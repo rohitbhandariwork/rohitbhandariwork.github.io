@@ -15,108 +15,90 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.6; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.6; font-size: 16px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
         .site-header { background: #0f172a; color: #fff; position: sticky; top: 0; z-index: 100; }
-        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
         .site-brand { display: flex; align-items: baseline; gap: 10px; }
         .site-brand a { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
         .brand-tagline { font-size: 12px; color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-        .main-nav { display: flex; gap: 24px; }
-        .main-nav a { color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+        .main-nav { display: flex; gap: 28px; }
+        .main-nav a { color: #94a3b8; text-decoration: none; font-size: 15px; font-weight: 500; padding: 8px 0; transition: color .2s; }
         .main-nav a:hover, .main-nav a.active { color: #fff; }
 
-        .breaking-bar { background: #1e293b; color: #fff; padding: 8px 0; font-size: 13px; }
+        .breaking-bar { background: #1e293b; color: #fff; padding: 10px 0; font-size: 14px; }
         .breaking-bar .container { display: flex; align-items: center; gap: 12px; }
-        .breaking-label { background: #ef4444; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .breaking-label { background: #dc2626; color: #fff; padding: 3px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .breaking-text { color: #cbd5e1; }
 
-        .content-layout { display: grid; grid-template-columns: 1fr 320px; gap: 32px; padding: 32px 0; }
+        .content-layout { display: grid; grid-template-columns: 1fr 300px; gap: 32px; padding: 32px 0; }
         .main-content { min-width: 0; }
 
-        .date-heading { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-        .date-sub { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+        .page-header { margin-bottom: 28px; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 800; color: #0f172a; }
+        .page-header p { font-size: 15px; color: #64748b; margin-top: 4px; }
 
         .news-card {
-            background: #fff; border-radius: 12px; margin-bottom: 24px;
+            background: #fff; border-radius: 16px; margin-bottom: 28px;
             box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
             border: 1px solid #e2e8f0; overflow: hidden;
         }
-        .news-card:first-of-type {
-            border: none; box-shadow: none; background: transparent; margin-bottom: 32px;
-        }
-        .news-card:first-of-type .article-image {
-            border-radius: 12px; overflow: hidden; margin: -1px -1px 20px -1px;
-        }
-        .news-card:first-of-type .article-image img {
-            width: 100%; height: auto; max-height: 420px; object-fit: cover; display: block;
-        }
-        .news-card:first-of-type .card-body { padding: 0; }
-        .news-card:first-of-type h2 { font-family: 'Playfair Display', serif; font-size: 32px; line-height: 1.2; margin-bottom: 12px; }
-        .news-card:first-of-type h2 .company-badge { font-family: 'Inter', sans-serif; }
-        .news-card:first-of-type p { font-size: 16px; line-height: 1.8; }
-
+        .article-image img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
         .card-body { padding: 24px; }
-        .article-image img { width: 100%; height: 200px; object-fit: cover; display: block; }
-        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #2563eb; margin-bottom: 8px; }
-        .news-card h2 { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 8px; line-height: 1.3; }
-        .news-card h3 { font-size: 16px; font-weight: 600; color: #334155; margin: 20px 0 8px; }
-        .news-card p { font-size: 15px; line-height: 1.7; color: #475569; margin-bottom: 12px; }
-        .news-card ul { padding-left: 20px; margin-bottom: 12px; }
-        .news-card li { font-size: 14px; line-height: 1.7; color: #475569; margin: 4px 0; }
-        .news-card hr { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #2563eb; margin-bottom: 10px; }
+        .news-card h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 8px; line-height: 1.35; }
+        .news-card h3 { font-size: 17px; font-weight: 600; color: #334155; margin: 24px 0 8px; }
+        .news-card p { font-size: 16px; line-height: 1.7; color: #475569; margin-bottom: 14px; }
+        .news-card ul { padding-left: 20px; margin-bottom: 14px; }
+        .news-card li { font-size: 15px; line-height: 1.7; color: #475569; margin: 6px 0; }
+        .news-card hr { border: none; border-top: 1px solid #e2e8f0; margin: 28px 0; }
 
         .company-badge {
             display: inline-flex; align-items: center; gap: 5px;
-            background: #f1f5f9; padding: 2px 10px 2px 5px;
+            background: #f1f5f9; padding: 3px 12px 3px 6px;
             border-radius: 16px; margin: 0 2px; vertical-align: middle;
         }
         .company-badge .clogo { width: 16px; height: 16px; border-radius: 3px; object-fit: contain; }
-        .company-badge .wiki-link { color: #2563eb; text-decoration: none; font-weight: 600; font-size: 13px; border-bottom: 1px dashed #93c5fd; }
+        .company-badge .wiki-link { color: #2563eb; text-decoration: none; font-weight: 600; font-size: 14px; border-bottom: 1px dashed #93c5fd; }
         .company-badge .wiki-link:hover { border-bottom-style: solid; }
         .company-badge .ceo-label { display: flex; align-items: center; gap: 3px; font-size: 10px; color: #64748b; font-weight: 500; }
         .company-badge .ceo-img { width: 14px; height: 14px; border-radius: 50%; object-fit: cover; }
 
         .sidebar { display: flex; flex-direction: column; gap: 24px; }
-        .sidebar-section { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; }
-        .sidebar-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #0f172a; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #2563eb; }
-        .sidebar-text { font-size: 13px; color: #64748b; line-height: 1.7; }
+        .sidebar-section { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; }
+        .sidebar-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #0f172a; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #2563eb; }
+        .sidebar-text { font-size: 14px; color: #64748b; line-height: 1.7; }
         .sidebar-archive { list-style: none; }
-        .sidebar-archive li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+        .sidebar-archive li { padding: 0; border-bottom: 1px solid #f1f5f9; }
         .sidebar-archive li:last-child { border: none; }
-        .sidebar-archive a { color: #2563eb; text-decoration: none; font-size: 13px; font-weight: 500; }
+        .sidebar-archive a { display: block; padding: 10px 0; color: #2563eb; text-decoration: none; font-size: 14px; font-weight: 500; }
         .sidebar-archive a:hover { text-decoration: underline; }
-        .sidebar-more { display: inline-block; margin-top: 12px; font-size: 13px; color: #2563eb; font-weight: 600; text-decoration: none; }
+        .sidebar-more { display: inline-block; margin-top: 12px; padding: 6px 0; font-size: 14px; color: #2563eb; font-weight: 600; text-decoration: none; }
         .sidebar-more:hover { text-decoration: underline; }
         .sidebar-ad .ad-placeholder {
             background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px;
-            padding: 48px 16px; text-align: center; color: #94a3b8; font-size: 13px;
+            padding: 32px 16px; text-align: center; color: #94a3b8; font-size: 14px;
         }
 
-        .quick-hits { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; }
-        .quick-hits h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #0f172a; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #2563eb; }
-        .quick-hits ul { padding-left: 0; list-style: none; }
-        .quick-hits li { font-size: 14px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #475569; line-height: 1.5; }
-        .quick-hits li:last-child { border: none; }
-
-        .site-footer { background: #0f172a; color: #94a3b8; padding: 32px 0; margin-top: 32px; text-align: center; font-size: 13px; }
-        .site-footer a { color: #60a5fa; text-decoration: none; font-weight: 500; }
+        .site-footer { background: #0f172a; color: #94a3b8; padding: 40px 0; margin-top: 32px; text-align: center; font-size: 14px; }
+        .site-footer a { color: #60a5fa; text-decoration: none; font-weight: 500; padding: 4px 8px; }
         .site-footer a:hover { color: #fff; }
-        .site-footer p { margin: 4px 0; }
+        .site-footer p { margin: 6px 0; }
 
         @media (max-width: 900px) {
             .content-layout { grid-template-columns: 1fr; }
             .sidebar { order: -1; }
-            .news-card:first-of-type h2 { font-size: 26px; }
-            .date-heading { font-size: 26px; }
+            .page-header h1 { font-size: 24px; }
         }
         @media (max-width: 640px) {
             .container { padding: 0 16px; }
-            .header-inner { flex-direction: column; height: auto; padding: 12px 0; gap: 8px; }
-            .main-nav { gap: 16px; }
+            .header-inner { flex-direction: column; height: auto; padding: 14px 0; gap: 10px; }
+            .main-nav { gap: 20px; }
             .card-body { padding: 16px; }
-            .news-card:first-of-type h2 { font-size: 22px; }
+            .news-card h2 { font-size: 19px; }
+            .news-card { margin-bottom: 20px; }
+            .sidebar { order: 0; }
         }
     </style>
 </head>
@@ -147,58 +129,54 @@
     <main class="container">
         <div class="content-layout">
             <div class="main-content">
-                <h1 class="date-heading">Daily Briefing</h1>
-                <p class="date-sub">Sunday, May 24, 2026 · Curated by AI</p>
+                <div class="page-header">
+                    <h1>Daily Briefing</h1>
+                    <p>Sunday, May 24, 2026 · Curated by AI</p>
+                </div>
                 <div class="news-content"><div class="news-card">
-    <div class="section-label">TECHNOLOGY</div>
-    <div class="article-image"><img src="https://image.pollinations.ai/prompt/Microsoft%20CEO:%20Satya%20Nadella’s%20Record%20Q1%20Earnings%20Highlight%20Cloud%20Dominance?width=800&height=450&nologo=true" alt="Microsoft CEO: Satya Nadella’s Record Q1 Earnings Highlight Cloud Dominance" loading="lazy" onerror="this.parentElement.style.display='none'"></div><h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span>’s Record Q1 Earnings Highlight Cloud Dominance</h2>
-    <p><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span> has reported impressive earnings for its first fiscal quarter of 2024, with cloud computing, particularly Azure, leading the charge. The tech giant revealed a revenue of $64.5 billion, marking a notable 16% increase year-over-year, alongside a staggering 30% growth in Azure revenue.</p>
+    <div class="section-label">TECH NEWS</div>
+    <div class="article-image"><img src="https://image.pollinations.ai/prompt/Apple%20CEO:%20Tim%20Cook%20Reports%20Q4%20Earnings:%20Revenue%20Decline%20Signals%20Challenges%20Ahead?width=800&height=450&nologo=true" alt="Apple CEO: Tim Cook Reports Q4 Earnings: Revenue Decline Signals Challenges Ahead" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="card-body"><h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://apple.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Apple" target="_blank" rel="noopener" class="wiki-link">Apple</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Tim+Cook&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Tim Cook</span></span> Reports Q4 Earnings: Revenue Decline Signals Challenges Ahead</h2>
+    <p>This week, <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://apple.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Apple" target="_blank" rel="noopener" class="wiki-link">Apple</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Tim+Cook&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Tim Cook</span></span> released its Q4 earnings report, revealing a 2% year-over-year decline in revenue, totalling $83 billion. This marks a decrease from $84.6 billion reported in the same period last year, alongside a drop in net income from $20.6 billion to $19 billion.</p>
     <h3>The Details</h3>
     <ul>
-        <li>Net income stands at $19.2 billion</li>
-        <li>Demand for cloud solutions underscores <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span>'s market position against competitors like <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://amazon.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Amazon" target="_blank" rel="noopener" class="wiki-link">Amazon</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Andy+Jassy&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Andy Jassy</span></span> Web Services</li>
+        <li>iPhone sales generated $45.3 billion, down from $46.8 billion last year.</li>
+        <li>Services revenue increased to $21.9 billion, showing a growth of 5% year-on-year.</li>
     </ul>
     <h3>Why It Matters</h3>
-    <p>This powerful performance from <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span> indicates a robust demand for cloud services, vital in today's shifting economic landscape. However, as competition intensifies in the cloud sector, analysts are questioning the sustainability of Azure's rapid growth, spotlighting the need for ongoing innovation to maintain <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span>’s competitive edge.</p>
-</div>
-
-<div class="news-card">
-    <div class="section-label">BUSINESS</div>
-    <div class="article-image"><img src="https://image.pollinations.ai/prompt/Meta%20Platforms%20CEO:%20Mark%20Zuckerberg%20Unveils%20AI%20Innovations%20to%20Boost%20Advertising%20Revenue?width=800&height=450&nologo=true" alt="Meta Platforms CEO: Mark Zuckerberg Unveils AI Innovations to Boost Advertising Revenue" loading="lazy" onerror="this.parentElement.style.display='none'"></div><h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta_Platforms" target="_blank" rel="noopener" class="wiki-link">Meta Platforms</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span> Unveils AI Innovations to Boost Advertising Revenue</h2>
-    <p><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta_Platforms" target="_blank" rel="noopener" class="wiki-link">Meta Platforms</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span> has announced significant updates to its advertising strategy, leveraging advanced artificial <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://intel.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Intel" target="_blank" rel="noopener" class="wiki-link">Intel</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Pat+Gelsinger&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Pat Gelsinger</span></span>ligence during its quarterly earnings report. With ad revenues reaching $34 billion—up 12% year-over-year—<span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span> is ramping up AI investment by 40% for 2024, positioning itself to better meet changing market demands.</p>
+    <p>This earnings report shines a light on <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://apple.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Apple" target="_blank" rel="noopener" class="wiki-link">Apple</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Tim+Cook&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Tim Cook</span></span>'s vulnerabilities amidst a slowing global economy and challenges in its hardware segments. While the growth in Services revenue indicates a potential pivot, questions arise about the sustainability of their premium pricing strategy with iPhone sales declining.</p>
+    
+    <div class="section-label">TECH NEWS</div>
+    <h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span> Unveils New AI Features: Aiming for a Productivity Boost</h2>
+    <p>On October 25, <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span> announced significant new AI integrations across its Office products at a promotional event. These updates, particularly with the Copilot feature, are expected to increase productivity by an impressive 30% for its estimated 1.5 billion users worldwide.</p>
     <h3>The Details</h3>
     <ul>
-        <li>Active user count across platforms reaches 3.3 billion</li>
-        <li>Focus on AI is crucial as traditional advertising revenues face pressure</li>
+        <li><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span>'s market value recently surged to $2.5 trillion.</li>
+        <li>New AI features target both enterprise and individual users, streamlining workflows.</li>
     </ul>
     <h3>Why It Matters</h3>
-    <p><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>'s strategic shift towards AI advertising could redefine targeting effectiveness at a time when advertisers are looking for smarter ways to engage consumers. However, the company's reliance on AI has raised ethical questions around privacy and manipulation, which may lead to regulatory scrutiny, impacting its advertising model in the long run.</p>
-</div>
-
-<div class="news-card">
-    <div class="section-label">LEGAL</div>
-    <div class="article-image"><img src="https://image.pollinations.ai/prompt/Google%20CEO:%20Sundar%20Pichai%20Faces%20New%20Antitrust%20Charges%20from%20U.S.%20Justice%20Department?width=800&height=450&nologo=true" alt="Google CEO: Sundar Pichai Faces New Antitrust Charges from U.S. Justice Department" loading="lazy" onerror="this.parentElement.style.display='none'"></div><h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Sundar+Pichai&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Sundar Pichai</span></span> Faces New Antitrust Charges from U.S. Justice Department</h2>
-    <p>The U.S. Department of Justice has launched new antitrust charges against <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Sundar+Pichai&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Sundar Pichai</span></span>, challenging its commanding 59% share in the searchable digital advertising market. Proposed changes could reshape how <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Sundar+Pichai&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Sundar Pichai</span></span> operates in this space, potentially influencing up to $60 billion in annual advertising revenues.</p>
+    <p>As <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://microsoft.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Satya+Nadella&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Satya Nadella</span></span> positions itself as a leader in AI productivity tools, it faces competition from other tech giants like <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Sundar+Pichai&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Sundar Pichai</span></span> while navigating ethical concerns. The balance between innovation and job security raises vital questions about the future workplace dynamics.</p>
+    
+    <div class="section-label">TECH NEWS</div>
+    <h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span> Launches Project Cambria: A New Era for VR/AR</h2>
+    <p><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span> recently unveiled its new virtual reality headset, Project Cambria, which offers enhanced mixed-reality capabilities and is priced at $1,499. Slated for launch in early 2024, this product aims to cement <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>'s vision of the <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>verse.</p>
     <h3>The Details</h3>
     <ul>
-        <li>Changes include restructuring ad pricing and enhancing transparency measures</li>
-        <li>The outcome could benefit smaller competitors and change advertising strategies</li>
+        <li><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>'s VR/AR division generated $1.8 billion in revenue in 2022.</li>
+        <li>The division is expected to grow at a rate of 15% for 2023.</li>
     </ul>
     <h3>Why It Matters</h3>
-    <p>This antitrust case could have significant implications for the digital advertising landscape, potentially leading to increased competition. However, some experts warn that such regulations could hinder innovation and the quality of services that <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://google.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Sundar+Pichai&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Sundar Pichai</span></span> provides, ultimately impacting both consumers and small businesses reliant on effective advertising.</p>
-</div>
-
-<div class="news-card">
-    <div class="section-label">PRODUCTS</div>
-    <div class="article-image"><img src="https://image.pollinations.ai/prompt/Apple%20CEO:%20Tim%20Cook%20Launches%20iPhone%2016%20and%20Enhanced%20MacBook%20Pro%20Series?width=800&height=450&nologo=true" alt="Apple CEO: Tim Cook Launches iPhone 16 and Enhanced MacBook Pro Series" loading="lazy" onerror="this.parentElement.style.display='none'"></div><h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://apple.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Apple" target="_blank" rel="noopener" class="wiki-link">Apple</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Tim+Cook&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Tim Cook</span></span> Launches iPhone 16 and Enhanced MacBook Pro Series</h2>
-    <p><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://apple.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Apple" target="_blank" rel="noopener" class="wiki-link">Apple</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Tim+Cook&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Tim Cook</span></span> has unveiled its highly anticipated new product line, featuring the iPhone 16 series and an upgraded MacBook Pro lineup. The tech giant saw 9 million pre-orders for the iPhone 16 within the first 24 hours, projecting $70 billion in revenue from the release alone.</p>
+    <p>While this new hardware could elevate <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>'s prospects in the mixed reality landscape, its high cost poses questions about widespread consumer adoption. Critics worry that <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>'s focus on the <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://meta.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Mark+Zuckerberg&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Mark Zuckerberg</span></span>verse might divert resources from addressing ongoing issues in social media.</p>
+    
+    <div class="section-label">TECH NEWS</div>
+    <h2><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tesla.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Tesla" target="_blank" rel="noopener" class="wiki-link">Tesla</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Elon+Musk&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Elon Musk</span></span> Plans to Produce EVs in India: A Bold Move into a Growing Market</h2>
+    <p><span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tesla.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Tesla" target="_blank" rel="noopener" class="wiki-link">Tesla</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Elon+Musk&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Elon Musk</span></span> announced its tentative plans to manufacture electric vehicles in India, aiming for a significant $10 billion investment over the next five years. This move targets the rapidly growing Indian EV market, projected to reach $20 billion by 2026.</p>
     <h3>The Details</h3>
     <ul>
-        <li>MacBook Pro sales are expected to grow by 15% due to better battery life and processing power</li>
-        <li>New releases are essential for maintaining market share amidst competition</li>
+        <li>Expected annual production capacity is set at 500,000 vehicles.</li>
+        <li>India is considered one of the fastest-growing markets for electric vehicles.</li>
     </ul>
     <h3>Why It Matters</h3>
-    <p>Despite robust early sales, analysts are questioning whether incremental upgrades will excite consumers, emphasizing the need for <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://apple.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Apple" target="_blank" rel="noopener" class="wiki-link">Apple</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Tim+Cook&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Tim Cook</span></span> to innovate boldly to combat market saturation and enhance its competitive positioning against rivals like Samsung and emerging manufacturers.</p>
+    <p>While <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tesla.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Tesla" target="_blank" rel="noopener" class="wiki-link">Tesla</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Elon+Musk&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Elon Musk</span></span>'s entry could propel the EV sector in India, it may face hurdles related to regulatory compliance and local production standards. Observers are eager to see if <span class="company-badge"><img src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tesla.com&size=24" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Tesla" target="_blank" rel="noopener" class="wiki-link">Tesla</a><span class="ceo-label"><img src="https://ui-avatars.com/api/?name=Elon+Musk&size=24&background=2563eb&color=fff&rounded=true" alt="" class="ceo-img" loading="lazy" onerror="this.style.display='none'"> CEO: Elon Musk</span></span> can maintain its status as an innovator while engaging responsibly with local economies.</p>
 </div></div>
             </div>
             <aside class="sidebar">
