@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Daily Brief — 2026-05-24</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://rohitbhandariwork.github.io/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://rohitbhandariwork.github.io/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://rohitbhandariwork.github.io/assets/css/style.css" rel="stylesheet">
+    <style>
+        body { background: #f8fafc; font-family: 'Manrope', sans-serif; }
+        .news-header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 20px 0;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .news-header .container { display: flex; align-items: center; justify-content: space-between; }
+        .news-header .brand { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+        .news-header .brand span { opacity: 0.7; font-weight: 500; }
+        .news-header nav a { color: rgba(255,255,255,0.8); text-decoration: none; margin-left: 24px; font-size: 14px; font-weight: 600; }
+        .news-header nav a:hover { color: #fff; }
+        .news-body { padding: 32px 0; }
+        .date-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #2563eb;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+        }
+        .news-card h2 { font-size: 22px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+        .news-card .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #2563eb; margin-bottom: 8px; }
+        .news-card h3 { font-size: 18px; font-weight: 600; margin: 16px 0 8px; color: #333; }
+        .news-card p { font-size: 15px; line-height: 1.7; color: #475569; }
+        .news-card ul { padding-left: 20px; }
+        .news-card li { font-size: 15px; line-height: 1.7; color: #475569; margin: 4px 0; }
+        .news-card hr { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+        .company-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #f1f5f9; padding: 2px 12px 2px 6px;
+            border-radius: 20px; margin: 0 2px;
+        }
+        .company-badge .clogo {
+            width: 18px; height: 18px; border-radius: 4px; object-fit: contain;
+        }
+        .company-badge .wiki-link {
+            color: #2563eb; text-decoration: none; font-weight: 600; font-size: 14px;
+            border-bottom: 1px dashed #93c5fd;
+        }
+        .company-badge .wiki-link:hover { border-bottom-style: solid; }
+        .key-people {
+            display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0;
+        }
+        .key-person {
+            display: flex; align-items: center; gap: 8px;
+            background: #f8fafc; padding: 6px 14px 6px 6px;
+            border-radius: 24px; border: 1px solid #e2e8f0;
+        }
+        .key-person img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+        .key-person .name { font-size: 13px; font-weight: 600; color: #333; }
+        .key-person .role { font-size: 11px; color: #64748b; }
+        .ad-unit {
+            background: #f1f5f9; border: 2px dashed #cbd5e1;
+            border-radius: 8px; padding: 32px 16px; text-align: center;
+            color: #94a3b8; font-size: 14px; margin: 24px 0;
+        }
+        .news-footer {
+            text-align: center; padding: 32px 0; color: #94a3b8;
+            font-size: 13px; border-top: 1px solid #e2e8f0; margin-top: 40px;
+        }
+        .news-footer a { color: #2563eb; text-decoration: none; font-weight: 600; }
+        .archive-list { list-style: none; padding: 0; }
+        .archive-list li { padding: 12px 0; border-bottom: 1px solid #e2e8f0; }
+        .archive-list a { color: #2563eb; text-decoration: none; font-size: 16px; font-weight: 600; }
+        .archive-list a:hover { text-decoration: underline; }
+        .quick-hits h3 { font-size: 16px; font-weight: 700; color: #2563eb; margin: 20px 0 8px; }
+        .quick-hits ul { padding-left: 20px; }
+        .quick-hits li { font-size: 14px; margin: 4px 0; color: #475569; }
+        @media (max-width: 768px) {
+            .news-header nav a { margin-left: 12px; font-size: 12px; }
+            .news-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="news-header">
+        <div class="container">
+            <div class="brand">AI Daily Brief <span>by Rohit Bhandari</span></div>
+            <nav>
+                <a href="https://rohitbhandariwork.github.io/news">Archive</a>
+                <a href="https://rohitbhandariwork.github.io">Portfolio</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="news-body">
+        <div class="container">
+            <div class="date-badge">Sunday, May 24, 2026</div>
+            <div class="ad-unit">Ad Unit — Google AdSense</div>
+            <div class="news-card"><div class="key-people"><div class="key-person"><img src="https://images.weserv.nl/?url=https://commons.wikimedia.org/wiki/Special:FilePath/&w=48" alt="Andy Jassy" loading="lazy" onerror="this.style.display='none'"><div><div class="name">Andy Jassy</div><div class="role">CEO, Amazon</div></div></div><div class="key-person"><img src="https://images.weserv.nl/?url=https://commons.wikimedia.org/wiki/Special:FilePath/Mark_Zuckerberg_F8_2018.jpg&w=48" alt="Mark Zuckerberg" loading="lazy" onerror="this.style.display='none'"><div><div class="name">Mark Zuckerberg</div><div class="role">CEO, Meta</div></div></div><div class="key-person"><img src="https://images.weserv.nl/?url=https://commons.wikimedia.org/wiki/Special:FilePath/&w=48" alt="Pat Gelsinger" loading="lazy" onerror="this.style.display='none'"><div><div class="name">Pat Gelsinger</div><div class="role">CEO, Intel</div></div></div><div class="key-person"><img src="https://images.weserv.nl/?url=https://commons.wikimedia.org/wiki/Special:FilePath/Satya_Nadella.jpg&w=48" alt="Satya Nadella" loading="lazy" onerror="this.style.display='none'"><div><div class="name">Satya Nadella</div><div class="role">CEO, Microsoft</div></div></div><div class="key-person"><img src="https://images.weserv.nl/?url=https://commons.wikimedia.org/wiki/Special:FilePath/Sundar_Pichai_WEF_2023.png&w=48" alt="Sundar Pichai" loading="lazy" onerror="this.style.display='none'"><div><div class="name">Sundar Pichai</div><div class="role">CEO, Google</div></div></div></div>```html
+<div class="news-card">
+    <div class="section-label">TECH BUSINESS</div>
+    <h2><span class="company-badge"><img src="https://logo.clearbit.com/meta.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a></span>'s Q3 2023 Earnings Report Highlights Strong Recovery</h2>
+    <p>On October 31, 2023, <span class="company-badge"><img src="https://logo.clearbit.com/meta.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta_Platforms" target="_blank" rel="noopener" class="wiki-link">Meta Platforms</a></span> Inc., the parent company of Facebook, released its Q3 earnings, showcasing a remarkable uptick in both revenue and user engagement, as the firm pivots towards artificial <span class="company-badge"><img src="https://logo.clearbit.com/intel.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Intel" target="_blank" rel="noopener" class="wiki-link">Intel</a></span>ligence. This recovery signals a bright outlook after previous declines.</p>
+    <h3>The Details</h3>
+    <ul>
+        <li>Revenue hit $34.6 billion, a 23% increase year-over-year.</li>
+        <li>Daily Active Users (DAUs) grew to 2.82 billion, marking a 10% rise year-over-year.</li>
+    </ul>
+    <h3>Why It Matters</h3>
+    <p><span class="company-badge"><img src="https://logo.clearbit.com/meta.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Meta" target="_blank" rel="noopener" class="wiki-link">Meta</a></span>'s strong financial performance indicates a resurgence in advertising revenue, crucial for attracting more advertisers. However, their substantial $10 billion investment in AI suggests a strategic shift in focus, prompting discussions on how this might impact their approaches to user privacy and ethical practices moving forward.</p>
+</div>
+
+<div class="news-card">
+    <div class="section-label">TECH INNOVATION</div>
+    <h2><span class="company-badge"><img src="https://logo.clearbit.com/amazon.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Amazon" target="_blank" rel="noopener" class="wiki-link">Amazon</a></span> Introduces AI-Enhanced Shopping Features</h2>
+    <p>On November 1, 2023, <span class="company-badge"><img src="https://logo.clearbit.com/amazon.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Amazon" target="_blank" rel="noopener" class="wiki-link">Amazon</a></span> rolled out new AI-powered features on its shopping platform, promising a more personalized user experience. These innovations could significantly enhance customer satisfaction during the peak holiday shopping season.</p>
+    <h3>The Details</h3>
+    <ul>
+        <li>A 40% increase in relevant product suggestions is expected.</li>
+        <li>The features are currently being beta-tested in the US, UK, and Germany.</li>
+    </ul>
+    <h3>Why It Matters</h3>
+    <p>By integrating AI into their shopping experience, <span class="company-badge"><img src="https://logo.clearbit.com/amazon.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Amazon" target="_blank" rel="noopener" class="wiki-link">Amazon</a></span> hopes to not only streamline purchases but also maintain its competitive edge in the ever-evolving e-commerce landscape. However, concerns about the potential for "filter bubbles" persist, as users may miss out on discovering varied products.</p>
+</div>
+
+<div class="news-card">
+    <div class="section-label">TECH INNOVATION</div>
+    <h2><span class="company-badge"><img src="https://logo.clearbit.com/microsoft.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a></span> Boosts Productivity with Copilot Integration in Office 365</h2>
+    <p>On October 30, 2023, <span class="company-badge"><img src="https://logo.clearbit.com/microsoft.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a></span> announced the rollout of its AI-driven Copilot feature across the Office 365 suite, designed to enhance productivity for an estimated 300 million business users, signaling a new chapter in workplace efficiency.</p>
+    <h3>The Details</h3>
+    <ul>
+        <li>Over 2 million businesses participated in the initial beta testing.</li>
+        <li>Post-announcement, Office 365 saw a 10% increase in subscriptions.</li>
+    </ul>
+    <h3>Why It Matters</h3>
+    <p><span class="company-badge"><img src="https://logo.clearbit.com/microsoft.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a></span>'s focus on AI can potentially redefine productivity workflows and attract new subscribers eager for innovative solutions. The debate, however, remains on whether such tools will empower workers or foster over-reliance on AI-generated content.</p>
+</div>
+
+<div class="news-card">
+    <div class="section-label">TECH BUSINESS</div>
+    <h2><span class="company-badge"><img src="https://logo.clearbit.com/google.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a></span> Cloud Reaches $30 Billion Revenue Run Rate</h2>
+    <p>On November 1, 2023, <span class="company-badge"><img src="https://logo.clearbit.com/google.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a></span> Cloud announced a milestone achievement of surpassing a $30 billion annual revenue run rate, reflecting significant growth attributed to increased enterprise adoption and advancements in AI technology.</p>
+    <h3>The Details</h3>
+    <ul>
+        <li>Revenue for Q3 2023 reached $7.4 billion, a 31% increase year-over-year.</li>
+        <li>25% growth in new enterprise customers bolstered revenue streams.</li>
+    </ul>
+    <h3>Why It Matters</h3>
+    <p>This milestone positions <span class="company-badge"><img src="https://logo.clearbit.com/google.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener" class="wiki-link">Google</a></span> Cloud favorably against competitors like <span class="company-badge"><img src="https://logo.clearbit.com/amazon.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Amazon" target="_blank" rel="noopener" class="wiki-link">Amazon</a></span> Web Services and <span class="company-badge"><img src="https://logo.clearbit.com/microsoft.com?size=32" alt="" class="clogo" loading="lazy" onerror="this.style.display='none'"><a href="https://en.wikipedia.org/wiki/Microsoft" target="_blank" rel="noopener" class="wiki-link">Microsoft</a></span> Azure amid a booming cloud market projected to grow to $1 trillion by 2030. Nevertheless, questions about the sustainability of this growth in a fiercely competitive environment are becoming increasingly prominent.</p>
+</div>
+```</div>
+            <div class="ad-unit">Ad Unit — Google AdSense</div>
+        </div>
+    </div>
+
+    <footer class="news-footer">
+        <div class="container">
+            <p>Powered by AI Agents + Rohit Bhandari</p>
+            <p><a href="https://rohitbhandariwork.github.io/news">Archive</a> · <a href="https://rohitbhandariwork.github.io">Portfolio</a></p>
+        </div>
+    </footer>
+</body>
+</html>
