@@ -449,30 +449,32 @@
   <script src="assets/js/main.js"></script>
 
 <style>
-#nl-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#nl-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
 #nl-overlay.show{opacity:1;visibility:visible}
-#nl-modal{background:#141414;border:1px solid #333;border-radius:20px;padding:40px 36px;max-width:420px;width:90%;position:relative;color:#f0f0f0;font-family:-apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;text-align:center}
-#nl-modal h2{font-size:22px;margin-bottom:6px}
-#nl-modal p.sub{color:#999;font-size:14px;margin-bottom:24px;line-height:1.5}
-#nl-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#666;font-size:22px;cursor:pointer;padding:4px;line-height:1}
-#nl-close:hover{color:#fff}
+#nl-modal{background:#fff;border-radius:24px;padding:44px 40px 36px;max-width:440px;width:92%;position:relative;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.15)}
+#nl-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#9aa1ae;font-size:26px;cursor:pointer;padding:4px;line-height:1;transition:color .2s}
+#nl-close:hover{color:#1d2433}
+#nl-icon{width:48px;height:48px;background:linear-gradient(135deg,#1f2f5f,#2a4a7a);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px}
+#nl-modal h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#1d2433;margin-bottom:6px}
+#nl-modal p.sub{color:#5d6678;font-size:14px;line-height:1.6;margin-bottom:26px;font-family:'Manrope',sans-serif}
 #nl-form{display:flex;flex-direction:column;gap:12px}
-#nl-form input{background:#1e1e1e;border:1px solid #333;border-radius:10px;padding:12px 14px;font-size:14px;color:#f0f0f0;font-family:inherit;outline:none}
-#nl-form input:focus{border-color:#6c5ce7}
-#nl-form button{background:#6c5ce7;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:600;color:#fff;font-family:inherit;cursor:pointer}
-#nl-form button:hover{background:#5a4bd1}
-#nl-form button:disabled{opacity:.6;cursor:not-allowed}
-#nl-msg{font-size:13px;margin-top:14px;min-height:20px}
-#nl-msg.ok{color:#00d68f}
-#nl-msg.err{color:#ff6b6b}
+#nl-form input{font-family:'Manrope',sans-serif;background:#f5f2ed;border:1px solid rgba(29,36,51,.1);border-radius:999px;padding:14px 20px;font-size:14px;color:#1d2433;outline:none;transition:border .2s}
+#nl-form input:focus{border-color:#db6d3f}
+#nl-form input::placeholder{color:#9aa1ae}
+#nl-form button{font-family:'Syne',sans-serif;background:#db6d3f;border:none;border-radius:999px;padding:14px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .2s}
+#nl-form button:hover{background:#bb4f24}
+#nl-form button:disabled{opacity:.5;cursor:not-allowed}
+#nl-msg{font-size:13px;margin-top:14px;min-height:22px;font-family:'Manrope',sans-serif}
+#nl-msg.ok{color:#1f2f5f;font-weight:600}
+#nl-msg.err{color:#db6d3f}
 </style>
 
 <div id="nl-overlay">
   <div id="nl-modal">
     <button id="nl-close">&times;</button>
-    <div style="font-size:40px;margin-bottom:6px">🧠</div>
-    <h2>AI Knowledge Explained</h2>
-    <p class="sub">5-min explainers on AI concepts — simple enough for a beginner, deep enough for a pro. One email, every few days.</p>
+    <div id="nl-icon">🧠</div>
+    <h2>Stay sharp on AI</h2>
+    <p class="sub">5-min explainers on AI concepts — simple enough for a beginner, deep enough for a pro. No fluff, just signal.</p>
     <form id="nl-form">
       <input type="text" id="nl-name" placeholder="Your name" required>
       <input type="email" id="nl-email" placeholder="Your email" required>
@@ -488,7 +490,7 @@
   var ov = document.getElementById('nl-overlay');
   document.getElementById('nl-close').onclick = function(){ov.classList.remove('show')};
   ov.onclick = function(e){if(e.target===ov)ov.classList.remove('show')};
-  setTimeout(function(){ov.classList.add('show')},1500);
+  setTimeout(function(){ov.classList.add('show')},2000);
   document.getElementById('nl-form').onsubmit = async function(e){
     e.preventDefault();
     var btn = e.target.querySelector('button');
@@ -500,7 +502,7 @@
         email: document.getElementById('nl-email').value.trim()
       })});
       var d = await r.json();
-      if(d.status==='ok'){msg.className='ok';msg.textContent="You're in! Check your inbox."; e.target.reset(); setTimeout(function(){ov.classList.remove('show')},2000)}
+      if(d.status==='ok'){msg.className='ok';msg.textContent="You're in! 🎉"; e.target.reset(); setTimeout(function(){ov.classList.remove('show')},2000)}
       else{msg.className='err';msg.textContent=d.detail||'Something went wrong.'}
     }catch(e){msg.className='err';msg.textContent='Could not reach the server.'}
     btn.disabled=false;btn.textContent='Subscribe';
