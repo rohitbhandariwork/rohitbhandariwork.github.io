@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Knowledge Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="vault-logo">🧠</div>
+      <div class="vault-title">Knowledge Vault</div>
+    </div>
+    <nav id="nav">
+      <a href="#/" class="nav-item" data-nav="/">Dashboard</a>
+      <div class="nav-divider">Modules</div>
+      <div id="module-tree"></div>
+      <div class="nav-divider">Collection</div>
+      <a href="#/vault" class="nav-item" data-nav="/vault">🗂️ Vault</a>
+      <a href="#/badges" class="nav-item" data-nav="/badges">🏅 Badges</a>
+    </nav>
+  </aside>
+  <main id="main">
+    <div id="content"></div>
+  </main>
+  <footer id="bottom-bar">
+    <div class="stat"><span class="stat-icon">⭐</span><span id="xp-display">0 XP</span></div>
+    <div class="stat"><span class="stat-icon">💎</span><span id="gem-display">0</span></div>
+    <div class="stat"><span class="stat-icon">🔥</span><span id="streak-display">0 days</span></div>
+    <div class="stat"><span id="level-display" class="level-badge">Apprentice</span></div>
+  </footer>
+</div>
+<div id="toast-container"></div>
+
+<script src="modules.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
