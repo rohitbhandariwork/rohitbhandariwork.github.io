@@ -447,6 +447,66 @@
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/js/main.js"></script>
+
+<style>
+#nl-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#nl-overlay.show{opacity:1;visibility:visible}
+#nl-modal{background:#141414;border:1px solid #333;border-radius:20px;padding:40px 36px;max-width:420px;width:90%;position:relative;color:#f0f0f0;font-family:-apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;text-align:center}
+#nl-modal h2{font-size:22px;margin-bottom:6px}
+#nl-modal p.sub{color:#999;font-size:14px;margin-bottom:24px;line-height:1.5}
+#nl-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#666;font-size:22px;cursor:pointer;padding:4px;line-height:1}
+#nl-close:hover{color:#fff}
+#nl-form{display:flex;flex-direction:column;gap:12px}
+#nl-form input{background:#1e1e1e;border:1px solid #333;border-radius:10px;padding:12px 14px;font-size:14px;color:#f0f0f0;font-family:inherit;outline:none}
+#nl-form input:focus{border-color:#6c5ce7}
+#nl-form button{background:#6c5ce7;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:600;color:#fff;font-family:inherit;cursor:pointer}
+#nl-form button:hover{background:#5a4bd1}
+#nl-form button:disabled{opacity:.6;cursor:not-allowed}
+#nl-msg{font-size:13px;margin-top:14px;min-height:20px}
+#nl-msg.ok{color:#00d68f}
+#nl-msg.err{color:#ff6b6b}
+</style>
+
+<div id="nl-overlay">
+  <div id="nl-modal">
+    <button id="nl-close">&times;</button>
+    <div style="font-size:40px;margin-bottom:6px">🧠</div>
+    <h2>AI Knowledge Explained</h2>
+    <p class="sub">5-min explainers on AI concepts — simple enough for a beginner, deep enough for a pro. One email, every few days.</p>
+    <form id="nl-form">
+      <input type="text" id="nl-name" placeholder="Your name" required>
+      <input type="email" id="nl-email" placeholder="Your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <div id="nl-msg"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var API = 'https://your-server-url.com/tusk/subscribers/add';
+  var ov = document.getElementById('nl-overlay');
+  document.getElementById('nl-close').onclick = function(){ov.classList.remove('show')};
+  ov.onclick = function(e){if(e.target===ov)ov.classList.remove('show')};
+  setTimeout(function(){ov.classList.add('show')},1500);
+  document.getElementById('nl-form').onsubmit = async function(e){
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    btn.disabled=true;btn.textContent='Subscribing...';
+    var msg = document.getElementById('nl-msg');msg.className='';msg.textContent='';
+    try{
+      var r = await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        name: document.getElementById('nl-name').value.trim(),
+        email: document.getElementById('nl-email').value.trim()
+      })});
+      var d = await r.json();
+      if(d.status==='ok'){msg.className='ok';msg.textContent="You're in! Check your inbox."; e.target.reset(); setTimeout(function(){ov.classList.remove('show')},2000)}
+      else{msg.className='err';msg.textContent=d.detail||'Something went wrong.'}
+    }catch(e){msg.className='err';msg.textContent='Could not reach the server.'}
+    btn.disabled=false;btn.textContent='Subscribe';
+  };
+})();
+</script>
 </body>
 
 </html>
