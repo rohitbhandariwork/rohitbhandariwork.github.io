@@ -621,8 +621,12 @@ document.addEventListener('click', function(e) {
 
 /* ── Init ── */
 window.addEventListener('load', () => {
-  checkStreak();
-  updateDisplay();
-  renderModuleTree();
-  doRender(location.hash.replace(/^#/, '') || '/');
+  try {
+    checkStreak();
+    updateDisplay();
+    renderModuleTree();
+    doRender(location.hash.replace(/^#/, '') || '/');
+  } catch(e) {
+    document.getElementById('content').innerHTML = '<div style="padding:40px;text-align:center;color:var(--accent)"><h2>⚠️ Error</h2><pre style="text-align:left;margin-top:16px;background:rgba(255,255,255,0.8);padding:20px;border-radius:12px;font-size:13px;max-width:600px;margin-left:auto;margin-right:auto;overflow-x:auto">' + e.stack + '</pre></div>';
+  }
 });
