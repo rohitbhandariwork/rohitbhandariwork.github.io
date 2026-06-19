@@ -2,9 +2,9 @@
   "date": "2026-05-16",
   "label": "May 16, 2026",
   "headlines": [
-    "\ud83e\udd16 <span class=\"company-badge\"><img src=\"https://logo.clearbit.com/openai.com?size=32\" alt=\"\" class=\"clogo\" loading=\"lazy\" onerror=\"this.style.display='none'\"><a href=\"https://en.wikipedia.org/wiki/OpenAI\" target=\"_blank\" rel=\"noopener\" class=\"wiki-link\">OpenAI</a></span>",
-    "\ud83e\uddbe <span class=\"company-badge\"><img src=\"https://logo.clearbit.com/google.com?size=32\" alt=\"\" class=\"clogo\" loading=\"lazy\" onerror=\"this.style.display='none'\"><a href=\"https://en.wikipedia.org/wiki/Google\" target=\"_blank\" rel=\"noopener\" class=\"wiki-link\">Google</a></span>",
-    "\ud83d\udcf1 <span class=\"company-badge\"><img src=\"https://logo.clearbit.com/meta.com?size=32\" alt=\"\" class=\"clogo\" loading=\"lazy\" onerror=\"this.style.display='none'\"><a href=\"https://en.wikipedia.org/wiki/Meta\" target=\"_blank\" rel=\"noopener\" class=\"wiki-link\">Meta</a></span>",
+    "\ud83e\udd16 OpenAI",
+    "\ud83e\uddbe Google",
+    "\ud83d\udcf1 Meta",
     "\u2501\u2501\u2501 QUICK HITS \u2501\u2501\u2501"
   ]
 }
