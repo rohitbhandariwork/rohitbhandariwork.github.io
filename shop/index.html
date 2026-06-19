@@ -251,16 +251,16 @@
 
 <script>
 const EBOOKS = [
-  { slug: 'python-ai',     icon: '🐍', color: 'green',   title: 'Python for AI & Machine Learning', desc: 'Master Python for AI/ML with practical examples covering NumPy, Pandas, scikit-learn, and PyTorch. From data wrangling to model deployment.', price: 'Free' },
-  { slug: 'deep-learning',  icon: '🧠', color: 'purple',  title: 'Deep Learning Fundamentals', desc: 'Understand neural networks from scratch - backpropagation, activation functions, CNNs, RNNs, and modern architectures with clear explanations.', price: 'Free' },
-  { slug: 'transformers-nlp', icon: '🤖', color: 'blue',   title: 'Transformers & NLP', desc: 'Attention is all you need. Dive into transformer architecture, BERT, GPT, tokenization, fine-tuning, and building LLM-powered applications.', price: 'Free' },
-  { slug: 'computer-vision',   icon: '👁️', color: 'teal',   title: 'Computer Vision in Practice', desc: 'Image classification, object detection, segmentation, and generative vision models. OpenCV, YOLO, Stable Diffusion, and real-world CV pipelines.', price: 'Free' },
-  { slug: 'reinforcement-learning', icon: '🎮', color: 'orange', title: 'Reinforcement Learning', desc: 'From Q-learning to PPO. Explore RL fundamentals, policy gradients, and how AlphaGo, robotics, and game AI actually work under the hood.', price: 'Free' },
-  { slug: 'llm-apps',       icon: '⚡', color: 'indigo',  title: 'LLM Application Development', desc: 'Build production-ready LLM apps: prompt engineering, RAG, vector databases, LangChain, agents, eval, and cost optimization strategies.', price: 'Free' },
-  { slug: 'mlops',          icon: '🔄', color: 'cyan',    title: 'MLOps & Production ML', desc: 'Take models to production: CI/CD for ML, feature stores, model registry, monitoring, drift detection, A/B testing, and infrastructure as code.', price: 'Free' },
-  { slug: 'data-engineering', icon: '📊', color: 'amber',  title: 'Data Engineering for AI', desc: 'Build robust data pipelines: ETL/ELT, Spark, dbt, data lakes, streaming with Kafka, and data quality frameworks for AI-ready data.', price: 'Free' },
-  { slug: 'ai-ethics',       icon: '⚖️', color: 'rose',    title: 'AI Ethics & Responsible AI', desc: 'Fairness, bias, transparency, privacy, and accountability in AI systems. Practical frameworks for ethical AI development and governance.', price: 'Free' },
-  { slug: 'generative-ai',   icon: '✨', color: 'pink',    title: 'Generative AI & Diffusion Models', desc: 'Explore GANs, VAEs, autoregressive models, and diffusion models. Build gen AI apps for images, music, code, and multimodal creation.', price: 'Free' },
+  { slug: 'python-ai',     icon: '🐍', color: 'green',   title: 'Python for AI & Machine Learning', desc: 'Master Python for AI/ML with practical examples covering NumPy, Pandas, scikit-learn, and PyTorch. From data wrangling to model deployment.', price: 499 },
+  { slug: 'deep-learning',  icon: '🧠', color: 'purple',  title: 'Deep Learning Fundamentals', desc: 'Understand neural networks from scratch - backpropagation, activation functions, CNNs, RNNs, and modern architectures with clear explanations.', price: 599 },
+  { slug: 'transformers-nlp', icon: '🤖', color: 'blue',   title: 'Transformers & NLP', desc: 'Attention is all you need. Dive into transformer architecture, BERT, GPT, tokenization, fine-tuning, and building LLM-powered applications.', price: 699 },
+  { slug: 'computer-vision',   icon: '👁️', color: 'teal',   title: 'Computer Vision in Practice', desc: 'Image classification, object detection, segmentation, and generative vision models. OpenCV, YOLO, Stable Diffusion, and real-world CV pipelines.', price: 499 },
+  { slug: 'reinforcement-learning', icon: '🎮', color: 'orange', title: 'Reinforcement Learning', desc: 'From Q-learning to PPO. Explore RL fundamentals, policy gradients, and how AlphaGo, robotics, and game AI actually work under the hood.', price: 399 },
+  { slug: 'llm-apps',       icon: '⚡', color: 'indigo',  title: 'LLM Application Development', desc: 'Build production-ready LLM apps: prompt engineering, RAG, vector databases, LangChain, agents, eval, and cost optimization strategies.', price: 999 },
+  { slug: 'mlops',          icon: '🔄', color: 'cyan',    title: 'MLOps & Production ML', desc: 'Take models to production: CI/CD for ML, feature stores, model registry, monitoring, drift detection, A/B testing, and infrastructure as code.', price: 699 },
+  { slug: 'data-engineering', icon: '📊', color: 'amber',  title: 'Data Engineering for AI', desc: 'Build robust data pipelines: ETL/ELT, Spark, dbt, data lakes, streaming with Kafka, and data quality frameworks for AI-ready data.', price: 599 },
+  { slug: 'ai-ethics',       icon: '⚖️', color: 'rose',    title: 'AI Ethics & Responsible AI', desc: 'Fairness, bias, transparency, privacy, and accountability in AI systems. Practical frameworks for ethical AI development and governance.', price: 199 },
+  { slug: 'generative-ai',   icon: '✨', color: 'pink',    title: 'Generative AI & Diffusion Models', desc: 'Explore GANs, VAEs, autoregressive models, and diffusion models. Build gen AI apps for images, music, code, and multimodal creation.', price: 799 },
 ];
 
 const COLORS = { purple: '#ede9fe', blue: '#dbeafe', green: '#d1fae5', orange: '#fed7aa', pink: '#fce7f3', teal: '#ccfbf1', indigo: '#e0e7ff', amber: '#fef3c7', rose: '#ffe4e6', cyan: '#cffafe' };
@@ -276,7 +276,7 @@ EBOOKS.forEach((b, i) => {
       <h3>${b.title}</h3>
       <p>${b.desc}</p>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;">
-        <span class="price">${b.price === 'Free' ? 'Free' : '₹' + b.price} <small>${b.price === 'Free' ? '(donation welcome)' : 'one-time'}</small></span>
+        <span class="price">₹${b.price} <small>one-time</small></span>
         <button class="btn-buy" onclick="openPurchase('${b.slug}','${b.title.replace(/'/g,"\\'")}')" style="width:auto;padding:8px 20px;margin-top:0;">Get It</button>
       </div>
     </div>
