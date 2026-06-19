@@ -305,7 +305,7 @@ function renderMysteryModule(c) {
       <div class="lesson-body">
         <p>You've collected all seven shards of knowledge. The vault recognizes your dedication.</p>
         <p>But true mastery is not about knowing the answers — it's about knowing what questions to ask.</p>
-        <p style="margin-top:20px;color:var(--gold);font-size:18px;text-align:center;font-style:italic">"The only true wisdom is in knowing you know nothing."<br><span style="font-size:14px;color:var(--text-muted)">— Socrates, probably</span></p>
+        <p style="margin-top:20px;color:var(--accent);font-size:18px;text-align:center;font-style:italic">"The only true wisdom is in knowing you know nothing."<br><span style="font-size:14px;color:var(--text-muted)">— Socrates, probably</span></p>
         <p style="margin-top:20px">As a reward for your dedication, all concept cards are now unlocked. The vault is yours to explore.</p>
       </div>
       <div class="module-actions">
@@ -476,8 +476,8 @@ function renderQuizResult() {
     <div class="big">${passed ? '🎉' : '😅'}</div>
     <h3>${passed ? 'Knowledge Acquired!' : 'Almost There!'}</h3>
     <p>${correct}/${total} correct (${pct}%)${passed ? '' : ' — review and try again'}</p>
-    ${!isRetake && passed ? '<p style="margin-top:8px;color:var(--gold)">+15 💎 bonus for passing</p>' : ''}
-    ${isRetake && passed && correct > alreadyHad ? '<p style="margin-top:8px;color:var(--gold)">New personal best! +5 💎</p>' : ''}
+    ${!isRetake && passed ? '<p style="margin-top:8px;color:var(--accent)">+15 💎 bonus for passing</p>' : ''}
+    ${isRetake && passed && correct > alreadyHad ? '<p style="margin-top:8px;color:var(--accent)">New personal best! +5 💎</p>' : ''}
   `;
   container.appendChild(div);
 
