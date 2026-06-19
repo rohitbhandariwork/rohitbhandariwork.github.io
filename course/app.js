@@ -17,7 +17,13 @@ const CONCEPT_CARDS = [
   [6, [{ id:'vector-db', icon:'🗄️', name:'Vector DB', desc:'Database for similarity search over embeddings' },
         { id:'semantic-search', icon:'🔎', name:'Semantic Search', desc:'Search by meaning, not keywords' }]],
   [7, [{ id:'eval', icon:'📏', name:'Evaluation', desc:'Measuring model performance and quality' },
-        { id:'benchmark', icon:'📊', name:'Benchmarks', desc:'Standardized tests for model comparison' }]]
+        { id:'benchmark', icon:'📊', name:'Benchmarks', desc:'Standardized tests for model comparison' }]],
+  [8, [{ id:'multimodal', icon:'🎨', name:'Multimodal AI', desc:'Processing text, images, audio in one model' },
+        { id:'clip', icon:'🔗', name:'CLIP', desc:'Joint text-image embeddings for cross-modal search' }]],
+  [9, [{ id:'agent', icon:'🤖', name:'AI Agent', desc:'LLM-powered system that reasons and uses tools' },
+        { id:'react', icon:'🔄', name:'ReAct', desc:'Reasoning + Acting loop for agent decision-making' }]],
+  [10, [{ id:'alignment', icon:'🛡️', name:'Alignment', desc:'Ensuring AI does what humans actually want' },
+        { id:'rlhf', icon:'🏅', name:'RLHF', desc:'Reinforcement Learning from Human Feedback' }]]
 ];
 
 function defaultState() {
@@ -105,7 +111,7 @@ function checkBadgeUnlocks() {
       showToast(`🏅 Badge unlocked: ${b.icon} ${b.name}`, 'gold');
     }
   });
-  if (len >= 7 && !state.seenBadgeIds.includes('completionist')) {
+  if (len >= 10 && !state.seenBadgeIds.includes('completionist')) {
     state.seenBadgeIds.push('completionist');
     showToast('🏅 Badge unlocked: 🏆 Completionist', 'gold');
   }
@@ -177,7 +183,7 @@ function renderModuleTree() {
     </a>`;
   }).join('');
   // Mystery module (unlocked after all 7 complete)
-  if (state.completedModules.length >= 7) {
+  if (state.completedModules.length === MODULES.length) {
     container.innerHTML += `<a class="module-link mystery-pulse" data-module="mystery" onclick="event.preventDefault();navigate('#/module/mystery')">
       <span class="status-icon">❓</span><span>🔮 Hidden Archive</span>
     </a>`;
@@ -240,7 +246,7 @@ function renderDashboard(c) {
           </div>
         </div>`;
       }).join('')}
-      ${state.completedModules.length >= 7 ? `<div class="module-card" onclick="navigate('#/module/mystery')" style="border-color:rgba(168,85,247,.3)">
+      ${state.completedModules.length === MODULES.length ? `<div class="module-card" onclick="navigate('#/module/mystery')" style="border-color:rgba(168,85,247,.3)">
         <div class="card-top"><span class="track-tag mystery-badge" style="background:linear-gradient(135deg,#a855f7,#6366f1);color:#fff">SECRET</span><span class="status-badge">❓</span></div>
         <div style="font-size:28px;margin-bottom:4px">🔮</div>
         <h3>Hidden Archive</h3>
