@@ -667,7 +667,7 @@ function renderQuizQuestion(qIdx) {
     <div class="module-actions" style="margin-top:16px">
       ${!showResults ? `<button class="btn btn-gold" onclick="submitQuizAnswer(${qIdx})" ${selected === undefined ? 'disabled' : ''}>${qIdx === mod.quiz.length - 1 ? '📝 Submit Quiz' : '⏭ Next Question'}</button>` : ''}
       ${showResults && qIdx < mod.quiz.length - 1 ? `<button class="btn btn-cyan" onclick="renderQuizQuestion(${qIdx+1})">⏭ Next Question</button>` : ''}
-      ${showResults && qIdx === mod.quiz.length - 1 ? `<button class="btn btn-gold" onclick="finishQuiz()">📊 View Results</button>` : ''}
+      ${showResults && qIdx === mod.quiz.length - 1 ? `<button class="btn btn-gold" onclick="finishQuiz()">🔙 Back to Dashboard</button>` : ''}
     </div>
   `;
 }
@@ -741,6 +741,8 @@ function renderQuizResult() {
     } else {
       playSound('quizfail');
     }
+    // Scroll to results
+    setTimeout(() => { const el = document.getElementById('quiz-result-box'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
   }
 }
 
