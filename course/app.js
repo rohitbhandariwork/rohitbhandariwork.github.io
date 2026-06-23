@@ -1,3 +1,150 @@
+/* ── Sound Effects (Web Audio API) ── */
+let _audioCtx = null;
+function _getCtx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+
+function playSound(type) {
+  try {
+    const ctx = _getCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const now = ctx.currentTime;
+    const g = ctx.createGain();
+    g.connect(ctx.destination);
+
+    switch (type) {
+      case 'complete': {
+        // Ascending arpeggio — happy accomplishment
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'sine';
+          o.frequency.value = freq;
+          const og = ctx.createGain();
+          og.gain.setValueAtTime(0.3, now + i * 0.1);
+          og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.4);
+          o.connect(og).connect(ctx.destination);
+          o.start(now + i * 0.1);
+          o.stop(now + i * 0.1 + 0.4);
+        });
+        break;
+      }
+      case 'levelup': {
+        // Fanfare — bright, celebratory
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'triangle';
+          o.frequency.value = freq;
+          const og = ctx.createGain();
+          og.gain.setValueAtTime(0.25, now + i * 0.15);
+          og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.6);
+          o.connect(og).connect(ctx.destination);
+          o.start(now + i * 0.15);
+          o.stop(now + i * 0.15 + 0.6);
+        });
+        break;
+      }
+      case 'quizpass': {
+        // Two-tone chime — pleasant confirmation
+        [880, 1108.73].forEach((freq, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'sine';
+          o.frequency.value = freq;
+          const og = ctx.createGain();
+          og.gain.setValueAtTime(0.2, now + i * 0.12);
+          og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.5);
+          o.connect(og).connect(ctx.destination);
+          o.start(now + i * 0.12);
+          o.stop(now + i * 0.12 + 0.5);
+        });
+        break;
+      }
+      case 'quizfail': {
+        // Descending tone — gentle "nope"
+        [400, 300].forEach((freq, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'sawtooth';
+          o.frequency.value = freq;
+          const og = ctx.createGain();
+          og.gain.setValueAtTime(0.12, now + i * 0.15);
+          og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.35);
+          o.connect(og).connect(ctx.destination);
+          o.start(now + i * 0.15);
+          o.stop(now + i * 0.15 + 0.35);
+        });
+        break;
+      }
+      case 'badge': {
+        // Sparkle — rapid high notes
+        [1318.5, 1568, 1760, 2093].forEach((freq, i) => {
+          const o = ctx.createOscillator();
+          o.type = 'sine';
+          o.frequency.value = freq;
+          const og = ctx.createGain();
+          og.gain.setValueAtTime(0.15, now + i * 0.06);
+          og.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.25);
+          o.connect(og).connect(ctx.destination);
+          o.start(now + i * 0.06);
+          o.stop(now + i * 0.06 + 0.25);
+        });
+        break;
+      }
+      case 'gem': {
+        // Short coin — quick blip
+        const o = ctx.createOscillator();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(1200, now);
+        o.frequency.exponentialRampToValueAtTime(1800, now + 0.08);
+        const og = ctx.createGain();
+        og.gain.setValueAtTime(0.2, now);
+        og.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        o.connect(og).connect(ctx.destination);
+        o.start(now);
+        o.stop(now + 0.15);
+        break;
+      }
+      case 'click': {
+        // Subtle tick
+        const o = ctx.createOscillator();
+        o.type = 'sine';
+        o.frequency.value = 600;
+        const og = ctx.createGain();
+        og.gain.setValueAtTime(0.08, now);
+        og.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        o.connect(og).connect(ctx.destination);
+        o.start(now);
+        o.stop(now + 0.06);
+        break;
+      }
+    }
+  } catch(e) { /* audio not available */ }
+}
+
+/* ── Visual Effects ── */
+function spawnFloatText(x, y, text, color) {
+  const el = document.createElement('div');
+  el.className = 'float-text';
+  el.textContent = text;
+  el.style.cssText = `left:${x}px;top:${y}px;color:${color}`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
+function spawnConfetti(count) {
+  const container = document.createElement('div');
+  container.className = 'particles';
+  const colors = ['#f0b429','#38bdf8','#34d399','#a855f7','#ef4444','#f97316','#ec4899','#06b6d4'];
+  for (let i = 0; i < (count || 60); i++) {
+    const p = document.createElement('div');
+    const w = 4 + Math.random() * 8;
+    const h = w * (0.4 + Math.random() * 0.6);
+    p.style.cssText = `position:absolute;left:${Math.random()*100}%;top:${-10}%;width:${w}px;height:${h}px;background:${colors[i%colors.length]};border-radius:${Math.random()>0.5?'50%':'2px'};animation:confettiFall ${1.5+Math.random()*2}s ease-in forwards;animation-delay:${Math.random()*0.5}s;transform:rotate(${Math.random()*360}deg)`;
+    container.appendChild(p);
+  }
+  document.body.appendChild(container);
+  setTimeout(() => container.remove(), 4000);
+}
+
 /* ── State ── */
 const STORAGE_KEY = 'aikv_save';
 const LEVELS = [0, 50, 150, 300, 500, 750, 1050, 1400, 1800];
@@ -81,6 +228,7 @@ function addXP(amount) {
 
 function addGems(amount) {
   state.gems += amount;
+  if (amount > 0) playSound('gem');
   saveState();
   updateDisplay();
 }
@@ -99,33 +247,44 @@ function checkBadgeUnlocks() {
   const bd = BADGES;
   const len = state.completedModules.length;
   const lvl = state.level;
+  let unlocked = false;
   bd.forEach(b => {
     if (state.seenBadgeIds.includes(b.id)) return;
     if (b.id === 'apprentice' && len >= 1) {
       state.seenBadgeIds.push(b.id);
       showToast(`🏅 Badge unlocked: ${b.icon} ${b.name}`, 'gold');
+      unlocked = true;
       return;
     }
     if (b.level && lvl >= b.level) {
       state.seenBadgeIds.push(b.id);
       showToast(`🏅 Badge unlocked: ${b.icon} ${b.name}`, 'gold');
+      unlocked = true;
     }
   });
   if (len >= 10 && !state.seenBadgeIds.includes('completionist')) {
     state.seenBadgeIds.push('completionist');
     showToast('🏅 Badge unlocked: 🏆 Completionist', 'gold');
+    unlocked = true;
   }
   if (state.eggsFound.length >= 3 && !state.seenBadgeIds.includes('egg_hunter')) {
     state.seenBadgeIds.push('egg_hunter');
     showToast('🥚 Badge unlocked: 🥚 Egg Hunter', 'gold');
+    unlocked = true;
   }
   if (state.streak >= 3 && !state.seenBadgeIds.includes('streak_3')) {
     state.seenBadgeIds.push('streak_3');
     showToast('🏅 Badge unlocked: 🔥 Streak Starter', 'gold');
+    unlocked = true;
   }
   if (state.streak >= 7 && !state.seenBadgeIds.includes('streak_7')) {
     state.seenBadgeIds.push('streak_7');
     showToast('🏅 Badge unlocked: 🔥 Streak Master', 'gold');
+    unlocked = true;
+  }
+  if (unlocked) {
+    playSound('badge');
+    spawnConfetti(40);
   }
   saveState();
 }
@@ -355,11 +514,20 @@ function completeModule(id) {
   const cards = CONCEPT_CARDS.find(([mid]) => mid === id);
   if (cards) cards[1].forEach(c => { if (!state.conceptCards.includes(c.id)) state.conceptCards.push(c.id); });
 
+  playSound('complete');
   addXP(mod.xp);
   const gemBonus = Math.floor(mod.xp / 10) + 2;
   addGems(gemBonus);
   showToast(`✅ ${mod.title} complete! +${mod.xp} XP, +${gemBonus} 💎`, 'gold');
   checkBadgeUnlocks();
+
+  // Float text for XP + gems
+  const btn = document.querySelector('.btn-gold');
+  if (btn) {
+    const r = btn.getBoundingClientRect();
+    spawnFloatText(r.left + r.width/2 - 30, r.top - 10, `+${mod.xp} XP`, 'var(--accent)');
+    setTimeout(() => spawnFloatText(r.left + r.width/2 - 25, r.top - 40, `+${gemBonus} 💎`, 'var(--navy)'), 300);
+  }
 
   // Check if all 7 done — reveal mystery
   if (state.completedModules.length === MODULES.length) {
@@ -492,6 +660,8 @@ function renderQuizResult() {
   if (!quizState._resultsProcessed) {
     quizState._resultsProcessed = true;
     if (passed) {
+      playSound('quizpass');
+      spawnConfetti(30);
       if (!isRetake) {
         addGems(15);
         state.quizScores[mod.id] = correct;
@@ -503,6 +673,8 @@ function renderQuizResult() {
         saveState();
         showToast(`📝 New best! +5 💎`, 'cyan');
       }
+    } else {
+      playSound('quizfail');
     }
   }
 }
@@ -570,6 +742,14 @@ function showToast(msg, type = '') {
 }
 
 function showLevelUp(lvl) {
+  playSound('levelup');
+  spawnConfetti(100);
+  // Screen flash
+  const flash = document.createElement('div');
+  flash.className = 'screen-flash';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 800);
+
   const overlay = document.createElement('div');
   overlay.className = 'level-up-overlay';
   overlay.onclick = () => overlay.remove();

@@ -285,6 +285,19 @@ p{color:var(--text-muted);line-height:1.8}
 .toast.cyan{border-color:var(--navy)}
 @keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 
+/* ── Float Text ── */
+.float-text{
+  position:fixed;pointer-events:none;z-index:300;
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:800;
+  animation:floatUp 1.2s ease-out forwards;
+  text-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(0.5);opacity:0}
+  20%{transform:translateY(-10px) scale(1.2);opacity:1}
+  100%{transform:translateY(-80px) scale(1);opacity:0}
+}
+
 /* ── Particles ── */
 .particles{position:fixed;inset:0;pointer-events:none;z-index:99}
 .particle{position:absolute;width:6px;height:6px;border-radius:50%;animation:particleFly 1.2s ease-out forwards}
@@ -292,6 +305,18 @@ p{color:var(--text-muted);line-height:1.8}
   0%{transform:translate(0,0) scale(1);opacity:1}
   100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}
 }
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+/* ── Screen Flash ── */
+.screen-flash{
+  position:fixed;inset:0;z-index:98;
+  background:radial-gradient(circle at center,rgba(219,109,63,0.15),transparent 60%);
+  pointer-events:none;animation:flashFade 0.8s ease-out forwards;
+}
+@keyframes flashFade{0%{opacity:1}100%{opacity:0}}
 
 /* ── Mystery module ── */
 .mystery-pulse{animation:pulse 2s infinite}
