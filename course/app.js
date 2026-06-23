@@ -120,6 +120,33 @@ function playSound(type) {
   } catch(e) { /* audio not available */ }
 }
 
+/* ── Utilities ── */
+function readingTime(mod) {
+  const wc = mod.content.reduce((t, p) => t + p.replace(/<[^>]*>/g, '').split(/\s+/).length, 0);
+  return Math.max(1, Math.round(wc / 200));
+}
+
+function timeToMidnight() {
+  const now = new Date();
+  const ms = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  return `${h}h ${m}m`;
+}
+
+function moduleById(id) { return MODULES.find(m => m.id === id); }
+
+function moduleNameForCard(cardId) {
+  for (const [mid, cards] of CONCEPT_CARDS)
+    if (cards.some(c => c.id === cardId)) return moduleById(mid);
+  return null;
+}
+
+function strip(html) {
+  const d = document.createElement('div'); d.innerHTML = html;
+  return d.textContent || d.innerText || '';
+}
+
 /* ── Visual Effects ── */
 function spawnFloatText(x, y, text, color) {
   const el = document.createElement('div');
@@ -174,7 +201,7 @@ const CONCEPT_CARDS = [
 ];
 
 function defaultState() {
-  return { xp:0, gems:0, level:1, streak:0, lastLogin:null, completedModules:[], quizScores:{}, eggsFound:[], lastModuleDate:null, conceptCards:[], seenBadgeIds:[], knowSecret:false };
+  return { xp:0, gems:0, level:1, streak:0, lastLogin:null, completedModules:[], quizScores:{}, eggsFound:[], lastModuleDate:null, conceptCards:[], seenBadgeIds:[], knowSecret:false, streakFreezes:0, dailyModuleCount:0 };
 }
 
 function loadState() {
@@ -197,10 +224,20 @@ let state = loadState();
 /* ── Streak ── */
 function checkStreak() {
   const today = new Date().toISOString().slice(0,10);
-  if (state.lastLogin === today) return;
+  if (state.lastLogin === today) { state.dailyModuleCount = 0; saveState(); return; }
   const yesterday = new Date(Date.now()-864e5).toISOString().slice(0,10);
-  state.streak = state.lastLogin === yesterday ? state.streak + 1 : 1;
+  if (state.lastLogin === yesterday) {
+    state.streak += 1;
+  } else if (state.lastLogin && state.lastLogin !== today) {
+    if (state.streakFreezes > 0) {
+      state.streakFreezes -= 1;
+      showToast('🛡️ Streak Shield activated! Your streak is protected.', 'cyan');
+    } else {
+      state.streak = 1;
+    }
+  }
   state.lastLogin = today;
+  state.dailyModuleCount = 0;
   if (state.streak === 3) checkBadgeUnlocks();
   if (state.streak === 7) checkBadgeUnlocks();
   saveState();
@@ -309,6 +346,8 @@ function doRender(path) {
   if (q) { renderQuiz(parseInt(q[1]), c); _routing = false; return; }
   if (path === '/vault') { renderVault(c); _routing = false; return; }
   if (path === '/badges') { renderBadges(c); _routing = false; return; }
+  if (path === '/search') { renderSearch(c); _routing = false; return; }
+  if (path === '/levels') { renderLevels(c); _routing = false; return; }
   renderDashboard(c);
   _routing = false;
 }
@@ -337,11 +376,12 @@ function renderModuleTree() {
     const unlocked = done || !lockUntilTomorrow;
     const cls = ['module-link', done?'completed':'', locked?'locked':''].filter(Boolean).join(' ');
     const icon = done ? '✅' : (locked ? '🔒' : '📖');
+    const rt = readingTime(m);
     return `<a class="${cls}" data-module="${m.id}" onclick="event.preventDefault();navigate('#/module/${m.id}')">
       <span class="status-icon">${icon}</span><span>${m.icon} ${m.title}</span>
+      <span class="module-meta">${locked ? '🔒 unlocks in '+timeToMidnight() : '⏱ '+rt+' min'}</span>
     </a>`;
   }).join('');
-  // Mystery module (unlocked after all 7 complete)
   if (state.completedModules.length === MODULES.length) {
     container.innerHTML += `<a class="module-link mystery-pulse" data-module="mystery" onclick="event.preventDefault();navigate('#/module/mystery')">
       <span class="status-icon">❓</span><span>🔮 Hidden Archive</span>
@@ -371,7 +411,7 @@ function renderDashboard(c) {
 
     <div class="stats-grid">
       <div class="stat-card"><span class="val">${state.xp}</span><span class="label">Total XP</span></div>
-      <div class="stat-card"><span class="val">${state.gems}</span><span class="label">💎 Gems</span></div>
+      <div class="stat-card"><span class="val">${state.gems}</span><span class="label" title="💎 Gems are awarded for completing modules and passing quizzes. Use them to buy Streak Shields or unlock bonus content!">💎 Gems <span class="info-icon">ⓘ</span></span></div>
       <div class="stat-card"><span class="val">${state.streak}</span><span class="label">🔥 Day Streak</span></div>
       <div class="stat-card"><span class="val">${state.completedModules.length}/${MODULES.length}</span><span class="label">Modules Done</span></div>
     </div>
@@ -391,6 +431,7 @@ function renderDashboard(c) {
         const done = state.completedModules.includes(m.id);
         const locked = !done && lockUntilTomorrow;
         const status = done ? '✅' : (locked ? '🔒' : '');
+        const rt = readingTime(m);
         return `<div class="module-card ${done?'completed':''} ${locked?'locked':''}" onclick="${locked?'':'navigate(\'#/module/'+m.id+'\')'}" ${locked?'style=cursor:default':''}>
           <div class="card-top">
             <span class="track-tag">${m.track}</span>
@@ -401,7 +442,7 @@ function renderDashboard(c) {
           <p>${m.lore.slice(0,80)}...</p>
           <div class="card-footer">
             <span>⭐ ${m.xp} XP</span>
-            <span>${m.quiz.length} questions</span>
+            <span>⏱ ${rt} min</span>
           </div>
         </div>`;
       }).join('')}
@@ -412,6 +453,13 @@ function renderDashboard(c) {
         <p>Something stirs in the depths of the vault...</p>
         <div class="card-footer"><span>??? XP</span><span>?? questions</span></div>
       </div>` : ''}
+    </div>
+
+    <div class="daily-info">
+      <h3>📅 How Daily Progression Works</h3>
+      <p>You can complete <strong>one module per day</strong> at full XP. After that, you can still grind extra modules at <strong>50% XP</strong> (max 3 per day, no streak credit). Your streak grows when you visit daily, and streaks unlock badges. If you miss a day, <strong>Streak Shields</strong> protect your progress.</p>
+      <p style="margin-top:8px">${lockUntilTomorrow ? `⏳ Next module unlocks in <strong>${timeToMidnight()}</strong>.` : '✅ You can start the next module right now.'}</p>
+      <div class="shield-shop">🛡️ Streak Shields: <strong>${state.streakFreezes || 0}</strong> owned · Buy for 30 💎 <button class="btn btn-gold" onclick="buyStreakShield()" style="min-height:36px;padding:0 16px;font-size:12px">Buy</button></div>
     </div>
   `;
 }
@@ -433,17 +481,18 @@ function renderModule(id, c) {
 
   const done = state.completedModules.includes(mod.id);
   const locked = !done && lockUntilTomorrow;
+  const rt = readingTime(mod);
 
   c.innerHTML = `
     <div class="module-page">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="font-size:32px">${mod.icon}</span>
         <div>
-          <div style="font-size:12px;color:var(--text-muted)">Module ${mod.id} · ${mod.track} · ⭐ ${mod.xp} XP</div>
+          <div style="font-size:12px;color:var(--text-muted)">Module ${mod.id} · ${mod.track} · ⭐ ${mod.xp} XP · ⏱ ${rt} min read</div>
           <h2>${mod.title}</h2>
         </div>
       </div>
-      ${locked ? `<div class="lore">⏳ One module per day. Come back tomorrow to unlock this one. You can review completed modules in the meantime.</div>`
+      ${locked ? `<div class="lore">⏳ One module per day. Come back tomorrow (${timeToMidnight()} left) to unlock this one. You can review completed modules in the meantime.</div>`
                : `<div class="lore">${mod.lore}</div>`}
       <div class="lesson-body">
         ${locked ? '<p style="color:var(--text-muted)">Complete a module each day to unlock the next chamber. Your streak grows with each daily visit.</p>'
@@ -451,7 +500,7 @@ function renderModule(id, c) {
       </div>
       <div class="module-actions">
         <button class="btn btn-ghost" onclick="navigate('#/')">🔙 Back</button>
-        ${!locked && !done ? `<button class="btn btn-gold" onclick="completeModule(${mod.id})">✅ Complete & Earn XP</button>` : ''}
+        ${!locked && !done ? `<button class="btn btn-gold" onclick="completeModule(${mod.id})">✅ Complete & Earn ${state.dailyModuleDone ? '50% ' : ''}XP</button>` : ''}
         ${done ? `<button class="btn btn-${state.quizScores[mod.id] === undefined ? 'gold' : 'cyan'}" onclick="navigate('#/quiz/${mod.id}')">📝 ${state.quizScores[mod.id] === undefined ? 'Take Quiz' : 'Retake Quiz'}</button>` : ''}
       </div>
     </div>
@@ -501,35 +550,43 @@ function completeModule(id) {
   if (state.completedModules.includes(id)) return;
   
   const today = new Date().toISOString().slice(0,10);
-  if (state.lastModuleDate === today && state.dailyModuleDone) {
-    showToast('⏳ You already completed a module today. Come back tomorrow!', 'gold');
-    return;
+  const isExtra = state.lastModuleDate === today && state.dailyModuleDone;
+
+  if (isExtra) {
+    state.dailyModuleCount = (state.dailyModuleCount || 0) + 1;
+    if (state.dailyModuleCount > 3) {
+      showToast('⏳ Max 3 extra modules per day. See you tomorrow!', 'gold');
+      return;
+    }
   }
 
   state.completedModules.push(id);
   state.lastModuleDate = today;
-  state.dailyModuleDone = true;
+  if (!isExtra) state.dailyModuleDone = true;
 
   // Award concept cards
   const cards = CONCEPT_CARDS.find(([mid]) => mid === id);
   if (cards) cards[1].forEach(c => { if (!state.conceptCards.includes(c.id)) state.conceptCards.push(c.id); });
 
+  const xpMult = isExtra ? 0.5 : 1;
+  const xpAward = Math.round(mod.xp * xpMult);
+
   playSound('complete');
-  addXP(mod.xp);
-  const gemBonus = Math.floor(mod.xp / 10) + 2;
+  addXP(xpAward);
+  const gemBonus = Math.floor(xpAward / 10) + 2;
   addGems(gemBonus);
-  showToast(`✅ ${mod.title} complete! +${mod.xp} XP, +${gemBonus} 💎`, 'gold');
+  showToast(`✅ ${mod.title} complete! +${xpAward} XP${isExtra ? ' (50% grind mode)' : ''}, +${gemBonus} 💎`, 'gold');
   checkBadgeUnlocks();
 
   // Float text for XP + gems
   const btn = document.querySelector('.btn-gold');
   if (btn) {
     const r = btn.getBoundingClientRect();
-    spawnFloatText(r.left + r.width/2 - 30, r.top - 10, `+${mod.xp} XP`, 'var(--accent)');
+    spawnFloatText(r.left + r.width/2 - 30, r.top - 10, `+${xpAward} XP`, 'var(--accent)');
     setTimeout(() => spawnFloatText(r.left + r.width/2 - 25, r.top - 40, `+${gemBonus} 💎`, 'var(--navy)'), 300);
   }
 
-  // Check if all 7 done — reveal mystery
+  // Check if all done — reveal mystery
   if (state.completedModules.length === MODULES.length) {
     showToast('🔮 All modules complete! The Hidden Archive stirs...', 'cyan');
   }
@@ -579,9 +636,14 @@ function renderQuizQuestion(qIdx) {
   const q = mod.quiz[qIdx];
   const selected = quizState.answers[qIdx];
   const showResults = quizState.submitted;
+  const pct = Math.round(((qIdx) / mod.quiz.length) * 100);
 
   const container = document.getElementById('quiz-container');
   container.innerHTML = `
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+      <span>${qIdx+1}/${mod.quiz.length}</span>
+    </div>
     <div class="quiz-question">
       <div class="q-num">Question ${qIdx+1} of ${mod.quiz.length}</div>
       <div class="q-text">${q.q}</div>
@@ -599,6 +661,9 @@ function renderQuizQuestion(qIdx) {
         </div>`;
       }).join('')}
     </div>
+    ${showResults ? `<div class="quiz-explain">${selected === q.ans
+      ? `✅ <strong>Correct!</strong> "${q.opts[q.ans]}" is right.`
+      : `❌ <strong>Incorrect.</strong> The correct answer was: "${q.opts[q.ans]}".`}</div>` : ''}
     <div class="module-actions" style="margin-top:16px">
       ${!showResults ? `<button class="btn btn-gold" onclick="submitQuizAnswer(${qIdx})" ${selected === undefined ? 'disabled' : ''}>${qIdx === mod.quiz.length - 1 ? '📝 Submit Quiz' : '⏭ Next Question'}</button>` : ''}
       ${showResults && qIdx < mod.quiz.length - 1 ? `<button class="btn btn-cyan" onclick="renderQuizQuestion(${qIdx+1})">⏭ Next Question</button>` : ''}
@@ -688,7 +753,6 @@ function finishQuiz() {
 function renderVault(c) {
   const allCards = CONCEPT_CARDS.flatMap(([mid, cards]) => cards);
   const unlocked = state.conceptCards;
-  const allUnlocked = state.completedModules.length >= MODULES.length;
 
   c.innerHTML = `
     <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">🗂️ Concept Vault</h2>
@@ -696,10 +760,11 @@ function renderVault(c) {
     <div class="vault-grid">
       ${allCards.map(card => {
         const has = unlocked.includes(card.id);
+        const mod = moduleNameForCard(card.id);
         return `<div class="concept-card ${has?'':'locked'}">
           <div class="card-icon">${has ? card.icon : '🔒'}</div>
           <h4>${has ? card.name : '???'}</h4>
-          <p>${has ? card.desc : 'Complete the module to unlock'}</p>
+          <p>${has ? card.desc : (mod ? `Unlock by completing <strong>${mod.icon} ${mod.title}</strong>` : 'Complete the module to unlock')}</p>
         </div>`;
       }).join('')}
     </div>
@@ -719,9 +784,9 @@ function renderBadges(c) {
       ${bd.map(b => {
         const earned = state.seenBadgeIds.includes(b.id);
         return `<div class="badge-item ${earned?'earned':''}">
-          <div class="badge-icon">${b.icon}</div>
-          <h4>${earned ? b.name : '???'}</h4>
-          <p>${earned ? b.desc : 'Keep going!'}</p>
+          <div class="badge-icon">${earned ? b.icon : '🔒'}</div>
+          <h4>${b.name}</h4>
+          <p>${b.desc}${!earned ? '<br><span style="font-size:11px;color:var(--accent)">🔒 Locked</span>' : ' ✅'}</p>
         </div>`;
       }).join('')}
     </div>
@@ -787,7 +852,104 @@ function updateDisplay() {
   document.getElementById('xp-display').textContent = `${state.xp} XP`;
   document.getElementById('gem-display').textContent = `${state.gems}`;
   document.getElementById('streak-display').textContent = `${state.streak} day${state.streak!==1?'s':''}`;
+  document.getElementById('shield-display').textContent = `${state.streakFreezes || 0}`;
   document.getElementById('level-display').textContent = getLevelName(state.level);
+}
+
+/* ── Search ── */
+function renderSearch(c) {
+  const allCards = CONCEPT_CARDS.flatMap(([mid, cards]) => cards);
+  let results = '';
+  c.innerHTML = `
+    <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">🔍 Search</h2>
+    <p style="color:var(--text-muted);margin-bottom:16px">Search across modules, concepts, and badges.</p>
+    <input id="search-input" class="search-input" placeholder="Type to search..." autofocus oninput="doSearch(this.value)">
+    <div id="search-results"></div>
+    <div class="module-actions" style="margin-top:20px">
+      <button class="btn btn-ghost" onclick="navigate('#/')">🔙 Back</button>
+    </div>
+  `;
+}
+
+function doSearch(query) {
+  const q = query.toLowerCase().trim();
+  const container = document.getElementById('search-results');
+  if (!q || q.length < 2) { container.innerHTML = '<p style="color:var(--text-muted);margin-top:16px">Type at least 2 characters to search.</p>'; return; }
+
+  const allCards = CONCEPT_CARDS.flatMap(([mid, cards]) => cards);
+  const hits = [];
+
+  MODULES.forEach(m => {
+    if (m.title.toLowerCase().includes(q) || m.track.toLowerCase().includes(q) || m.lore.toLowerCase().includes(q) || m.content.some(p => strip(p).toLowerCase().includes(q))) {
+      hits.push({ type: 'module', icon: m.icon, label: m.title, sub: m.track + ' module', link: `/module/${m.id}` });
+    }
+  });
+  allCards.forEach(c => {
+    if (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)) {
+      const mod = moduleNameForCard(c.id);
+      hits.push({ type: 'concept', icon: c.icon, label: c.name, sub: mod ? mod.icon + ' ' + mod.title : 'concept card', link: mod ? `/module/${mod.id}` : '#/vault' });
+    }
+  });
+  BADGES.forEach(b => {
+    if (b.name.toLowerCase().includes(q) || b.desc.toLowerCase().includes(q)) {
+      hits.push({ type: 'badge', icon: b.icon, label: b.name, sub: b.desc, link: '#/badges' });
+    }
+  });
+
+  if (hits.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);margin-top:16px">No results found.</p>';
+    return;
+  }
+  container.innerHTML = hits.map(h => `<div class="search-hit" onclick="navigate('${h.link}')">
+    <span style="font-size:24px">${h.icon}</span>
+    <div><strong>${h.label}</strong><br><span style="font-size:13px;color:var(--text-muted)">${h.sub}</span></div>
+    <span style="margin-left:auto;color:var(--text-muted);font-size:12px">${h.type}</span>
+  </div>`).join('');
+}
+
+/* ── Levels Table ── */
+function renderLevels(c) {
+  c.innerHTML = `
+    <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">📊 Tier Levels</h2>
+    <p style="color:var(--text-muted);margin-bottom:16px">${state.xp} total XP · Current: <strong>${getLevelName(state.level)}</strong> (Level ${state.level})</p>
+    <div class="levels-table-wrap">
+      <table class="levels-table">
+        <tr><th>Level</th><th>Title</th><th>XP Required</th><th>Status</th></tr>
+        ${LEVELS.map((xp, i) => {
+          if (i === 0) return '';
+          const name = LEVEL_NAMES[i] || 'Transcendent';
+          const prev = LEVELS[i - 1];
+          const reached = state.level >= i;
+          return `<tr class="${reached ? 'reached' : ''}">
+            <td><strong>${i}</strong></td>
+            <td>${name}</td>
+            <td>${prev} XP</td>
+            <td>${reached ? '✅' : (i === state.level + 1 ? '🎯 Next' : '🔒')}</td>
+          </tr>`;
+        }).join('')}
+        <tr class="${state.level >= LEVELS.length ? 'reached' : ''}">
+          <td><strong>${LEVELS.length}</strong></td>
+          <td>Transcendent</td>
+          <td>${LEVELS[LEVELS.length - 1]} XP</td>
+          <td>${state.level >= LEVELS.length ? '✅' : '🔒'}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="module-actions" style="margin-top:20px">
+      <button class="btn btn-ghost" onclick="navigate('#/')">🔙 Back</button>
+    </div>
+  `;
+}
+
+/* ── Streak Shield Shop ── */
+function buyStreakShield() {
+  if (state.gems < 30) { showToast('❌ Not enough 💎 Gems! Need 30.', 'gold'); return; }
+  state.gems -= 30;
+  state.streakFreezes = (state.streakFreezes || 0) + 1;
+  saveState();
+  updateDisplay();
+  playSound('gem');
+  showToast('🛡️ Streak Shield purchased! You now have ' + state.streakFreezes + ' shield(s).', 'cyan');
 }
 
 /* ── Easter Egg handler ── */

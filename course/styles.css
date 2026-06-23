@@ -322,6 +322,46 @@ p{color:var(--text-muted);line-height:1.8}
 .mystery-pulse{animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
 
+/* ── Daily Info ── */
+.daily-info{background:rgba(255,255,255,0.6);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:32px}
+.daily-info h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.daily-info p{font-size:13px;line-height:1.7;margin:0}
+
+/* ── Module meta in sidebar ── */
+.module-meta{display:block;font-size:10px;color:var(--text-muted);margin-top:1px;font-weight:400}
+
+/* ── Quiz Progress ── */
+.quiz-progress{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:6px;background:rgba(31,47,95,.1);border-radius:999px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--accent));border-radius:999px;transition:width .4s ease}
+.quiz-progress span{font-size:13px;color:var(--text-muted);font-weight:600;min-width:40px;text-align:right}
+
+/* ── Quiz Explanation ── */
+.quiz-explain{padding:14px 18px;margin-top:16px;border-radius:14px;font-size:14px;line-height:1.6}
+.quiz-explain{background:rgba(247,243,235,0.6);border:1px solid var(--line)}
+
+/* ── Gems info icon ── */
+.info-icon{cursor:help;font-size:11px;opacity:.6;display:inline-block;margin-left:2px}
+
+/* ── Search ── */
+.search-input{width:100%;padding:14px 18px;border:1px solid var(--line);border-radius:999px;font-size:15px;font-family:'Manrope',sans-serif;background:rgba(255,255,255,0.78);outline:none;transition:.2s;color:var(--text)}
+.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(219,109,63,.1)}
+.search-hit{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,0.6);border:1px solid var(--line);border-radius:14px;margin-top:10px;cursor:pointer;transition:.2s}
+.search-hit:hover{background:#fff;border-color:var(--accent);transform:translateX(4px)}
+
+/* ── Levels Table ── */
+.levels-table-wrap{overflow-x:auto;margin-top:16px}
+.levels-table{width:100%;border-collapse:collapse;font-size:14px}
+.levels-table th{text-align:left;padding:10px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);border-bottom:1px solid var(--line)}
+.levels-table td{padding:10px 14px;border-bottom:1px solid var(--line)}
+.levels-table tr.reached td{color:var(--navy);font-weight:500}
+.levels-table tr.reached td:first-child{font-weight:700}
+.levels-table tr:last-child td{border-bottom:none}
+
+/* ── Streak Shield settings ── */
+.shield-shop{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;background:rgba(255,255,255,0.7);border:1px solid var(--line);border-radius:999px;font-size:14px;margin-top:12px}
+.shield-shop button{margin-left:8px}
+
 @media(max-width:768px){
   #sidebar{display:none}
   #main{margin-left:0;padding:24px 20px 100px}
