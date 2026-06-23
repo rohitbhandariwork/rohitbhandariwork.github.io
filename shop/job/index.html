@@ -144,6 +144,7 @@
         <input type="text" id="company" name="company" placeholder="Optional — I'll try to detect it from the JD">
         <div class="hint">If left blank, I'll extract the company name automatically.</div>
       </div>
+      <div style="font-size:13px;color:#f59e0b;font-weight:600;margin-bottom:12px;">⏱ Estimated time: ~5–7 minutes</div>
       <button type="submit" class="btn-submit" id="submitBtn">Generate &amp; Send to My Email</button>
     </form>
   </div>
@@ -164,7 +165,7 @@ async function submitJob(e) {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Generating...';
+  btn.innerHTML = '<span class="spinner"></span> Generating (~5–7 min)...';
 
   const jd = document.getElementById('jd').value.trim();
   const company = document.getElementById('company').value.trim();
@@ -178,7 +179,7 @@ async function submitJob(e) {
     if (!resp.ok) throw new Error('Server error: ' + resp.status);
     const data = await resp.json();
     document.getElementById('formCard').style.display = 'none';
-    const msg = `Your tailored resume and cover letter for <strong>${data.position}</strong> @ <strong>${data.company}</strong> have been sent to <strong>rohitbhandari.work@gmail.com</strong>.`;
+    const msg = `Your tailored resume and cover letter for <strong>${data.position}</strong> @ <strong>${data.company}</strong> have been sent to <strong>rohitbhandari.work@gmail.com</strong>. Check your inbox in a few minutes.`;
     document.getElementById('resultMsg').innerHTML = msg;
     document.getElementById('resultCard').style.display = 'block';
   } catch (err) {
