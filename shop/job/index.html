@@ -10,8 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Injected by tunnel-monitor -->
-  <script>  var SHOP_API = 'https://individually-feet-opposite-deployment.trycloudflare.com/tusk';</script>
+  <script>var SHOP_API = 'https://individually-feet-opposite-deployment.trycloudflare.com/tusk';</script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,10 +46,23 @@
 
     .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 
+    .toggle-wrap {
+      display: flex; gap: 0; margin: 24px auto 0;
+      background: #e8e4de; border-radius: 999px; padding: 3px;
+      max-width: 360px;
+    }
+    .toggle-btn {
+      flex: 1; padding: 10px 20px; border: none; border-radius: 999px;
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: .2s; background: transparent; color: #5d6678;
+    }
+    .toggle-btn.active { background: #1f2f5f; color: #fff; box-shadow: 0 2px 8px rgba(31,47,95,.2); }
+    .toggle-btn:hover:not(.active) { color: #1f2f5f; }
+
     .form-card {
       background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
       border-radius: 16px; border: 1px solid rgba(29,36,51,.08);
-      padding: 32px; margin: 32px auto;
+      padding: 32px; margin: 24px auto 32px;
     }
     .form-card h2 {
       font-family: 'Syne', sans-serif; font-size: 20px; color: #1f2f5f; margin-bottom: 4px;
@@ -71,6 +83,11 @@
     }
     .form-group textarea { resize: vertical; min-height: 200px; }
     .form-group .hint { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+    .form-group .filled-hint { font-size: 12px; color: #065f46; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .extra-fields { display: none; }
+    .extra-fields.visible { display: block; }
 
     .btn-submit {
       width: 100%; padding: 14px 24px; background: #f59e0b; color: #fff;
@@ -116,10 +133,10 @@
       .job-hero h1 { font-size: 28px; }
       .job-hero { padding: 32px 16px 24px; }
       .form-card { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 
-<script>https://fossil-teachers-colours-common.trycloudflare.com</script>
 </head>
 <body>
 
@@ -127,13 +144,19 @@
 
 <section class="job-hero">
   <h1>Job Application Tool</h1>
-  <p>Paste a job description below. I'll generate a tailored resume and cover letter, then email the PDFs to myself for review.</p>
+  <p>Paste a job description and get a tailored resume + cover letter delivered to email. Quick mode for Rohit, or full form for anyone else.</p>
 </section>
 
 <div class="container">
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" id="toggleRohit" onclick="setMode('rohit')">⚡ For Rohit</button>
+    <button class="toggle-btn" id="toggleOther" onclick="setMode('other')">👤 Someone Else</button>
+  </div>
+
   <div class="form-card" id="formCard">
-    <h2>Submit a Job Description</h2>
-    <p class="form-sub">Paste the full JD and I'll craft a custom application package.</p>
+    <h2 id="formTitle">Quick Apply — Rohit</h2>
+    <p class="form-sub" id="formSub">Only the job description is needed — everything else is pre-filled.</p>
     <form id="jobForm" onsubmit="submitJob(event)">
       <div class="form-group">
         <label for="jd">Job Description *</label>
@@ -141,17 +164,42 @@
       </div>
       <div class="form-group">
         <label for="company">Company Name</label>
-        <input type="text" id="company" name="company" placeholder="Optional — I'll try to detect it from the JD">
-        <div class="hint">If left blank, I'll extract the company name automatically.</div>
+        <input type="text" id="company" name="company" placeholder="Optional — will auto-detect from JD">
+        <div class="hint">Leave blank to auto-detect from the job description.</div>
       </div>
+
+      <div class="extra-fields" id="extraFields">
+        <div style="height:1px;background:#d4d8dd;margin:0 0 20px"></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candName">Full Name *</label>
+            <input type="text" id="candName" placeholder="e.g. Jane Doe">
+          </div>
+          <div class="form-group">
+            <label for="candEmail">Email *</label>
+            <input type="email" id="candEmail" placeholder="e.g. jane@example.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candPhone">Phone</label>
+            <input type="text" id="candPhone" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label for="candLinkedin">LinkedIn</label>
+            <input type="url" id="candLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+        </div>
+      </div>
+
       <div style="font-size:13px;color:#f59e0b;font-weight:600;margin-bottom:12px;">⏱ Estimated time: ~5–7 minutes</div>
-      <button type="submit" class="btn-submit" id="submitBtn">Generate &amp; Send to My Email</button>
+      <button type="submit" class="btn-submit" id="submitBtn">Generate &amp; Send</button>
     </form>
   </div>
 
   <div class="result-card" id="resultCard">
-    <h3>📨 Sent to Your Email</h3>
-    <p id="resultMsg">Your tailored resume and cover letter have been sent to <strong>rohitbhandari.work@gmail.com</strong>.</p>
+    <h3>📨 Sent for Review</h3>
+    <p id="resultMsg">Your tailored resume and cover letter have been sent to <strong>rohitbhandari.work@gmail.com</strong> for review.</p>
     <a href="./" class="btn-secondary">Apply for Another</a>
   </div>
 </div>
@@ -160,6 +208,27 @@
 
 <script>
 const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
+let currentMode = 'rohit';
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('toggleRohit').classList.toggle('active', mode === 'rohit');
+  document.getElementById('toggleOther').classList.toggle('active', mode === 'other');
+  const extra = document.getElementById('extraFields');
+  extra.classList.toggle('visible', mode === 'other');
+  document.getElementById('formTitle').textContent = mode === 'rohit' ? 'Quick Apply — Rohit' : 'Apply for Someone Else';
+  document.getElementById('formSub').textContent = mode === 'rohit'
+    ? 'Only the job description is needed — everything else is pre-filled.'
+    : 'Fill in the candidate\'s details along with the job description.';
+
+  if (mode === 'other') {
+    document.getElementById('candName').required = true;
+    document.getElementById('candEmail').required = true;
+  } else {
+    document.getElementById('candName').required = false;
+    document.getElementById('candEmail').required = false;
+  }
+}
 
 async function submitJob(e) {
   e.preventDefault();
@@ -170,21 +239,39 @@ async function submitJob(e) {
   const jd = document.getElementById('jd').value.trim();
   const company = document.getElementById('company').value.trim();
 
+  const payload = { job_description: jd, company };
+
+  if (currentMode === 'other') {
+    const name = document.getElementById('candName').value.trim();
+    const email = document.getElementById('candEmail').value.trim();
+    if (!name || !email) {
+      showToast('Name and Email are required for other candidates.', true);
+      btn.disabled = false;
+      btn.innerHTML = 'Generate &amp; Send';
+      return;
+    }
+    payload.candidate_name = name;
+    payload.candidate_email = email;
+    payload.candidate_phone = document.getElementById('candPhone').value.trim();
+    payload.candidate_linkedin = document.getElementById('candLinkedin').value.trim();
+  }
+
   try {
     const resp = await fetch(API_BASE + '/job-apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ job_description: jd, company }),
+      body: JSON.stringify(payload),
     });
     if (!resp.ok) throw new Error('Server error: ' + resp.status);
     const data = await resp.json();
     document.getElementById('formCard').style.display = 'none';
-    const msg = `Your tailored resume and cover letter for <strong>${data.position}</strong> @ <strong>${data.company}</strong> have been sent to <strong>rohitbhandari.work@gmail.com</strong>. Check your inbox in a few minutes.`;
+    const who = data.candidate || 'Rohit Bhandari';
+    const msg = `✅ Package for <strong>${who}</strong> — <strong>${data.position}</strong> @ <strong>${data.company}</strong> — sent to <strong>rohitbhandari.work@gmail.com</strong> for review. Check inbox in a few minutes.`;
     document.getElementById('resultMsg').innerHTML = msg;
     document.getElementById('resultCard').style.display = 'block';
   } catch (err) {
     btn.disabled = false;
-    btn.innerHTML = 'Generate &amp; Send to My Email';
+    btn.innerHTML = 'Generate &amp; Send';
     showToast('Failed: ' + err.message, true);
   }
 }
