@@ -484,11 +484,12 @@ function renderModule(id, c) {
   const rt = readingTime(mod);
 
   c.innerHTML = `
+    <div class="reading-progress"><div class="reading-progress-fill" id="reading-progress-fill"></div></div>
     <div class="module-page">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span style="font-size:32px">${mod.icon}</span>
+      <div class="module-hdr" style="display:flex;align-items:flex-start;gap:14px">
+        <div class="module-icon">${mod.icon}</div>
         <div>
-          <div style="font-size:12px;color:var(--text-muted)">Module ${mod.id} · ${mod.track} · ⭐ ${mod.xp} XP · ⏱ ${rt} min read</div>
+          <div class="meta">Module ${mod.id} · ${mod.track} · ⭐ ${mod.xp} XP · ⏱ ${rt} min read</div>
           <h2>${mod.title}</h2>
         </div>
       </div>
@@ -505,6 +506,20 @@ function renderModule(id, c) {
       </div>
     </div>
   `;
+  // Reading progress tracker
+  if (!locked) {
+    setTimeout(() => {
+      const fill = document.getElementById('reading-progress-fill');
+      if (!fill) return;
+      const update = () => {
+        if (!document.body.contains(fill)) { window.removeEventListener('scroll', update); return; }
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        fill.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
+      };
+      window.addEventListener('scroll', update);
+    }, 100);
+  }
 }
 
 function renderMysteryModule(c) {

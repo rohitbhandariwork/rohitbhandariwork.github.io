@@ -148,34 +148,58 @@ p{color:var(--text-muted);line-height:1.8}
 }
 
 /* ── Module Lesson ── */
+.module-page{max-width:760px;margin:0 auto}
+.module-page .module-hdr{margin-bottom:20px}
+.module-page .module-hdr .meta{font-size:13px;color:var(--text-muted);margin-bottom:4px}
+.module-page .module-hdr h2{font-size:28px;font-weight:800;letter-spacing:-.02em;margin:0}
+.module-page .module-hdr .module-icon{font-size:38px;line-height:1}
+
 .module-page .lore{
-  background:rgba(255,255,255,0.6);
-  border:1px solid var(--line);
-  border-radius:18px;padding:18px 22px;margin-bottom:24px;
-  font-style:italic;color:var(--navy);font-size:14px;border-left:3px solid var(--accent);
-  line-height:1.7
+  position:relative;
+  background:linear-gradient(135deg,rgba(31,47,95,.04),rgba(219,109,63,.04));
+  border:1px solid rgba(31,47,95,.1);
+  border-radius:16px;padding:24px 26px;margin:0 0 28px;
+  font-style:italic;color:var(--navy);font-size:15px;line-height:1.8
 }
-.module-page .lore::before{content:"✦ ";opacity:.5}
-.module-page h2{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;margin-bottom:16px}
-.module-page .lesson-body{font-size:15px;line-height:1.9;color:var(--text)}
-.module-page .lesson-body p{margin-bottom:14px}
+.module-page .lore::before{
+  content:"✦";position:absolute;top:-10px;left:20px;
+  font-size:20px;color:var(--accent);opacity:.6;
+  background:var(--bg);padding:0 6px
+}
+
+.module-page .lesson-body{font-size:16.5px;line-height:1.85;color:var(--text)}
+.module-page .lesson-body > p:first-child::first-letter{
+  float:left;font-size:52px;line-height:.8;padding-right:8px;padding-top:4px;
+  font-family:'Syne',sans-serif;font-weight:700;color:var(--accent)
+}
+.module-page .lesson-body p{margin-bottom:18px}
 .module-page .lesson-body strong{color:var(--navy)}
 .module-page .lesson-body code{
-  font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,47,95,.07);
-  padding:2px 6px;border-radius:4px;color:var(--accent-dark)
+  font-family:'JetBrains Mono',monospace;font-size:14px;background:rgba(31,47,95,.07);
+  padding:2px 7px;border-radius:5px;color:var(--accent-dark);word-break:break-word
 }
 .module-page .lesson-body .highlight{
-  background:rgba(219,109,63,.08);
-  border-left:3px solid var(--accent);
-  padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0
+  background:linear-gradient(135deg,rgba(219,109,63,.06),rgba(31,47,95,.04));
+  border:1px solid rgba(219,109,63,.15);
+  border-left:4px solid var(--accent);
+  padding:20px 24px;border-radius:12px;margin:24px 0;
+  position:relative
+}
+.module-page .lesson-body .highlight::before{
+  content:"💡";position:absolute;top:-12px;left:16px;
+  font-size:18px;background:var(--bg);padding:0 6px
 }
 .module-page .lesson-body .egg{
   cursor:pointer;border-bottom:2px dashed var(--accent);transition:.2s;
-  color:var(--accent-dark)
+  color:var(--accent-dark);position:relative
 }
 .module-page .lesson-body .egg:hover{
   color:var(--accent);background:rgba(219,109,63,.08)
 }
+
+/* ── Reading Progress ── */
+.reading-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:50;background:transparent}
+.reading-progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--accent));width:0;transition:width .2s ease}
 .module-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
