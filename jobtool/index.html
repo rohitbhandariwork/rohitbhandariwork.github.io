@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tool — RBPN</title>
+  <meta name="description" content="Paste a job description and get a tailored resume + cover letter PDF delivered to your email.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>var SHOP_API = 'https://individually-feet-opposite-deployment.trycloudflare.com/tusk';</script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Manrope', -apple-system, system-ui, sans-serif;
+      background: #faf6f0; color: #1f2f5f; line-height: 1.6;
+    }
+
+    #topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000;
+      background: rgba(251,247,240,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(29,36,51,.08);
+      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+      padding: 0 20px;
+    }
+    #topbar a {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
+      border-radius: 999px; font-size: 13px; font-weight: 600;
+      color: #5d6678; text-decoration: none; transition: .2s;
+      font-family: 'Manrope', sans-serif;
+    }
+    #topbar a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    #topbar a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    body { padding-top: 52px; }
+
+    .job-hero {
+      text-align: center; padding: 48px 24px 32px;
+      background: linear-gradient(135deg, #1f2f5f 0%, #2a3f7a 100%);
+      color: #fff;
+    }
+    .job-hero h1 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -0.5px; }
+    .job-hero p { font-size: 16px; color: #c8d0e0; margin-top: 8px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+    .toggle-wrap {
+      display: flex; gap: 0; margin: 24px auto 0;
+      background: #e8e4de; border-radius: 999px; padding: 3px;
+      max-width: 360px;
+    }
+    .toggle-btn {
+      flex: 1; padding: 10px 20px; border: none; border-radius: 999px;
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: .2s; background: transparent; color: #5d6678;
+    }
+    .toggle-btn.active { background: #1f2f5f; color: #fff; box-shadow: 0 2px 8px rgba(31,47,95,.2); }
+    .toggle-btn:hover:not(.active) { color: #1f2f5f; }
+
+    .form-card {
+      background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
+      border-radius: 16px; border: 1px solid rgba(29,36,51,.08);
+      padding: 32px; margin: 24px auto 32px;
+    }
+    .form-card h2 {
+      font-family: 'Syne', sans-serif; font-size: 20px; color: #1f2f5f; margin-bottom: 4px;
+    }
+    .form-card .form-sub {
+      font-size: 13px; color: #5d6678; margin-bottom: 24px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #1f2f5f; margin-bottom: 5px; }
+    .form-group textarea, .form-group input {
+      width: 100%; padding: 12px 16px; border: 1px solid #d4d8dd;
+      border-radius: 10px; font-family: 'Manrope', sans-serif; font-size: 14px;
+      background: #fff; color: #1f2f5f; transition: border .2s, box-shadow .2s;
+    }
+    .form-group textarea:focus, .form-group input:focus {
+      outline: none; border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 200px; }
+    .form-group .hint { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+    .form-group .filled-hint { font-size: 12px; color: #065f46; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .extra-fields { display: none; }
+    .extra-fields.visible { display: block; }
+
+    .btn-submit {
+      width: 100%; padding: 14px 24px; background: #f59e0b; color: #fff;
+      border: none; border-radius: 999px; font-family: 'Manrope', sans-serif;
+      font-size: 15px; font-weight: 700; cursor: pointer; transition: background .2s;
+    }
+    .btn-submit:hover { background: #d97706; }
+    .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    .result-card {
+      display: none; background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
+      border-radius: 16px; border: 1px solid rgba(29,36,51,.08);
+      padding: 32px; margin: 32px auto; text-align: center;
+    }
+    .result-card h3 { font-family: 'Syne', sans-serif; font-size: 20px; color: #065f46; margin-bottom: 8px; }
+    .result-card p { color: #5d6678; font-size: 14px; }
+    .result-card .btn-secondary {
+      display: inline-block; margin-top: 16px; padding: 10px 24px;
+      background: #1f2f5f; color: #fff; border: none; border-radius: 999px;
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: background .2s; text-decoration: none;
+    }
+    .result-card .btn-secondary:hover { background: #2a3f7a; }
+
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .6s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 100000; padding: 14px 24px; border-radius: 999px;
+      font-weight: 600; font-size: 14px; display: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    }
+    .toast.success { background: #065f46; color: #fff; display: block; }
+    .toast.error { background: #991b1b; color: #fff; display: block; }
+
+    @media (max-width: 640px) {
+      .job-hero h1 { font-size: 28px; }
+      .job-hero { padding: 32px 16px 24px; }
+      .form-card { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+
+</head>
+<body>
+
+<div id="topbar"><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="./" class="active">💼 Apply Job</a><a href="../shop/">🛒 Shop</a></div>
+
+<section class="job-hero">
+  <h1>Job Application Tool</h1>
+  <p>Paste a job description and get a tailored resume + cover letter delivered to email. Quick mode for Rohit, or full form for anyone else.</p>
+</section>
+
+<div class="container">
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" id="toggleRohit" onclick="setMode('rohit')">⚡ For Rohit</button>
+    <button class="toggle-btn" id="toggleOther" onclick="setMode('other')">👤 Someone Else</button>
+  </div>
+
+  <div class="form-card" id="formCard">
+    <h2 id="formTitle">Quick Apply — Rohit</h2>
+    <p class="form-sub" id="formSub">Only the job description is needed — everything else is pre-filled.</p>
+    <form id="jobForm" onsubmit="submitJob(event)">
+      <div class="form-group">
+        <label for="jd">Job Description *</label>
+        <textarea id="jd" name="job_description" required placeholder="Paste the full job description here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company" placeholder="Optional — will auto-detect from JD">
+        <div class="hint">Leave blank to auto-detect from the job description.</div>
+      </div>
+
+      <div class="extra-fields" id="extraFields">
+        <div style="height:1px;background:#d4d8dd;margin:0 0 20px"></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candName">Full Name *</label>
+            <input type="text" id="candName" placeholder="e.g. Jane Doe">
+          </div>
+          <div class="form-group">
+            <label for="candEmail">Email *</label>
+            <input type="email" id="candEmail" placeholder="e.g. jane@example.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candPhone">Phone</label>
+            <input type="text" id="candPhone" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label for="candLinkedin">LinkedIn</label>
+            <input type="url" id="candLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:#f59e0b;font-weight:600;margin-bottom:12px;">⏱ Estimated time: ~5–7 minutes</div>
+      <button type="submit" class="btn-submit" id="submitBtn">Generate &amp; Send</button>
+    </form>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <h3>📨 Sent for Review</h3>
+    <p id="resultMsg">Your tailored resume and cover letter have been sent to <strong>rohitbhandari.work@gmail.com</strong> for review.</p>
+    <a href="./" class="btn-secondary">Apply for Another</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
+let currentMode = 'rohit';
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('toggleRohit').classList.toggle('active', mode === 'rohit');
+  document.getElementById('toggleOther').classList.toggle('active', mode === 'other');
+  const extra = document.getElementById('extraFields');
+  extra.classList.toggle('visible', mode === 'other');
+  document.getElementById('formTitle').textContent = mode === 'rohit' ? 'Quick Apply — Rohit' : 'Apply for Someone Else';
+  document.getElementById('formSub').textContent = mode === 'rohit'
+    ? 'Only the job description is needed — everything else is pre-filled.'
+    : 'Fill in the candidate\'s details along with the job description.';
+
+  if (mode === 'other') {
+    document.getElementById('candName').required = true;
+    document.getElementById('candEmail').required = true;
+  } else {
+    document.getElementById('candName').required = false;
+    document.getElementById('candEmail').required = false;
+  }
+}
+
+async function submitJob(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Generating (~5–7 min)...';
+
+  const jd = document.getElementById('jd').value.trim();
+  const company = document.getElementById('company').value.trim();
+
+  const payload = { job_description: jd, company };
+
+  if (currentMode === 'other') {
+    const name = document.getElementById('candName').value.trim();
+    const email = document.getElementById('candEmail').value.trim();
+    if (!name || !email) {
+      showToast('Name and Email are required for other candidates.', true);
+      btn.disabled = false;
+      btn.innerHTML = 'Generate &amp; Send';
+      return;
+    }
+    payload.candidate_name = name;
+    payload.candidate_email = email;
+    payload.candidate_phone = document.getElementById('candPhone').value.trim();
+    payload.candidate_linkedin = document.getElementById('candLinkedin').value.trim();
+  }
+
+  try {
+    const resp = await fetch(API_BASE + '/job-apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!resp.ok) throw new Error('Server error: ' + resp.status);
+    const data = await resp.json();
+    document.getElementById('formCard').style.display = 'none';
+    const who = data.candidate || 'Rohit Bhandari';
+    const msg = `✅ Package for <strong>${who}</strong> — <strong>${data.position}</strong> @ <strong>${data.company}</strong> — sent to <strong>rohitbhandari.work@gmail.com</strong> for review. Check inbox in a few minutes.`;
+    document.getElementById('resultMsg').innerHTML = msg;
+    document.getElementById('resultCard').style.display = 'block';
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = 'Generate &amp; Send';
+    showToast('Failed: ' + err.message, true);
+  }
+}
+
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (isError ? 'error' : 'success');
+  setTimeout(() => { t.className = 'toast'; }, 4000);
+}
+</script>
+</body>
+</html>
