@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <script>var SHOP_API = 'https://classes-dist-graph-hebrew.trycloudflare.com/tusk';</script>
+  <script>var SHOP_API = '{{TUNNEL_URL}}/tusk';</script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,35 +23,18 @@
       position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000;
       background: rgba(251,247,240,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(29,36,51,.08);
-      display: flex; align-items: center; gap: 4px; padding: 0 8px;
+      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+      padding: 0 20px;
     }
-    .hamburger {
-      display: none; background: none; border: none; cursor: pointer;
-      font-size: 22px; color: #5d6678; padding: 6px 10px; border-radius: 8px; transition: .2s;
+    #topbar a {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
+      border-radius: 999px; font-size: 13px; font-weight: 600;
+      color: #5d6678; text-decoration: none; transition: .2s;
       font-family: 'Manrope', sans-serif;
     }
-    .hamburger:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
-    .nav-links a {
-      display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px;
-      border-radius: 999px; font-size: 12px; font-weight: 600;
-      color: #5d6678; text-decoration: none; transition: .2s; white-space: nowrap;
-      font-family: 'Manrope', sans-serif;
-    }
-    .nav-links a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    .nav-links a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    #topbar a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    #topbar a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
     body { padding-top: 52px; }
-    @media (max-width: 768px) {
-      .hamburger { display: block; }
-      .nav-links {
-        display: none; position: fixed; top: 52px; left: 0; right: 0;
-        flex-direction: column; background: rgba(251,247,240,0.98);
-        backdrop-filter: blur(12px); border-bottom: 1px solid rgba(29,36,51,.08);
-        padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 8px 24px rgba(0,0,0,.08);
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
-    }
 
     .hero {
       text-align: center; padding: 48px 24px 32px;
@@ -217,22 +200,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-        .timer-row {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      margin: -8px 0 8px; font-size: 13px; font-weight: 600;
-    }
-    .timer-ring {
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 3px solid #d4d8dd; display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: #5d6678; transition: border-color .3s;
-    }
-    .timer-ring.warn { border-color: #f59e0b; color: #e65100; }
-    .timer-ring.danger { border-color: #dc2626; color: #dc2626; animation: pulse .5s infinite; }
-    @keyframes pulse { 50% { opacity: .5; } }
-    .timer-text { color: #94a3b8; }
-    .timer-text.warn { color: #e65100; }
-    .timer-text.danger { color: #dc2626; }
-
     .toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
       z-index: 100000; padding: 14px 24px; border-radius: 999px;
@@ -247,15 +214,16 @@
       .chat-box { padding: 16px; max-height: 360px; }
       .result-card .score-grid { grid-template-columns: 1fr; }
     }
-  </style></head>
+  </style>
+</head>
 <body>
 
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="./" class="active">🎙️ AI Interview</a><a href="../flashcard/">🃏 Flashcards</a><a href="../shop/">🛒 Shop</a></div></div>
+<div id="topbar"><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="./" class="active">🎙️ AI Interview</a><a href="../shop/">🛒 Shop</a></div>
 
 <section class="hero">
   <h1>🎙️ AI Interview</h1>
   <p>A conversational technical interview with our AI recruiter. Covers the areas that matter most for the role.</p>
-  <span class="badge">4 focus areas • no time limit</span>
+  <span class="badge">⏱ Up to 23 minutes • 4 focus areas</span>
 </section>
 
 <div class="container">
@@ -277,10 +245,6 @@
     <div class="progress-label" id="progressLabel">Question 0 of 0</div>
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progressFill"></div>
-    </div>
-    <div class="timer-row" id="timerRow">
-      <div class="timer-ring" id="timerRing">120</div>
-      <span class="timer-text" id="timerText">2:00 remaining</span>
     </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="input-area" id="inputArea">
@@ -307,9 +271,6 @@ let currentIdx = 0;
 let totalQ = 0;
 let isProcessing = false;
 let autoScrolling = false;
-let timerInterval = null;
-let timeLeft = 0;
-const TIME_PER_QUESTION = 120; // seconds
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -447,57 +408,11 @@ function updateProgress(idx, total) {
   document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
 }
 
-function stopTimer() {
-  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-}
-
-function startTimer() {
-  stopTimer();
-  timeLeft = TIME_PER_QUESTION;
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerDisplay();
-    if (timeLeft <= 0) {
-      stopTimer();
-      autoSubmitOnTimeout();
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay() {
-  const ring = document.getElementById('timerRing');
-  const text = document.getElementById('timerText');
-  const m = Math.floor(timeLeft / 60);
-  const s = timeLeft % 60;
-  ring.textContent = timeLeft;
-  text.textContent = m + ':' + (s < 10 ? '0' : '') + s + ' remaining';
-  ring.className = 'timer-ring';
-  text.className = 'timer-text';
-  if (timeLeft <= 15) { ring.classList.add('danger'); text.classList.add('danger'); }
-  else if (timeLeft <= 30) { ring.classList.add('warn'); text.classList.add('warn'); }
-}
-
-function autoSubmitOnTimeout() {
-  if (isProcessing) return;
-  const input = document.getElementById('answerInput');
-  if (input.value.trim()) {
-    submitAnswer();
-  } else {
-    // Force submit with placeholder
-    input.value = '(no answer)';
-    submitAnswer();
-  }
-}
-
 function enableInput(enabled) {
   document.getElementById('answerInput').disabled = !enabled;
   document.getElementById('sendBtn').disabled = !enabled;
   if (enabled) {
     document.getElementById('answerInput').focus();
-    startTimer();
-  } else {
-    stopTimer();
   }
 }
 
@@ -508,9 +423,7 @@ async function submitAnswer() {
   if (!answer) return;
 
   isProcessing = true;
-  stopTimer();
-  document.getElementById('answerInput').disabled = true;
-  document.getElementById('sendBtn').disabled = true;
+  enableInput(false);
 
   addMessage('user', answer);
   input.value = '';
@@ -545,9 +458,7 @@ async function submitAnswer() {
     addMessage('ai', data.question, { area: data.area, evaluation: data.evaluation, score: data.score, tip: data.tip });
     currentIdx = data.index;
     updateProgress(currentIdx, data.total);
-    isProcessing = false;
     enableInput(true);
-    return;
   } catch (err) {
     hideTyping();
     showToast('Failed: ' + err.message);
@@ -596,7 +507,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   document.getElementById('sendBtn').addEventListener('click', submitAnswer);
 });
-function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
 </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <script>var SHOP_API = 'https://classes-dist-graph-hebrew.trycloudflare.com/tusk';</script>
+  <script>var SHOP_API = '{{TUNNEL_URL}}/tusk';</script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,35 +23,18 @@
       position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000;
       background: rgba(251,247,240,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(29,36,51,.08);
-      display: flex; align-items: center; gap: 4px; padding: 0 8px;
+      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+      padding: 0 20px;
     }
-    .hamburger {
-      display: none; background: none; border: none; cursor: pointer;
-      font-size: 22px; color: #5d6678; padding: 6px 10px; border-radius: 8px; transition: .2s;
+    #topbar a {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
+      border-radius: 999px; font-size: 13px; font-weight: 600;
+      color: #5d6678; text-decoration: none; transition: .2s;
       font-family: 'Manrope', sans-serif;
     }
-    .hamburger:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
-    .nav-links a {
-      display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px;
-      border-radius: 999px; font-size: 12px; font-weight: 600;
-      color: #5d6678; text-decoration: none; transition: .2s; white-space: nowrap;
-      font-family: 'Manrope', sans-serif;
-    }
-    .nav-links a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    .nav-links a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    #topbar a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    #topbar a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
     body { padding-top: 52px; }
-    @media (max-width: 768px) {
-      .hamburger { display: block; }
-      .nav-links {
-        display: none; position: fixed; top: 52px; left: 0; right: 0;
-        flex-direction: column; background: rgba(251,247,240,0.98);
-        backdrop-filter: blur(12px); border-bottom: 1px solid rgba(29,36,51,.08);
-        padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 8px 24px rgba(0,0,0,.08);
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
-    }
 
     .job-hero {
       text-align: center; padding: 48px 24px 32px;
@@ -153,10 +136,11 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
+
 </head>
 <body>
 
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="../../course/">📘 Open Course</a><a href="../../news/">📰 AI News</a><a href="./" class="active">💼 Apply Job</a><a href="../../interview/">🎙️ AI Interview</a><a href="../../flashcard/">🃏 Flashcards</a><a href="../">🛒 Shop</a></div></div>
+<div id="topbar"><a href="../../course/">📘 Open Course</a><a href="../../news/">📰 AI News</a><a href="./" class="active">💼 Apply Job</a><a href="../../interview/">🎙️ AI Interview</a><a href="../">🛒 Shop</a></div>
 
 <section class="job-hero">
   <h1>Job Application Tool</h1>
@@ -298,7 +282,6 @@ function showToast(msg, isError) {
   t.className = 'toast ' + (isError ? 'error' : 'success');
   setTimeout(() => { t.className = 'toast'; }, 4000);
 }
-function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
 </script>
 </body>
 </html>

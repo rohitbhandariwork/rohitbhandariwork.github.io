@@ -177,6 +177,16 @@ const STORAGE_KEY = 'aikv_save';
 const LEVELS = [0, 50, 150, 300, 500, 750, 1050, 1400, 1800];
 const LEVEL_NAMES = ['Apprentice','Explorer','Adept','Scholar','Architect','Sage','Luminary','Grandmaster','Transcendent'];
 const DAILY_XP_CAP = 300;
+const MAX_HEARTS = 5;
+
+const QUEST_TYPES = [
+  { id:'module', label:'Complete 1 module', icon:'📖', check:s=>s.completedModules.length > s._questSnapshot?.modules, reward:15 },
+  { id:'quiz_pass', label:'Pass a quiz (60%+)', icon:'📝', check:s=>Object.keys(s.quizScores).length > (s._questSnapshot?.quizCount||0), reward:10 },
+  { id:'xp_50', label:'Earn 50+ XP today', icon:'⭐', check:s=>s._dailyXP >= 50, reward:10 },
+  { id:'xp_100', label:'Earn 100+ XP today', icon:'🔥', check:s=>s._dailyXP >= 100, reward:15 },
+  { id:'streak', label:'Maintain your streak', icon:'🔥', check:s=>false, reward:10 },
+  { id:'review', label:'Review a completed module', icon:'📚', check:s=>(s._questSnapshot?.reviews||0) < s._reviewsToday, reward:10 },
+];
 
 const CONCEPT_CARDS = [
   [1, [{ id:'transformer', icon:'⚡', name:'Transformer', desc:'Neural architecture using self-attention, no recurrence' },
@@ -201,7 +211,7 @@ const CONCEPT_CARDS = [
 ];
 
 function defaultState() {
-  return { xp:0, gems:0, level:1, streak:0, lastLogin:null, completedModules:[], quizScores:{}, eggsFound:[], lastModuleDate:null, conceptCards:[], seenBadgeIds:[], knowSecret:false, streakFreezes:0, dailyModuleCount:0 };
+  return { xp:0, gems:0, level:1, streak:0, lastLogin:null, completedModules:[], quizScores:{}, eggsFound:[], lastModuleDate:null, conceptCards:[], seenBadgeIds:[], knowSecret:false, streakFreezes:0, dailyModuleCount:0, _dailyXP:0, _questDate:null, _quests:[], _questDone:[], _questSnapshot:null, _reviewsToday:0, _reviewedToday:[] };
 }
 
 function loadState() {
@@ -238,14 +248,62 @@ function checkStreak() {
   }
   state.lastLogin = today;
   state.dailyModuleCount = 0;
+  state._dailyXP = 0;
+  state._reviewsToday = 0;
+  state._reviewedToday = [];
+  genDailyQuests();
+  // Auto-complete streak quest
+  if (state.streak >= 1 && !(state._questDone || []).includes('streak')) {
+    state._questDone = [...(state._questDone || []), 'streak'];
+    showToast('📋 Quest complete: 🔥 Maintain your streak! +10 💎', 'gold');
+    state.gems += 10;
+    spawnConfetti(20);
+  }
   if (state.streak === 3) checkBadgeUnlocks();
   if (state.streak === 7) checkBadgeUnlocks();
   saveState();
 }
 
+/* ── Daily Quests ── */
+function genDailyQuests() {
+  const today = new Date().toISOString().slice(0,10);
+  if (state._questDate === today && state._quests.length) return;
+  const pool = QUEST_TYPES.filter(q => q.id !== 'xp_100' || state.level >= 2);
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  state._quests = shuffled.slice(0, 3).map(q => q.id);
+  state._questDone = state._questDone || [];
+  state._questDate = today;
+  state._dailyXP = 0;
+  state._reviewsToday = 0;
+  state._questSnapshot = {
+    modules: state.completedModules.length,
+    quizCount: Object.keys(state.quizScores).length,
+    streak: state.streak,
+    reviews: state._reviewsToday || 0
+  };
+  saveState();
+}
+
+function checkQuests() {
+  state._quests.forEach(qid => {
+    if (state._questDone.includes(qid)) return;
+    const q = QUEST_TYPES.find(x => x.id === qid);
+    if (q && q.check(state)) {
+      state._questDone.push(qid);
+      state.gems += q.reward;
+      playSound('gem');
+      showToast(`📋 Quest complete: ${q.icon} ${q.label}! +${q.reward} 💎`, 'gold');
+      spawnConfetti(20);
+      saveState();
+      updateDisplay();
+    }
+  });
+}
+
 /* ── Gamification ── */
 function addXP(amount) {
   state.xp += amount;
+  state._dailyXP = (state._dailyXP || 0) + amount;
   const newLevel = LEVELS.findIndex(l => state.xp < l) - 1;
   const effectiveLevel = newLevel < 0 ? LEVELS.length - 1 : newLevel;
   if (effectiveLevel > state.level) {
@@ -259,6 +317,7 @@ function addXP(amount) {
   } else {
     state.level = Math.max(1, effectiveLevel);
   }
+  checkQuests();
   saveState();
   updateDisplay();
 }
@@ -378,7 +437,10 @@ function renderModuleTree() {
     const icon = done ? '✅' : (locked ? '🔒' : '📖');
     const rt = readingTime(m);
     return `<a class="${cls}" data-module="${m.id}" onclick="event.preventDefault();navigate('#/module/${m.id}')">
-      <span class="status-icon">${icon}</span><span>${m.icon} ${m.title}</span>
+      <span class="link-top">
+        <span class="status-icon">${icon}</span>
+        <span class="link-title">${m.icon} ${m.title}</span>
+      </span>
       <span class="module-meta">${locked ? '🔒 unlocks in '+timeToMidnight() : '⏱ '+rt+' min'}</span>
     </a>`;
   }).join('');
@@ -425,7 +487,7 @@ function renderDashboard(c) {
       <span>${nextName} in ${nextXP} XP</span>
     </div>
 
-    <h2 style="margin-top:32px;font-family:Syne,sans-serif;font-size:18px">${allDone ? '🔄 Review Modules' : '📚 Modules'}</h2>
+    <h2 style="margin-top:32px;font-family:Inter,sans-serif;font-size:18px">${allDone ? '🔄 Review Modules' : '📚 Modules'}</h2>
     <div class="module-grid">
       ${MODULES.map(m => {
         const done = state.completedModules.includes(m.id);
@@ -434,7 +496,7 @@ function renderDashboard(c) {
         const rt = readingTime(m);
         return `<div class="module-card ${done?'completed':''} ${locked?'locked':''}" onclick="${locked?'':'navigate(\'#/module/'+m.id+'\')'}" ${locked?'style=cursor:default':''}>
           <div class="card-top">
-            <span class="track-tag">${m.track}</span>
+            <span class="track-tag track-${m.track.toLowerCase()}">${m.track}</span>
             <span class="status-badge">${status}</span>
           </div>
           <div style="font-size:28px;margin-bottom:4px">${m.icon}</div>
@@ -461,6 +523,25 @@ function renderDashboard(c) {
       <p style="margin-top:8px">${lockUntilTomorrow ? `⏳ Next module unlocks in <strong>${timeToMidnight()}</strong>.` : '✅ You can start the next module right now.'}</p>
       <div class="shield-shop">🛡️ Streak Shields: <strong>${state.streakFreezes || 0}</strong> owned · Buy for 30 💎 <button class="btn btn-gold" onclick="buyStreakShield()" style="min-height:36px;padding:0 16px;font-size:12px">Buy</button></div>
     </div>
+
+    <div class="daily-info" style="margin-top:16px">
+      <h3>📋 Daily Quests</h3>
+      ${state._quests && state._questDate === new Date().toISOString().slice(0,10)
+        ? `<div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">${state._quests.map(qid => {
+            const q = QUEST_TYPES.find(x => x.id === qid);
+            if (!q) return '';
+            const done = state._questDone.includes(qid);
+            return `<div class="daily-quest" style="margin-top:0${done ? ';opacity:.6':''}">
+              <div class="quest-icon">${done ? '✅' : q.icon}</div>
+              <div class="quest-body">
+                <h4>${q.label}</h4>
+                <p>${done ? 'Complete!' : q.reward + ' 💎 reward'}</p>
+              </div>
+              ${done ? '<div class="quest-check">✅</div>' : '<div class="quest-check" style="font-size:14px;color:var(--text-muted)">' + q.reward + '💎</div>'}
+            </div>`;
+          }).join('')}</div>`
+        : '<p style="font-size:13px;margin-top:8px">Quests will appear after your first daily visit.</p>'}
+    </div>
   `;
 }
 
@@ -482,6 +563,12 @@ function renderModule(id, c) {
   const done = state.completedModules.includes(mod.id);
   const locked = !done && lockUntilTomorrow;
   const rt = readingTime(mod);
+
+  if (done && !(state._reviewedToday || []).includes(mod.id)) {
+    state._reviewedToday = [...(state._reviewedToday || []), mod.id];
+    state._reviewsToday = (state._reviewsToday || 0) + 1;
+    saveState();
+  }
 
   c.innerHTML = `
     <div class="reading-progress"><div class="reading-progress-fill" id="reading-progress-fill"></div></div>
@@ -592,6 +679,7 @@ function completeModule(id) {
   addGems(gemBonus);
   showToast(`✅ ${mod.title} complete! +${xpAward} XP${isExtra ? ' (50% grind mode)' : ''}, +${gemBonus} 💎`, 'gold');
   checkBadgeUnlocks();
+  checkQuests();
 
   // Float text for XP + gems
   const btn = document.querySelector('.btn-gold');
@@ -631,12 +719,15 @@ function renderQuiz(id, c) {
     // Allow retake
   }
 
-  quizState = { moduleId: mod.id, answers: {}, submitted: false };
+  quizState = { moduleId: mod.id, answers: {}, submitted: false, hearts: MAX_HEARTS };
 
   c.innerHTML = `
     <div class="module-page">
       <h2>📝 Quiz: ${mod.title}</h2>
       <p style="color:var(--text-muted);margin-bottom:16px">${mod.quiz.length} questions · ${prevScore !== undefined ? `Previous score: ${prevScore}/${mod.quiz.length}` : ''}</p>
+      <div class="quiz-hearts" id="quiz-hearts">
+        ${Array.from({length: MAX_HEARTS}, (_, i) => `<span class="heart-icon" data-heart="${i}">❤️</span>`).join('')}
+      </div>
       <div class="quiz-container" id="quiz-container"></div>
     </div>
   `;
@@ -654,6 +745,7 @@ function renderQuizQuestion(qIdx) {
   const pct = Math.round(((qIdx) / mod.quiz.length) * 100);
 
   const container = document.getElementById('quiz-container');
+  const judged = quizState.judged?.[qIdx];
   container.innerHTML = `
     <div class="quiz-progress">
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
@@ -667,28 +759,36 @@ function renderQuizQuestion(qIdx) {
       ${q.opts.map((opt, oi) => {
         const cls = ['quiz-option'];
         if (selected === oi) cls.push('selected');
-        if (showResults) {
+        if (judged || showResults) {
           if (oi === q.ans) cls.push('correct');
           else if (selected === oi) cls.push('wrong');
         }
-        return `<div class="${cls.join(' ')}" onclick="${showResults ? '' : 'selectQuizAnswer('+qIdx+','+oi+')'}">
+        return `<div class="${cls.join(' ')}" onclick="${judged || showResults ? '' : 'selectQuizAnswer('+qIdx+','+oi+')'}">
           <span class="radio"></span><span>${opt}</span>
         </div>`;
       }).join('')}
     </div>
-    ${showResults ? `<div class="quiz-explain">${selected === q.ans
+    ${judged || showResults ? `<div class="quiz-explain">${selected === q.ans
       ? `✅ <strong>Correct!</strong> "${q.opts[q.ans]}" is right.`
       : `❌ <strong>Incorrect.</strong> The correct answer was: "${q.opts[q.ans]}".`}</div>` : ''}
     <div class="module-actions" style="margin-top:16px">
-      ${!showResults ? `<button class="btn btn-gold" onclick="submitQuizAnswer(${qIdx})" ${selected === undefined ? 'disabled' : ''}>${qIdx === mod.quiz.length - 1 ? '📝 Submit Quiz' : '⏭ Next Question'}</button>` : ''}
-      ${showResults && qIdx < mod.quiz.length - 1 ? `<button class="btn btn-cyan" onclick="renderQuizQuestion(${qIdx+1})">⏭ Next Question</button>` : ''}
-      ${showResults && qIdx === mod.quiz.length - 1 ? `<button class="btn btn-gold" onclick="finishQuiz()">🔙 Back to Dashboard</button>` : ''}
+      ${!judged && !showResults ? `<button class="btn btn-gold" onclick="submitQuizAnswer(${qIdx})" ${selected === undefined ? 'disabled' : ''}>${qIdx === mod.quiz.length - 1 ? '📝 Submit Quiz' : '📝 Check Answer'}</button>` : ''}
+      ${(judged || showResults) && !quizState.submitted ? `<button class="btn btn-cyan" onclick="renderQuizQuestion(${qIdx+1})">⏭ Next Question</button>` : ''}
+      ${quizState.submitted && qIdx === mod.quiz.length - 1 ? `<button class="btn btn-gold" onclick="finishQuiz()">🔙 Back to Dashboard</button>` : ''}
+      ${quizState.submitted && qIdx < mod.quiz.length - 1 ? `<button class="btn btn-cyan" onclick="renderQuizQuestion(${qIdx+1})">⏭ Next Question</button>` : ''}
+      ${quizState.hearts <= 0 ? `<button class="btn btn-gold" onclick="finishQuiz()">🔙 Back to Dashboard</button>` : ''}
     </div>
   `;
 }
 
+function updateQuizHearts() {
+  document.querySelectorAll('#quiz-hearts .heart-icon').forEach((el, i) => {
+    el.classList.toggle('lost', i >= quizState.hearts);
+  });
+}
+
 function selectQuizAnswer(qIdx, optIdx) {
-  if (quizState.submitted) return;
+  if (quizState.submitted || quizState.judged?.[qIdx]) return;
   quizState.answers[qIdx] = optIdx;
   renderQuizQuestion(qIdx);
 }
@@ -697,14 +797,34 @@ function submitQuizAnswer(qIdx) {
   const mod = MODULES.find(m => m.id === quizState.moduleId);
   if (!mod) return;
   if (quizState.answers[qIdx] === undefined) return;
+  if (quizState.judged?.[qIdx]) return;
+
+  // Judge immediately — Duolingo style
+  if (!quizState.judged) quizState.judged = {};
+  const isCorrect = quizState.answers[qIdx] === mod.quiz[qIdx].ans;
+  quizState.judged[qIdx] = true;
+
+  if (!isCorrect) {
+    quizState.hearts--;
+    updateQuizHearts();
+    if (quizState.hearts <= 0) {
+      // Heartbreak — quiz ends early
+      quizState.submitted = true;
+      renderQuizQuestion(qIdx);
+      renderQuizResult();
+      showToast('💔 Out of hearts! Quiz ended.', 'gold');
+      return;
+    }
+  } else {
+    playSound('quizpass');
+  }
 
   if (qIdx === mod.quiz.length - 1) {
-    // Last question — show results
     quizState.submitted = true;
     renderQuizQuestion(qIdx);
     renderQuizResult();
   } else {
-    renderQuizQuestion(qIdx + 1);
+    renderQuizQuestion(qIdx);
   }
 }
 
@@ -712,15 +832,16 @@ function renderQuizResult() {
   const mod = MODULES.find(m => m.id === quizState.moduleId);
   if (!mod) return;
   let correct = 0;
-  mod.quiz.forEach((q, i) => { if (quizState.answers[i] === q.ans) correct++; });
+  mod.quiz.forEach((q, i) => { if (quizState.answers[i] === q.ans && quizState.judged?.[i]) correct++; });
   
   // Find or create results container
   const existing = document.getElementById('quiz-result-box');
   if (existing) existing.remove();
 
   const container = document.getElementById('quiz-container');
-  const total = mod.quiz.length;
-  const pct = Math.round((correct / total) * 100);
+  const total = quizState.hearts <= 0 ? Math.max(correct, 1) : mod.quiz.length;
+  const answered = Object.keys(quizState.judged || {}).length;
+  const pct = Math.round((correct / Math.max(answered, 1)) * 100);
   const passed = pct >= 60;
   const isRetake = state.quizScores[mod.id] !== undefined;
   const alreadyHad = state.quizScores[mod.id] || 0;
@@ -729,9 +850,9 @@ function renderQuizResult() {
   div.id = 'quiz-result-box';
   div.className = 'quiz-result';
   div.innerHTML = `
-    <div class="big">${passed ? '🎉' : '😅'}</div>
-    <h3>${passed ? 'Knowledge Acquired!' : 'Almost There!'}</h3>
-    <p>${correct}/${total} correct (${pct}%)${passed ? '' : ' — review and try again'}</p>
+    <div class="big">${quizState.hearts <= 0 ? '💔' : (passed ? '🎉' : '😅')}</div>
+    <h3>${quizState.hearts <= 0 ? 'Hearts Depleted!' : (passed ? 'Knowledge Acquired!' : 'Almost There!')}</h3>
+    <p>${correct}/${answered} correct (${pct}%)${quizState.hearts <= 0 ? ' — ran out of hearts!' : (passed ? '' : ' — review and try again')}</p>
     ${!isRetake && passed ? '<p style="margin-top:8px;color:var(--accent)">+15 💎 bonus for passing</p>' : ''}
     ${isRetake && passed && correct > alreadyHad ? '<p style="margin-top:8px;color:var(--accent)">New personal best! +5 💎</p>' : ''}
   `;
@@ -763,6 +884,7 @@ function renderQuizResult() {
 
 function finishQuiz() {
   quizState = null;
+  checkQuests();
   doRender(document.location.hash.replace(/^#/, '') || '/');
 }
 
@@ -772,7 +894,7 @@ function renderVault(c) {
   const unlocked = state.conceptCards;
 
   c.innerHTML = `
-    <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">🗂️ Concept Vault</h2>
+    <h2 style="font-family:Inter,sans-serif;font-size:22px;margin-bottom:4px">🗂️ Concept Vault</h2>
     <p style="color:var(--text-muted);margin-bottom:16px">Key concepts you've collected from each module. ${unlocked.length}/${allCards.length} unlocked.</p>
     <div class="vault-grid">
       ${allCards.map(card => {
@@ -795,7 +917,7 @@ function renderVault(c) {
 function renderBadges(c) {
   const bd = BADGES;
   c.innerHTML = `
-    <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">🏅 Badges</h2>
+    <h2 style="font-family:Inter,sans-serif;font-size:22px;margin-bottom:4px">🏅 Badges</h2>
     <p style="color:var(--text-muted);margin-bottom:16px">${state.seenBadgeIds.length}/${bd.length} earned</p>
     <div class="badge-grid">
       ${bd.map(b => {
@@ -868,9 +990,12 @@ function spawnParticles() {
 function updateDisplay() {
   document.getElementById('xp-display').textContent = `${state.xp} XP`;
   document.getElementById('gem-display').textContent = `${state.gems}`;
-  document.getElementById('streak-display').textContent = `${state.streak} day${state.streak!==1?'s':''}`;
+  document.getElementById('streak-display').textContent = `${state.streak}`;
   document.getElementById('shield-display').textContent = `${state.streakFreezes || 0}`;
   document.getElementById('level-display').textContent = getLevelName(state.level);
+  const qDone = (state._questDone || []).length;
+  const qTotal = (state._quests || []).length;
+  document.getElementById('quest-count').textContent = `${qDone}/${qTotal}`;
 }
 
 /* ── Search ── */
@@ -878,7 +1003,7 @@ function renderSearch(c) {
   const allCards = CONCEPT_CARDS.flatMap(([mid, cards]) => cards);
   let results = '';
   c.innerHTML = `
-    <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">🔍 Search</h2>
+    <h2 style="font-family:Inter,sans-serif;font-size:22px;margin-bottom:4px">🔍 Search</h2>
     <p style="color:var(--text-muted);margin-bottom:16px">Search across modules, concepts, and badges.</p>
     <input id="search-input" class="search-input" placeholder="Type to search..." autofocus oninput="doSearch(this.value)">
     <div id="search-results"></div>
@@ -927,7 +1052,7 @@ function doSearch(query) {
 /* ── Levels Table ── */
 function renderLevels(c) {
   c.innerHTML = `
-    <h2 style="font-family:Syne,sans-serif;font-size:22px;margin-bottom:4px">📊 Tier Levels</h2>
+    <h2 style="font-family:Inter,sans-serif;font-size:22px;margin-bottom:4px">📊 Tier Levels</h2>
     <p style="color:var(--text-muted);margin-bottom:16px">${state.xp} total XP · Current: <strong>${getLevelName(state.level)}</strong> (Level ${state.level})</p>
     <div class="levels-table-wrap">
       <table class="levels-table">
@@ -969,8 +1094,18 @@ function buyStreakShield() {
   showToast('🛡️ Streak Shield purchased! You now have ' + state.streakFreezes + ' shield(s).', 'cyan');
 }
 
-/* ── Easter Egg handler ── */
+/* ── Global button effects ── */
 document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.btn, .hero-cta, .module-card:not(.locked), .nav-item, .module-link:not(.locked), .search-hit');
+  if (btn && !btn.disabled) {
+    playSound('click');
+    btn.classList.remove('btn-click');
+    void btn.offsetWidth;
+    btn.classList.add('btn-click');
+    setTimeout(() => btn.classList.remove('btn-click'), 150);
+  }
+
+  /* ── Easter Egg handler ── */
   const egg = e.target.closest('.egg');
   if (egg) {
     const id = egg.dataset.eggId || 'unknown';
