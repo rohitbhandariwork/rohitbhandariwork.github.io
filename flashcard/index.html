@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <script>var SHOP_API = 'https://cool-netscape-sullivan-root.trycloudflare.com/tusk';</script>
+  <script>var SHOP_API = '{{TUNNEL_URL}}/tusk';</script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,17 +29,35 @@
       position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000;
       background: rgba(15,15,26,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,.06);
-      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
-      padding: 0 20px;
+      display: flex; align-items: center; gap: 4px; padding: 0 8px;
     }
-    #topbar a {
-      display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
-      border-radius: 999px; font-size: 13px; font-weight: 600;
-      color: #8888aa; text-decoration: none; transition: .2s;
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      font-size: 22px; color: #8888aa; padding: 6px 10px; border-radius: 8px; transition: .2s;
+      font-family: 'Manrope', sans-serif;
     }
-    #topbar a:hover { color: #fff; background: rgba(255,255,255,.08); }
-    #topbar a.active { color: #f59e0b; background: rgba(245,158,11,.12); }
+    .hamburger:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
+    .nav-links a {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+      border-radius: 999px; font-size: 12px; font-weight: 600;
+      color: #8888aa; text-decoration: none; transition: .2s; white-space: nowrap;
+      font-family: 'Manrope', sans-serif;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .nav-links a.active { color: #f59e0b; background: rgba(245,158,11,.12); }
     body { padding-top: 52px; }
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none; position: fixed; top: 52px; left: 0; right: 0;
+        flex-direction: column; background: rgba(15,15,26,0.98);
+        backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.06);
+        padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
+    }
 
     /* ── Stats Bar ── */
     .stats-hero {
@@ -484,7 +502,6 @@
     .glow-orb.orb1 { top: -100px; right: -100px; background: rgba(245,158,11,.04); }
     .glow-orb.orb2 { bottom: -100px; left: -100px; background: rgba(168,85,247,.04); }
   </style>
-<script>https://cool-netscape-sullivan-root.trycloudflare.com</script>
 </head>
 <body>
 
@@ -494,7 +511,7 @@
 
 <canvas id="confettiCanvas"></canvas>
 
-<div id="topbar"><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../shop/">🛒 Shop</a></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../shop/">🛒 Shop</a></div></div>
 
 <!-- Level Up Modal -->
 <div class="modal-overlay" id="lvlModal">
@@ -1292,6 +1309,7 @@ document.addEventListener('click', () => {
 }, { once: true });
 
 init();
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
 </script>
 </body>
 </html>
