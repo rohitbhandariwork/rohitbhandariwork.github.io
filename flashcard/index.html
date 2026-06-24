@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Flashcards — RBPN</title>
+  <meta name="description" content="AI-generated flashcards to learn any topic. Flip, study, and track your progress.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>var SHOP_API = '{{TUNNEL_URL}}/tusk';</script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Manrope', -apple-system, system-ui, sans-serif;
+      background: #faf6f0; color: #1f2f5f; line-height: 1.6;
+    }
+
+    #topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000;
+      background: rgba(251,247,240,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(29,36,51,.08);
+      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+      padding: 0 20px;
+    }
+    #topbar a {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px;
+      border-radius: 999px; font-size: 13px; font-weight: 600;
+      color: #5d6678; text-decoration: none; transition: .2s;
+      font-family: 'Manrope', sans-serif;
+    }
+    #topbar a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    #topbar a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
+    body { padding-top: 52px; }
+
+    .hero {
+      text-align: center; padding: 48px 24px 24px;
+      background: linear-gradient(135deg, #1f2f5f 0%, #2a3f7a 100%);
+      color: #fff;
+    }
+    .hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.5px; }
+    .hero p { font-size: 15px; color: #c8d0e0; margin-top: 6px; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+    .topic-bar {
+      display: flex; gap: 8px; margin: 20px auto;
+    }
+    .topic-bar input {
+      flex: 1; padding: 10px 16px; border: 1px solid #d4d8dd;
+      border-radius: 10px; font-family: 'Manrope', sans-serif; font-size: 14px;
+      background: #fff; color: #1f2f5f;
+    }
+    .topic-bar input:focus { outline: none; border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .topic-bar button {
+      padding: 10px 20px; border: none; border-radius: 10px;
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: .2s;
+    }
+    .btn-gen { background: #f59e0b; color: #fff; }
+    .btn-gen:hover { background: #d97706; }
+    .btn-random { background: #e8e4de; color: #1f2f5f; }
+    .btn-random:hover { background: #ddd8d0; }
+    .topic-bar button:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    .topic-chips {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; justify-content: center;
+    }
+    .topic-chip {
+      padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      background: #e8e4de; color: #1f2f5f; cursor: pointer; transition: .2s; border: none;
+      font-family: 'Manrope', sans-serif;
+    }
+    .topic-chip:hover { background: #d4cfc8; }
+
+    .flashcard-area { display: none; }
+    .flashcard-area.visible { display: block; }
+
+    .card-wrapper {
+      perspective: 1200px; margin: 16px auto; max-width: 520px; cursor: pointer;
+    }
+    .card-inner {
+      position: relative; width: 100%; min-height: 280px;
+      transition: transform .5s ease; transform-style: preserve-3d;
+    }
+    .card-inner.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0; backface-visibility: hidden;
+      border-radius: 20px; padding: 32px 28px; display: flex;
+      flex-direction: column; justify-content: center;
+      border: 1px solid rgba(29,36,51,.08);
+    }
+    .card-front {
+      background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.06);
+    }
+    .card-back {
+      background: #1f2f5f; color: #fff; transform: rotateY(180deg);
+      box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    }
+    .card-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .card-label.front { color: #94a3b8; }
+    .card-label.back { color: #94a3b8; }
+    .card-front .card-text { font-size: 20px; font-weight: 700; line-height: 1.5; }
+    .card-back .card-text { font-size: 16px; line-height: 1.7; }
+    .card-back .card-text code {
+      background: rgba(255,255,255,.1); padding: 2px 6px; border-radius: 4px;
+      font-size: 14px;
+    }
+    .card-hint {
+      margin-top: 16px; font-size: 12px; color: #94a3b8; text-align: center;
+    }
+    .card-hint.back { color: rgba(255,255,255,.5); }
+
+    .nav-row {
+      display: flex; justify-content: center; gap: 10px; margin: 12px auto 24px;
+    }
+    .nav-row button {
+      padding: 10px 24px; border: none; border-radius: 999px;
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: .2s;
+    }
+    .btn-prev { background: #e8e4de; color: #1f2f5f; }
+    .btn-prev:hover { background: #ddd8d0; }
+    .btn-next { background: #1f2f5f; color: #fff; }
+    .btn-next:hover { background: #2a3f7a; }
+    .nav-row button:disabled { opacity: .4; cursor: not-allowed; }
+
+    .progress-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 8px 0 4px; font-size: 13px; color: #5d6678;
+    }
+    .progress-bar-wrap {
+      height: 4px; background: #e8e4de; border-radius: 4px; overflow: hidden; margin-bottom: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%; background: #f59e0b; border-radius: 4px; transition: width .3s;
+    }
+
+    .known-row {
+      display: flex; gap: 10px; justify-content: center; margin: 4px auto 16px;
+    }
+    .known-row button {
+      padding: 8px 24px; border: none; border-radius: 999px;
+      font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: .2s;
+    }
+    .btn-known { background: #065f46; color: #fff; }
+    .btn-known:hover { background: #047857; }
+    .btn-still { background: #991b1b; color: #fff; }
+    .btn-still:hover { background: #b91c1c; }
+    .known-row button:disabled { opacity: .4; cursor: not-allowed; }
+
+    .counter {
+      text-align: center; font-size: 14px; font-weight: 600;
+      margin: 4px 0; color: #1f2f5f;
+    }
+
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .6s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 100000; padding: 14px 24px; border-radius: 999px;
+      font-weight: 600; font-size: 14px; display: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    }
+    .toast.error { background: #991b1b; color: #fff; display: block; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .card-inner { min-height: 220px; }
+      .card-face { padding: 24px 20px; }
+      .card-front .card-text { font-size: 17px; }
+      .card-back .card-text { font-size: 14px; }
+      .topic-bar { flex-wrap: wrap; }
+      .topic-bar input { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="topbar"><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../shop/">🛒 Shop</a></div>
+
+<section class="hero">
+  <h1>🃏 AI Flashcards</h1>
+  <p>Pick a topic and let AI generate a deck. Flip, learn, repeat.</p>
+</section>
+
+<div class="container">
+  <div class="topic-bar">
+    <input type="text" id="topicInput" placeholder="Enter a topic..." onkeydown="if(event.key==='Enter')generateDeck()">
+    <button class="btn-random" id="randomBtn" onclick="randomTopic()">🎲</button>
+    <button class="btn-gen" id="genBtn" onclick="generateDeck()">Generate</button>
+  </div>
+
+  <div class="topic-chips" id="topicChips"></div>
+
+  <div class="flashcard-area" id="flashcardArea">
+    <div class="counter" id="counter">Card 0 of 0</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-row">
+      <span id="knownCount">✅ 0 known</span>
+      <span id="stillCount">📖 0 learning</span>
+    </div>
+
+    <div class="card-wrapper" onclick="flipCard(event)">
+      <div class="card-inner" id="cardInner">
+        <div class="card-face card-front">
+          <div class="card-label front">QUESTION</div>
+          <div class="card-text" id="frontText">Click Generate to start</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-label back">ANSWER</div>
+          <div class="card-text" id="backText"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-hint" id="cardHint">Tap card to flip</div>
+
+    <div class="known-row">
+      <button class="btn-known" id="knownBtn" onclick="markKnown()">✅ Still learning → Known</button>
+      <button class="btn-still" id="stillBtn" onclick="markStill()">📖 Known → Still Learning</button>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-prev" id="prevBtn" onclick="prevCard()">← Previous</button>
+      <button class="btn-next" id="nextBtn" onclick="nextCard()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
+let cards = [];
+let currentIndex = 0;
+let knownSet = {};
+let isFlipped = false;
+let isLoading = false;
+
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (isError ? 'error' : '');
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+async function loadTopics() {
+  try {
+    const resp = await fetch(API_BASE + '/flashcard/topics');
+    const data = await resp.json();
+    const chips = document.getElementById('topicChips');
+    chips.innerHTML = '';
+    data.topics.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'topic-chip';
+      btn.textContent = t;
+      btn.onclick = () => { document.getElementById('topicInput').value = t; generateDeck(); };
+      chips.appendChild(btn);
+    });
+  } catch (e) {
+    // silent
+  }
+}
+
+async function randomTopic() {
+  const chips = document.querySelectorAll('.topic-chip');
+  if (chips.length) {
+    const r = Math.floor(Math.random() * chips.length);
+    chips[r].click();
+  }
+}
+
+async function generateDeck() {
+  if (isLoading) return;
+  const input = document.getElementById('topicInput');
+  const topic = input.value.trim();
+  if (!topic) { showToast('Enter a topic first', true); return; }
+
+  isLoading = true;
+  const genBtn = document.getElementById('genBtn');
+  genBtn.disabled = true;
+  genBtn.innerHTML = '<span class="spinner"></span> Generating...';
+
+  try {
+    const resp = await fetch(API_BASE + '/flashcard/deck', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic }),
+    });
+    if (!resp.ok) throw new Error('Server error: ' + resp.status);
+    const data = await resp.json();
+
+    cards = data.cards || [];
+    currentIndex = 0;
+    knownSet = {};
+    isFlipped = false;
+
+    if (cards.length === 0) {
+      showToast('No cards generated. Try another topic.', true);
+      isLoading = false;
+      genBtn.disabled = false;
+      genBtn.innerHTML = 'Generate';
+      return;
+    }
+
+    document.getElementById('flashcardArea').classList.add('visible');
+    showCard();
+  } catch (err) {
+    showToast('Failed: ' + err.message, true);
+  }
+  isLoading = false;
+  genBtn.disabled = false;
+  genBtn.innerHTML = 'Generate';
+}
+
+function showCard() {
+  if (!cards.length) return;
+  const card = cards[currentIndex];
+  document.getElementById('frontText').textContent = card.front;
+  document.getElementById('backText').innerHTML = card.back.replace(/\n/g, '<br>');
+  document.getElementById('counter').textContent = 'Card ' + (currentIndex + 1) + ' of ' + cards.length;
+  document.getElementById('progressFill').style.width = ((currentIndex + 1) / cards.length * 100) + '%';
+
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('nextBtn').disabled = currentIndex === cards.length - 1;
+
+  isFlipped = false;
+  document.getElementById('cardInner').classList.remove('flipped');
+  document.getElementById('cardHint').textContent = 'Tap card to flip';
+
+  const known = knownSet[currentIndex];
+  document.getElementById('knownBtn').disabled = known === true;
+  document.getElementById('stillBtn').disabled = known === false;
+
+  updateCounts();
+}
+
+function flipCard(e) {
+  if (e.target.closest('button')) return;
+  isFlipped = !isFlipped;
+  document.getElementById('cardInner').classList.toggle('flipped', isFlipped);
+  document.getElementById('cardHint').textContent = isFlipped ? 'Tap to flip back' : 'Tap card to flip';
+}
+
+function markKnown() {
+  knownSet[currentIndex] = true;
+  document.getElementById('knownBtn').disabled = true;
+  document.getElementById('stillBtn').disabled = false;
+  updateCounts();
+}
+
+function markStill() {
+  knownSet[currentIndex] = false;
+  document.getElementById('knownBtn').disabled = false;
+  document.getElementById('stillBtn').disabled = true;
+  updateCounts();
+}
+
+function updateCounts() {
+  const known = Object.values(knownSet).filter(v => v === true).length;
+  const still = Object.values(knownSet).filter(v => v === false).length;
+  document.getElementById('knownCount').textContent = '✅ ' + known + ' known';
+  document.getElementById('stillCount').textContent = '📖 ' + still + ' learning';
+}
+
+function prevCard() {
+  if (currentIndex > 0) { currentIndex--; showCard(); }
+}
+
+function nextCard() {
+  if (currentIndex < cards.length - 1) { currentIndex++; showCard(); }
+}
+
+loadTopics();
+</script>
+</body>
+</html>
