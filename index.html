@@ -28,19 +28,27 @@
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
   <style>
-    #topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(251,247,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(29,36,51,.08);display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:0 20px}
-    #topbar a{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:600;color:#5d6678;text-decoration:none;transition:.2s;font-family:'Manrope',sans-serif}
-    #topbar a:hover{color:#1f2f5f;background:rgba(31,47,95,.06)}
+    #topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(251,247,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(29,36,51,.08);display:flex;align-items:center;gap:4px;padding:0 8px}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#5d6678;padding:6px 10px;border-radius:8px;transition:.2s;font-family:'Manrope',sans-serif}
+    .hamburger:hover{color:#1f2f5f;background:rgba(31,47,95,.06)}
+    .nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
+    .nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#5d6678;text-decoration:none;transition:.2s;white-space:nowrap;font-family:'Manrope',sans-serif}
+    .nav-links a:hover{color:#1f2f5f;background:rgba(31,47,95,.06)}
     @media(min-width:992px){body{padding-top:52px}#topbar{padding-right:44px}#header{top:52px}}
     @media(max-width:991px){body{padding-top:52px}#header{top:52px}}
+    @media(max-width:768px){
+      .hamburger{display:block}
+      .nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(251,247,240,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(29,36,51,.08);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+      .nav-links.open{display:flex}
+      .nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}
+      #header{top:52px}
+    }
   </style>
-<script>  var API = 'https://cool-netscape-sullivan-root.trycloudflare.com/tusk/subscribers/add';</script>
-<script>https://cool-netscape-sullivan-root.trycloudflare.com</script>
-<script>https://cool-netscape-sullivan-root.trycloudflare.com</script>
+<script>  var API = '{{TUNNEL_URL}}/tusk/subscribers/add';</script>
 </head>
 
 <body>
-  <div id="topbar"><a href="course/">📘 Open Course</a><a href="news/">📰 AI News</a><a href="jobtool/">💼 Apply Job</a><a href="interview/">🎙️ AI Interview</a><a href="flashcard/">🃏 Flashcards</a><a href="shop/">🛒 Shop</a></div>
+  <div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="course/">📘 Open Course</a><a href="news/">📰 AI News</a><a href="jobtool/">💼 Apply Job</a><a href="interview/">🎙️ AI Interview</a><a href="flashcard/">🃏 Flashcards</a><a href="shop/">🛒 Shop</a></div></div>
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
 
   <header id="header" class="d-flex flex-column justify-content-center">
@@ -480,7 +488,7 @@
 
 <script>
 (function(){
-  var API = 'https://cool-netscape-sullivan-root.trycloudflare.com/tusk/subscribers/add';
+  var API = '{{TUNNEL_URL}}/tusk/subscribers/add';
   var ov = document.getElementById('nl-overlay');
   document.getElementById('nl-close').onclick = function(){ov.classList.remove('show')};
   ov.onclick = function(e){if(e.target===ov)ov.classList.remove('show')};
@@ -502,6 +510,7 @@
     btn.disabled=false;btn.textContent='Subscribe';
   };
 })();
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
 </script>
 </body>
 
