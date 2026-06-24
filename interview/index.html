@@ -200,6 +200,22 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+        .timer-row {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin: -8px 0 8px; font-size: 13px; font-weight: 600;
+    }
+    .timer-ring {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 3px solid #d4d8dd; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #5d6678; transition: border-color .3s;
+    }
+    .timer-ring.warn { border-color: #f59e0b; color: #e65100; }
+    .timer-ring.danger { border-color: #dc2626; color: #dc2626; animation: pulse .5s infinite; }
+    @keyframes pulse { 50% { opacity: .5; } }
+    .timer-text { color: #94a3b8; }
+    .timer-text.warn { color: #e65100; }
+    .timer-text.danger { color: #dc2626; }
+
     .toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
       z-index: 100000; padding: 14px 24px; border-radius: 999px;
@@ -246,6 +262,10 @@
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progressFill"></div>
     </div>
+    <div class="timer-row" id="timerRow">
+      <div class="timer-ring" id="timerRing">120</div>
+      <span class="timer-text" id="timerText">2:00 remaining</span>
+    </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="input-area" id="inputArea">
       <textarea id="answerInput" rows="1" placeholder="Type your answer..." disabled></textarea>
@@ -271,6 +291,9 @@ let currentIdx = 0;
 let totalQ = 0;
 let isProcessing = false;
 let autoScrolling = false;
+let timerInterval = null;
+let timeLeft = 0;
+const TIME_PER_QUESTION = 120; // seconds
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -408,11 +431,57 @@ function updateProgress(idx, total) {
   document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
 }
 
+function stopTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+}
+
+function startTimer() {
+  stopTimer();
+  timeLeft = TIME_PER_QUESTION;
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      stopTimer();
+      autoSubmitOnTimeout();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const ring = document.getElementById('timerRing');
+  const text = document.getElementById('timerText');
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  ring.textContent = timeLeft;
+  text.textContent = m + ':' + (s < 10 ? '0' : '') + s + ' remaining';
+  ring.className = 'timer-ring';
+  text.className = 'timer-text';
+  if (timeLeft <= 15) { ring.classList.add('danger'); text.classList.add('danger'); }
+  else if (timeLeft <= 30) { ring.classList.add('warn'); text.classList.add('warn'); }
+}
+
+function autoSubmitOnTimeout() {
+  if (isProcessing) return;
+  const input = document.getElementById('answerInput');
+  if (input.value.trim()) {
+    submitAnswer();
+  } else {
+    // Force submit with placeholder
+    input.value = '(no answer)';
+    submitAnswer();
+  }
+}
+
 function enableInput(enabled) {
   document.getElementById('answerInput').disabled = !enabled;
   document.getElementById('sendBtn').disabled = !enabled;
   if (enabled) {
     document.getElementById('answerInput').focus();
+    startTimer();
+  } else {
+    stopTimer();
   }
 }
 
@@ -423,7 +492,9 @@ async function submitAnswer() {
   if (!answer) return;
 
   isProcessing = true;
-  enableInput(false);
+  stopTimer();
+  document.getElementById('answerInput').disabled = true;
+  document.getElementById('sendBtn').disabled = true;
 
   addMessage('user', answer);
   input.value = '';
@@ -458,7 +529,9 @@ async function submitAnswer() {
     addMessage('ai', data.question, { area: data.area, evaluation: data.evaluation, score: data.score, tip: data.tip });
     currentIdx = data.index;
     updateProgress(currentIdx, data.total);
+    isProcessing = false;
     enableInput(true);
+    return;
   } catch (err) {
     hideTyping();
     showToast('Failed: ' + err.message);
