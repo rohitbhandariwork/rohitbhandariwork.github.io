@@ -116,9 +116,6 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .topic-bar input:focus{outline:none;border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.1)}
 .topic-bar input::placeholder{color:#5555aa}
 .topic-bar button{padding:11px 14px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;min-height:44px;touch-action:manipulation}
-.btn-gen{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
-.btn-gen:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(245,158,11,.3)}
-.btn-gen:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 .btn-random{background:rgba(255,255,255,.06);color:#8888aa}
 .btn-random:hover{background:rgba(255,255,255,.1);color:#fff}
 .topic-chips{display:flex;flex-wrap:nowrap;gap:4px;margin-top:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -603,9 +600,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 <!-- Topic Area -->
 <div class="topic-area" id="topicArea">
 <div class="topic-bar">
-<input type="text" id="topicInput" placeholder="Enter a topic..." onkeydown="if(event.key==='Enter')generateDeck()">
-<button class="btn-random" id="randomBtn" onclick="randomTopic()" title="Random topic">🎲</button>
-<button class="btn-gen" id="genBtn" onclick="generateDeck()">Generate</button>
+<button class="btn-random" id="randomBtn" onclick="randomTopic()" title="Random topic">🎲 Random</button>
 </div>
 <div class="topic-chips" id="topicChips"></div>
 </div>
@@ -821,21 +816,23 @@ chip.title=`+${b.xp} XP, 💎${b.g}`;div.appendChild(chip)}
 
 // Load
 async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');if(r.ok){const d=await r.json();stats={...stats,...d};updateStatsUI();renderChallenges();renderAchievements();renderBosses()}}catch(e){}}
-async function loadTopics(){try{const r=await fetch(API_BASE+'/flashcard/topics'),d=await r.json(),chips=document.getElementById('topicChips');chips.innerHTML='';d.topics.forEach(t=>{const b=document.createElement('button');b.className='topic-chip';if(recentTopics.includes(t))b.classList.add('recent');b.textContent=t;b.onclick=()=>{SND.click();document.getElementById('topicInput').value=t;generateDeck()};chips.appendChild(b)})}catch(e){}}
-async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if(c.length)c[Math.floor(Math.random()*c.length)].click()}
+let currentTopic='';
+async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
+async function loadTopics(){try{const r=await fetch(API_BASE+'/flashcard/topics'),d=await r.json(),chips=document.getElementById('topicChips');chips.innerHTML='';d.topics.forEach(t=>{const b=document.createElement('button');b.className='topic-chip';if(recentTopics.includes(t))b.classList.add('recent');b.textContent=t;b.onclick=()=>selectTopic(t);chips.appendChild(b)})}catch(e){}}
+async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if(c.length){const chip=c[Math.floor(Math.random()*c.length)];selectTopic(chip.textContent)}}
 
 // Generate
-async function generateDeck(){
-if(isLoading)return;const inp=document.getElementById('topicInput'),topic=inp.value.trim();if(!topic){showToast('Enter a topic first','error');return}
-isLoading=true;const gb=document.getElementById('genBtn');gb.disabled=true;gb.innerHTML='<span class="spinner"></span> Generating...';isDeckComplete=false;document.getElementById('deckComplete').classList.remove('show')
-try{const r=await fetch(API_BASE+'/flashcard/deck',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic})});if(!r.ok)throw Error('Server error: '+r.status);const d=await r.json();cards=d.cards||[];currentIndex=0;knownSet={};deckKnownCount=0;isFlipped=false;if(!cards.length){showToast('No cards generated','error');isLoading=false;gb.disabled=false;gb.innerHTML='Generate';return}
+async function generateDeck(topic){
+if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a topic first','error');return}
+isLoading=true;isDeckComplete=false;document.getElementById('deckComplete').classList.remove('show')
+try{const r=await fetch(API_BASE+'/flashcard/deck',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic})});if(!r.ok)throw Error('Server error: '+r.status);const d=await r.json();cards=d.cards||[];currentIndex=0;knownSet={};deckKnownCount=0;isFlipped=false;if(!cards.length){showToast('No cards available','error');isLoading=false;return}
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
 document.getElementById('topicArea').classList.add('collapsed');
 document.getElementById('flashcardArea').classList.add('visible','centered');
 document.getElementById('backTopics').classList.add('show');
 document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block:'center'});
 showCard();SND.click()}catch(e){showToast('Failed: '+e.message,'error')}
-isLoading=false;gb.disabled=false;gb.innerHTML='Generate'}
+isLoading=false}
 
 function showCard(){
 if(!cards.length)return;const c=cards[currentIndex];
@@ -861,7 +858,7 @@ knownSet[currentIndex]=true;deckKnownCount=Object.values(knownSet).filter(v=>v==
 spawnFloat('+10 XP','green');
 document.getElementById('knownBtn').disabled=true;document.getElementById('knownBtn').textContent='✅ Known ✓';
 document.getElementById('stillBtn').disabled=false;document.getElementById('stillBtn').textContent='📖 Still Learning';
-updateDeckCounts();checkDeckComplete();await recordStudy({action:'known',topic:document.getElementById('topicInput').value.trim()})}
+updateDeckCounts();checkDeckComplete();await recordStudy({action:'known',topic:currentTopic})}
 
 async function markStill(){
 if(knownSet[currentIndex]===false)return;SND.still();
@@ -870,7 +867,7 @@ spawnFloat('+3 XP','orange');
 document.getElementById('stillBtn').disabled=true;document.getElementById('stillBtn').textContent='📖 Learning ✓';
 document.getElementById('knownBtn').disabled=false;document.getElementById('knownBtn').textContent='✅ I Know This';
 updateDeckCounts();document.getElementById('deckComplete').classList.remove('show');isDeckComplete=false;
-await recordStudy({action:'still',topic:document.getElementById('topicInput').value.trim()})}
+await recordStudy({action:'still',topic:currentTopic})}
 
 function updateDeckCounts(){const k=Object.values(knownSet).filter(v=>v===true).length,s=Object.values(knownSet).filter(v=>v===false).length;document.getElementById('knownCount').textContent='✅ '+k+' known';document.getElementById('stillCount').textContent='📖 '+s+' learning'}
 function checkDeckComplete(){if(deckKnownCount===cards.length&&cards.length>0&&!isDeckComplete){isDeckComplete=true;document.getElementById('deckComplete').classList.add('show');document.getElementById('deckCompleteXP').textContent='+50 XP + 💎3 Gems';SND.deckComplete();spawnConf(80);spawnFloat('+50 XP','gold',document.getElementById('deckComplete'));showToast('🎉 Deck Complete! +50 XP','success')}}
@@ -878,7 +875,6 @@ function backToTopics(){
 document.getElementById('topicArea').classList.remove('collapsed');
 document.getElementById('flashcardArea').classList.remove('centered');
 document.getElementById('backTopics').classList.remove('show');
-document.getElementById('topicInput').focus();
 window.scrollTo({top:document.getElementById('topicArea').offsetTop-70,behavior:'smooth'})}
 function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
 function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
