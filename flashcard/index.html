@@ -432,19 +432,6 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .pb-chip.new{animation:pbPulse 1s ease infinite}
 @keyframes pbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 
-/* Create Deck (Level 2: Endgame) */
-.create-deck-toggle{font-size:11px;color:#7777cc;cursor:pointer;display:inline-block;margin:2px 4px}
-.create-deck-toggle:hover{color:#3b82f6}
-.create-deck-panel{margin:4px auto;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:none;font-size:11px}
-.create-deck-panel.show{display:block}
-.create-deck-panel textarea{width:100%;padding:6px 8px;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:11px;background:rgba(255,255,255,.04);color:#e8e8f0;resize:vertical;min-height:60px;font-family:inherit}
-.create-deck-panel textarea:focus{outline:none;border-color:#3b82f6}
-.create-deck-panel .cd-input{margin:4px 0;display:flex;gap:4px}
-.create-deck-panel .cd-input input{flex:1;padding:4px 8px;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:11px;background:rgba(255,255,255,.04);color:#e8e8f0}
-.create-deck-panel .cd-input input:focus{outline:none;border-color:#3b82f6}
-.create-deck-panel button{padding:6px 14px;border-radius:999px;border:none;background:rgba(59,130,246,.12);color:#3b82f6;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation}
-.create-deck-panel button:hover{background:#3b82f6;color:#fff}
-
 /* Glow orbs */
 .glow-orb{position:fixed;width:300px;height:300px;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:-1}
 .glow-orb.orb1{top:-100px;right:-100px;background:rgba(245,158,11,.04)}
@@ -523,10 +510,8 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 <div class="stats-footer" id="statsFooter" style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:2px">
 <span class="player-type" id="playerTypeBadge">🧭 Explorer</span>
 <span class="knowledge-toggle" id="knowledgeToggle" onclick="toggleKnowledgePanel()">🌳 Knowledge Tree ▸</span>
-<span class="create-deck-toggle" id="createDeckToggle" onclick="toggleCreateDeckPanel()">✏️ Create Deck ▸</span>
 </div>
 <div class="knowledge-panel" id="knowledgePanel"><div class="kp-header"><div class="kp-stat"><div class="kp-num" id="kpMastered">0</div><div class="kp-label">Mastered</div></div><div class="kp-stat"><div class="kp-num" id="kpLearning">0</div><div class="kp-label">Learning</div></div><div class="kp-stat"><div class="kp-num" id="kpTotal">0</div><div class="kp-label">Total</div></div></div><div class="kp-bar"><div class="kp-bar-fill" id="kpBarFill" style="width:0%"></div></div><div class="kp-tags" id="kpTags"></div></div>
-<div class="create-deck-panel" id="createDeckPanel"><div class="cd-input"><input type="text" id="cdTopic" placeholder="Topic name"><input type="text" id="cdFront" placeholder="Front"><input type="text" id="cdBack" placeholder="Back"><button onclick="addCardToDeck()">+</button></div><div style="text-align:center">Preview: <span id="cdCount">0</span> cards</div><div style="display:flex;gap:4px;justify-content:center;margin-top:4px"><button onclick="submitCustomDeck()">💾 Save Deck</button><button onclick="clearCustomDeck()">Clear</button></div></div>
 </section>
 
 <div class="container">
@@ -1103,7 +1088,7 @@ const TUTORIAL_STEPS=[
   {icon:'🏆',title:'Reach New Levels',desc:'Each level unlocks new features: custom decks at Level 8, knowledge trees at Level 10, and more!'},
   {icon:'🧭',title:'You\'re Ready!',desc:'Explore the interface, try the mystery button, check your knowledge tree, and create custom decks. Happy studying!'},
 ];
-let tutStep=0,tutActive=false,customDeckCards=[];
+let tutStep=0,tutActive=false;
 function showTutorial(stepIdx){
   const ov=document.getElementById('tutOverlay');
   if(!ov)return;
@@ -1224,46 +1209,6 @@ async function updatePlayerType(){
         data.dominant_type.charAt(0).toUpperCase()+data.dominant_type.slice(1);
     }
   }catch(e){}
-}
-
-// ── Level 2: Create Deck ──
-function toggleCreateDeckPanel(){
-  const p=document.getElementById('createDeckPanel');
-  const t=document.getElementById('createDeckToggle');
-  p.classList.toggle('show');
-  t.textContent=p.classList.contains('show')?'✏️ Create Deck ▾':'✏️ Create Deck ▸';
-}
-function addCardToDeck(){
-  const front=document.getElementById('cdFront').value.trim();
-  const back=document.getElementById('cdBack').value.trim();
-  if(!front||!back){showToast('Enter both front and back','error');return}
-  customDeckCards.push({front,back});
-  document.getElementById('cdFront').value='';
-  document.getElementById('cdBack').value='';
-  document.getElementById('cdCount').textContent=customDeckCards.length;
-  SND.flip();
-}
-function clearCustomDeck(){
-  customDeckCards=[];
-  document.getElementById('cdCount').textContent='0';
-}
-async function submitCustomDeck(){
-  const topic=document.getElementById('cdTopic').value.trim();
-  if(!topic||customDeckCards.length===0){showToast('Enter a topic and add at least 1 card','error');return}
-  try{
-    const r=await fetch('/flashcard/create-deck',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({topic,cards:customDeckCards})
-    });
-    const d=await r.json();
-    if(d.success){
-      showToast(`✅ Deck "${topic}" created! +20 XP`,'success');
-      SND.deckComplete();spawnConf(30);
-      customDeckCards=[];document.getElementById('cdCount').textContent='0';
-      document.getElementById('cdTopic').value='';
-      await loadStats();updateStatsUI();
-    }else{showToast('❌ '+d.reason,'error')}
-  }catch(e){showToast('Error creating deck','error')}
 }
 
 // Init
