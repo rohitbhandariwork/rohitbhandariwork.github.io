@@ -112,7 +112,6 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .flashcard-area.centered{min-height:60vh;padding:16px 0}
 }
 .topic-heading{font-size:13px;font-weight:700;color:#c8c8e0;margin-bottom:8px;text-align:center}
-.topic-loading{font-size:11px;color:#5555aa;display:inline-block;padding:4px 0}
 .topic-bar{display:flex;gap:6px}
 .topic-bar button{padding:11px 14px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;min-height:44px;touch-action:manipulation}
 .btn-random{background:rgba(255,255,255,.06);color:#8888aa}
@@ -536,7 +535,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 <div class="topic-bar">
 <button class="btn-random" id="randomBtn" onclick="randomTopic()" title="Random topic">🎲 Surprise me</button>
 </div>
-<div class="topic-chips" id="topicChips"><span class="topic-loading">Loading topics…</span></div>
+<div class="topic-chips" id="topicChips"></div>
 </div>
 
 <!-- Flashcard Area -->
@@ -808,7 +807,8 @@ chip.title=`+${b.xp} XP, 💎${b.g}`;div.appendChild(chip)}
 async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');if(r.ok){const d=await r.json();stats={...stats,...d};updateStatsUI();renderChallenges();renderAchievements();renderBosses()}}catch(e){}}
 let currentTopic='';
 async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
-async function loadTopics(){try{const r=await fetch(API_BASE+'/flashcard/topics'),d=await r.json(),chips=document.getElementById('topicChips');if(!d.topics||!d.topics.length)return;chips.innerHTML='';d.topics.forEach(t=>{const b=document.createElement('button');b.className='topic-chip';if(recentTopics.includes(t))b.classList.add('recent');b.textContent=t;b.onclick=()=>selectTopic(t);chips.appendChild(b)})}catch(e){}}
+const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns"];
+function loadTopics(){const chips=document.getElementById('topicChips');chips.innerHTML='';TOPICS.forEach(t=>{const b=document.createElement('button');b.className='topic-chip';if(recentTopics.includes(t))b.classList.add('recent');b.textContent=t;b.onclick=()=>selectTopic(t);chips.appendChild(b)})}
 async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if(c.length){const chip=c[Math.floor(Math.random()*c.length)];selectTopic(chip.textContent)}}
 
 // Generate
@@ -1219,7 +1219,7 @@ async function updatePlayerType(){
 // Init
 async function init(){
 await loadStats();
-await loadTopics();
+loadTopics();
 renderAchievements();
 renderTitles();
 renderMastery();
