@@ -815,7 +815,8 @@ async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if
 async function generateDeck(topic){
 if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a topic first','error');return}
 isLoading=true;isDeckComplete=false;document.getElementById('deckComplete').classList.remove('show')
-try{const r=await fetch(API_BASE+'/flashcard/deck',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic})});if(!r.ok)throw Error('Server error: '+r.status);const d=await r.json();cards=d.cards||[];currentIndex=0;knownSet={};deckKnownCount=0;isFlipped=false;if(!cards.length){showToast('No cards available','error');isLoading=false;return}
+try{const r=await fetch('./flashcard_decks.json');if(!r.ok)throw Error('Failed to load deck data');const d=await r.json();const pool=d[topic]||[];if(!pool.length){showToast('No cards for '+topic,'error');isLoading=false;return}
+const shuffled=[...pool].sort(()=>Math.random()-.5);cards=shuffled.slice(0,Math.min(8,shuffled.length));currentIndex=0;knownSet={};deckKnownCount=0;isFlipped=false
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
 document.getElementById('topicArea').classList.add('collapsed');
 document.getElementById('flashcardArea').classList.add('visible','centered');
