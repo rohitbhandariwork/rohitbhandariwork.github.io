@@ -233,7 +233,7 @@ const SND={
   alarm:()=>{for(let i=0;i<3;i++)setTimeout(()=>tone(880,.15,'square',.12),i*250)},
   levelUp:()=>melody([[523.25,0,.1,'square',.06],[659.25,.1,.1,'square',.06],[783.99,.2,.1,'square',.06],[1046.5,.3,.3,'square',.06]]),
   xp:()=>melody([[659.25,0,.1,'sine',.08],[880,.08,.15,'sine',.08]]),
-  tick:()=>tone(800,.03,'sine',.025),
+  tick:()=>tone(1200,.02,'sine',.035),
 };
 
 // ── Constants ──
@@ -431,11 +431,22 @@ function startTimer(){
   state.phase='running';
   endTime=Date.now()+state.timeLeft*1000;
   lastTickSec=Math.ceil(state.timeLeft);
-  state.timerId=setInterval(tick,50);
+  state.timerId=setInterval(tick,100);
   showControls();
   if(soundEnabled)SND.start();
   updateDisplay();
 }
+
+// Catch up when returning from backgrounded tab
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden||state.phase!=='running'||endTime===null)return;
+  const remaining=Math.max(0,(endTime-Date.now())/1000);
+  state.timeLeft=remaining;
+  if(remaining<=0){
+    clearInterval(state.timerId);state.timerId=null;
+    focusComplete();
+  }else{updateDisplay()}
+});
 
 function pauseTimer(){
   if(!state.timerId)return;
