@@ -144,6 +144,19 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .card-back .card-text{font-size:13px;line-height:1.7;max-width:32em;margin:0 auto;letter-spacing:.015em}
 .card-back .card-text code{background:rgba(34,197,94,.1);padding:2px 6px;border-radius:4px;font-size:13px}
 .card-hint{margin-top:10px;font-size:11px;color:#5555aa;text-align:center;transition:.3s}
+/* Tier buttons */
+.tier-row{display:flex;gap:4px;justify-content:center;margin:6px auto;flex-wrap:wrap}
+.tier-btn{padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:36px;opacity:.5}
+.tier-btn.active{opacity:1;transform:scale(1.05)}
+.tier-btn:active{transform:scale(.96)}
+.tier-easy{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.2)}
+.tier-easy.active{background:rgba(34,197,94,.2)}
+.tier-normal{background:rgba(59,130,246,.12);color:#3b82f6;border:1px solid rgba(59,130,246,.2)}
+.tier-normal.active{background:rgba(59,130,246,.2)}
+.tier-hard{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.tier-hard.active{background:rgba(245,158,11,.2)}
+.tier-expert{background:rgba(168,85,247,.12);color:#a855f7;border:1px solid rgba(168,85,247,.2)}
+.tier-expert.active{background:rgba(168,85,247,.2)}
 .card-inner.lucky{animation:luckyGlow 1s ease}
 @keyframes luckyGlow{0%,100%{box-shadow:0 0 0 rgba(255,215,0,0)}50%{box-shadow:0 0 30px rgba(255,215,0,.3)}}
 /* Float XP */
@@ -435,6 +448,14 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .collapse-body{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease;opacity:0}
 .collapse-body.open{max-height:2000px;opacity:1}
 .collapse-inner{padding:4px 14px 8px}
+/* Topics collapse bar — prominent button style */
+#c-topics{font-size:15px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);color:#f59e0b;padding:12px 16px;border-radius:12px;margin-bottom:4px}
+#c-topics:active{background:rgba(245,158,11,.15)}
+#c-topics .ca{color:rgba(245,158,11,.5)}
+/* Topic heading H1 */
+.topic-heading{font-size:28px;font-weight:800;color:#e8e8f0;margin-bottom:12px;text-align:center;line-height:1.3}
+/* Study topic H1 above card */
+.study-topic{font-size:24px;font-weight:800;text-align:center;color:#f59e0b;margin-bottom:8px;padding:4px 0;line-height:1.3}
 /* Glow orbs */
 .glow-orb{position:fixed;width:300px;height:300px;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:-1}
 .glow-orb.orb1{top:-100px;right:-100px;background:rgba(245,158,11,.04)}
@@ -595,6 +616,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <!-- Flashcard Area -->
 <div class="flashcard-area" id="flashcardArea">
 <div class="back-topics" id="backTopics"><button onclick="backToTopics()">← Topics</button></div>
+<div class="study-topic" id="studyTopic"></div>
 <div class="counter" id="counter">Card 0 of 0</div>
 <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
 <div class="deck-stats"><span class="known-count" id="knownCount">✅ 0 known</span><span class="still-count" id="stillCount">📖 0 learning</span></div>
@@ -605,6 +627,12 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <div class="card-face card-back"><div class="card-label back">ANSWER</div><div class="card-text" id="backText"></div></div>
 </div></div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
+</div>
+<div class="tier-row">
+<button class="tier-btn tier-easy active" id="tierEasy" onclick="switchTier('easy')">🌱 Easy</button>
+<button class="tier-btn tier-normal" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
+<button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Hard</button>
+<button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
 </div>
 <div class="srs-state" id="srsState"></div>
 <div class="rating-row">
@@ -749,7 +777,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 
 <script>
 const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
-let cards=[],currentIndex=0,isFlipped=false,isLoading=false,recentTopics=[],deckCache=null;
+let cards=[],currentIndex=0,isFlipped=false,isLoading=false,currentTier='easy',recentTopics=[],deckCache=null;
 let stats={xp:0,level:1,gems:10,streak:0,total_known:0,achievements:[],hidden_achievements:[],streak_days:[],daily_challenge:null,daily_progress:0,daily_goal:0,mystery_available:true,xp_booster_active:false,xp_booster_cards_remaining:0,weekly_challenge:null,weekly_progress:0,weekly_goal:0,narrative_stage:1,boss_challenges:{},streak_freezes:0};
 
 const LVL_TITLES=[{min:1,max:2,title:'Novice',rank:'🃏 Learner'},{min:3,max:5,title:'Apprentice',rank:'📖 Student'},{min:6,max:9,title:'Journeyman',rank:'⚡ Scholar'},{min:10,max:14,title:'Expert',rank:'🧠 Thinker'},{min:15,max:20,title:'Master',rank:'👑 Master'},{min:21,max:29,title:'Grandmaster',rank:'🌟 Sage'},{min:30,max:50,title:'Legend',rank:'💎 Legend'}];
@@ -910,6 +938,7 @@ const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c.
 if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
 const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
+document.getElementById('studyTopic').textContent=topic;
 document.getElementById('c-topics').classList.remove('open');document.getElementById('cb-topics').classList.remove('open');
 document.getElementById('flashcardArea').classList.add('visible','centered');
 document.getElementById('backTopics').classList.add('show');
@@ -920,7 +949,7 @@ isLoading=false}
 function showCard(){
 if(!cards.length)return;const c=cards[currentIndex];
 document.getElementById('frontText').textContent=c.front;
-document.getElementById('backText').innerHTML=c.back.replace(/\n/g,'<br>');
+document.getElementById('backText').innerHTML=(c[currentTier]||c.easy||'').replace(/\n/g,'<br>');
 document.getElementById('counter').textContent='Card '+(currentIndex+1)+' of '+cards.length;
 document.getElementById('progressFill').style.width=((currentIndex+1)/cards.length*100)+'%';
 document.getElementById('prevBtn').disabled=currentIndex===0;
@@ -934,7 +963,18 @@ else if(sc.nextReview<=todayStr())document.getElementById('srsState').textConten
 else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
 document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=false);
 document.getElementById('knownCount').textContent='📋 '+(cards.length-currentIndex)+' left';
-document.getElementById('stillCount').textContent='✅ '+currentIndex+' done'}
+document.getElementById('stillCount').textContent='✅ '+currentIndex+' done';
+updateTierButtons()}
+
+function switchTier(tier){
+currentTier=tier;SND.click();
+if(cards.length&&cards[currentIndex]){
+document.getElementById('backText').innerHTML=(cards[currentIndex][tier]||'').replace(/\n/g,'<br>')}
+updateTierButtons()}
+
+function updateTierButtons(){
+document.querySelectorAll('.tier-btn').forEach(b=>{
+const t=b.id.replace('tier','').toLowerCase();b.classList.toggle('active',t===currentTier)})}
 
 function flipCard(e){if(e.target.closest('button'))return;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);document.getElementById('cardHint').textContent=isFlipped?'Tap to flip back':'Tap card to flip';if(isFlipped)SND.flip()}
 
@@ -960,6 +1000,7 @@ function backToTopics(){
 document.getElementById('topicArea').classList.remove('collapsed');
 document.getElementById('flashcardArea').classList.remove('centered');
 document.getElementById('backTopics').classList.remove('show');
+document.getElementById('studyTopic').textContent='';
 window.scrollTo({top:document.getElementById('topicArea').offsetTop-70,behavior:'smooth'});
 loadTopics()}
 function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
