@@ -90,9 +90,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .btn-interrupt{background:rgba(239,68,68,.12);color:#ef4444;border:1px solid rgba(239,68,68,.15)}
 .btn-interrupt:hover{background:rgba(239,68,68,.2)}
 .btn-interrupt:active{transform:scale(.97)}
-.btn-reset{background:rgba(255,255,255,.06);color:#8888aa;border:1px solid rgba(255,255,255,.08)}
-.btn-reset:hover{background:rgba(255,255,255,.1);color:#e8e8f0}
-.btn-reset:active{transform:scale(.97)}
 .timer-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
 
@@ -212,7 +209,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <button class="timer-btn btn-pause" id="pauseBtn" onclick="pauseTimer()" style="display:none">⏸ Pause</button>
 <button class="timer-btn btn-end-break" id="endBreakBtn" onclick="endBreak()" style="display:none">☕ End Break</button>
 <button class="timer-btn btn-interrupt" id="interruptBtn" onclick="interruptTimer()" style="display:none">⛔ Interrupted</button>
-<button class="timer-btn btn-reset" id="resetBtn" onclick="resetTimer()">↺ Reset</button>
 </div>
 </section>
 
@@ -518,8 +514,12 @@ function toggleNav(){document.getElementById('navLinks').classList.toggle('open'
 
 // ── Init ──
 document.addEventListener('click',()=>{if(!audioCtx)getCtx()},{once:true});
+currentFocusDuration=WORK_DUR;
+state.timeLeft=WORK_DUR*60; state.totalTime=WORK_DUR*60;
+state.phase='idle'; state.timerId=null;
+showControls();
+updateDisplay();
 updateStatsUI();
-resetTimer();
 </script>
 </body>
 </html>
