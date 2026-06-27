@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rohitbhandariwork.github.io/course/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/course/</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/flashcard/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/flashcard/</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -16,83 +16,83 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/interview/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/interview/</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/jobtool/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/jobtool/</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/05/11/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/05/11/</loc>
+    <priority>0.3</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/05/16/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/05/16/</loc>
+    <priority>0.3</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/05/24/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/05/24/</loc>
+    <priority>0.3</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/05/25/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/05/25/</loc>
+    <priority>0.3</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/05/26/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/05/26/</loc>
+    <priority>0.3</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/06/19/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/06/19/</loc>
+    <priority>0.5</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/06/20/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/06/20/</loc>
+    <priority>0.5</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/06/22/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/06/22/</loc>
+    <priority>0.5</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/06/23/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/06/23/</loc>
+    <priority>0.5</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/06/24/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/06/24/</loc>
+    <priority>0.5</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/2026/06/27/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/2026/06/27/</loc>
+    <priority>0.5</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/news/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/news/</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/shop/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/shop/</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/shop/job/index.html</loc>
-    <priority>1.0</priority>
+    <loc>https://rohitbhandariwork.github.io/shop/job/</loc>
+    <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
