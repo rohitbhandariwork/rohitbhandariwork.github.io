@@ -484,17 +484,6 @@ function endBreak(){
   updateDisplay();
 }
 
-function resetTimer(){
-  if(state.timerId){clearInterval(state.timerId);state.timerId=null}
-  currentFocusDuration=WORK_DUR;
-  state.timeLeft=WORK_DUR*60; state.totalTime=WORK_DUR*60;
-  state.phase='idle'; state.paused=false;
-  state.timerId=null;
-  showControls();
-  document.getElementById('startBtn').textContent='▶ Start';
-  updateDisplay();
-}
-
 // ── Toggles ──
 function toggleSound(){
   soundEnabled=!soundEnabled;
