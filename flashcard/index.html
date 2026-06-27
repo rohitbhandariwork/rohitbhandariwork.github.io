@@ -11,11 +11,9 @@
 <meta property="og:url" content="https://rohitbhandariwork.github.io/flashcard/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+<style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8e8f0;line-height:1.6;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent;padding-top:calc(52px + env(safe-area-inset-top,0))}
+body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8e8f0;line-height:1.6;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent;padding-top:calc(52px + env(safe-area-inset-top,0));-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:#1a1a2e}
 ::-webkit-scrollbar-thumb{background:#3a3a5c;border-radius:3px}
@@ -47,7 +45,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .stats-grid{max-width:700px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:center;position:relative;z-index:1}
 .level-badge{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(245,158,11,.3);transition:.3s;flex-shrink:0;position:relative}
 .level-badge .lvl-num{font-size:20px;font-weight:900;color:#fff;line-height:1}
-.level-badge .lvl-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.5px}
+.level-badge .lvl-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.5px}
 .level-badge.pulse{animation:lvlPulse .5s ease}
 @keyframes lvlPulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
 .gem-badge{position:absolute;top:-6px;right:-6px;background:#ec4899;border-radius:999px;padding:2px 7px;font-size:11px;font-weight:700;color:#fff;box-shadow:0 2px 8px rgba(236,72,153,.3);display:flex;align-items:center;gap:2px}
@@ -63,7 +61,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .stats-right{display:flex;gap:6px;align-items:center;grid-column:1/-1;justify-content:center}
 .stat-pill{display:flex;flex-direction:column;align-items:center;padding:5px 8px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);min-width:40px}
 .stat-pill .stat-num{font-size:14px;font-weight:800;line-height:1.2}
-.stat-pill .stat-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;color:#aaaac8}
+.stat-pill .stat-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#aaaac8}
 .stat-pill.streak .stat-num{color:#f97316}
 .stat-pill.known-pill .stat-num{color:#22c55e}
 .stat-pill.achiev .stat-num{color:#a855f7}
@@ -185,7 +183,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .btn-easy{background:rgba(59,130,246,.12);color:#3b82f6;border:1px solid rgba(59,130,246,.2)}
 .btn-easy:not(:disabled):hover{background:rgba(59,130,246,.2)}
 .srs-state{text-align:center;font-size:11px;font-weight:600;color:#aaaac8;margin:2px 0 6px}
-.due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;height:18px;margin-left:4px;vertical-align:middle}
+.due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 6px;min-width:20px;height:20px;margin-left:4px;vertical-align:middle}
 .topic-chip.has-due{border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.08);color:#ef4444}
 .nav-row{display:flex;justify-content:center;gap:8px;margin:6px auto}
 .nav-row button{padding:12px 18px;border:none;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;min-height:44px;touch-action:manipulation}
@@ -246,7 +244,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .achiev-item.unlocked:hover{transform:scale(1.1)}
 .achiev-item.locked{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);filter:grayscale(1);opacity:.3}
 .achiev-item.hidden{filter:grayscale(1);opacity:.15;background:rgba(255,255,255,.02)}
-.achiev-item .achiev-tip{position:absolute;bottom:calc(100%+6px);left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid rgba(168,85,247,.2);border-radius:8px;padding:6px 10px;white-space:nowrap;font-size:10px;display:none;z-index:10;color:#e8e8f0}
+.achiev-item .achiev-tip{position:absolute;bottom:calc(100%+6px);left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid rgba(168,85,247,.2);border-radius:8px;padding:6px 10px;white-space:nowrap;font-size:11px;display:none;z-index:10;color:#e8e8f0}
 .achiev-item:hover .achiev-tip{display:block}
 
 /* Lucky card notification */
@@ -281,7 +279,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 /* Daily Special Topic (CD6) */
 .topic-chip.special{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.12);color:#f59e0b;animation:specialPulse 2s ease-in-out infinite}
 @keyframes specialPulse{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 8px rgba(245,158,11,.2)}}
-.topic-chip .special-badge{font-size:10px;background:#f59e0b;color:#fff;border-radius:999px;padding:1px 5px;margin-left:4px}
+.topic-chip .special-badge{font-size:11px;background:#f59e0b;color:#fff;border-radius:999px;padding:1px 5px;margin-left:4px}
 
 /* Evanescing Challenge (CD6) */
 .evan-card{margin:4px auto;padding:8px 12px;border-radius:10px;background:rgba(239,68,68,.05);border:1px dashed rgba(239,68,68,.2);display:none;align-items:center;gap:8px;font-size:11px}
@@ -445,7 +443,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .collapse{margin:6px auto;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.04)}
 .collapse-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;transition:.2s;font-size:12px;font-weight:700;color:#aaaac8;background:rgba(255,255,255,.02);touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
 .collapse-bar:active{background:rgba(255,255,255,.04)}
-.collapse-bar .ca{transition:transform .3s;font-size:10px;color:#5555aa}
+.collapse-bar .ca{transition:transform .3s;font-size:11px;color:#5555aa}
 .collapse-bar.open .ca{transform:rotate(90deg)}
 .collapse-body{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease;opacity:0}
 .collapse-body.open{max-height:2000px;opacity:1}
