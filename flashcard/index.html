@@ -64,7 +64,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .day-chip.frozen::after{content:'❄️';font-size:11px;position:absolute}
 
 /* Container */
-.container{max-width:100%;margin:0 auto;padding:0 8px}
+.container{max-width:100%;margin:0 auto;padding:0 16px}
 
 /* Narrative Banner */
 .narrative-banner{margin:6px auto;padding:8px 8px;border-radius:10px;background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(245,158,11,.04));border:1px solid rgba(168,85,247,.12);display:flex;align-items:center;gap:6px;font-size:11px}
@@ -88,7 +88,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 
 /* Topic Area */
 .topic-area{margin:8px auto;transition:opacity .3s ease,max-height .4s ease;overflow:hidden;max-height:200px}
-.topic-area.collapsed{opacity:0;max-height:0;margin:0;pointer-events:none}
+
 .flashcard-area.centered{min-height:70vh;display:flex;flex-direction:column;justify-content:center;padding:12px 0}
 
 /* Back to topics button */
@@ -140,8 +140,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .card-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;color:#aaaac8}
 .card-label.front{color:#f59e0b}
 .card-label.back{color:#22c55e}
-.card-front .card-text{font-size:16px;font-weight:700;line-height:1.6}
-.card-back .card-text{font-size:13px;line-height:1.7}
+.card-front .card-text{font-size:16px;font-weight:700;line-height:1.6;max-width:28em;margin:0 auto}
+.card-back .card-text{font-size:13px;line-height:1.7;max-width:32em;margin:0 auto;letter-spacing:.015em}
 .card-back .card-text code{background:rgba(34,197,94,.1);padding:2px 6px;border-radius:4px;font-size:13px}
 .card-hint{margin-top:10px;font-size:11px;color:#5555aa;text-align:center;transition:.3s}
 .card-inner.lucky{animation:luckyGlow 1s ease}
@@ -453,7 +453,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 }
 
 @media(min-width:1024px){
-.container{max-width:860px;padding:0 16px}
+.container{max-width:min(860px,100%);margin:0 auto;padding:0 16px}
 .stats-hero{padding:24px 32px}
 .stats-grid{max-width:860px;gap:10px}
 .level-badge{width:72px;height:72px}
@@ -477,25 +477,25 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .topic-bar{gap:10px}
 .topic-bar button{padding:14px 20px;font-size:16px;min-height:48px}
 .topic-chips{gap:6px;margin-top:12px}
-.topic-chip{padding:6px 14px;font-size:15px}
-.back-topics button{font-size:14px;padding:6px 16px}
+.topic-chip{padding:6px 14px;font-size:clamp(13px,1.2vw,17px)}
+.back-topics button{font-size:clamp(12px,1.1vw,15px);padding:6px 16px}
 .action-row{gap:10px;margin:12px auto}
-.action-btn{padding:14px 20px;font-size:15px;min-height:48px}
-.card-wrapper{max-width:700px}
+.action-btn{padding:14px 20px;font-size:clamp(13px,1.2vw,17px);min-height:48px}
+.card-wrapper{max-width:min(700px,94vw)}
 .card-inner{min-height:280px}
 .card-face{padding:36px 32px}
 .card-label{font-size:14px;letter-spacing:1.5px;margin-bottom:16px}
-.card-front .card-text{font-size:22px;line-height:1.5}
-.card-back .card-text{font-size:18px;line-height:1.6}
-.card-back .card-text code{font-size:16px;padding:3px 8px}
+.card-front .card-text{font-size:clamp(18px,1.8vw,26px);line-height:1.5;max-width:28em;margin:0 auto}
+.card-back .card-text{font-size:clamp(15px,1.5vw,22px);line-height:1.6;max-width:32em;margin:0 auto;letter-spacing:.015em}
+.card-back .card-text code{font-size:clamp(14px,1.3vw,18px);padding:3px 8px}
 .card-hint{font-size:14px;margin-top:14px}
 .rating-row{gap:10px;margin:10px auto 14px}
-.rating-btn{padding:14px 22px;font-size:16px;min-height:48px}
-.srs-state{font-size:14px}
+.rating-btn{padding:14px 22px;font-size:clamp(13px,1.4vw,18px);min-height:48px}
+.srs-state{font-size:clamp(12px,1.2vw,15px)}
 .nav-row{gap:12px}
-.nav-row button{padding:14px 24px;font-size:16px;min-height:48px}
-.counter{font-size:14px}
-.deck-stats{font-size:14px}
+.nav-row button{padding:14px 24px;font-size:clamp(14px,1.3vw,18px);min-height:48px}
+.counter{font-size:clamp(12px,1.1vw,15px)}
+.deck-stats{font-size:clamp(12px,1.1vw,15px)}
 .progress-bar-wrap{height:6px}
 .toast{font-size:15px;padding:12px 24px}
 .modal-box{max-width:400px;padding:36px 32px}
@@ -578,7 +578,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <span class="narr-stage" id="narrStage">Realm 1: The Awakening</span>
 </div>
 
-<!-- Topic Area (primary action) -->
+<div class="collapse-bar" id="c-topics" onclick="toggleSection('topics')">
+<span>📖 Topics</span><span class="ca">▸</span>
+</div>
+<div class="collapse-body open" id="cb-topics">
+<div class="collapse-inner">
 <div class="topic-area" id="topicArea">
 <div class="topic-heading">📖 Pick a topic to study</div>
 <div class="topic-bar">
@@ -586,6 +590,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 </div>
 <div class="topic-chips" id="topicChips"></div>
 </div>
+</div></div>
 
 <!-- Flashcard Area -->
 <div class="flashcard-area" id="flashcardArea">
@@ -905,7 +910,7 @@ const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c.
 if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
 const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
-document.getElementById('topicArea').classList.add('collapsed');
+document.getElementById('c-topics').classList.remove('open');document.getElementById('cb-topics').classList.remove('open');
 document.getElementById('flashcardArea').classList.add('visible','centered');
 document.getElementById('backTopics').classList.add('show');
 document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block:'center'});
