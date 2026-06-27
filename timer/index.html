@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Pomodoro Timer — RBPN</title>
-<meta name="description" content="Pomodoro timer with gamification. Focus, break, earn XP, build streaks.">
+<title>Escalating Focus Timer — RBPN</title>
+<meta name="description" content="Escalating focus timer. Each completed focus adds 5 min. Interrupt resets. Earn XP, build streaks.">
 <link rel="canonical" href="https://rohitbhandariwork.github.io/timer/">
-<meta property="og:title" content="Pomodoro Timer — RBPN">
-<meta property="og:description" content="Pomodoro timer with gamification. Focus, break, earn XP, build streaks.">
+<meta property="og:title" content="Escalating Focus Timer — RBPN">
+<meta property="og:description" content="Escalating focus timer. Each completed focus adds 5 min. Interrupt resets. Earn XP, build streaks.">
 <meta property="og:url" content="https://rohitbhandariwork.github.io/timer/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -52,6 +52,13 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .day-chip.today{box-shadow:0 0 6px rgba(245,158,11,.4)}
 .day-chip.missed{background:#ef4444;color:#fff}
 
+/* Stats footer */
+.stats-footer{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px}
+.stats-footer span{font-size:11px;color:#aaaac8}
+.stats-footer strong{color:#f59e0b}
+.stat-best{font-size:11px;color:#8888aa;text-align:center;margin-top:2px}
+.stat-best b{color:#f59e0b}
+
 /* Container */
 .container{max-width:100%;margin:0 auto;padding:0 16px}
 
@@ -61,16 +68,15 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .timer-ring-svg{width:100%;height:100%;transform:rotate(-90deg)}
 .timer-ring-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:6}
 .timer-ring-progress{fill:none;stroke:#f59e0b;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s ease,stroke .5s ease}
-.timer-ring-progress.running{animation:ringPulse 2s ease-in-out infinite}
 @keyframes ringPulse{0%,100%{opacity:1}50%{opacity:.7}}
 .timer-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
 .timer-phase{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#aaaac8}
 .timer-phase.focus{color:#f59e0b}
 .timer-phase.break{color:#22c55e}
 .timer-display{font-size:52px;font-weight:800;letter-spacing:2px;font-variant-numeric:tabular-nums;line-height:1;color:#fff}
-.timer-session{font-size:11px;font-weight:600;color:#8888aa}
-.timer-session strong{color:#c8c8e0}
-.timer-controls{display:flex;gap:8px;margin-top:4px}
+.timer-duration-badge{font-size:11px;font-weight:600;color:#8888aa;letter-spacing:.5px}
+.timer-duration-badge strong{color:#e8e8f0;font-weight:800}
+.timer-controls{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center}
 .timer-btn{padding:12px 28px;border-radius:999px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;min-height:48px;touch-action:manipulation;display:flex;align-items:center;gap:6px}
 .btn-start{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
 .btn-start:hover{box-shadow:0 4px 20px rgba(245,158,11,.3)}
@@ -78,20 +84,16 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .btn-pause{background:rgba(255,255,255,.08);color:#e8e8f0;border:1px solid rgba(255,255,255,.1)}
 .btn-pause:hover{background:rgba(255,255,255,.12)}
 .btn-pause:active{transform:scale(.97)}
-.btn-reset{background:rgba(239,68,68,.12);color:#ef4444;border:1px solid rgba(239,68,68,.15)}
-.btn-reset:hover{background:rgba(239,68,68,.2)}
+.btn-end-break{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
+.btn-end-break:hover{box-shadow:0 4px 20px rgba(34,197,94,.3)}
+.btn-end-break:active{transform:scale(.97)}
+.btn-interrupt{background:rgba(239,68,68,.12);color:#ef4444;border:1px solid rgba(239,68,68,.15)}
+.btn-interrupt:hover{background:rgba(239,68,68,.2)}
+.btn-interrupt:active{transform:scale(.97)}
+.btn-reset{background:rgba(255,255,255,.06);color:#8888aa;border:1px solid rgba(255,255,255,.08)}
+.btn-reset:hover{background:rgba(255,255,255,.1);color:#e8e8f0}
 .btn-reset:active{transform:scale(.97)}
-.btn-start:disabled,.btn-pause:disabled,.btn-reset:disabled{opacity:.4;cursor:not-allowed;transform:none}
-
-/* Session Log */
-.session-log{margin:10px auto;width:100%;max-width:360px}
-.session-log-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8888aa;margin-bottom:6px;text-align:center}
-.session-log-items{display:flex;gap:3px;justify-content:center;flex-wrap:wrap}
-.session-dot{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:.3s}
-.session-dot.focus{background:rgba(245,158,11,.15);color:#f59e0b}
-.session-dot.focus.done{background:#f59e0b;color:#fff}
-.session-dot.break{background:rgba(34,197,94,.15);color:#22c55e}
-.session-dot.break.done{background:#22c55e;color:#fff}
+.timer-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
 /* Settings */
 .settings-toggle{font-size:12px;font-weight:600;color:#8888aa;cursor:pointer;padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.06);transition:.2s;touch-action:manipulation;background:rgba(255,255,255,.02)}
@@ -138,11 +140,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .toast.error{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
 .toast.warning{background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.2)}
 
-/* Stats footer */
-.stats-footer{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px}
-.stats-footer span{font-size:11px;color:#aaaac8}
-.stats-footer strong{color:#f59e0b}
-
 /* Responsive */
 @media(min-width:768px){
 #topbar{padding:max(env(safe-area-inset-top,0),4px) 12px}
@@ -164,10 +161,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .stat-pill .stat-num{font-size:18px}
 .stat-pill .stat-label{font-size:12px}
 .day-chip{width:28px;height:28px;font-size:11px}
+.stat-best{font-size:13px}
 .timer-ring-wrap{width:340px;height:340px}
 .timer-display{font-size:72px}
 .timer-phase{font-size:14px}
-.timer-session{font-size:13px}
+.timer-duration-badge{font-size:13px}
 .timer-btn{padding:14px 36px;font-size:17px;min-height:52px}
 .settings-panel{max-width:400px}
 .settings-label{font-size:13px}
@@ -183,7 +181,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <div class="nav-links" id="navLinks">
 <a href="../">← Back to Portfolio</a>
 <a href="../flashcard/">🃏 Flashcards</a>
-<a href="./" class="active">⏱️ Pomodoro Timer</a>
+<a href="./" class="active">⏱️ Focus Timer</a>
 </div>
 </div>
 
@@ -201,6 +199,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <div class="stat-pill pomodoros"><span class="stat-num" id="pomodoroCount">0</span><span class="stat-label">🍅 Done</span></div>
 </div>
 </div>
+<div class="stats-footer"><span>Best: <b id="bestFocusDisplay">0</b> min</span></div>
 </section>
 
 <div class="container">
@@ -214,8 +213,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 </svg>
 <div class="timer-center">
 <div class="timer-phase focus" id="timerPhase">FOCUS</div>
-<div class="timer-display" id="timerDisplay">25:00</div>
-<div class="timer-session">Session <strong id="sessionNum">1</strong> of <strong id="sessionTotal">4</strong></div>
+<div class="timer-display" id="timerDisplay">5:00</div>
+<div class="timer-duration-badge" id="durationBadge">⏱ <strong id="curDurDisplay">5</strong> min</div>
 </div>
 </div>
 <!-- Sound/Visual toggles -->
@@ -223,61 +222,34 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 <button class="toggle-btn active" id="soundToggle" onclick="toggleSound()">🔊 Sound</button>
 <button class="toggle-btn active" id="visualToggle" onclick="toggleVisual()">✨ Effects</button>
 </div>
-<div class="timer-controls">
+<div class="timer-controls" id="controlsRow">
 <button class="timer-btn btn-start" id="startBtn" onclick="startTimer()">▶ Start</button>
 <button class="timer-btn btn-pause" id="pauseBtn" onclick="pauseTimer()" style="display:none">⏸ Pause</button>
+<button class="timer-btn btn-end-break" id="endBreakBtn" onclick="endBreak()" style="display:none">☕ End Break</button>
+<button class="timer-btn btn-interrupt" id="interruptBtn" onclick="interruptTimer()" style="display:none">⛔ Interrupted</button>
 <button class="timer-btn btn-reset" id="resetBtn" onclick="resetTimer()">↺ Reset</button>
 </div>
 </section>
-
-<!-- Session Log -->
-<div class="session-log" id="sessionLog">
-<div class="session-log-title">Today's Sessions</div>
-<div class="session-log-items" id="sessionLogItems"></div>
-</div>
 
 <!-- Settings -->
 <button class="settings-toggle" id="settingsToggle" onclick="toggleSettings()">⚙️ Settings</button>
 <div class="settings-panel" id="settingsPanel">
 <div class="settings-group">
-<div class="settings-label">Focus Duration <span id="workDurDisplay">25</span> min</div>
+<div class="settings-label">Start Focus <span id="workDurDisplay">5</span> min</div>
 <div class="settings-options" id="workOptions">
-<button class="settings-opt" data-value="15">15</button>
-<button class="settings-opt" data-value="20">20</button>
-<button class="settings-opt active" data-value="25">25</button>
-<button class="settings-opt" data-value="30">30</button>
-<button class="settings-opt" data-value="35">35</button>
-<button class="settings-opt" data-value="40">40</button>
-<button class="settings-opt" data-value="45">45</button>
-<button class="settings-opt" data-value="50">50</button>
-</div>
-</div>
-<div class="settings-group">
-<div class="settings-label">Short Break <span id="shortBreakDisplay">5</span> min</div>
-<div class="settings-options" id="shortBreakOptions">
 <button class="settings-opt" data-value="3">3</button>
 <button class="settings-opt active" data-value="5">5</button>
-<button class="settings-opt" data-value="7">7</button>
-<button class="settings-opt" data-value="10">10</button>
-</div>
-</div>
-<div class="settings-group">
-<div class="settings-label">Long Break <span id="longBreakDisplay">15</span> min</div>
-<div class="settings-options" id="longBreakOptions">
 <button class="settings-opt" data-value="10">10</button>
 <button class="settings-opt" data-value="15">15</button>
 <button class="settings-opt" data-value="20">20</button>
-<button class="settings-opt" data-value="25">25</button>
 </div>
 </div>
 <div class="settings-group">
-<div class="settings-label">Focus Sessions <span id="sessionsDisplay">4</span></div>
-<div class="settings-options" id="sessionsOptions">
-<button class="settings-opt" data-value="2">2</button>
-<button class="settings-opt" data-value="3">3</button>
-<button class="settings-opt active" data-value="4">4</button>
-<button class="settings-opt" data-value="5">5</button>
-<button class="settings-opt" data-value="6">6</button>
+<div class="settings-label">Increment <span id="incrementDisplay">5</span> min</div>
+<div class="settings-options" id="incrementOptions">
+<button class="settings-opt active" data-value="5">5</button>
+<button class="settings-opt" data-value="10">10</button>
+<button class="settings-opt" data-value="15">15</button>
 </div>
 </div>
 </div>
@@ -306,17 +278,18 @@ const SND={
 };
 
 // ── Settings ──
-let WORK_DUR=25, SHORT_BREAK=5, LONG_BREAK=15, SESSIONS_BEFORE_LONG=4;
+let WORK_DUR=5, WORK_INCREMENT=5;
 const LS_KEY='timer_stats';
 
 // ── State ──
-let state={phase:'idle',mode:'focus',timeLeft:WORK_DUR*60,totalTime:WORK_DUR*60,session:1,totalSessions:SESSIONS_BEFORE_LONG,paused:false,timerId:null,wasLongBreak:false,fociDone:0};
+let state={phase:'idle',timeLeft:WORK_DUR*60,totalTime:WORK_DUR*60,timerId:null};
+let currentFocusDuration=WORK_DUR;
 let soundEnabled=true,visualEnabled=true;
 
 // ── Gamification ──
 function loadStats(){
   try{const d=JSON.parse(localStorage.getItem(LS_KEY));if(d&&typeof d==='object')return d}catch(e){}
-  return {xp:0,level:1,pomodoros:0,streak:0,streak_days:[],best_streak:0,total_focus_minutes:0,sessions_today:0,last_date:''};
+  return {xp:0,level:1,pomodoros:0,streak:0,streak_days:[],best_streak:0,best_focus:0};
 }
 let stats=loadStats();
 
@@ -325,12 +298,12 @@ function saveStats(){
 }
 
 const TITLES=[
-  {minLevel:1,title:'Timer Newbie'},
-  {minLevel:2,title:'Focus Seeker'},
-  {minLevel:4,title:'Pomodoro Pro'},
-  {minLevel:7,title:'Time Warden'},
-  {minLevel:10,title:'Chronomaster'},
-  {minLevel:15,title:'Tempus Dominus'},
+  {minLevel:1,title:'Focus Beginner'},
+  {minLevel:2,title:'Flow Starter'},
+  {minLevel:4,title:'Concentration Pro'},
+  {minLevel:7,title:'Deep Worker'},
+  {minLevel:10,title:'Focus Master'},
+  {minLevel:15,title:'Unshakeable'},
 ];
 
 function getTitle(level){
@@ -363,20 +336,18 @@ function updateStatsUI(){
   document.getElementById('pomodoroCount').textContent=stats.pomodoros;
   document.getElementById('streakNum').textContent=stats.streak;
   document.getElementById('streakPill').classList.toggle('has-streak',(stats.streak||0)>0);
-  // Days chips
+  document.getElementById('bestFocusDisplay').textContent=stats.best_focus||0;
   const chips=document.getElementById('daysChips');chips.innerHTML='';
   const days=stats.streak_days||[],today=new Date().toISOString().slice(0,10);
   for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*86400000),ds=d.toISOString().slice(0,10),c=document.createElement('div');c.className='day-chip';if(days.includes(ds))c.classList.add('done');if(ds===today&&days.includes(ds))c.classList.add('today');if(!days.includes(ds)&&ds<today)c.classList.add('missed');c.textContent=['S','M','T','W','T','F','S'][d.getDay()];chips.appendChild(c)}
 }
 
-// ── Streak ──
 function updateStreak(){
   const today=new Date().toISOString().slice(0,10);
   const days=stats.streak_days||[];
   if(!days.includes(today)){
     days.push(today);
     stats.streak_days=days;
-    // Check consecutive
     let streak=0;
     const d=new Date();
     while(true){
@@ -396,8 +367,7 @@ const CIRCUMFERENCE=2*Math.PI*44;
 
 function updateRing(progress){
   const offset=CIRCUMFERENCE*(1-Math.min(1,Math.max(0,progress)));
-  const ring=document.getElementById('timerRing');
-  ring.style.strokeDashoffset=offset;
+  document.getElementById('timerRing').style.strokeDashoffset=offset;
 }
 
 function formatTime(secs){
@@ -406,19 +376,20 @@ function formatTime(secs){
 }
 
 function updateDisplay(){
-  document.getElementById('timerDisplay').textContent=formatTime(state.timeLeft);
-  document.getElementById('sessionNum').textContent=state.session;
-  document.getElementById('sessionTotal').textContent=state.totalSessions;
-  const phase=document.getElementById('timerPhase');
+  const phaseEl=document.getElementById('timerPhase');
   const ring=document.getElementById('timerRing');
-  if(state.mode==='focus'){
-    phase.textContent='FOCUS';
-    phase.className='timer-phase focus';
-    ring.style.stroke='#f59e0b';
-  }else{
-    phase.textContent='BREAK';
-    phase.className='timer-phase break';
+  if(state.phase==='break'){
+    phaseEl.textContent='☕ BREAK';
+    phaseEl.className='timer-phase break';
     ring.style.stroke='#22c55e';
+    document.getElementById('timerDisplay').textContent='Take your time';
+    document.getElementById('durationBadge').innerHTML='⏱ <strong id="curDurDisplay">'+currentFocusDuration+'</strong> min → next focus';
+  }else{
+    phaseEl.textContent='FOCUS';
+    phaseEl.className='timer-phase focus';
+    ring.style.stroke='#f59e0b';
+    document.getElementById('timerDisplay').textContent=formatTime(state.timeLeft);
+    document.getElementById('durationBadge').innerHTML='⏱ <strong id="curDurDisplay">'+currentFocusDuration+'</strong> min';
   }
   updateRing(state.totalTime>0?state.timeLeft/state.totalTime:0);
 }
@@ -462,130 +433,109 @@ function showToast(msg,type){
   clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.className='toast',2500);
 }
 
+function showControls(){
+  document.getElementById('startBtn').style.display='none';
+  document.getElementById('pauseBtn').style.display='none';
+  document.getElementById('endBreakBtn').style.display='none';
+  document.getElementById('interruptBtn').style.display='none';
+  if(state.phase==='break'){
+    document.getElementById('endBreakBtn').style.display='flex';
+  }else if(state.phase==='idle'){
+    document.getElementById('startBtn').style.display='flex';
+  }else if(state.phase==='running'){
+    document.getElementById('pauseBtn').style.display='flex';
+    document.getElementById('interruptBtn').style.display='flex';
+  }else if(state.phase==='paused'){
+    document.getElementById('startBtn').style.display='flex';
+    document.getElementById('interruptBtn').style.display='flex';
+    document.getElementById('startBtn').textContent='▶ Resume';
+  }
+}
+
 function tick(){
   state.timeLeft--;
   updateDisplay();
   if(state.timeLeft<=0){
     clearInterval(state.timerId);state.timerId=null;
-    state.paused=false;
-    completePhase();
+    focusComplete();
   }
 }
 
 function startTimer(){
-  if(!state.paused&&state.phase==='idle'){
-    // Reset from idle
-    state.timeLeft=WORK_DUR*60;state.totalTime=WORK_DUR*60;
-    state.mode='focus';state.session=1;
-    state.totalSessions=SESSIONS_BEFORE_LONG;
-  }
   if(state.timerId)return;
-  if(state.timeLeft<=0){
-    state.timeLeft=state.totalTime;
-  }
-  state.phase='running';state.paused=false;
+  state.phase='running';
   state.timerId=setInterval(tick,1000);
-  document.getElementById('startBtn').style.display='none';
-  document.getElementById('pauseBtn').style.display='flex';
+  showControls();
   if(soundEnabled)SND.start();
   updateDisplay();
 }
 
 function pauseTimer(){
-  if(state.timerId){
-    clearInterval(state.timerId);state.timerId=null;
-    state.paused=true;state.phase='paused';
-    document.getElementById('pauseBtn').style.display='none';
-    document.getElementById('startBtn').style.display='flex';
-    document.getElementById('startBtn').textContent='▶ Resume';
-    if(soundEnabled)SND.pause();
-  }
+  if(!state.timerId)return;
+  clearInterval(state.timerId);state.timerId=null;
+  state.phase='paused';
+  showControls();
+  if(soundEnabled)SND.pause();
 }
 
-function resetTimer(){
-  if(state.timerId){clearInterval(state.timerId);state.timerId=null}
-  state.phase='idle';state.paused=false;
-  state.mode='focus';state.session=1;state.fociDone=0;
-  state.totalSessions=SESSIONS_BEFORE_LONG;
-  state.timeLeft=WORK_DUR*60;state.totalTime=WORK_DUR*60;
-  document.getElementById('startBtn').style.display='flex';
-  document.getElementById('startBtn').textContent='▶ Start';
-  document.getElementById('pauseBtn').style.display='none';
+function focusComplete(){
+  stats.pomodoros++;
+  if(currentFocusDuration>stats.best_focus)stats.best_focus=currentFocusDuration;
+  addXP(10);
+  updateStreak();
+  flashScreen('flash-complete');
+  spawnConfetti(40);
+  spawnFloat('+10 XP','#f59e0b');
+  if(soundEnabled){SND.complete();setTimeout(()=>SND.alarm(),800)}
+  showToast('🎉 Focus complete! +10 XP','success');
+  // Escalate
+  currentFocusDuration+=WORK_INCREMENT;
+  // Move to break
+  state.phase='break'; state.paused=false;
+  showControls();
   updateDisplay();
-  updateSessionLog();
-  document.getElementById('timerRing').classList.remove('running');
-}
-
-function completePhase(){
-  if(state.mode==='focus'){
-    stats.pomodoros++;stats.total_focus_minutes+=Math.round(WORK_DUR);
-    const today=new Date().toISOString().slice(0,10);
-    if(stats.last_date!==today){stats.last_date=today;stats.sessions_today=1}
-    else stats.sessions_today++;
-    state.fociDone++;
-    addXP(10);
-    updateStreak();
-    flashScreen('flash-complete');
-    spawnConfetti(40);
-    spawnFloat('+10 XP','#f59e0b');
-    if(soundEnabled){SND.complete();setTimeout(()=>SND.alarm(),800)}
-    showToast('🍅 Focus complete! +10 XP','success');
-    if(state.session>=state.totalSessions){
-      state.wasLongBreak=true; state.mode='break'; state.session=1;
-      state.timeLeft=LONG_BREAK*60; state.totalTime=LONG_BREAK*60;
-      showToast('☕ Long break! '+LONG_BREAK+' min','info');
-    }else{
-      state.wasLongBreak=false; state.mode='break';
-      state.timeLeft=SHORT_BREAK*60; state.totalTime=SHORT_BREAK*60;
-      showToast('☕ Short break! '+SHORT_BREAK+' min','info');
-    }
-    flashScreen('flash-break');
-    if(soundEnabled)SND.breakStart();
-    updateDisplay();
-    state.phase='idle';state.paused=false;
-    document.getElementById('startBtn').textContent='▶ Start Break';
-    document.getElementById('startBtn').style.display='flex';
-    document.getElementById('pauseBtn').style.display='none';
-    updateSessionLog();
-  }else{
-    addXP(5);
-    spawnFloat('+5 XP','#22c55e');
-    flashScreen('flash-focus');
-    if(soundEnabled){SND.complete();setTimeout(()=>SND.alarm(),500)}
-    showToast('✨ Break over! Time to focus','warning');
-    if(state.wasLongBreak){
-      state.wasLongBreak=false; state.fociDone=0;
-    }else{
-      state.session++;
-    }
-    state.mode='focus';state.timeLeft=WORK_DUR*60;state.totalTime=WORK_DUR*60;
-    state.phase='idle';state.paused=false;
-    document.getElementById('startBtn').textContent='▶ Start Focus';
-    document.getElementById('startBtn').style.display='flex';
-    document.getElementById('pauseBtn').style.display='none';
-    updateDisplay();
-    updateSessionLog();
-  }
   saveStats();
   updateStatsUI();
 }
 
-// ── Session Log ──
-function updateSessionLog(){
-  const container=document.getElementById('sessionLogItems');
-  container.innerHTML='';
-  const total=state.totalSessions, done=state.fociDone, cur=state.session;
-  const inBreak=state.mode==='break';
-  for(let i=1;i<=total;i++){
-    const dot=document.createElement('div');
-    const isDone=i<=done;
-    const isCur=i===cur&&!isDone;
-    dot.className='session-dot focus'+(isDone?' done':'');
-    dot.textContent=isDone?'🍅':(isCur?(inBreak?'☕':'⏳'):i);
-    container.appendChild(dot);
-  }
+function interruptTimer(){
+  if(state.timerId){clearInterval(state.timerId);state.timerId=null}
+  addXP(10);
+  spawnFloat('+10 XP Interrupted','#ef4444');
+  flashScreen('flash-complete');
+  if(soundEnabled)SND.pause();
+  showToast('⛔ Interrupted — +10 XP, reset to '+WORK_DUR+' min','warning');
+  currentFocusDuration=WORK_DUR;
+  state.timeLeft=WORK_DUR*60; state.totalTime=WORK_DUR*60;
+  state.phase='idle'; state.paused=false;
+  state.timerId=null;
+  showControls();
+  updateDisplay();
+  updateStatsUI();
 }
-updateSessionLog();
+
+function endBreak(){
+  if(soundEnabled)SND.breakStart();
+  spawnFloat('+5 XP','#22c55e');
+  showToast('✨ Break over! Ready for '+currentFocusDuration+' min','info');
+  addXP(5);
+  state.timeLeft=currentFocusDuration*60; state.totalTime=currentFocusDuration*60;
+  state.phase='idle'; state.paused=false;
+  state.timerId=null;
+  showControls();
+  updateDisplay();
+}
+
+function resetTimer(){
+  if(state.timerId){clearInterval(state.timerId);state.timerId=null}
+  currentFocusDuration=WORK_DUR;
+  state.timeLeft=WORK_DUR*60; state.totalTime=WORK_DUR*60;
+  state.phase='idle'; state.paused=false;
+  state.timerId=null;
+  showControls();
+  document.getElementById('startBtn').textContent='▶ Start';
+  updateDisplay();
+}
 
 // ── Settings ──
 function toggleSettings(){
@@ -600,10 +550,18 @@ function setupSettings(){
         btn.classList.add('active');
         const val=parseInt(btn.dataset.value);
         const id=group.id;
-        if(id==='workOptions'){WORK_DUR=val;document.getElementById('workDurDisplay').textContent=val;if(state.phase==='idle'){state.timeLeft=WORK_DUR*60;state.totalTime=WORK_DUR*60;updateDisplay()}}
-        else if(id==='shortBreakOptions'){SHORT_BREAK=val;document.getElementById('shortBreakDisplay').textContent=val}
-        else if(id==='longBreakOptions'){LONG_BREAK=val;document.getElementById('longBreakDisplay').textContent=val}
-        else if(id==='sessionsOptions'){SESSIONS_BEFORE_LONG=val;document.getElementById('sessionsDisplay').textContent=val;state.totalSessions=val;updateDisplay()}
+        if(id==='workOptions'){
+          WORK_DUR=val;
+          document.getElementById('workDurDisplay').textContent=val;
+          if(state.phase==='idle'||state.phase==='break'){
+            currentFocusDuration=val;
+            state.timeLeft=val*60; state.totalTime=val*60;
+            updateDisplay();
+          }
+        }else if(id==='incrementOptions'){
+          WORK_INCREMENT=val;
+          document.getElementById('incrementDisplay').textContent=val;
+        }
         if(soundEnabled)SND.click();
       });
     });
@@ -632,7 +590,6 @@ function toggleNav(){document.getElementById('navLinks').classList.toggle('open'
 document.addEventListener('click',()=>{if(!audioCtx)getCtx()},{once:true});
 updateStatsUI();
 resetTimer();
-updateSessionLog();
 </script>
 </body>
 </html>
