@@ -165,15 +165,22 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 .float-xp.pink{color:#ec4899}
 .float-xp.blue{color:#3b82f6}
 
-/* Known Row */
-.known-row{display:flex;gap:8px;justify-content:center;margin:6px auto 10px}
-.known-row button{padding:12px 16px;border:none;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;position:relative;overflow:hidden;touch-action:manipulation;min-height:44px}
-.known-row button:disabled{opacity:.35;cursor:not-allowed}
-.known-row button:not(:disabled):active{transform:scale(.96)}
-.btn-known{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
-.btn-known:not(:disabled):hover{box-shadow:0 4px 16px rgba(34,197,94,.3)}
-.btn-still{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
-.btn-still:not(:disabled):hover{box-shadow:0 4px 16px rgba(239,68,68,.3)}
+/* Rating Row (SRS) */
+.rating-row{display:flex;gap:6px;justify-content:center;margin:6px auto 10px;flex-wrap:wrap}
+.rating-btn{padding:10px 12px;border:none;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:44px}
+.rating-btn:disabled{opacity:.35;cursor:not-allowed}
+.rating-btn:not(:disabled):active{transform:scale(.96)}
+.btn-again{background:rgba(239,68,68,.12);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+.btn-again:not(:disabled):hover{background:rgba(239,68,68,.2)}
+.btn-hard{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.btn-hard:not(:disabled):hover{background:rgba(245,158,11,.2)}
+.btn-good{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.2)}
+.btn-good:not(:disabled):hover{background:rgba(34,197,94,.2)}
+.btn-easy{background:rgba(59,130,246,.12);color:#3b82f6;border:1px solid rgba(59,130,246,.2)}
+.btn-easy:not(:disabled):hover{background:rgba(59,130,246,.2)}
+.srs-state{text-align:center;font-size:11px;font-weight:600;color:#aaaac8;margin:2px 0 6px}
+.due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;height:18px;margin-left:4px;vertical-align:middle}
+.topic-chip.has-due{border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.08);color:#ef4444}
 .nav-row{display:flex;justify-content:center;gap:8px;margin:6px auto}
 .nav-row button{padding:12px 18px;border:none;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;min-height:44px;touch-action:manipulation}
 .btn-prev{background:rgba(255,255,255,.06);color:#8888aa}
@@ -550,9 +557,12 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 </div></div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
 </div>
-<div class="known-row">
-<button class="btn-known" id="knownBtn" onclick="markKnown()">✅ I Know This</button>
-<button class="btn-still" id="stillBtn" onclick="markStill()">📖 Still Learning</button>
+<div class="srs-state" id="srsState"></div>
+<div class="rating-row">
+<button class="rating-btn btn-again" onclick="rateCard(1)">🔄 Again</button>
+<button class="rating-btn btn-hard" onclick="rateCard(2)">🔁 Hard</button>
+<button class="rating-btn btn-good" onclick="rateCard(3)">✅ Good</button>
+<button class="rating-btn btn-easy" onclick="rateCard(4)">🚀 Easy</button>
 </div>
 <div class="nav-row">
 <button class="btn-prev" id="prevBtn" onclick="prevCard()">← Previous</button>
@@ -690,7 +700,7 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#0f0f1a
 
 <script>
 const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
-let cards=[],currentIndex=0,knownSet={},isFlipped=false,isLoading=false,isDeckComplete=false,deckKnownCount=0,recentTopics=[];
+let cards=[],currentIndex=0,isFlipped=false,isLoading=false,recentTopics=[],deckCache=null;
 let stats={xp:0,level:1,gems:10,streak:0,total_known:0,achievements:[],hidden_achievements:[],streak_days:[],daily_challenge:null,daily_progress:0,daily_goal:0,mystery_available:true,xp_booster_active:false,xp_booster_cards_remaining:0,weekly_challenge:null,weekly_progress:0,weekly_goal:0,narrative_stage:1,boss_challenges:{},streak_freezes:0};
 
 const LVL_TITLES=[{min:1,max:2,title:'Novice',rank:'🃏 Learner'},{min:3,max:5,title:'Apprentice',rank:'📖 Student'},{min:6,max:9,title:'Journeyman',rank:'⚡ Scholar'},{min:10,max:14,title:'Expert',rank:'🧠 Thinker'},{min:15,max:20,title:'Master',rank:'👑 Master'},{min:21,max:29,title:'Grandmaster',rank:'🌟 Sage'},{min:30,max:50,title:'Legend',rank:'💎 Legend'}];
@@ -746,6 +756,22 @@ function calcLevel(x){return Math.floor(x/50)+1}
 function getLvlTitle(l){for(const t of LVL_TITLES){if(l>=t.min&&l<=t.max)return t}return LVL_TITLES[LVL_TITLES.length-1]}
 function xpInLvl(x){return x-(calcLevel(x)-1)*50}
 function xpNeeded(l){return l*50}
+
+// ── SRS (SM‑2) Helpers ──
+const SRS_KEY='flashcard_srs';
+function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY))||{}}catch(e){return {}}}
+function saveSRS(d){try{localStorage.setItem(SRS_KEY,JSON.stringify(d))}catch(e){}}
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function calcSM2(quality,card){
+  let {ef,interval,reps}=card;
+  ef=ef||2.5;interval=interval||0;reps=reps||0;
+  if(quality<3){reps=0;interval=1}
+  else{reps+=1;if(reps===1)interval=1;else if(reps===2)interval=6;else interval=Math.round(interval*ef)}
+  const newEf=ef+(0.1-(5-quality)*(0.08+(5-quality)*0.02));
+  ef=Math.max(1.3,newEf);
+  const next=new Date();next.setDate(next.getDate()+interval);
+  return {ef,interval,reps,nextReview:next.toISOString().slice(0,10),ease:quality};
+}
 
 function renderChallenges(){
 const dc=document.getElementById('dailyCard'),wc=document.getElementById('weeklyCard');
@@ -806,15 +832,34 @@ async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');
 let currentTopic='';
 async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
 const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns"];
-function loadTopics(){const chips=document.getElementById('topicChips');chips.innerHTML='';TOPICS.forEach(t=>{const b=document.createElement('button');b.className='topic-chip';if(recentTopics.includes(t))b.classList.add('recent');b.textContent=t;b.onclick=()=>selectTopic(t);chips.appendChild(b)})}
-async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if(c.length){const chip=c[Math.floor(Math.random()*c.length)];selectTopic(chip.textContent)}}
+function loadTopics(){
+  const chips=document.getElementById('topicChips');chips.innerHTML='';
+  const srs=loadSRS();const today=todayStr();
+  TOPICS.forEach(t=>{
+    const b=document.createElement('button');b.className='topic-chip';
+    if(recentTopics.includes(t))b.classList.add('recent');
+    let due=0;
+    if(deckCache){
+      const pool=deckCache[t]||[];
+      due=pool.filter((_,i)=>{const id=t+':'+i;const sc=srs[id];return !sc||sc.nextReview<=today}).length
+    }
+    b.dataset.topic=t;
+    if(due>0){b.classList.add('has-due');b.innerHTML=t+' <span class="due-badge">'+due+'</span>'}
+    else b.textContent=t;
+    b.onclick=()=>selectTopic(t);chips.appendChild(b)
+  })
+}
+async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if(c.length){const chip=c[Math.floor(Math.random()*c.length)];selectTopic(chip.dataset.topic)}}
 
 // Generate
 async function generateDeck(topic){
 if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a topic first','error');return}
-isLoading=true;isDeckComplete=false;document.getElementById('deckComplete').classList.remove('show')
+isLoading=true;document.getElementById('deckComplete').classList.remove('show')
 try{const r=await fetch('./flashcard_decks.json');if(!r.ok)throw Error('Failed to load deck data');const d=await r.json();const pool=d[topic]||[];if(!pool.length){showToast('No cards for '+topic,'error');isLoading=false;return}
-const shuffled=[...pool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;knownSet={};deckKnownCount=0;isFlipped=false
+const srs=loadSRS();const t=todayStr();
+const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c._oidx;const sc=srs[id];return !sc||sc.nextReview<=t});
+if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
+const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
 document.getElementById('topicArea').classList.add('collapsed');
 document.getElementById('flashcardArea').classList.add('visible','centered');
@@ -833,38 +878,41 @@ document.getElementById('prevBtn').disabled=currentIndex===0;
 document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
 isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
 document.getElementById('cardHint').textContent='Tap card to flip';
-const k=knownSet[currentIndex];
-document.getElementById('knownBtn').disabled=k===true;document.getElementById('stillBtn').disabled=k===false;
-document.getElementById('knownBtn').textContent=k===false?'⏳ Mark Known':'✅ I Know This';
-document.getElementById('stillBtn').textContent=k===true?'⏳ Mark Learning':'📖 Still Learning';
-updateDeckCounts()}
+// SRS state
+const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
+if(!sc)document.getElementById('srsState').textContent='🆕 New card';
+else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
+else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
+document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=false);
+document.getElementById('knownCount').textContent='📋 '+(cards.length-currentIndex)+' left';
+document.getElementById('stillCount').textContent='✅ '+currentIndex+' done'}
 
 function flipCard(e){if(e.target.closest('button'))return;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);document.getElementById('cardHint').textContent=isFlipped?'Tap to flip back':'Tap card to flip';if(isFlipped)SND.flip()}
 
-async function markKnown(){
-if(knownSet[currentIndex]===true)return;SND.correct();
-knownSet[currentIndex]=true;deckKnownCount=Object.values(knownSet).filter(v=>v===true).length;
-spawnFloat('+10 XP','green');
-document.getElementById('knownBtn').disabled=true;document.getElementById('knownBtn').textContent='✅ Known ✓';
-document.getElementById('stillBtn').disabled=false;document.getElementById('stillBtn').textContent='📖 Still Learning';
-updateDeckCounts();checkDeckComplete();await recordStudy({action:'known',topic:currentTopic})}
-
-async function markStill(){
-if(knownSet[currentIndex]===false)return;SND.still();
-knownSet[currentIndex]=false;deckKnownCount=Object.values(knownSet).filter(v=>v===true).length;
-spawnFloat('+3 XP','orange');
-document.getElementById('stillBtn').disabled=true;document.getElementById('stillBtn').textContent='📖 Learning ✓';
-document.getElementById('knownBtn').disabled=false;document.getElementById('knownBtn').textContent='✅ I Know This';
-updateDeckCounts();document.getElementById('deckComplete').classList.remove('show');isDeckComplete=false;
-await recordStudy({action:'still',topic:currentTopic})}
-
-function updateDeckCounts(){const k=Object.values(knownSet).filter(v=>v===true).length,s=Object.values(knownSet).filter(v=>v===false).length;document.getElementById('knownCount').textContent='✅ '+k+' known';document.getElementById('stillCount').textContent='📖 '+s+' learning'}
-function checkDeckComplete(){if(deckKnownCount===cards.length&&cards.length>0&&!isDeckComplete){isDeckComplete=true;document.getElementById('deckComplete').classList.add('show');document.getElementById('deckCompleteXP').textContent='+50 XP + 💎3 Gems';SND.deckComplete();spawnConf(80);spawnFloat('+50 XP','gold',document.getElementById('deckComplete'));showToast('🎉 Deck Complete! +50 XP','success')}}
+function rateCard(quality){
+if(!cards.length||isLoading)return;SND.click();
+const c=cards[currentIndex];const cardId=currentTopic+':'+c._oidx;
+const srs=loadSRS();
+const old=srs[cardId]||{ef:2.5,interval:0,reps:0,nextReview:todayStr()};
+srs[cardId]=calcSM2(quality,old);saveSRS(srs);
+const xpMap=[0,2,5,8,12];const xp=xpMap[quality]||0;
+spawnFloat('+'+xp+' XP',quality>=3?'green':'orange');
+if(quality>=3)SND.correct();else SND.still();
+document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=true);
+const rd=new Date(srs[cardId].nextReview);
+const diff=Math.ceil((rd-new Date())/86400000);
+showToast('📅 Next review: '+rd.toLocaleDateString()+(diff>0?' ('+diff+'d)':''),'info');
+setTimeout(()=>{
+  if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}
+  else{showToast('🎉 All due cards reviewed for '+currentTopic+'!','success');document.getElementById('srsState').textContent='✅ All caught up!'}
+},400);
+recordStudy({action:['again','again','hard','good','easy'][quality],topic:currentTopic,quality})}
 function backToTopics(){
 document.getElementById('topicArea').classList.remove('collapsed');
 document.getElementById('flashcardArea').classList.remove('centered');
 document.getElementById('backTopics').classList.remove('show');
-window.scrollTo({top:document.getElementById('topicArea').offsetTop-70,behavior:'smooth'})}
+window.scrollTo({top:document.getElementById('topicArea').offsetTop-70,behavior:'smooth'});
+loadTopics()}
 function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
 function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
 
@@ -891,8 +939,7 @@ try{const r=await fetch(API_BASE+'/flashcard/buy-streak-freeze',{method:'POST'})
 // Record study
 async function recordStudy(data){
 try{
-const k=Object.values(knownSet).filter(v=>v===true).length,s=Object.values(knownSet).filter(v=>v===false).length;
-const payload={action:data.action,topic:data.topic||'',card_index:currentIndex,total_cards:cards.length,deck_known:k,deck_still:s,deck_complete:isDeckComplete,bonus_xp:data.bonus_xp||0,use_booster:stats.xp_booster_active,study_mode:stats.study_mode||'normal'};
+const payload={action:data.action,topic:data.topic||'',card_index:currentIndex,total_cards:cards.length,deck_known:0,deck_still:0,deck_complete:false,quality:data.quality||0,bonus_xp:data.bonus_xp||0,use_booster:stats.xp_booster_active,study_mode:stats.study_mode||'normal'};
 const r=await fetch(API_BASE+'/flashcard/study',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
 if(r.ok){
 const d=await r.json();const oldLevel=stats.level,oldXp=stats.xp,oldGems=stats.gems||0;
@@ -1218,6 +1265,7 @@ async function updatePlayerType(){
 // Init
 async function init(){
 await loadStats();
+try{const r=await fetch('./flashcard_decks.json');if(r.ok)deckCache=await r.json()}catch(e){}
 loadTopics();
 renderAchievements();
 renderTitles();
