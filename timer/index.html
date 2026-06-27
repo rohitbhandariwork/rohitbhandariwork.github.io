@@ -95,19 +95,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .btn-reset:active{transform:scale(.97)}
 .timer-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
-/* Settings */
-.settings-toggle{font-size:12px;font-weight:600;color:#8888aa;cursor:pointer;padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.06);transition:.2s;touch-action:manipulation;background:rgba(255,255,255,.02)}
-.settings-toggle:hover{color:#e8e8f0;border-color:rgba(255,255,255,.12)}
-.settings-panel{margin:6px auto;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);display:none;max-width:360px;width:100%}
-.settings-panel.open{display:block}
-.settings-group{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.settings-group:last-child{margin-bottom:0}
-.settings-label{font-size:11px;font-weight:600;color:#aaaac8;display:flex;justify-content:space-between;align-items:center}
-.settings-label span{color:#e8e8f0;font-weight:700;font-variant-numeric:tabular-nums}
-.settings-options{display:flex;gap:4px;flex-wrap:wrap}
-.settings-opt{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#8888aa;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:36px}
-.settings-opt:hover{background:rgba(255,255,255,.06);color:#e8e8f0}
-.settings-opt.active{background:rgba(245,158,11,.15);border-color:#f59e0b;color:#f59e0b}
+
 
 /* Sound/Visual toggles */
 .toggle-row{display:flex;gap:8px;justify-content:center;margin-top:4px}
@@ -167,9 +155,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 .timer-phase{font-size:14px}
 .timer-duration-badge{font-size:13px}
 .timer-btn{padding:14px 36px;font-size:17px;min-height:52px}
-.settings-panel{max-width:400px}
-.settings-label{font-size:13px}
-.settings-opt{font-size:13px;padding:8px 16px}
 }
 </style>
 </head>
@@ -231,29 +216,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#0f0f1a;color:#e8
 </div>
 </section>
 
-<!-- Settings -->
-<button class="settings-toggle" id="settingsToggle" onclick="toggleSettings()">⚙️ Settings</button>
-<div class="settings-panel" id="settingsPanel">
-<div class="settings-group">
-<div class="settings-label">Start Focus <span id="workDurDisplay">5</span> min</div>
-<div class="settings-options" id="workOptions">
-<button class="settings-opt" data-value="3">3</button>
-<button class="settings-opt active" data-value="5">5</button>
-<button class="settings-opt" data-value="10">10</button>
-<button class="settings-opt" data-value="15">15</button>
-<button class="settings-opt" data-value="20">20</button>
-</div>
-</div>
-<div class="settings-group">
-<div class="settings-label">Increment <span id="incrementDisplay">5</span> min</div>
-<div class="settings-options" id="incrementOptions">
-<button class="settings-opt active" data-value="5">5</button>
-<button class="settings-opt" data-value="10">10</button>
-<button class="settings-opt" data-value="15">15</button>
-</div>
-</div>
-</div>
-
 </div>
 
 <div class="flash-overlay" id="flashOverlay"></div>
@@ -277,8 +239,8 @@ const SND={
   xp:()=>melody([[659.25,0,.1,'sine',.08],[880,.08,.15,'sine',.08]]),
 };
 
-// ── Settings ──
-let WORK_DUR=5, WORK_INCREMENT=5;
+// ── Constants ──
+const WORK_DUR=5, WORK_INCREMENT=5;
 const LS_KEY='timer_stats';
 
 // ── State ──
@@ -536,38 +498,6 @@ function resetTimer(){
   document.getElementById('startBtn').textContent='▶ Start';
   updateDisplay();
 }
-
-// ── Settings ──
-function toggleSettings(){
-  document.getElementById('settingsPanel').classList.toggle('open');
-}
-
-function setupSettings(){
-  document.querySelectorAll('.settings-options').forEach(group=>{
-    group.querySelectorAll('.settings-opt').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        group.querySelectorAll('.settings-opt').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        const val=parseInt(btn.dataset.value);
-        const id=group.id;
-        if(id==='workOptions'){
-          WORK_DUR=val;
-          document.getElementById('workDurDisplay').textContent=val;
-          if(state.phase==='idle'||state.phase==='break'){
-            currentFocusDuration=val;
-            state.timeLeft=val*60; state.totalTime=val*60;
-            updateDisplay();
-          }
-        }else if(id==='incrementOptions'){
-          WORK_INCREMENT=val;
-          document.getElementById('incrementDisplay').textContent=val;
-        }
-        if(soundEnabled)SND.click();
-      });
-    });
-  });
-}
-setupSettings();
 
 // ── Toggles ──
 function toggleSound(){
