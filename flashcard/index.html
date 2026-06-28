@@ -75,29 +75,23 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .challenge-card.done{opacity:.5}
 .challenge-card.done .cc-progress{color:#22c55e}
 
-/* Topic Area */
-.topic-area{margin:6px auto;transition:opacity .3s ease,max-height .4s ease;overflow:hidden;max-height:200px;width:100%}
-.flashcard-area.centered{min-height:auto;display:flex;flex-direction:column;justify-content:center;flex:1;padding:0}
-
-/* Back to topics button */
-.back-topics{display:none;text-align:center}
-.back-topics.show{display:block}
-.back-topics button{padding:2px 10px;border-radius:999px;border:none;background:#e2e8f0;color:#64748b;font-size:10px;font-weight:600;cursor:pointer;transition:.2s;touch-action:manipulation}
-.back-topics button:active{background:#cbd5e1;color:#334155}
-
-@media(min-width:640px){
-.flashcard-area.centered{min-height:auto;padding:0}
-}
-.topic-heading{font-size:28px;font-weight:800;color:#1e293b;margin-bottom:6px;text-align:center}
-.topic-bar{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
-.topic-bar button{padding:8px 12px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;min-height:36px;touch-action:manipulation}
-.btn-random{background:#e2e8f0;color:#475569}
-.btn-random:active{background:#cbd5e1}
-.topic-chips{display:flex;flex-wrap:nowrap;gap:4px;margin-top:4px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.topic-chips::-webkit-scrollbar{display:none}
-.topic-chip{padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;background:#fff;color:#475569;cursor:pointer;transition:.2s;border:1px solid #e2e8f0}
-.topic-chip:active{background:#f1f5f9;border-color:#94a3b8}
-.topic-chip.recent{background:rgba(245,158,11,.1);border-color:#f59e0b;color:#d97706}
+/* Topic Grid — Cards */
+.topic-area{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:8px 0}
+.topic-heading{font-size:28px;font-weight:800;color:#1e293b;margin-bottom:4px;text-align:center;line-height:1.2}
+.topic-bar{margin-bottom:8px}
+.topic-bar button{padding:8px 16px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;min-height:36px;touch-action:manipulation}
+.btn-random{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
+.btn-random:active{opacity:.9}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;width:100%;max-width:600px;margin:0 auto}
+.topic-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 12px;cursor:pointer;transition:.2s;text-align:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;position:relative;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.topic-card:active{transform:scale(.96);border-color:#a5b4fc;box-shadow:0 2px 8px rgba(99,102,241,.1)}
+.topic-card .tc-icon{font-size:24px}
+.topic-card .tc-name{font-size:12px;font-weight:700;color:#1e293b;line-height:1.2}
+.topic-card .tc-due{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(239,68,68,.3)}
+.topic-card.recent{border-color:#a5b4fc;background:rgba(99,102,241,.04)}
+.topic-card.special{border-color:#f59e0b;background:rgba(245,158,11,.04);animation:specialPulse 2s ease-in-out infinite}
+@keyframes specialPulse{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 6px rgba(245,158,11,.2)}}
+.topic-card .special-badge{font-size:9px;background:#f59e0b;color:#fff;border-radius:999px;padding:1px 4px;position:absolute;bottom:-4px;right:-4px}
 
 /* Flashcard Area */
 .flashcard-area{display:none;flex-direction:column;flex:1;padding:0}
@@ -172,7 +166,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .btn-easy:not(:disabled):active{background:rgba(99,102,241,.2)}
 .srs-state{text-align:center;font-size:10px;font-weight:600;color:#64748b;flex-shrink:0}
 .due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 6px;min-width:20px;height:20px;margin-left:4px;vertical-align:middle}
-.topic-chip.has-due{border-color:#fca5a5;background:rgba(239,68,68,.06);color:#dc2626}
 .nav-row{display:flex;justify-content:center;gap:6px;flex-shrink:0;padding:4px 0}
 .nav-row button{padding:6px 14px;border:none;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;min-height:34px;touch-action:manipulation}
 .btn-prev{background:#e2e8f0;color:#475569}
@@ -265,9 +258,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .power-hour-banner .ph-sub{font-size:10px;color:#94a3b8}
 
 /* Daily Special Topic (CD6) */
-.topic-chip.special{border-color:#f59e0b;background:rgba(245,158,11,.1);color:#d97706;animation:specialPulse 2s ease-in-out infinite}
-@keyframes specialPulse{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 6px rgba(245,158,11,.2)}}
-.topic-chip .special-badge{font-size:10px;background:#f59e0b;color:#fff;border-radius:999px;padding:1px 4px;margin-left:3px}
 
 /* Evanescing Challenge (CD6) */
 .evan-card{margin:2px auto;padding:6px 10px;border-radius:8px;background:rgba(239,68,68,.04);border:1px dashed rgba(239,68,68,.15);display:none;align-items:center;gap:6px;font-size:10px}
@@ -442,19 +432,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .pb-chip.new{animation:pbPulse 1s ease infinite}
 @keyframes pbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 
-/* Collapsible sections */
-.collapse{margin:4px auto;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0}
-.collapse-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;transition:.2s;font-size:12px;font-weight:700;color:#475569;background:#fff;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
-.collapse-bar:active{background:#f8fafc}
-.collapse-bar .ca{transition:transform .3s;font-size:10px;color:#94a3b8}
-.collapse-bar.open .ca{transform:rotate(90deg)}
-.collapse-body{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease;opacity:0}
-.collapse-body.open{max-height:2000px;opacity:1}
-.collapse-inner{padding:2px 12px 6px}
-/* Topics collapse bar — prominent button style */
-#c-topics{font-size:14px;background:linear-gradient(135deg,#e0e7ff,#c7d2fe);border:1px solid #a5b4fc;color:#4338ca;padding:10px 14px;border-radius:10px;margin-bottom:2px}
-#c-topics:active{background:linear-gradient(135deg,#c7d2fe,#a5b4fc)}
-#c-topics .ca{color:rgba(67,56,202,.5)}
 /* Topic heading H1 */
 .topic-heading{font-size:28px;font-weight:800;color:#1e293b;margin-bottom:8px;text-align:center;line-height:1.3}
 /* Study topic H1 above card */
@@ -492,11 +469,13 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .challenge-card .cc-text{font-size:12px}
 .challenge-card .cc-progress{font-size:12px}
 .challenge-card .cc-reward{font-size:12px}
-.topic-heading{font-size:28px;margin-bottom:8px}
+.topic-heading{font-size:28px;margin-bottom:4px}
 .topic-bar{gap:6px}
-.topic-bar button{padding:10px 16px;font-size:14px;min-height:38px}
-.topic-chips{gap:6px;margin-top:6px}
-.topic-chip{padding:5px 12px;font-size:12px}
+.topic-bar button{padding:8px 14px;font-size:13px;min-height:36px}
+.topic-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;max-width:650px}
+.topic-card{padding:16px 14px;min-height:90px}
+.topic-card .tc-icon{font-size:28px}
+.topic-card .tc-name{font-size:13px}
 .back-topics button{font-size:11px;padding:4px 12px}
 .action-row{gap:6px;margin:6px auto}
 .action-btn{padding:8px 14px;font-size:12px;min-height:36px}
@@ -593,19 +572,13 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <span class="narr-stage" id="narrStage">Realm 1: The Awakening</span>
 </div>
 
-<div class="collapse-bar" id="c-topics" onclick="toggleSection('topics')">
-<span>📖 Topics</span><span class="ca">▸</span>
-</div>
-<div class="collapse-body open" id="cb-topics">
-<div class="collapse-inner">
 <div class="topic-area" id="topicArea">
 <div class="topic-heading">📖 Pick a topic to study</div>
 <div class="topic-bar">
 <button class="btn-random" id="randomBtn" onclick="randomTopic()" title="Random topic">🎲 Surprise me</button>
 </div>
-<div class="topic-chips" id="topicChips"></div>
+<div class="topic-grid" id="topicGrid"></div>
 </div>
-</div></div>
 
 <!-- Flashcard Area -->
 <div class="flashcard-area" id="flashcardArea">
@@ -902,23 +875,23 @@ let currentTopic='';
 async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
 const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns"];
 function loadTopics(){
-  const chips=document.getElementById('topicChips');chips.innerHTML='';
+  const grid=document.getElementById('topicGrid');grid.innerHTML='';
   const srs=loadSRS();const today=todayStr();
+  const icons={Python:'🐍','Data Structures':'🗂️',Concurrency:'⚡',Databases:'🗄️','System Design':'🏗️',Security:'🔒',Testing:'🧪',DevOps:'🚀','Design Patterns':'🏛️'};
   TOPICS.forEach(t=>{
-    const b=document.createElement('button');b.className='topic-chip';
+    const b=document.createElement('button');b.className='topic-card';
     if(recentTopics.includes(t))b.classList.add('recent');
     let due=0;
     if(deckCache){
       const pool=deckCache[t]||[];
       due=pool.filter((_,i)=>{const id=t+':'+i;const sc=srs[id];return !sc||sc.nextReview<=today}).length
     }
-    b.dataset.topic=t;
-    if(due>0){b.classList.add('has-due');b.innerHTML=t+' <span class="due-badge">'+due+'</span>'}
-    else b.textContent=t;
-    b.onclick=()=>selectTopic(t);chips.appendChild(b)
+    b.innerHTML='<div class="tc-icon">'+(icons[t]||'📘')+'</div><div class="tc-name">'+t+'</div>';
+    if(due>0)b.innerHTML+='<div class="tc-due">'+due+'</div>';
+    b.onclick=()=>selectTopic(t);grid.appendChild(b)
   })
 }
-async function randomTopic(){const c=document.querySelectorAll('.topic-chip');if(c.length){const chip=c[Math.floor(Math.random()*c.length)];selectTopic(chip.dataset.topic)}}
+async function randomTopic(){const c=document.querySelectorAll('.topic-card');if(c.length){const card=c[Math.floor(Math.random()*c.length)];selectTopic(card.querySelector('.tc-name').textContent)}}
 
 // Generate
 async function generateDeck(topic){
@@ -931,8 +904,8 @@ if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','suc
 const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
 document.getElementById('studyTopic').textContent=topic;
-document.getElementById('c-topics').classList.remove('open');document.getElementById('cb-topics').classList.remove('open');
-document.getElementById('flashcardArea').classList.add('visible','centered');
+document.getElementById('topicArea').style.display='none';
+document.getElementById('flashcardArea').classList.add('visible');
 document.getElementById('backTopics').classList.add('show');
 document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block:'center'});
 showCard();SND.click()}catch(e){showToast('Failed: '+e.message,'error')}
@@ -989,11 +962,10 @@ setTimeout(()=>{
 },400);
 recordStudy({action:['again','again','hard','good','easy'][quality],topic:currentTopic,quality})}
 function backToTopics(){
-document.getElementById('topicArea').classList.remove('collapsed');
-document.getElementById('flashcardArea').classList.remove('centered');
+document.getElementById('topicArea').style.display='flex';
+document.getElementById('flashcardArea').classList.remove('visible');
 document.getElementById('backTopics').classList.remove('show');
 document.getElementById('studyTopic').textContent='';
-window.scrollTo({top:document.getElementById('topicArea').offsetTop-70,behavior:'smooth'});
 loadTopics()}
 function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
 function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
@@ -1384,8 +1356,8 @@ document.getElementById('powerHourBanner').classList.add('show')}
 
 // CD6: Daily special topic
 if(stats.daily_special_topic){
-document.querySelectorAll('.topic-chip').forEach(c=>{
-if(c.textContent.trim()===stats.daily_special_topic){
+document.querySelectorAll('.topic-card').forEach(c=>{
+if(c.querySelector('.tc-name')&&c.querySelector('.tc-name').textContent.trim()===stats.daily_special_topic){
 c.classList.add('special');
 const badge=document.createElement('span');badge.className='special-badge';badge.textContent='+'+stats.daily_special_bonus+'XP';
 c.appendChild(badge)}})}
