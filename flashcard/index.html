@@ -70,8 +70,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .btn-booster.active{background:#ec4899;color:#fff}
 .btn-mystery{background:rgba(168,85,247,.1);color:#7c3aed;border:1px dashed rgba(168,85,247,.3)}
 .btn-mystery:active{background:rgba(168,85,247,.2)}
-.btn-streak{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.2)}
-.btn-streak:active{background:rgba(59,130,246,.2)}
 .action-btn:disabled{opacity:.4;cursor:not-allowed}
 
 /* Card */
@@ -212,13 +210,28 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .weekly-summary .ws-title{font-size:16px;font-weight:800;color:#6366f1;margin-top:4px}
 .weekly-summary .ws-row{display:flex;justify-content:center;gap:16px;margin:12px 0}
 .weekly-summary .ws-item{text-align:center}
-.weekly-summary .ws-item .ws-num{font-size:20px;font-weight:900;color:#f59e0b}
-.weekly-summary .ws-item .ws-label{font-size:11px;color:#94a3b8;font-weight:600}
 .weekly-summary .ws-item .ws-num{font-size:20px;font-weight:900;color:#d97706}
+.weekly-summary .ws-item .ws-label{font-size:11px;color:#94a3b8;font-weight:600}
 .weekly-summary .ws-change{font-size:13px;font-weight:700;margin-top:4px}
 .weekly-summary .ws-change.up{color:#059669}
 .weekly-summary .ws-change.down{color:#dc2626}
 .weekly-summary button{margin-top:12px;padding:8px 24px;border-radius:999px;border:none;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+
+/* Tutorial card at bottom */
+.tut-card{display:none;margin:10px auto 0;max-width:480px;border-radius:12px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:12px 16px 10px;position:relative;flex-shrink:0}
+.tut-card.show{display:block}
+.tut-card .tut-close{position:absolute;top:6px;right:8px;background:none;border:none;font-size:16px;color:#94a3b8;cursor:pointer;padding:2px 6px;border-radius:6px;line-height:1}
+.tut-card .tut-close:active{background:#f1f5f9}
+.tut-card .tut-step{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.tut-card .tut-icon{font-size:24px;margin:4px 0 0}
+.tut-card .tut-title{font-size:14px;font-weight:800;color:#1e293b;margin:2px 0}
+.tut-card .tut-desc{font-size:11px;color:#64748b;line-height:1.5;margin-bottom:6px}
+.tut-card .tut-actions{display:flex;gap:6px;justify-content:flex-end}
+.tut-card .tut-actions button{padding:5px 12px;border-radius:999px;font-size:11px;font-weight:700;border:none;cursor:pointer;transition:.15s}
+.tut-card .tut-skip{background:#f1f5f9;color:#64748b}
+.tut-card .tut-skip:active{background:#e2e8f0}
+.tut-card .tut-next,.tut-card .tut-done{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
+.tut-card .tut-next:active,.tut-card .tut-done:active{opacity:.85}
 
 /* Topic heading H1 */
 .topic-heading{font-size:28px;font-weight:800;color:#1e293b;margin-bottom:8px;text-align:center;line-height:1.3}
@@ -261,6 +274,10 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .modal-box .big-lvl-title{font-size:22px}
 .modal-box .big-lvl-desc{font-size:13px}
 .modal-box button{font-size:13px;padding:8px 24px}
+.tut-card{padding:14px 20px 12px}
+.tut-card .tut-icon{font-size:28px}
+.tut-card .tut-title{font-size:15px}
+.tut-card .tut-desc{font-size:12px}
 }
 </style>
 </head><body>
@@ -310,7 +327,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="tracking-chips">
 <span class="tchip" onclick="showCardPopup()">🔢<span id="counter" class="tchip-val">0/0</span></span>
 <span class="tchip" onclick="showStatsPopup()">✅<span id="knownCount" class="tchip-val">0</span></span>
-<span class="tchip" onclick="showStatsPopup()">📖<span id="stillCount" class="tchip-val">0</span></span>
+<span class="tchip">📖<span id="stillCount" class="tchip-val">0</span></span>
 </div>
 </div>
 <div class="card-section">
@@ -326,6 +343,10 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <button class="nav-arrow next" id="nextBtn" onclick="event.stopPropagation();nextCard()">→</button>
 </div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
+<div class="action-row">
+<button class="action-btn btn-mystery" id="mysteryBtn" onclick="revealMystery()">🎁 Mystery</button>
+<button class="action-btn btn-booster" id="boosterBtn" onclick="activateBooster()">⚡ 2× Booster (💎5)</button>
+</div>
 </div>
 <div class="action-group">
 <div class="action-label">ANSWER</div>
@@ -350,6 +371,19 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="dc-sub">All cards marked Known</div>
 <div class="dc-xp" id="deckCompleteXP">+50 XP + 💎3 Gems</div>
 </div>
+</div>
+
+<!-- Tutorial card at bottom -->
+<div class="tut-card" id="tutCard">
+  <button class="tut-close" onclick="skipTutorial()">✕</button>
+  <div class="tut-step" id="tutStep">Step 1/6</div>
+  <div class="tut-icon" id="tutIcon">🎯</div>
+  <div class="tut-title" id="tutTitle">Welcome, Scholar!</div>
+  <div class="tut-desc" id="tutDesc">You've entered the knowledge realm. Let's start your learning journey!</div>
+  <div class="tut-actions" id="tutActions">
+    <button class="tut-skip" onclick="skipTutorial()">Skip</button>
+    <button class="tut-next" id="tutNextBtn" onclick="nextTutorialStep()">Next →</button>
+  </div>
 </div>
 
 </div>
@@ -490,7 +524,7 @@ html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;ba
 html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'#fef2f2':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">🎁 Special Offer</span><span style="font-size:10px;color:'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'#dc2626':'#64748b')+'">'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'🔴 Claim now!':'Empty')+'</span></div></div></div>';
 openPopup('⚡ Power-ups & Modes',html)}
 
-function showInsightPopup(){openPopup('📊 Insights & Progress',`<div style="text-align:center;margin-bottom:8px"><span id="popRankTitle" style="font-size:20px;font-weight:800;color:#1e293b">Novice</span> <span id="popLvlTitle" style="font-size:13px;color:#64748b">🃏 Learner</span></div><div style="margin:0 0 4px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:1px"><span id="popXpDisplay">0 / 50 XP</span><span style="font-weight:700;color:#f59e0b">Lv.<span id="popLvlNum">1</span></span></div><div class="xp-bar-wrap" style="background:#e2e8f0"><div class="xp-bar-fill" id="popXpBar" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b,#ef4444)"></div></div></div><div style="display:flex;gap:8px;justify-content:center;margin:8px 0"><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#fffbeb"><div style="font-size:18px">🔥</div><div style="font-size:16px;font-weight:800;color:#d97706" id="popStreakNum">0</div><div style="font-size:9px;color:#92400e;font-weight:600">Day</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#f0fdf4"><div style="font-size:18px">✅</div><div style="font-size:16px;font-weight:800;color:#059669" id="popKnownNum">0</div><div style="font-size:9px;color:#166534;font-weight:600">Known</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#faf5ff"><div style="font-size:18px">🏆</div><div style="font-size:16px;font-weight:800;color:#7c3aed" id="popAchivNum">0</div><div style="font-size:9px;color:#581c87;font-weight:600">Badges</div></div></div><div style="text-align:center;font-size:11px;color:#94a3b8;margin-top:6px" id="popPlayerType">🧭 Explorer</div>`)}
+function showInsightPopup(){openPopup('📊 Insights',`<div style="text-align:center;margin-bottom:8px"><span id="popRankTitle" style="font-size:20px;font-weight:800;color:#1e293b">Novice</span> <span id="popLvlTitle" style="font-size:13px;color:#64748b">🃏 Learner</span></div><div style="margin:0 0 4px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:1px"><span id="popXpDisplay">0 / 50 XP</span><span style="font-weight:700;color:#f59e0b">Lv.<span id="popLvlNum">1</span></span></div><div class="xp-bar-wrap" style="background:#e2e8f0"><div class="xp-bar-fill" id="popXpBar" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b,#ef4444)"></div></div></div><div style="display:flex;gap:8px;justify-content:center;margin:8px 0"><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#fffbeb"><div style="font-size:18px">🔥</div><div style="font-size:16px;font-weight:800;color:#d97706" id="popStreakNum">0</div><div style="font-size:9px;color:#92400e;font-weight:600">Day</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#f0fdf4"><div style="font-size:18px">✅</div><div style="font-size:16px;font-weight:800;color:#059669" id="popKnownNum">0</div><div style="font-size:9px;color:#166534;font-weight:600">Known</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#faf5ff"><div style="font-size:18px">🏆</div><div style="font-size:16px;font-weight:800;color:#7c3aed" id="popAchivNum">0</div><div style="font-size:9px;color:#581c87;font-weight:600">Badges</div></div></div><div style="text-align:center;font-size:11px;color:#94a3b8;margin-top:6px" id="popPlayerType">🧭 Explorer</div>`)}
 
 function updateStatsUI(){
 const l=stats.level,xpL=stats.xp-(l-1)*50,need=xpNeeded(l),pct=Math.min(100,(xpL/need)*100);
@@ -633,7 +667,7 @@ if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a 
 isLoading=true;const dc=document.getElementById('deckComplete');if(dc)dc.classList.remove('show')
 try{const r=await fetch('./flashcard_decks.json');if(!r.ok)throw Error('Failed to load deck data');const d=await r.json();const pool=d[topic]||[];if(!pool.length){showToast('No cards for '+topic,'error');isLoading=false;return}
 const srs=loadSRS();const t=todayStr();
-const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c._oidx;const sc=srs[id];return sc&&sc.nextReview<=t});
+const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c._oidx;const sc=srs[id];return !sc||sc.nextReview<=t});
 if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
 const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
 if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
@@ -686,8 +720,8 @@ const TUTORIAL_STEPS=[
 ];
 let tutStep=0,tutActive=false;
 function showTutorial(stepIdx){
-  const ov=document.getElementById('tutOverlay');
-  if(!ov)return;
+  const card=document.getElementById('tutCard');
+  if(!card)return;
   const s=TUTORIAL_STEPS[stepIdx];
   document.getElementById('tutStep').textContent=`Step ${stepIdx+1}/${TUTORIAL_STEPS.length}`;
   document.getElementById('tutIcon').textContent=s.icon;
@@ -699,20 +733,20 @@ function showTutorial(stepIdx){
   }else{
     actions.innerHTML=`<button class="tut-skip" onclick="skipTutorial()">Skip</button><button class="tut-next" onclick="nextTutorialStep()">Next →</button>`;
   }
-  ov.classList.add('show');tutActive=true;tutStep=stepIdx;
+  card.classList.add('show');tutActive=true;tutStep=stepIdx;
 }
 function nextTutorialStep(){
   if(tutStep<TUTORIAL_STEPS.length-1){showTutorial(tutStep+1)}
 }
 function skipTutorial(){
-  document.getElementById('tutOverlay').classList.remove('show');tutActive=false;
-  fetch('/flashcard/advance-tutorial',{method:'POST'});
+  document.getElementById('tutCard').classList.remove('show');tutActive=false;
+  fetch(API_BASE+'/flashcard/advance-tutorial',{method:'POST'});
 }
 async function completeTutorial(){
-  document.getElementById('tutOverlay').classList.remove('show');tutActive=false;
+  document.getElementById('tutCard').classList.remove('show');tutActive=false;
   SND.achiev();spawnConf(50);
   showToast('🎉 Tutorial complete! +50 XP, +10 Gems','success');
-  await fetch('/flashcard/advance-tutorial',{method:'POST'});
+  await fetch(API_BASE+'/flashcard/advance-tutorial',{method:'POST'});
   await loadStats();updateStatsUI();
 }
 async function checkTutorial(){
@@ -759,14 +793,18 @@ function renderPersonalBests(){
 // ── Level 3: Player Type ──
 async function updatePlayerType(){
   if(!stats.player_type_scores)return;
-  const badge=document.getElementById('playerTypeBadge');
   try{
-    const r=await fetch('/flashcard/player-insight');
+    const r=await fetch(API_BASE+'/flashcard/player-insight');
     const data=await r.json();
     if(data.dominant_type){
+      stats.player_type=data.dominant_type;
       const icons={achiever:'🏆',explorer:'🧭',socializer:'💬',killer:'⚔️'};
-      badge.textContent=(icons[data.dominant_type]||'🧭')+' '+
+      const label=(icons[data.dominant_type]||'🧭')+' '+
         data.dominant_type.charAt(0).toUpperCase()+data.dominant_type.slice(1);
+      const badge=document.getElementById('playerTypeBadge');
+      if(badge)badge.textContent=label;
+      const pop=document.getElementById('popPlayerType');
+      if(pop)pop.textContent='🧭 '+label;
     }
   }catch(e){}
 }
@@ -785,17 +823,7 @@ spawnFloat('+'+stats._blessing_xp+' XP','gold');SND.levelUp();spawnConf(60)}
 if(stats._milestone_reached){
 spawnConf(60);SND.levelUp()}
 
-// CD5: Mentor message
-if(stats.mentor_message){
-const m=document.getElementById('mentorMessageDisplay');
-if(m){m.style.display='flex';m.textContent=stats.mentor_message}}
-
-// CD6: Power Hour
-if(stats.is_power_hour){
-const b=document.getElementById('powerHourChip');
-if(b)b.classList.add('active')}
-
-// CD6: Daily special topic
+// Daily special topic
 if(stats.daily_special_topic){
 document.querySelectorAll('.topic-card').forEach(c=>{
 if(c.querySelector('.tc-name')&&c.querySelector('.tc-name').textContent.trim()===stats.daily_special_topic){
@@ -807,12 +835,7 @@ c.appendChild(badge)}})}
 if(stats._treasure){
 SND.mystery();spawnConf(30)}
 
-// CD7: Easter egg
-if(stats.easter_egg_found){
-const e=document.getElementById('easterTarget');
-if(e)e.classList.add('found')}
-
-// CD8: Decay warning
+// Decay warning
 if(stats._decay_warning){
 SND.still()}
 
@@ -846,10 +869,7 @@ const ns=document.getElementById('narrStage');
 if(nt)nt.innerHTML=stage<=1?'<strong>The Knowledge Seeker</strong> — Your journey begins. Study topics to unlock new realms.':`<strong>The Knowledge Seeker</strong> — Realm ${stage}: ${REALMS[stage-1]}`;
 if(ns)ns.textContent=`Realm ${stage}: ${REALMS[stage-1]}`;
 
-// Study mode UI
-if(stats.study_mode){document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===stats.study_mode))}
-
-// Level 2: Tutorial
+// Tutorial
 checkTutorial();
 
 // Level 2: Weekly summary
@@ -862,20 +882,6 @@ updatePlayerType();
 document.addEventListener('click',()=>{if(!audioCtx)getCtx()},{once:true});
 init();
 </script>
-
-<!-- Tutorial Overlay (Level 2) -->
-<div class="tut-overlay" id="tutOverlay">
-  <div class="tut-box">
-    <div class="tut-step" id="tutStep">Step 1/6</div>
-    <div class="tut-icon" id="tutIcon">🎯</div>
-    <div class="tut-title" id="tutTitle">Welcome, Scholar!</div>
-    <div class="tut-desc" id="tutDesc">You've entered the knowledge realm. Let's start your learning journey!</div>
-    <div class="tut-actions" id="tutActions">
-      <button class="tut-skip" onclick="skipTutorial()">Skip</button>
-      <button class="tut-next" id="tutNextBtn" onclick="nextTutorialStep()">Next →</button>
-    </div>
-  </div>
-</div>
 
 <!-- Weekly Summary (Level 2) -->
 <div class="weekly-summary" id="weeklySummary">
