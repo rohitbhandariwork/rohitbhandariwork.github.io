@@ -127,9 +127,13 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .card-back .card-text{font-size:14px;line-height:1.5;text-align:center;padding:0 4px}
 .card-back .card-text code{background:rgba(5,150,105,.1);padding:1px 4px;border-radius:3px;font-size:13px}
 .card-hint{font-size:10px;color:#94a3b8;text-align:center;margin-top:4px;flex-shrink:0}
+/* Action section labels */
+.action-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;text-align:center;flex-shrink:0;margin:0}
+.action-group{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 8px}
+.action-group + .action-group{margin-top:2px;padding-top:2px;border-top:1px solid #e2e8f0}
 /* Tier buttons */
-.tier-row{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;flex-shrink:0;padding:2px 0}
-.tier-btn{padding:5px 10px;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:32px;opacity:.5}
+.tier-row{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
+.tier-btn{padding:4px 8px;border:none;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:28px;opacity:.5}
 .tier-btn.active{opacity:1;transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .tier-btn:active{transform:scale(.95)}
 .tier-easy{background:rgba(5,150,105,.12);color:#059669;border:1px solid rgba(5,150,105,.25)}
@@ -153,8 +157,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .float-xp.blue{color:#3b82f6}
 
 /* Rating Row (SRS) */
-.rating-row{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
-.rating-btn{padding:6px 10px;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:32px}
+.rating-row{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
+.rating-btn{padding:5px 9px;border:none;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:28px}
 .rating-btn:disabled{opacity:.3;cursor:not-allowed}
 .rating-btn:not(:disabled):active{transform:scale(.95)}
 .btn-again{background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.2)}
@@ -167,8 +171,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .btn-easy:not(:disabled):active{background:rgba(99,102,241,.2)}
 .srs-state{text-align:center;font-size:10px;font-weight:600;color:#64748b;flex-shrink:0}
 .due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 6px;min-width:20px;height:20px;margin-left:4px;vertical-align:middle}
-.nav-row{display:flex;justify-content:center;gap:6px;flex-shrink:0;padding:4px 0}
-.nav-row button{padding:6px 14px;border:none;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;min-height:34px;touch-action:manipulation}
+.nav-row{display:flex;justify-content:center;gap:4px;flex-shrink:0;padding:2px 0}
+.nav-row button{padding:5px 12px;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;min-height:30px;touch-action:manipulation}
 .btn-prev{background:#e2e8f0;color:#475569}
 .btn-prev:active{background:#cbd5e1}
 .btn-next{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
@@ -487,10 +491,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .card-back .card-text{font-size:15px;line-height:1.5}
 .card-back .card-text code{font-size:13px;padding:2px 6px}
 .card-hint{font-size:11px}
-.rating-btn{padding:8px 14px;font-size:12px;min-height:36px}
+.tier-btn{padding:5px 10px;font-size:11px;min-height:30px}
+.rating-btn{padding:6px 11px;font-size:11px;min-height:30px}
 .srs-state{font-size:11px}
-.nav-row{gap:8px}
-.nav-row button{padding:8px 18px;font-size:13px;min-height:36px}
+.nav-row{gap:6px}
+.nav-row button{padding:6px 14px;font-size:12px;min-height:32px}
 .counter{font-size:11px}
 .deck-stats{font-size:11px}
 .progress-bar-wrap{height:4px}
@@ -601,17 +606,23 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </div></div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
 </div>
+<div class="action-group">
+<div class="action-label">ANSWER VIEW</div>
 <div class="tier-row" id="tierRow">
-<button class="tier-btn tier-easy active" id="tierEasy" onclick="switchTier('easy')">🌱 Easy</button>
+<button class="tier-btn tier-easy active" id="tierEasy" onclick="switchTier('easy')">🌱 Brief</button>
 <button class="tier-btn tier-normal" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
-<button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Hard</button>
+<button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Detailed</button>
 <button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
 </div>
+</div>
+<div class="action-group">
+<div class="action-label">YOUR RESULT</div>
 <div class="rating-row" id="ratingRow">
-<button class="rating-btn btn-again" onclick="rateCard(1)">🔄 Again</button>
-<button class="rating-btn btn-hard" onclick="rateCard(2)">🔁 Hard</button>
-<button class="rating-btn btn-good" onclick="rateCard(3)">✅ Good</button>
-<button class="rating-btn btn-easy" onclick="rateCard(4)">🚀 Easy</button>
+<button class="rating-btn btn-again" onclick="rateCard(1)">❌ Missed</button>
+<button class="rating-btn btn-hard" onclick="rateCard(2)">🤔 Tricky</button>
+<button class="rating-btn btn-good" onclick="rateCard(3)">✅ Knew It</button>
+<button class="rating-btn btn-easy" onclick="rateCard(4)">⭐ Perfect</button>
+</div>
 </div>
 <div class="srs-state" id="srsState"></div>
 <div class="nav-row">
