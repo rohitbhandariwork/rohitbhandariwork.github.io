@@ -96,6 +96,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 /* Flashcard Area */
 .flashcard-area{display:none;flex-direction:column;flex:1;padding:0}
 .flashcard-area.visible{display:flex}
+/* Tracking bar above card */
+.tracking-bar{flex-shrink:0;display:flex;flex-direction:column;gap:1px;padding:2px 12px}
 
 /* Booster & Mystery Row */
 .action-row{display:flex;gap:4px;margin:4px auto;justify-content:center;flex-wrap:wrap}
@@ -583,6 +585,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="flashcard-area" id="flashcardArea">
 <div class="back-topics" id="backTopics"><button onclick="backToTopics()">← Topics</button></div>
 <div class="study-topic" id="studyTopic"></div>
+<div class="tracking-bar">
+<div class="counter" id="counter">Card 0 of 0</div>
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+<div class="deck-stats"><span class="known-count" id="knownCount">✅ 0 known</span><span class="still-count" id="stillCount">📖 0 learning</span></div>
+</div>
 <div class="card-section">
 <div class="card-wrapper" onclick="flipCard(event)">
 <div class="card-inner" id="cardInner">
@@ -607,9 +614,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <button class="rating-btn btn-easy" onclick="rateCard(4)">🚀 Easy</button>
 </div>
 <div class="srs-state" id="srsState"></div>
-<div class="counter" id="counter">Card 0 of 0</div>
-<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-<div class="deck-stats"><span class="known-count" id="knownCount">✅ 0 known</span><span class="still-count" id="stillCount">📖 0 learning</span></div>
 <div class="nav-row">
 <button class="btn-prev" id="prevBtn" onclick="prevCard()">← Previous</button>
 <button class="btn-next" id="nextBtn" onclick="nextCard()">Next →</button>
