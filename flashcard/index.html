@@ -62,14 +62,14 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .tchip:active{background:#e2e8f0;transform:scale(.95)}
 .tchip-val{color:#1e293b;font-weight:800}
 
-/* Booster & Mystery Row */
-.action-row{display:flex;gap:4px;margin:4px auto;justify-content:center;flex-wrap:wrap}
-.action-btn{padding:6px 12px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;border:none;min-height:32px;touch-action:manipulation}
-.btn-booster{background:rgba(236,72,153,.1);color:#ec4899;border:1px solid rgba(236,72,153,.2)}
-.btn-booster:active{background:rgba(236,72,153,.2)}
-.btn-booster.active{background:#ec4899;color:#fff}
-.btn-mystery{background:rgba(168,85,247,.1);color:#7c3aed;border:1px dashed rgba(168,85,247,.3)}
-.btn-mystery:active{background:rgba(168,85,247,.2)}
+/* Power-up icon row (mystery, booster) */
+.power-row{flex-shrink:0;display:flex;gap:4px;justify-content:center;padding:2px 0}
+.pwr-btn{width:28px;height:28px;border-radius:50%;border:none;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;touch-action:manipulation;background:#f1f5f9;color:#64748b}
+.pwr-btn:active{transform:scale(.88);background:#e2e8f0}
+.pwr-btn:disabled{opacity:.3;cursor:default;transform:none}
+.pwr-btn.active{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}
+
+/* Booster & Mystery Row (deprecated — kept for legacy) */
 .action-btn:disabled{opacity:.4;cursor:not-allowed}
 
 /* Card */
@@ -257,8 +257,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .topic-card .tc-icon{font-size:28px}
 .topic-card .tc-name{font-size:13px}
 .back-topics button{font-size:11px;padding:4px 12px}
-.action-row{gap:6px;margin:6px auto}
-.action-btn{padding:8px 14px;font-size:12px;min-height:36px}
 .card-wrapper{max-width:540px}
 .card-face{padding:14px 12px}
 .card-label{font-size:10px;letter-spacing:1px}
@@ -330,6 +328,10 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <span class="tchip">📖<span id="stillCount" class="tchip-val">0</span></span>
 </div>
 </div>
+<div class="power-row">
+<button class="pwr-btn" id="mysteryBtn" onclick="confirmMystery()" title="Mystery card">🎁</button>
+<button class="pwr-btn" id="boosterBtn" onclick="confirmBooster()" title="XP Booster">⚡</button>
+</div>
 <div class="card-section">
 <div class="card-wrapper" onclick="flipCard(event)">
 <div class="card-inner" id="cardInner">
@@ -343,10 +345,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <button class="nav-arrow next" id="nextBtn" onclick="event.stopPropagation();nextCard()">→</button>
 </div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
-<div class="action-row">
-<button class="action-btn btn-mystery" id="mysteryBtn" onclick="revealMystery()">🎁 Mystery</button>
-<button class="action-btn btn-booster" id="boosterBtn" onclick="activateBooster()">⚡ 2× Booster (💎5)</button>
-</div>
 </div>
 <div class="action-group">
 <div class="action-label">ANSWER</div>
@@ -679,17 +677,25 @@ document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block
 showCard();SND.click()}catch(e){showToast('Failed: '+e.message,'error')}
 isLoading=false}
 async function revealMystery(){
-SND.mystery();const x=5+Math.floor(Math.random()*20);
-stats.xp+=x;stats.level=calcLevel(stats.xp);
-updateStatsUI();spawnFloat('+'+x+' XP','purple');
-showToast('🎁 Mystery card! +'+x+' XP','xp');
-const mb=document.getElementById('mysteryBtn');if(mb){mb.disabled=true;mb.textContent='🎁 Used Today'}
-document.getElementById('cardInner').classList.add('lucky');
-setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1000);
-if(stats.level>calcLevel(stats.xp-x)){SND.levelUp();showLevelUp(stats.level);spawnConf(60)}
-await recordStudy({action:'mystery',bonus_xp:x})}
+  SND.mystery();const x=5+Math.floor(Math.random()*20);
+  stats.xp+=x;stats.level=calcLevel(stats.xp);
+  updateStatsUI();spawnFloat('+'+x+' XP','purple');
+  showToast('🎁 Mystery card! +'+x+' XP','xp');
+  const mb=document.getElementById('mysteryBtn');if(mb)mb.disabled=true;
+  document.getElementById('cardInner').classList.add('lucky');
+  setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1000);
+  if(stats.level>calcLevel(stats.xp-x)){SND.levelUp();showLevelUp(stats.level);spawnConf(60)}
+  await recordStudy({action:'mystery',bonus_xp:x})}
 async function activateBooster(){
-try{const r=await fetch(API_BASE+'/flashcard/activate-booster',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cost_gems:5,cards_count:3})});const d=await r.json();if(d.success){stats.gems=d.gems;stats.xp_booster_active=true;stats.xp_booster_cards_remaining=d.xp_booster_cards_remaining;updateStatsUI();SND.booster();showToast('⚡ 2× Booster active for 3 cards!','xp');const bb=document.getElementById('boosterBtn');if(bb){bb.textContent='⚡ 2× (3 cards left)';bb.classList.add('active')}}else{showToast('Need 5 gems for booster','error')}}catch(e){showToast('Failed','error')}}
+  try{const r=await fetch(API_BASE+'/flashcard/activate-booster',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cost_gems:5,cards_count:3})});const d=await r.json();if(d.success){stats.gems=d.gems;stats.xp_booster_active=true;stats.xp_booster_cards_remaining=d.xp_booster_cards_remaining;updateStatsUI();SND.booster();showToast('⚡ 2× Booster active for 3 cards!','xp');const bb=document.getElementById('boosterBtn');if(bb){bb.classList.add('active');bb.disabled=true}}else{showToast('Need 5 gems for booster','error')}}catch(e){showToast('Failed','error')}}
+function confirmMystery(){
+  const mb=document.getElementById('mysteryBtn');
+  if(mb&&mb.disabled){showToast('🎁 Mystery already used today','info');return}
+  openPopup('🎁 Mystery Card',`<div style="text-align:center;padding:12px 0"><div style="font-size:48px;margin-bottom:8px">🎁</div><div style="font-size:16px;font-weight:800;color:#1e293b">Reveal a Mystery Card</div><div style="font-size:12px;color:#64748b;margin:8px 0;line-height:1.5">Get bonus XP (5–20) from a random card!<br>Free — once per day.</div><div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button onclick="closePopup();revealMystery()" style="padding:8px 20px;border-radius:999px;border:none;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-size:13px;font-weight:700;cursor:pointer">✨ Reveal!</button><button onclick="closePopup()" style="padding:8px 20px;border-radius:999px;border:none;background:#f1f5f9;color:#64748b;font-size:13px;font-weight:700;cursor:pointer">Cancel</button></div></div>`)}
+function confirmBooster(){
+  const bb=document.getElementById('boosterBtn');
+  if(bb&&bb.disabled){showToast('⚡ Booster already active','info');return}
+  openPopup('⚡ XP Booster',`<div style="text-align:center;padding:12px 0"><div style="font-size:48px;margin-bottom:8px">⚡</div><div style="font-size:16px;font-weight:800;color:#1e293b">Activate XP Booster</div><div style="font-size:12px;color:#64748b;margin:8px 0;line-height:1.5">Double XP for the next 3 cards!<br>Cost: <strong>💎5 Gems</strong></div><div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button onclick="closePopup();activateBooster()" style="padding:8px 20px;border-radius:999px;border:none;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-size:13px;font-weight:700;cursor:pointer">⚡ Activate</button><button onclick="closePopup()" style="padding:8px 20px;border-radius:999px;border:none;background:#f1f5f9;color:#64748b;font-size:13px;font-weight:700;cursor:pointer">Cancel</button></div></div>`)}
 async function recordStudy(data){
 try{
 const payload={action:data.action,topic:data.topic||'',card_index:currentIndex,total_cards:cards.length,deck_known:0,deck_still:0,deck_complete:false,quality:data.quality||0,bonus_xp:data.bonus_xp||0,use_booster:stats.xp_booster_active,study_mode:stats.study_mode||'normal'};
@@ -704,8 +710,8 @@ if(d.last_lucky_amount>0){try{document.getElementById('luckyAmount').textContent
 updateStatsUI();
 const ss={total_studied:d.total_studied||0,total_known:d.total_known||0,decks_completed:d.decks_completed||0,best_streak:d.best_streak||0,speed_flips:d.speed_flips||0,decks_in_day:d.decks_in_day||0,topics_count:d.topics_count||0,night_studies:d.night_studies||0,level:stats.level,lucky_cards_today:d.lucky_cards_today||0,gems:stats.gems||0,boosters_used:0,boss_done:0};
 checkNewAchievs(ss)
-if(stats.xp_booster_active&&stats.xp_booster_cards_remaining>0){const bb=document.getElementById('boosterBtn');if(bb){bb.textContent='⚡ 2× ('+stats.xp_booster_cards_remaining+' cards left)';bb.classList.add('active')}}
-else if(!stats.xp_booster_active){const bb=document.getElementById('boosterBtn');if(bb){bb.textContent='⚡ 2× Booster (💎5)';bb.classList.remove('active')}}
+  if(stats.xp_booster_active&&stats.xp_booster_cards_remaining>0){const bb=document.getElementById('boosterBtn');if(bb){bb.classList.add('active');bb.disabled=true}}
+  else if(!stats.xp_booster_active){const bb=document.getElementById('boosterBtn');if(bb){bb.classList.remove('active');bb.disabled=false}}
 if(d._special_bonus>0){spawnFloat('+'+d._special_bonus+' 🌟 Special','gold')}
 }}catch(e){}}
 
@@ -858,9 +864,7 @@ if(stats._ec_done){
 showToast('⏳ Evanescing Challenge Complete!','success');SND.achiev();spawnConf(40)}
 
 // Mystery button
-if(stats.mystery_available!==false){}else{
-const mb=document.getElementById('mysteryBtn');
-if(mb)mb.disabled=true}
+if(stats.mystery_available===false){const mb=document.getElementById('mysteryBtn');if(mb)mb.disabled=true}
 
 // Narrative
 const stage=Math.min(stats.narrative_stage||1,REALMS.length);
