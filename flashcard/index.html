@@ -301,6 +301,20 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .easter-target:active{opacity:1;background:#e2e8f0}
 .easter-target.found{opacity:.1;cursor:default}
 
+/* Slide-out panel for extras (Challenges, Power-ups, Insights) */
+.panel-overlay{position:fixed;inset:0;z-index:50000;background:rgba(0,0,0,.3);display:none;animation:fadeIn .2s ease}
+.panel-overlay.open{display:block}
+.panel-slide{position:fixed;top:0;right:-340px;bottom:0;width:320px;max-width:90vw;z-index:50001;background:#fff;box-shadow:-4px 0 20px rgba(0,0,0,.08);transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column}
+.panel-slide.open{right:0}
+.panel-slide .panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e2e8f0;flex-shrink:0}
+.panel-slide .panel-header strong{font-size:14px;color:#1e293b}
+.panel-slide .panel-close{background:none;border:none;font-size:20px;color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px}
+.panel-slide .panel-close:active{background:#f1f5f9}
+.panel-slide .panel-body{padding:12px 16px;overflow-y:auto;flex:1}
+.panel-slide .panel-section{margin-bottom:16px}
+.panel-slide .panel-section .ps-title{font-size:12px;font-weight:700;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}}
+
 /* XP Decay Warning (CD8) */
 .decay-warning{margin:2px auto;padding:4px 10px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);display:none;align-items:center;gap:6px;font-size:10px;animation:decayPulse 2s ease-in-out infinite}
 .decay-warning.show{display:flex}
@@ -528,7 +542,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </style>
 </head><body>
 <canvas id="confettiCanvas"></canvas>
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><button class="hamburger" onclick="togglePanel()" style="margin-left:auto;font-size:18px">⚙️</button><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
 
 <div class="modal-overlay" id="lvlModal"><div class="modal-box">
 <div class="big-lvl" id="lvlModalNum">5</div>
@@ -636,107 +650,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </div>
 </div>
 
-<!-- Collapse: Challenges & Events -->
-<div class="collapse">
-<div class="collapse-bar" id="c-challenges" onclick="toggleSection('challenges')">
-<span>🎯 Challenges & Events</span><span class="ca">▸</span>
-</div>
-<div class="collapse-body" id="cb-challenges">
-<div class="collapse-inner">
-<div class="blessing-banner" id="blessingBanner">
-<span class="bl-icon">🌟</span>
-<div class="bl-text"><strong id="blessTitle">Beginner's Blessing!</strong><br><span class="bl-sub" id="blessSub">+25 XP and 5 Gems to begin your journey</span></div>
-</div>
-<div class="milestone-banner" id="milestoneBanner">
-<span class="ms-icon">📜</span>
-<div class="ms-text"><strong id="milestoneTitle">Narrative Milestone!</strong><br><span id="milestoneDesc" class="ms-stage">You have reached a new chapter.</span></div>
-</div>
-<div class="mentor-bar" id="mentorBar">
-<span class="mentor-icon">🧙</span>
-<span class="mentor-text"><strong>Mentor:</strong> <span id="mentorText">Your journey begins.</span></span>
-<button class="mentor-dismiss" onclick="dismissMentor()">✕</button>
-</div>
-<div class="power-hour-banner" id="powerHourBanner">
-<span class="ph-icon">⚡</span>
-<span class="ph-text">Power Hour Active! 1.5× XP</span>
-<span class="ph-sub">7 PM - 8 PM daily</span>
-</div>
-<div class="dangle-banner" id="dangleBanner">
-<span class="dangle-icon">🎁</span>
-<span class="dangle-text">Free Booster awaits! Study now to claim 5 cards of 2× XP.</span>
-<button onclick="claimDangle()">Claim</button>
-</div>
-<div class="decay-warning" id="decayWarning">
-<span class="dw-icon">⚠️</span>
-<span class="dw-text">You've missed <span id="missedDays">3</span> days. Study now to keep your progress!</span>
-<span class="dw-sub">Don't lose your streak</span>
-</div>
-<div class="challenge-row">
-<div class="challenge-card daily" id="dailyCard">
-<span class="cc-icon">🎯</span>
-<span class="cc-text" id="dailyText">Daily challenge</span>
-<span class="cc-progress" id="dailyProgress">0/0</span>
-<span class="cc-reward" id="dailyReward">+0 XP</span>
-</div>
-<div class="challenge-card weekly" id="weeklyCard">
-<span class="cc-icon">📅</span>
-<span class="cc-text" id="weeklyText">Weekly challenge</span>
-<span class="cc-progress" id="weeklyProgress">0/0</span>
-<span class="cc-reward" id="weeklyReward">+0 XP</span>
-</div>
-</div>
-<div class="boss-progress" id="bossChallenges"></div>
-<div class="evan-card" id="evanCard">
-<span class="ec-icon">⏳</span>
-<span class="ec-text" id="evanText">Limited challenge</span>
-<span class="ec-progress" id="evanProgress">0/0</span>
-<span class="ec-reward" id="evanReward">+0 XP</span>
-</div>
-<div class="deposit-card" id="depositCard">
-<span class="dp-icon">💰</span>
-<div class="dp-text"><strong>Deposit Active:</strong> Stake <span id="depositAmount">10</span> gems — study <span id="depositGoal">5</span> days to earn double!</div>
-<span class="dp-progress" id="depositProgress">0/5</span>
-</div>
-</div></div></div>
-
-<!-- Collapse: Power-ups & Modes -->
-<div class="collapse">
-<div class="collapse-bar" id="c-tools" onclick="toggleSection('tools')">
-<span>⚡ Power-ups & Modes</span><span class="ca">▸</span>
-</div>
-<div class="collapse-body" id="cb-tools">
-<div class="collapse-inner">
-<div class="action-row">
-<button class="action-btn btn-booster" id="boosterBtn" onclick="activateBooster()">⚡ 2× Booster (💎5)</button>
-<button class="action-btn btn-mystery" id="mysteryBtn" onclick="revealMystery()">🎁 Mystery Card</button>
-<button class="action-btn btn-streak" id="streakFreezeBtn" onclick="buyStreakFreeze()">❄️ Streak Freeze (💎15)</button>
-</div>
-<div class="mode-row">
-<button class="mode-btn" data-mode="speed" onclick="setStudyMode('speed')">⚡ Speed (0.8×)</button>
-<button class="mode-btn active" data-mode="normal" onclick="setStudyMode('normal')">📖 Normal (1×)</button>
-<button class="mode-btn" data-mode="deep" onclick="setStudyMode('deep')">🧠 Deep (1.5×)</button>
-</div>
-<div class="exchange-row">
-<button class="btn-exchange" id="exchangeBtn" onclick="exchangeGems()">💎 Exchange 5 Gems → 15 XP</button>
-</div>
-<div class="title-toggle" id="titleToggle" onclick="toggleTitlePanel()">👑 Change Title</div>
-<div class="title-panel" id="titlePanel"><span style="color:#64748b;font-size:10px">Your Titles:</span><div class="tp-row" id="titleList"></div></div>
-</div></div></div>
-
-<!-- Collapse: Insights & Progress -->
-<div class="collapse">
-<div class="collapse-bar" id="c-insights" onclick="toggleSection('insights')">
-<span>📊 Insights & Progress</span><span class="ca">▸</span>
-</div>
-<div class="collapse-body" id="cb-insights">
-<div class="collapse-inner">
-<div class="pb-display" id="pbDisplay"></div>
-<div style="margin:2px auto;font-size:10px;color:#94a3b8;text-align:center">📚 Mastered Topics: <span id="masteryCount">0</span></div>
-<div class="mastery-display" id="masteryDisplay"></div>
-<div class="achiev-toggle" id="achievToggle" onclick="toggleAchievWall()">🏆 Show Achievements</div>
-<div class="achiev-wall" id="achievWall"></div>
-</div></div></div>
-
 </div>
 
 <!-- Treasure Popup (CD7) -->
@@ -757,6 +670,101 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="easter-target" id="easterTarget" onclick="clickEaster()">🥚</div>
 
 <div class="toast" id="toast"></div>
+
+<!-- Extras Panel (Challenges, Power-ups, Insights) -->
+<div class="panel-overlay" id="panelOverlay" onclick="togglePanel()"></div>
+<div class="panel-slide" id="panelSlide">
+<div class="panel-header"><strong>⚙️ Extras</strong><button class="panel-close" onclick="togglePanel()">✕</button></div>
+<div class="panel-body">
+
+<div class="panel-section">
+<div class="ps-title">🎯 Challenges & Events</div>
+<div class="blessing-banner" id="blessingBanner" style="margin:0 0 6px">
+<span class="bl-icon">🌟</span>
+<div class="bl-text"><strong id="blessTitle">Beginner's Blessing!</strong><br><span class="bl-sub" id="blessSub">+25 XP and 5 Gems to begin your journey</span></div>
+</div>
+<div class="milestone-banner" id="milestoneBanner" style="margin:0 0 6px">
+<span class="ms-icon">📜</span>
+<div class="ms-text"><strong id="milestoneTitle">Narrative Milestone!</strong><br><span id="milestoneDesc" class="ms-stage">You have reached a new chapter.</span></div>
+</div>
+<div class="mentor-bar" id="mentorBar" style="margin:0 0 6px">
+<span class="mentor-icon">🧙</span>
+<span class="mentor-text"><strong>Mentor:</strong> <span id="mentorText">Your journey begins.</span></span>
+<button class="mentor-dismiss" onclick="dismissMentor()">✕</button>
+</div>
+<div class="power-hour-banner" id="powerHourBanner" style="margin:0 0 6px">
+<span class="ph-icon">⚡</span>
+<span class="ph-text">Power Hour Active! 1.5× XP</span>
+<span class="ph-sub">7 PM - 8 PM daily</span>
+</div>
+<div class="dangle-banner" id="dangleBanner" style="margin:0 0 6px">
+<span class="dangle-icon">🎁</span>
+<span class="dangle-text">Free Booster awaits! Study now to claim 5 cards of 2× XP.</span>
+<button onclick="claimDangle()">Claim</button>
+</div>
+<div class="decay-warning" id="decayWarning" style="margin:0 0 6px">
+<span class="dw-icon">⚠️</span>
+<span class="dw-text">You've missed <span id="missedDays">3</span> days. Study now to keep your progress!</span>
+<span class="dw-sub">Don't lose your streak</span>
+</div>
+<div class="challenge-row" style="margin:0 0 6px">
+<div class="challenge-card daily" id="dailyCard">
+<span class="cc-icon">🎯</span>
+<span class="cc-text" id="dailyText">Daily challenge</span>
+<span class="cc-progress" id="dailyProgress">0/0</span>
+<span class="cc-reward" id="dailyReward">+0 XP</span>
+</div>
+<div class="challenge-card weekly" id="weeklyCard">
+<span class="cc-icon">📅</span>
+<span class="cc-text" id="weeklyText">Weekly challenge</span>
+<span class="cc-progress" id="weeklyProgress">0/0</span>
+<span class="cc-reward" id="weeklyReward">+0 XP</span>
+</div>
+</div>
+<div class="boss-progress" id="bossChallenges" style="margin:0 0 6px"></div>
+<div class="evan-card" id="evanCard" style="margin:0 0 6px">
+<span class="ec-icon">⏳</span>
+<span class="ec-text" id="evanText">Limited challenge</span>
+<span class="ec-progress" id="evanProgress">0/0</span>
+<span class="ec-reward" id="evanReward">+0 XP</span>
+</div>
+<div class="deposit-card" id="depositCard" style="margin:0">
+<span class="dp-icon">💰</span>
+<div class="dp-text"><strong>Deposit Active:</strong> Stake <span id="depositAmount">10</span> gems — study <span id="depositGoal">5</span> days to earn double!</div>
+<span class="dp-progress" id="depositProgress">0/5</span>
+</div>
+</div>
+
+<div class="panel-section">
+<div class="ps-title">⚡ Power-ups & Modes</div>
+<div class="action-row" style="margin:0 0 8px">
+<button class="action-btn btn-booster" id="boosterBtn" onclick="activateBooster()">⚡ 2× Booster (💎5)</button>
+<button class="action-btn btn-mystery" id="mysteryBtn" onclick="revealMystery()">🎁 Mystery Card</button>
+<button class="action-btn btn-streak" id="streakFreezeBtn" onclick="buyStreakFreeze()">❄️ Streak Freeze (💎15)</button>
+</div>
+<div class="mode-row" style="margin:0 0 8px">
+<button class="mode-btn" data-mode="speed" onclick="setStudyMode('speed')">⚡ Speed (0.8×)</button>
+<button class="mode-btn active" data-mode="normal" onclick="setStudyMode('normal')">📖 Normal (1×)</button>
+<button class="mode-btn" data-mode="deep" onclick="setStudyMode('deep')">🧠 Deep (1.5×)</button>
+</div>
+<div class="exchange-row" style="margin:0 0 8px">
+<button class="btn-exchange" id="exchangeBtn" onclick="exchangeGems()">💎 Exchange 5 Gems → 15 XP</button>
+</div>
+<div class="title-toggle" id="titleToggle" onclick="toggleTitlePanel()">👑 Change Title</div>
+<div class="title-panel" id="titlePanel"><span style="color:#64748b;font-size:10px">Your Titles:</span><div class="tp-row" id="titleList"></div></div>
+</div>
+
+<div class="panel-section">
+<div class="ps-title">📊 Insights & Progress</div>
+<div class="pb-display" id="pbDisplay" style="margin:0 0 6px"></div>
+<div style="font-size:10px;color:#94a3b8;text-align:center;margin:0 0 6px">📚 Mastered Topics: <span id="masteryCount">0</span></div>
+<div class="mastery-display" id="masteryDisplay" style="margin:0 0 6px"></div>
+<div class="achiev-toggle" id="achievToggle" onclick="toggleAchievWall()">🏆 Show Achievements</div>
+<div class="achiev-wall" id="achievWall"></div>
+</div>
+
+</div></div>
+<!-- End Extras Panel -->
 
 <script>
 const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
@@ -857,6 +865,7 @@ wall.appendChild(item)}
 }
 
 function toggleSection(id){const b=document.getElementById('c-'+id),p=document.getElementById('cb-'+id);b.classList.toggle('open');p.classList.toggle('open')}
+function togglePanel(){document.getElementById('panelOverlay').classList.toggle('open');document.getElementById('panelSlide').classList.toggle('open')}
 
 function toggleAchievWall(){const w=document.getElementById('achievWall'),t=document.getElementById('achievToggle');w.classList.toggle('show');t.textContent=w.classList.contains('show')?'🏆 Hide Achievements':'🏆 Show Achievements'}
 
