@@ -94,7 +94,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .flashcard-area{display:none;flex-direction:column;flex:1;padding:0}
 .flashcard-area.visible{display:flex}
 /* Tracking bar above card */
-.tracking-bar{flex-shrink:0;display:flex;flex-direction:column;gap:1px;padding:2px 12px}
+.tracking-bar{flex-shrink:0;display:flex;flex-direction:column;gap:0;padding:0 12px}
+.tracking-chips{display:flex;gap:4px;justify-content:center;margin-top:1px}
+.tchip{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:999px;background:#f1f5f9;font-size:10px;font-weight:700;color:#64748b;cursor:pointer;touch-action:manipulation;transition:.15s}
+.tchip:active{background:#e2e8f0;transform:scale(.95)}
+.tchip-val{color:#1e293b;font-weight:800}
 
 /* Booster & Mystery Row */
 .action-row{display:flex;gap:4px;margin:4px auto;justify-content:center;flex-wrap:wrap}
@@ -110,7 +114,13 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 
 /* Card */
 .card-section{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;width:100%;max-width:560px}
+/* Card nav arrows */
 .card-wrapper{perspective:1200px;margin:0 auto;width:100%;cursor:pointer;position:relative}
+.nav-arrow{position:absolute;bottom:-18px;z-index:10;width:32px;height:32px;border-radius:50%;border:1.5px solid #cbd5e1;background:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;touch-action:manipulation;box-shadow:0 1px 4px rgba(0,0,0,.06);color:#64748b}
+.nav-arrow:active{transform:scale(.9);background:#f1f5f9}
+.nav-arrow:disabled{opacity:.2;cursor:default;transform:none}
+.nav-arrow.prev{left:-4px}
+.nav-arrow.next{right:-4px}
 .card-inner{position:relative;width:100%;min-height:180px;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:20px}
 .card-inner.flipped{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:20px;padding:20px 16px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(0,0,0,.06)}
@@ -133,8 +143,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .tier-btn{padding:4px 8px;border:none;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:28px;opacity:.5}
 .tier-btn.active{opacity:1;transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .tier-btn:active{transform:scale(.95)}
-.tier-easy{background:rgba(5,150,105,.12);color:#059669;border:1px solid rgba(5,150,105,.25)}
-.tier-easy.active{background:rgba(5,150,105,.2)}
 .tier-normal{background:rgba(59,130,246,.12);color:#2563eb;border:1px solid rgba(59,130,246,.25)}
 .tier-normal.active{background:rgba(59,130,246,.2)}
 .tier-hard{background:rgba(245,158,11,.12);color:#d97706;border:1px solid rgba(245,158,11,.25)}
@@ -168,13 +176,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .btn-easy:not(:disabled):active{background:rgba(99,102,241,.2)}
 .srs-state{text-align:center;font-size:10px;font-weight:600;color:#64748b;flex-shrink:0}
 .due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 6px;min-width:20px;height:20px;margin-left:4px;vertical-align:middle}
-.nav-row{display:flex;justify-content:center;gap:4px;flex-shrink:0;padding:2px 0}
-.nav-row button{padding:5px 12px;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;min-height:30px;touch-action:manipulation}
-.btn-prev{background:#e2e8f0;color:#475569}
-.btn-prev:active{background:#cbd5e1}
-.btn-next{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
-.btn-next:active{box-shadow:0 2px 8px rgba(99,102,241,.3)}
-.nav-row button:disabled{opacity:.3;cursor:not-allowed}
 .counter{text-align:center;font-size:10px;font-weight:600;color:#94a3b8;flex-shrink:0}
 .progress-bar-wrap{height:3px;background:#e2e8f0;border-radius:3px;overflow:hidden;flex-shrink:0}
 .progress-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#6366f1,#8b5cf6);transition:width .4s ease}
@@ -293,19 +294,23 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .easter-target:active{opacity:1;background:#e2e8f0}
 .easter-target.found{opacity:.1;cursor:default}
 
-/* Slide-out panel for extras (Challenges, Power-ups, Insights) */
-.panel-overlay{position:fixed;inset:0;z-index:50000;background:rgba(0,0,0,.3);display:none;animation:fadeIn .2s ease}
-.panel-overlay.open{display:block}
-.panel-slide{position:fixed;top:0;right:-340px;bottom:0;width:320px;max-width:90vw;z-index:50001;background:#fff;box-shadow:-4px 0 20px rgba(0,0,0,.08);transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column}
-.panel-slide.open{right:0}
-.panel-slide .panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e2e8f0;flex-shrink:0}
-.panel-slide .panel-header strong{font-size:14px;color:#1e293b}
-.panel-slide .panel-close{background:none;border:none;font-size:20px;color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px}
-.panel-slide .panel-close:active{background:#f1f5f9}
-.panel-slide .panel-body{padding:12px 16px;overflow-y:auto;flex:1}
-.panel-slide .panel-section{margin-bottom:16px}
-.panel-slide .panel-section .ps-title{font-size:12px;font-weight:700;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}}
+/* Tool icons in topbar */
+.tool-icons{display:flex;gap:2px;margin-left:auto}
+.tool-icons span{font-size:16px;cursor:pointer;padding:4px 6px;border-radius:6px;transition:.15s;touch-action:manipulation}
+.tool-icons span:active{background:#e2e8f0;transform:scale(.9)}
+
+/* Popup overlay (replaces slide panel) */
+.popup-overlay{position:fixed;inset:0;z-index:50000;background:rgba(0,0,0,.3);display:none;animation:fadeIn .15s ease}
+.popup-overlay.open{display:block}
+.popup-box{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:50001;background:#fff;border-radius:16px;max-width:92vw;width:400px;max-height:80vh;display:none;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.12);animation:popIn .2s ease}
+.popup-box.open{display:flex}
+.popup-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e2e8f0;flex-shrink:0}
+.popup-title{font-size:14px;font-weight:700;color:#1e293b}
+.popup-close{background:none;border:none;font-size:20px;color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px}
+.popup-close:active{background:#f1f5f9}
+.popup-body{padding:14px 16px;overflow-y:auto;flex:1}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.92)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 
 /* XP Decay Warning (CD8) */
 .decay-warning{margin:2px auto;padding:4px 10px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);display:none;align-items:center;gap:6px;font-size:10px;animation:decayPulse 2s ease-in-out infinite}
@@ -489,12 +494,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .tier-btn{padding:5px 10px;font-size:11px;min-height:30px}
 .rating-btn{padding:6px 11px;font-size:11px;min-height:30px}
 .srs-state{font-size:11px}
-.nav-row{gap:6px}
-.nav-row button{padding:6px 14px;font-size:12px;min-height:32px}
-.counter{font-size:11px}
-.deck-stats{font-size:11px}
-.progress-bar-wrap{height:4px}
-.toast{font-size:13px;padding:10px 20px}
 .modal-box{max-width:360px;padding:28px 24px}
 .modal-box .big-lvl{font-size:64px}
 .modal-box .big-lvl-title{font-size:22px}
@@ -522,7 +521,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </style>
 </head><body>
 <canvas id="confettiCanvas"></canvas>
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><button class="hamburger" onclick="togglePanel()" style="margin-left:auto;font-size:18px">⚙️</button><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
 
 <div class="modal-overlay" id="lvlModal"><div class="modal-box">
 <div class="big-lvl" id="lvlModalNum">5</div>
@@ -584,9 +583,12 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="back-topics" id="backTopics"><button onclick="backToTopics()">← Topics</button></div>
 <div class="study-topic" id="studyTopic"></div>
 <div class="tracking-bar">
-<div class="counter" id="counter">Card 0 of 0</div>
 <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-<div class="deck-stats"><span class="known-count" id="knownCount">✅ 0 known</span><span class="still-count" id="stillCount">📖 0 learning</span></div>
+<div class="tracking-chips">
+<span class="tchip" onclick="showCardPopup()">🔢<span id="counter" class="tchip-val">0/0</span></span>
+<span class="tchip" onclick="showStatsPopup()">✅<span id="knownCount" class="tchip-val">0</span></span>
+<span class="tchip" onclick="showStatsPopup()">📖<span id="stillCount" class="tchip-val">0</span></span>
+</div>
 </div>
 <div class="card-section">
 <div class="card-wrapper" onclick="flipCard(event)">
@@ -596,32 +598,29 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="card-label back">ANSWER</div>
 <div class="card-text" id="backText"></div>
 </div>
-</div></div>
+</div>
+<button class="nav-arrow prev" id="prevBtn" onclick="event.stopPropagation();prevCard()">←</button>
+<button class="nav-arrow next" id="nextBtn" onclick="event.stopPropagation();nextCard()">→</button>
+</div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
 </div>
 <div class="action-group">
-<div class="action-label">ANSWER VIEW</div>
+<div class="action-label">ANSWER</div>
 <div class="tier-row" id="tierRow">
-<button class="tier-btn tier-easy active" id="tierEasy" onclick="switchTier('easy')">🌱 Brief</button>
-<button class="tier-btn tier-normal" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
+<button class="tier-btn tier-normal active" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
 <button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Detailed</button>
 <button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
 </div>
 </div>
 <div class="action-group">
-<div class="action-label">YOUR RESULT</div>
+<div class="action-label">RESULT</div>
 <div class="rating-row" id="ratingRow">
 <button class="rating-btn btn-again" onclick="rateCard(1)">❌ Missed</button>
 <button class="rating-btn btn-hard" onclick="rateCard(2)">🤔 Tricky</button>
-<button class="rating-btn btn-good" onclick="rateCard(3)">✅ Knew It</button>
-<button class="rating-btn btn-easy" onclick="rateCard(4)">⭐ Perfect</button>
+<button class="rating-btn btn-good" onclick="rateCard(3)">✅ Got It</button>
 </div>
 </div>
 <div class="srs-state" id="srsState"></div>
-<div class="nav-row">
-<button class="btn-prev" id="prevBtn" onclick="prevCard()">← Previous</button>
-<button class="btn-next" id="nextBtn" onclick="nextCard()">Next →</button>
-</div>
 <div class="deck-complete" id="deckComplete">
 <div class="dc-icon">🎉</div>
 <div class="dc-title">Deck Complete!</div>
@@ -651,104 +650,16 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 
 <div class="toast" id="toast"></div>
 
-<!-- Extras Panel (Challenges, Power-ups, Insights) -->
-<div class="panel-overlay" id="panelOverlay" onclick="togglePanel()"></div>
-<div class="panel-slide" id="panelSlide">
-<div class="panel-header"><strong>⚙️ Extras</strong><button class="panel-close" onclick="togglePanel()">✕</button></div>
-<div class="panel-body">
-
-<div class="panel-section">
-<div class="ps-title">🎯 Challenges & Events</div>
-<div class="blessing-banner" id="blessingBanner" style="margin:0 0 6px">
-<span class="bl-icon">🌟</span>
-<div class="bl-text"><strong id="blessTitle">Beginner's Blessing!</strong><br><span class="bl-sub" id="blessSub">+25 XP and 5 Gems to begin your journey</span></div>
+<!-- Popup Overlay (replaces gear panel) -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+<div class="popup-box" id="popupBox">
+<div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
+<div class="popup-body" id="popupBody"></div>
 </div>
-<div class="milestone-banner" id="milestoneBanner" style="margin:0 0 6px">
-<span class="ms-icon">📜</span>
-<div class="ms-text"><strong id="milestoneTitle">Narrative Milestone!</strong><br><span id="milestoneDesc" class="ms-stage">You have reached a new chapter.</span></div>
-</div>
-<div class="mentor-bar" id="mentorBar" style="margin:0 0 6px">
-<span class="mentor-icon">🧙</span>
-<span class="mentor-text"><strong>Mentor:</strong> <span id="mentorText">Your journey begins.</span></span>
-<button class="mentor-dismiss" onclick="dismissMentor()">✕</button>
-</div>
-<div class="power-hour-banner" id="powerHourBanner" style="margin:0 0 6px">
-<span class="ph-icon">⚡</span>
-<span class="ph-text">Power Hour Active! 1.5× XP</span>
-<span class="ph-sub">7 PM - 8 PM daily</span>
-</div>
-<div class="dangle-banner" id="dangleBanner" style="margin:0 0 6px">
-<span class="dangle-icon">🎁</span>
-<span class="dangle-text">Free Booster awaits! Study now to claim 5 cards of 2× XP.</span>
-<button onclick="claimDangle()">Claim</button>
-</div>
-<div class="decay-warning" id="decayWarning" style="margin:0 0 6px">
-<span class="dw-icon">⚠️</span>
-<span class="dw-text">You've missed <span id="missedDays">3</span> days. Study now to keep your progress!</span>
-<span class="dw-sub">Don't lose your streak</span>
-</div>
-<div class="challenge-row" style="margin:0 0 6px">
-<div class="challenge-card daily" id="dailyCard">
-<span class="cc-icon">🎯</span>
-<span class="cc-text" id="dailyText">Daily challenge</span>
-<span class="cc-progress" id="dailyProgress">0/0</span>
-<span class="cc-reward" id="dailyReward">+0 XP</span>
-</div>
-<div class="challenge-card weekly" id="weeklyCard">
-<span class="cc-icon">📅</span>
-<span class="cc-text" id="weeklyText">Weekly challenge</span>
-<span class="cc-progress" id="weeklyProgress">0/0</span>
-<span class="cc-reward" id="weeklyReward">+0 XP</span>
-</div>
-</div>
-<div class="boss-progress" id="bossChallenges" style="margin:0 0 6px"></div>
-<div class="evan-card" id="evanCard" style="margin:0 0 6px">
-<span class="ec-icon">⏳</span>
-<span class="ec-text" id="evanText">Limited challenge</span>
-<span class="ec-progress" id="evanProgress">0/0</span>
-<span class="ec-reward" id="evanReward">+0 XP</span>
-</div>
-<div class="deposit-card" id="depositCard" style="margin:0">
-<span class="dp-icon">💰</span>
-<div class="dp-text"><strong>Deposit Active:</strong> Stake <span id="depositAmount">10</span> gems — study <span id="depositGoal">5</span> days to earn double!</div>
-<span class="dp-progress" id="depositProgress">0/5</span>
-</div>
-</div>
-
-<div class="panel-section">
-<div class="ps-title">⚡ Power-ups & Modes</div>
-<div class="action-row" style="margin:0 0 8px">
-<button class="action-btn btn-booster" id="boosterBtn" onclick="activateBooster()">⚡ 2× Booster (💎5)</button>
-<button class="action-btn btn-mystery" id="mysteryBtn" onclick="revealMystery()">🎁 Mystery Card</button>
-<button class="action-btn btn-streak" id="streakFreezeBtn" onclick="buyStreakFreeze()">❄️ Streak Freeze (💎15)</button>
-</div>
-<div class="mode-row" style="margin:0 0 8px">
-<button class="mode-btn" data-mode="speed" onclick="setStudyMode('speed')">⚡ Speed (0.8×)</button>
-<button class="mode-btn active" data-mode="normal" onclick="setStudyMode('normal')">📖 Normal (1×)</button>
-<button class="mode-btn" data-mode="deep" onclick="setStudyMode('deep')">🧠 Deep (1.5×)</button>
-</div>
-<div class="exchange-row" style="margin:0 0 8px">
-<button class="btn-exchange" id="exchangeBtn" onclick="exchangeGems()">💎 Exchange 5 Gems → 15 XP</button>
-</div>
-<div class="title-toggle" id="titleToggle" onclick="toggleTitlePanel()">👑 Change Title</div>
-<div class="title-panel" id="titlePanel"><span style="color:#64748b;font-size:10px">Your Titles:</span><div class="tp-row" id="titleList"></div></div>
-</div>
-
-<div class="panel-section">
-<div class="ps-title">📊 Insights & Progress</div>
-<div class="pb-display" id="pbDisplay" style="margin:0 0 6px"></div>
-<div style="font-size:10px;color:#94a3b8;text-align:center;margin:0 0 6px">📚 Mastered Topics: <span id="masteryCount">0</span></div>
-<div class="mastery-display" id="masteryDisplay" style="margin:0 0 6px"></div>
-<div class="achiev-toggle" id="achievToggle" onclick="toggleAchievWall()">🏆 Show Achievements</div>
-<div class="achiev-wall" id="achievWall"></div>
-</div>
-
-</div></div>
-<!-- End Extras Panel -->
 
 <script>
 const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
-let cards=[],currentIndex=0,isFlipped=false,isLoading=false,currentTier='easy',recentTopics=[],deckCache=null;
+let cards=[],currentIndex=0,isFlipped=false,isLoading=false,currentTier='normal',recentTopics=[],deckCache=null;
 let stats={xp:0,level:1,gems:10,streak:0,total_known:0,achievements:[],hidden_achievements:[],streak_days:[],daily_challenge:null,daily_progress:0,daily_goal:0,mystery_available:true,xp_booster_active:false,xp_booster_cards_remaining:0,weekly_challenge:null,weekly_progress:0,weekly_goal:0,narrative_stage:1,boss_challenges:{},streak_freezes:0};
 
 const LVL_TITLES=[{min:1,max:2,title:'Novice',rank:'🃏 Learner'},{min:3,max:5,title:'Apprentice',rank:'📖 Student'},{min:6,max:9,title:'Journeyman',rank:'⚡ Scholar'},{min:10,max:14,title:'Expert',rank:'🧠 Thinker'},{min:15,max:20,title:'Master',rank:'👑 Master'},{min:21,max:29,title:'Grandmaster',rank:'🌟 Sage'},{min:30,max:50,title:'Legend',rank:'💎 Legend'}];
@@ -813,9 +724,10 @@ function todayStr(){return new Date().toISOString().slice(0,10)}
 function calcSM2(quality,card){
   let {ef,interval,reps}=card;
   ef=ef||2.5;interval=interval||0;reps=reps||0;
-  if(quality<3){reps=0;interval=1}
-  else{reps+=1;if(reps===1)interval=1;else if(reps===2)interval=6;else interval=Math.round(interval*ef)}
-  const newEf=ef+(0.1-(5-quality)*(0.08+(5-quality)*0.02));
+  if(quality===1){reps=0;interval=1}
+  else if(quality===2){reps+=.5;interval=Math.max(1,interval+1)}
+  else{reps+=1;if(reps<=1)interval=1;else if(reps<=2)interval=6;else interval=Math.round(interval*ef)}
+  const q=2*quality-1;const newEf=ef+(0.1-(5-q)*(0.08+(5-q)*0.02));
   ef=Math.max(1.3,newEf);
   const next=new Date();next.setDate(next.getDate()+interval);
   return {ef,interval,reps,nextReview:next.toISOString().slice(0,10),ease:quality};
@@ -845,7 +757,18 @@ wall.appendChild(item)}
 }
 
 function toggleSection(id){const b=document.getElementById('c-'+id),p=document.getElementById('cb-'+id);b.classList.toggle('open');p.classList.toggle('open')}
-function togglePanel(){document.getElementById('panelOverlay').classList.toggle('open');document.getElementById('panelSlide').classList.toggle('open')}
+function openPopup(title,html){document.getElementById('popupTitle').textContent=title;document.getElementById('popupBody').innerHTML=html;document.getElementById('popupOverlay').classList.add('open');document.getElementById('popupBox').classList.add('open')}
+function closePopup(){document.getElementById('popupOverlay').classList.remove('open');document.getElementById('popupBox').classList.remove('open')}
+
+function showCardPopup(){openPopup('📊 Progress',`<div style="text-align:center;padding:8px 0"><div style="font-size:48px;margin-bottom:8px">🔢</div><div style="font-size:18px;font-weight:800;color:#1e293b">${document.getElementById('counter').textContent}</div><div style="font-size:12px;color:#64748b;margin-top:4px">cards in this deck</div></div>`)}
+
+function showStatsPopup(){const k=document.getElementById('knownCount').textContent;const s=document.getElementById('stillCount').textContent;openPopup('📈 Session',`<div style="display:flex;gap:16px;justify-content:center;padding:12px 0"><div style="text-align:center"><div style="font-size:36px">✅</div><div style="font-size:22px;font-weight:800;color:#059669">${k}</div><div style="font-size:11px;color:#64748b;margin-top:2px">Done</div></div><div style="text-align:center"><div style="font-size:36px">📖</div><div style="font-size:22px;font-weight:800;color:#2563eb">${s}</div><div style="font-size:11px;color:#64748b;margin-top:2px">Left</div></div></div>`)}
+
+function showChallengePopup(){openPopup('🎯 Challenges & Events',`<div style="font-size:13px;color:#64748b;text-align:center;padding:16px 0">Challenges will render here</div>`)}
+
+function showPowerupPopup(){openPopup('⚡ Power-ups & Modes',`<div style="font-size:13px;color:#64748b;text-align:center;padding:16px 0">Power-ups will render here</div>`)}
+
+function showInsightPopup(){openPopup('📊 Insights & Progress',`<div style="font-size:13px;color:#64748b;text-align:center;padding:16px 0">Insights will render here</div>`)}
 
 function toggleAchievWall(){const w=document.getElementById('achievWall'),t=document.getElementById('achievToggle');w.classList.toggle('show');t.textContent=w.classList.contains('show')?'🏆 Hide Achievements':'🏆 Show Achievements'}
 
@@ -921,21 +844,21 @@ isLoading=false}
 function showCard(){
 if(!cards.length)return;const c=cards[currentIndex];
 document.getElementById('frontText').textContent=c.front;
-document.getElementById('backText').innerHTML=(c[currentTier]||c.easy||'').replace(/\n/g,'<br>');
-document.getElementById('counter').textContent='Card '+(currentIndex+1)+' of '+cards.length;
+document.getElementById('backText').innerHTML=(c[currentTier]||c.normal||'').replace(/\n/g,'<br>');
+document.getElementById('counter').textContent=(currentIndex+1)+'/'+cards.length;
 document.getElementById('progressFill').style.width=((currentIndex+1)/cards.length*100)+'%';
 document.getElementById('prevBtn').disabled=currentIndex===0;
 document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
 isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
-document.getElementById('cardHint').textContent='Tap card to flip';
+const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Tap card to flip';
 // SRS state
 const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
 if(!sc)document.getElementById('srsState').textContent='🆕 New card';
 else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
 else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
 document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=false);
-document.getElementById('knownCount').textContent='📋 '+(cards.length-currentIndex)+' left';
-document.getElementById('stillCount').textContent='✅ '+currentIndex+' done';
+document.getElementById('knownCount').textContent=currentIndex;
+document.getElementById('stillCount').textContent=cards.length-currentIndex;
 updateTierButtons()}
 
 function switchTier(tier){
@@ -948,7 +871,9 @@ function updateTierButtons(){
 document.querySelectorAll('.tier-btn').forEach(b=>{
 const t=b.id.replace('tier','').toLowerCase();b.classList.toggle('active',t===currentTier)})}
 
-function flipCard(e){if(e.target.closest('button'))return;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);document.getElementById('cardHint').textContent=isFlipped?'Tap to flip back':'Tap card to flip';if(isFlipped)SND.flip()}
+function flipCard(e){if(e.target.closest('button'))return;const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Tap card to flip'};if(isFlipped)SND.flip()}
+
+function dismissHint(){const h=document.getElementById('cardHint');h.dataset.dismissed='1';h.style.display='none'}
 
 function rateCard(quality){
 if(!cards.length||isLoading)return;SND.click();
@@ -956,7 +881,7 @@ const c=cards[currentIndex];const cardId=currentTopic+':'+c._oidx;
 const srs=loadSRS();
 const old=srs[cardId]||{ef:2.5,interval:0,reps:0,nextReview:todayStr()};
 srs[cardId]=calcSM2(quality,old);saveSRS(srs);
-const xpMap=[0,2,5,8,12];const xp=xpMap[quality]||0;
+const xpMap=[0,3,7,12];const xp=xpMap[quality]||0;
 spawnFloat('+'+xp+' XP',quality>=3?'green':'orange');
 if(quality>=3)SND.correct();else SND.still();
 document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=true);
@@ -967,7 +892,7 @@ setTimeout(()=>{
   if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}
   else{showToast('🎉 All due cards reviewed for '+currentTopic+'!','success');document.getElementById('srsState').textContent='✅ All caught up!'}
 },400);
-recordStudy({action:['again','again','hard','good','easy'][quality],topic:currentTopic,quality})}
+recordStudy({action:['','missed','tricky','got_it'][quality],topic:currentTopic,quality})}
 function backToTopics(){
 document.getElementById('topicArea').style.display='flex';
 document.getElementById('flashcardArea').classList.remove('visible');
