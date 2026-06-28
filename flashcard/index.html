@@ -18,40 +18,15 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 #topbar{flex-shrink:0;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:4px;padding:4px 8px;min-height:40px;z-index:100}
 .hamburger{display:block;background:none;border:none;cursor:pointer;font-size:20px;color:#64748b;padding:6px 8px;border-radius:8px;transition:.2s;touch-action:manipulation}
 .hamburger:active{background:#e2e8f0}
+.mini-level{display:flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;background:linear-gradient(135deg,#667eea,#764ba2);cursor:pointer;touch-action:manipulation;transition:.15s;flex-shrink:0}
+.mini-level:active{transform:scale(.95)}
+.mini-level .ml-num{font-size:11px;font-weight:800;color:#fff}
+.mini-level .ml-gems{font-size:10px;font-weight:700;color:#fbbf24}
 .nav-links{display:none;position:fixed;top:44px;left:0;right:0;flex-direction:column;background:#fff;border-bottom:2px solid #e2e8f0;padding:4px 8px 8px;gap:2px;align-items:stretch;box-shadow:0 8px 24px rgba(0,0,0,.08)}
 .nav-links.open{display:flex}
 .nav-links a{display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap;touch-action:manipulation}
 .nav-links a:active{background:#f1f5f9;color:#1a1a2e}
 .nav-links a.active{color:#f59e0b;background:rgba(245,158,11,.1)}
-/* Stats Bar — compact game HUD */
-.stats-hero{flex-shrink:0;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:4px 10px}
-.stats-grid{max-width:700px;margin:0 auto;display:flex;align-items:center;gap:8px}
-.level-badge{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(245,158,11,.3);flex-shrink:0;position:relative}
-.level-badge .lvl-num{font-size:16px;font-weight:900;color:#fff;line-height:1}
-.level-badge .lvl-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.3px}
-.gem-badge{position:absolute;top:-4px;right:-4px;background:#ec4899;border-radius:999px;padding:1px 5px;font-size:9px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(236,72,153,.3);display:flex;align-items:center;gap:1px}
-.stats-main{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
-.stats-row1{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.stats-row1 .title{font-size:11px;font-weight:700;color:rgba(255,255,255,.95)}
-.stats-row1 .lvl-title{font-size:10px;color:rgba(255,255,255,.8);font-weight:600}
-.stats-row1 .xp-text{font-size:10px;color:rgba(255,255,255,.7)}
-.xp-bar-wrap{height:3px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden}
-.xp-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#fbbf24,#f59e0b,#ef4444);transition:width .6s ease}
-.stats-right{display:flex;gap:4px;align-items:center}
-.stat-pill{display:flex;flex-direction:column;align-items:center;padding:2px 6px;border-radius:8px;background:rgba(255,255,255,.1);min-width:32px}
-.stat-pill .stat-num{font-size:12px;font-weight:800;line-height:1.2;color:#fff}
-.stat-pill .stat-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;color:rgba(255,255,255,.7)}
-.stat-pill.streak .stat-num{color:#fbbf24}
-.stat-pill.known-pill .stat-num{color:#4ade80}
-.stat-pill.achiev .stat-num{color:#c084fc}
-.stat-pill.gem-pill .stat-num{color:#f472b6}
-.days-chips{display:none}
-.level-badge.pulse{animation:lvlPulse .4s ease}
-@keyframes lvlPulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
-@keyframes xpShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-.stat-pill.streak.has-streak{background:rgba(251,191,36,.15);animation:streakGlow 2s ease-in-out infinite}
-@keyframes streakGlow{0%,100%{box-shadow:none}50%{box-shadow:0 0 8px rgba(251,191,36,.2)}}
-
 /* Container */
 .container{max-width:100%;margin:0 auto;padding:0 8px;display:flex;flex-direction:column;flex:1;min-height:0}
 
@@ -61,19 +36,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .narrative-banner .narr-text{flex:1;color:#475569}
 .narrative-banner .narr-text strong{color:#7c3aed}
 .narrative-banner .narr-stage{font-size:10px;color:#94a3b8;font-weight:600}
-
-/* Challenge Row */
-.challenge-row{display:flex;gap:4px;margin:4px auto}
-.challenge-card{flex:1;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:none;align-items:center;gap:4px;min-height:32px}
-.challenge-card.visible{display:flex}
-.challenge-card .cc-icon{font-size:14px}
-.challenge-card .cc-text{flex:1;font-size:10px;font-weight:600;color:#475569}
-.challenge-card .cc-progress{font-size:10px;font-weight:700;color:#f59e0b;min-width:24px;text-align:right}
-.challenge-card .cc-reward{font-size:10px;color:#22c55e;font-weight:600;white-space:nowrap}
-.challenge-card.daily{border-color:#fbbf24}
-.challenge-card.weekly{border-color:#c084fc}
-.challenge-card.done{opacity:.5}
-.challenge-card.done .cc-progress{color:#22c55e}
 
 /* Topic Grid — Cards */
 .topic-area{flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding:4px 0}
@@ -135,20 +97,23 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .card-back .card-text code{background:rgba(5,150,105,.1);padding:1px 4px;border-radius:3px;font-size:13px}
 .card-hint{font-size:10px;color:#94a3b8;text-align:center;margin-top:4px;flex-shrink:0}
 /* Action section labels */
-.action-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;text-align:center;flex-shrink:0;margin:0}
-.action-group{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 8px}
+.action-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;text-align:center;flex-shrink:0;margin:0 0 4px}
+
+.action-group{flex-shrink:0;display:flex;flex-direction:column;padding:0 4px;margin-bottom:4px}
 .action-group + .action-group{margin-top:2px;padding-top:2px;border-top:1px solid #e2e8f0}
+
+.tier-row,.rating-row{display:flex;gap:8px;width:100%}
+.tier-row .tier-btn,.rating-row .rating-btn{flex:1;min-width:0;text-align:center}
 /* Tier buttons */
-.tier-row{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
-.tier-btn{padding:4px 8px;border:none;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:28px;opacity:.5}
-.tier-btn.active{opacity:1;transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.tier-btn:active{transform:scale(.95)}
-.tier-normal{background:rgba(59,130,246,.12);color:#2563eb;border:1px solid rgba(59,130,246,.25)}
-.tier-normal.active{background:rgba(59,130,246,.2)}
-.tier-hard{background:rgba(245,158,11,.12);color:#d97706;border:1px solid rgba(245,158,11,.25)}
-.tier-hard.active{background:rgba(245,158,11,.2)}
-.tier-expert{background:rgba(147,51,234,.12);color:#7c3aed;border:1px solid rgba(147,51,234,.25)}
-.tier-expert.active{background:rgba(147,51,234,.2)}
+.tier-btn{padding:10px 0;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:38px;opacity:.5;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.tier-btn.active{opacity:1;transform:scale(1.03);box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.tier-btn:active{transform:scale(.97)}
+.tier-normal{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;border:1px solid rgba(59,130,246,.3)}
+.tier-normal.active{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
+.tier-hard{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1px solid rgba(245,158,11,.3)}
+.tier-hard.active{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.tier-expert{background:linear-gradient(135deg,#faf5ff,#f3e8ff);color:#7c3aed;border:1px solid rgba(147,51,234,.3)}
+.tier-expert.active{background:linear-gradient(135deg,#f3e8ff,#e9d5ff)}
 .card-inner.lucky{animation:luckyGlow 1s ease}
 @keyframes luckyGlow{0%,100%{box-shadow:0 0 0 rgba(255,215,0,0)}50%{box-shadow:0 0 30px rgba(255,215,0,.3)}}
 /* Float XP */
@@ -161,27 +126,21 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .float-xp.pink{color:#ec4899}
 .float-xp.blue{color:#3b82f6}
 
-/* Rating Row (SRS) */
-.rating-row{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
-.rating-btn{padding:5px 9px;border:none;border-radius:999px;font-size:10px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:28px}
+/* Rating Buttons (SRS) */
+.rating-btn{padding:10px 0;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:38px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .rating-btn:disabled{opacity:.3;cursor:not-allowed}
-.rating-btn:not(:disabled):active{transform:scale(.95)}
-.btn-again{background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.2)}
-.btn-again:not(:disabled):active{background:rgba(239,68,68,.2)}
-.btn-hard{background:rgba(245,158,11,.12);color:#d97706;border:1px solid rgba(245,158,11,.2)}
-.btn-hard:not(:disabled):active{background:rgba(245,158,11,.2)}
-.btn-good{background:rgba(5,150,105,.12);color:#059669;border:1px solid rgba(5,150,105,.2)}
-.btn-good:not(:disabled):active{background:rgba(5,150,105,.2)}
-.btn-easy{background:rgba(99,102,241,.12);color:#4f46e5;border:1px solid rgba(99,102,241,.2)}
-.btn-easy:not(:disabled):active{background:rgba(99,102,241,.2)}
+.rating-btn:not(:disabled):active{transform:scale(.97)}
+.btn-again{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#dc2626;border:1px solid rgba(220,38,38,.2)}
+.btn-again:not(:disabled):active{background:linear-gradient(135deg,#fee2e2,#fecaca)}
+.btn-hard{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1px solid rgba(245,158,11,.2)}
+.btn-hard:not(:disabled):active{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.btn-good{background:linear-gradient(135deg,#f0fdf4,#dcfce7);color:#059669;border:1px solid rgba(5,150,105,.2)}
+.btn-good:not(:disabled):active{background:linear-gradient(135deg,#dcfce7,#bbf7d0)}
 .srs-state{text-align:center;font-size:10px;font-weight:600;color:#64748b;flex-shrink:0}
 .due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 6px;min-width:20px;height:20px;margin-left:4px;vertical-align:middle}
 .counter{text-align:center;font-size:10px;font-weight:600;color:#94a3b8;flex-shrink:0}
 .progress-bar-wrap{height:3px;background:#e2e8f0;border-radius:3px;overflow:hidden;flex-shrink:0}
 .progress-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#6366f1,#8b5cf6);transition:width .4s ease}
-.deck-stats{display:flex;justify-content:space-between;flex-shrink:0;font-size:10px;color:#94a3b8}
-.deck-stats .known-count{color:#059669;font-weight:600}
-.deck-stats .still-count{color:#dc2626;font-weight:600}
 .spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(99,102,241,.2);border-top-color:#6366f1;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:4px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -219,18 +178,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .deck-complete .dc-title{font-size:16px;font-weight:800;color:#059669}
 .deck-complete .dc-sub{font-size:11px;color:#64748b}
 .deck-complete .dc-xp{font-size:13px;font-weight:700;color:#d97706}
-.achiev-toggle{text-align:center;font-size:10px;color:#94a3b8;cursor:pointer;transition:.2s;flex-shrink:0}
-.achiev-toggle:active{color:#7c3aed}
-.achiev-wall{display:none;gap:4px;flex-wrap:wrap;justify-content:center;padding:8px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;flex-shrink:0}
-.achiev-wall.show{display:flex}
-.achiev-item{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s;cursor:default;position:relative}
-.achiev-item.unlocked{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2)}
-.achiev-item.unlocked:active{transform:scale(1.1)}
-.achiev-item.locked{background:#f1f5f9;border:1px solid #e2e8f0;filter:grayscale(1);opacity:.4}
-.achiev-item.hidden{filter:grayscale(1);opacity:.2;background:#f8fafc}
-.achiev-item .achiev-tip{position:absolute;bottom:calc(100%+4px);left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid rgba(124,58,237,.2);border-radius:6px;padding:4px 8px;white-space:nowrap;font-size:10px;display:none;z-index:10;color:#fff}
-.achiev-item:hover .achiev-tip{display:block}
-
 /* Lucky card notification */
 .lucky-notice{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:90000;padding:14px 20px;border-radius:16px;background:#fff;border:2px solid #fbbf24;box-shadow:0 0 40px rgba(251,191,36,.15);text-align:center;display:none;animation:luckyPop .4s ease}
 .lucky-notice.show{display:block}
@@ -238,61 +185,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .lucky-notice .ln-icon{font-size:36px}
 .lucky-notice .ln-text{font-size:16px;font-weight:800;color:#d97706}
 .lucky-notice .ln-sub{font-size:12px;color:#64748b}
-
-/* Boss Challenge */
-.boss-progress{margin:4px 0;display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
-.boss-chip{padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);color:#dc2626;transition:.2s;cursor:default}
-.boss-chip.done{background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.12);color:#059669}
-.boss-chip .boss-reward{color:#94a3b8;font-size:10px}
-
-/* Mentor Message (CD5) */
-.mentor-bar{margin:2px auto;padding:4px 10px;border-radius:8px;background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.1);display:flex;align-items:center;gap:6px;font-size:10px}
-.mentor-bar .mentor-icon{font-size:14px;flex-shrink:0}
-.mentor-bar .mentor-text{flex:1;color:#64748b;font-style:italic}
-.mentor-bar .mentor-text strong{color:#4f46e5;font-style:normal}
-.mentor-bar .mentor-dismiss{background:none;border:none;color:#94a3b8;cursor:pointer;font-size:12px;padding:2px}
-
-/* Power Hour Banner (CD6) */
-.power-hour-banner{margin:2px auto;padding:4px 10px;border-radius:8px;background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(239,68,68,.06));border:1px solid rgba(245,158,11,.15);display:none;align-items:center;gap:6px;font-size:10px;animation:phPulse 2s ease-in-out infinite}
-.power-hour-banner.show{display:flex}
-@keyframes phPulse{0%,100%{opacity:1}50%{opacity:.7}}
-.power-hour-banner .ph-icon{font-size:16px}
-.power-hour-banner .ph-text{flex:1;color:#d97706;font-weight:700}
-.power-hour-banner .ph-sub{font-size:10px;color:#94a3b8}
-
-/* Daily Special Topic (CD6) */
-
-/* Evanescing Challenge (CD6) */
-.evan-card{margin:2px auto;padding:6px 10px;border-radius:8px;background:rgba(239,68,68,.04);border:1px dashed rgba(239,68,68,.15);display:none;align-items:center;gap:6px;font-size:10px}
-.evan-card.show{display:flex}
-.evan-card .ec-icon{font-size:14px}
-.evan-card .ec-text{flex:1;color:#dc2626;font-weight:600}
-.evan-card .ec-progress{font-size:11px;font-weight:700;color:#d97706}
-.evan-card .ec-reward{font-size:10px;color:#94a3b8}
-
-/* Dangling Offer (CD6) */
-.dangle-banner{margin:2px auto;padding:4px 10px;border-radius:8px;background:linear-gradient(135deg,rgba(236,72,153,.08),rgba(168,85,247,.06));border:1px solid rgba(236,72,153,.12);display:none;align-items:center;gap:6px;font-size:10px}
-.dangle-banner.show{display:flex}
-.dangle-banner .dangle-icon{font-size:14px}
-.dangle-banner .dangle-text{flex:1;color:#ec4899;font-weight:600}
-.dangle-banner button{padding:4px 10px;border-radius:999px;border:none;background:rgba(236,72,153,.12);color:#ec4899;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation}
-.dangle-banner button:active{background:#ec4899;color:#fff}
-
-/* Knowledge Treasure (CD7) */
-.treasure-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:180000;padding:16px 24px;border-radius:16px;background:#fff;box-shadow:0 0 40px rgba(251,191,36,.15);text-align:center;display:none;animation:treasurePop .4s ease}
-.treasure-popup.show{display:block}
-@keyframes treasurePop{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
-.treasure-popup .tp-icon{font-size:36px}
-.treasure-popup .tp-title{font-size:16px;font-weight:800;color:#d97706}
-.treasure-popup .tp-desc{font-size:11px;color:#64748b}
-.treasure-popup .tp-xp{font-size:13px;font-weight:700;color:#059669;margin-top:4px}
-.treasure-popup button{margin-top:8px;padding:6px 18px;border-radius:999px;border:none;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;font-size:12px;font-weight:700;cursor:pointer}
-.treasure-popup button:active{transform:scale(.97)}
-
-/* Easter Egg (CD7) */
-.easter-target{position:fixed;bottom:12px;right:12px;width:20px;height:20px;border-radius:50%;background:#f1f5f9;cursor:pointer;z-index:50000;transition:.3s;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:10px;opacity:.4}
-.easter-target:active{opacity:1;background:#e2e8f0}
-.easter-target.found{opacity:.1;cursor:default}
 
 /* Tool icons in topbar */
 .tool-icons{display:flex;gap:2px;margin-left:auto}
@@ -312,91 +204,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.92)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 
-/* XP Decay Warning (CD8) */
-.decay-warning{margin:2px auto;padding:4px 10px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);display:none;align-items:center;gap:6px;font-size:10px;animation:decayPulse 2s ease-in-out infinite}
-.decay-warning.show{display:flex}
-@keyframes decayPulse{0%,100%{opacity:1}50%{opacity:.6}}
-.decay-warning .dw-icon{font-size:14px}
-.decay-warning .dw-text{flex:1;color:#dc2626;font-weight:600}
-.decay-warning .dw-sub{font-size:10px;color:#94a3b8}
-
-/* Deposit Challenge (CD8) */
-.deposit-card{margin:2px auto;padding:6px 10px;border-radius:8px;background:rgba(5,150,105,.04);border:1px solid rgba(5,150,105,.1);display:none;align-items:center;gap:6px;font-size:10px}
-.deposit-card.show{display:flex}
-.deposit-card .dp-icon{font-size:14px}
-.deposit-card .dp-text{flex:1;color:#059669;font-weight:600}
-.deposit-card .dp-progress{font-size:11px;font-weight:700;color:#d97706}
-.btn-deposit{padding:4px 10px;border-radius:999px;border:none;background:rgba(5,150,105,.12);color:#059669;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation}
-.btn-deposit:active{background:#059669;color:#fff}
-
-/* Title Customization Panel (CD4) */
-.title-panel{margin:2px auto;padding:6px 10px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:none;font-size:10px}
-.title-panel.show{display:block}
-.title-panel .tp-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
-.title-panel .tp-title-btn{padding:3px 8px;border-radius:999px;border:1px solid #e2e8f0;background:#f8fafc;color:#64748b;font-size:10px;font-weight:600;cursor:pointer;transition:.2s;touch-action:manipulation}
-.title-panel .tp-title-btn:active{background:#e2e8f0}
-.title-panel .tp-title-btn.equipped{background:rgba(245,158,11,.1);border-color:#f59e0b;color:#d97706}
-.title-panel .tp-title-btn.locked{opacity:.3;cursor:not-allowed}
-.title-toggle{font-size:10px;color:#94a3b8;cursor:pointer;display:inline-block}
-.title-toggle:active{color:#d97706}
-
-/* Study Mode Selector (CD3) */
-.mode-row{display:flex;gap:3px;justify-content:center;flex-shrink:0}
-.mode-btn{padding:3px 8px;border-radius:999px;border:1px solid #e2e8f0;background:transparent;color:#64748b;font-size:10px;font-weight:600;cursor:pointer;transition:.2s}
-.mode-btn:active{background:#f1f5f9}
-.mode-btn.active{background:rgba(245,158,11,.1);border-color:#f59e0b;color:#d97706}
-
-/* Gems Exchange (CD3) */
-.exchange-row{display:flex;gap:3px;justify-content:center;flex-shrink:0}
-.btn-exchange{padding:3px 10px;border-radius:999px;border:1px solid rgba(236,72,153,.15);background:rgba(236,72,153,.06);color:#ec4899;font-size:10px;font-weight:600;cursor:pointer;transition:.2s;touch-action:manipulation}
-.btn-exchange:active{background:rgba(236,72,153,.15)}
-.btn-exchange:disabled{opacity:.3;cursor:not-allowed}
-
-/* Beginner's Blessing (CD1) */
-.blessing-banner{margin:2px auto;padding:8px 12px;border-radius:10px;background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(192,132,252,.08));border:1px solid rgba(245,158,11,.15);display:none;align-items:center;gap:8px;font-size:11px;animation:blessPop .4s ease}
-.blessing-banner.show{display:flex}
-@keyframes blessPop{0%{transform:scale(.9);opacity:0}50%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
-.blessing-banner .bl-icon{font-size:24px}
-.blessing-banner .bl-text{flex:1}
-.blessing-banner .bl-text strong{color:#d97706}
-.blessing-banner .bl-text .bl-sub{font-size:10px;color:#94a3b8}
-
-/* Milestone Announcement (CD1) */
-.milestone-banner{margin:2px auto;padding:6px 12px;border-radius:10px;background:linear-gradient(135deg,rgba(192,132,252,.1),rgba(245,158,11,.06));border:1px solid rgba(192,132,252,.15);display:none;align-items:center;gap:6px;font-size:10px}
-.milestone-banner.show{display:flex}
-.milestone-banner .ms-icon{font-size:20px}
-.milestone-banner .ms-text{flex:1}
-.milestone-banner .ms-text strong{color:#7c3aed}
-.milestone-banner .ms-stage{font-size:10px;color:#94a3b8}
-
-/* Topic Mastery (CD2) */
-.mastery-display{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;flex-shrink:0}
-.mastery-chip{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;background:rgba(5,150,105,.08);color:#059669;border:1px solid rgba(5,150,105,.1)}
-
-/* Consecutive Cascade Bonus (CD2) */
-.cascade-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200000;padding:14px 20px;border-radius:16px;background:#fff;border:2px solid rgba(5,150,105,.3);box-shadow:0 0 40px rgba(5,150,105,.1);text-align:center;display:none;animation:cascadePop .4s ease}
-.cascade-toast.show{display:block}
-@keyframes cascadePop{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
-.cascade-toast .ct-icon{font-size:32px}
-.cascade-toast .ct-title{font-size:14px;font-weight:800;color:#059669}
-.cascade-toast .ct-sub{font-size:10px;color:#64748b}
-
-/* Tutorial Overlay (Level 2: Onboarding) */
-.tut-overlay{position:fixed;inset:0;z-index:300000;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center}
-.tut-overlay.show{display:flex}
-.tut-box{background:#fff;border-radius:20px;padding:28px 24px;max-width:360px;text-align:center;border:1px solid #e2e8f0;box-shadow:0 0 40px rgba(99,102,241,.08);animation:tutPop .4s ease}
-@keyframes tutPop{0%{transform:scale(.85)translateY(20px);opacity:0}100%{transform:scale(1)translateY(0);opacity:1}}
-.tut-box .tut-step{font-size:10px;color:#94a3b8;font-weight:600;margin-bottom:4px}
-.tut-box .tut-icon{font-size:40px;margin-bottom:6px}
-.tut-box .tut-title{font-size:16px;font-weight:800;color:#1e293b;margin-bottom:6px}
-.tut-box .tut-desc{font-size:12px;color:#475569;line-height:1.5;margin-bottom:12px}
-.tut-box .tut-actions{display:flex;gap:6px;justify-content:center}
-.tut-box .tut-actions button{padding:6px 16px;border-radius:999px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
-.tut-box .tut-skip{background:#f1f5f9;color:#64748b}
-.tut-box .tut-skip:active{background:#e2e8f0}
-.tut-box .tut-next{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
-.tut-box .tut-done{background:linear-gradient(135deg,#059669,#047857);color:#fff}
-
 /* Weekly Summary (Level 2: Scaffolding) */
 .weekly-summary{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:180000;padding:20px 24px;border-radius:20px;background:#fff;border:2px solid rgba(99,102,241,.2);box-shadow:0 0 40px rgba(99,102,241,.08);text-align:center;display:none;animation:wsPop .4s ease;min-width:280px}
 .weekly-summary.show{display:block}
@@ -413,32 +220,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .weekly-summary .ws-change.down{color:#dc2626}
 .weekly-summary button{margin-top:12px;padding:8px 24px;border-radius:999px;border:none;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
 
-/* Player Type Badge (Level 3) */
-.player-type{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.15);color:#7c3aed;cursor:pointer;transition:.2s;touch-action:manipulation}
-.player-type:active{background:rgba(124,58,237,.2)}
-
-/* Knowledge Tree (Level 3: Explorer) */
-.knowledge-toggle{font-size:10px;color:#94a3b8;cursor:pointer;display:inline-block}
-.knowledge-toggle:active{color:#059669}
-.knowledge-panel{margin:2px auto;padding:6px 10px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:none;font-size:10px}
-.knowledge-panel.show{display:block}
-.knowledge-panel .kp-header{display:flex;justify-content:space-between;margin-bottom:4px}
-.knowledge-panel .kp-stat{text-align:center;padding:3px 6px;border-radius:6px;background:#f8fafc}
-.knowledge-panel .kp-stat .kp-num{font-size:14px;font-weight:800;color:#1e293b}
-.knowledge-panel .kp-stat .kp-label{font-size:10px;color:#94a3b8}
-.knowledge-panel .kp-bar{height:4px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin:3px 0}
-.knowledge-panel .kp-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#059669,#047857);transition:width .6s ease}
-.knowledge-panel .kp-tags{display:flex;flex-wrap:wrap;gap:2px;margin-top:3px}
-.knowledge-panel .kp-tag{padding:2px 6px;border-radius:999px;font-size:10px;font-weight:600}
-.knowledge-panel .kp-tag.mastered{background:rgba(5,150,105,.08);color:#059669;border:1px solid rgba(5,150,105,.1)}
-.knowledge-panel .kp-tag.learning{background:rgba(245,158,11,.08);color:#d97706;border:1px solid rgba(245,158,11,.1)}
-
-/* Personal Bests (Level 3: Killer) */
-.pb-display{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
-.pb-chip{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;background:rgba(239,68,68,.06);color:#dc2626;border:1px solid rgba(239,68,68,.1)}
-.pb-chip.new{animation:pbPulse 1s ease infinite}
-@keyframes pbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-
 /* Topic heading H1 */
 .topic-heading{font-size:28px;font-weight:800;color:#1e293b;margin-bottom:8px;text-align:center;line-height:1.3}
 /* Study topic H1 above card */
@@ -451,31 +232,12 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .hamburger{display:none}
 .nav-links{display:flex;position:static;flex-direction:row;background:none;border-bottom:none;padding:0;gap:4px;align-items:center;justify-content:flex-end;box-shadow:none}
 .nav-links a{padding:6px 12px;border-radius:999px;font-size:12px;justify-content:flex-start}
-.stats-hero{padding:8px 16px}
 .modal-box{margin:0 auto;max-width:340px}
-.achiev-toast{right:20px}
 }
 
 @media(min-width:1024px){
-.container{max-width:min(720px,100%);margin:0 auto;padding:0 12px}
-.stats-hero{padding:12px 24px}
-.stats-grid{max-width:720px;gap:8px}
-.level-badge{width:44px;height:44px}
-.level-badge .lvl-num{font-size:18px}
-.level-badge .lvl-label{font-size:10px}
-.gem-badge{font-size:10px;padding:2px 6px}
-.stats-row1 .title{font-size:13px}
-.stats-row1 .lvl-title{font-size:12px}
-.stats-row1 .xp-text{font-size:12px}
-.stat-pill{padding:4px 8px;min-width:36px}
-.stat-pill .stat-num{font-size:14px}
-.stat-pill .stat-label{font-size:10px}
 .narrative-banner{font-size:12px;padding:6px 12px;gap:6px}
 .narrative-banner .narr-stage{font-size:11px}
-.challenge-card{padding:8px 12px;min-height:36px}
-.challenge-card .cc-text{font-size:12px}
-.challenge-card .cc-progress{font-size:12px}
-.challenge-card .cc-reward{font-size:12px}
 .topic-heading{font-size:28px;margin-bottom:4px}
 .topic-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;max-width:650px}
 .topic-card{padding:16px 14px;min-height:90px}
@@ -491,37 +253,19 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .card-back .card-text{font-size:15px;line-height:1.5}
 .card-back .card-text code{font-size:13px;padding:2px 6px}
 .card-hint{font-size:11px}
-.tier-btn{padding:5px 10px;font-size:11px;min-height:30px}
-.rating-btn{padding:6px 11px;font-size:11px;min-height:30px}
+.tier-btn{padding:10px 12px;font-size:14px;min-height:40px}
+.rating-btn{padding:10px 12px;font-size:14px;min-height:40px}
 .srs-state{font-size:11px}
 .modal-box{max-width:360px;padding:28px 24px}
 .modal-box .big-lvl{font-size:64px}
 .modal-box .big-lvl-title{font-size:22px}
 .modal-box .big-lvl-desc{font-size:13px}
 .modal-box button{font-size:13px;padding:8px 24px}
-.mentor-bar{font-size:12px;padding:6px 12px}
-.power-hour-banner{font-size:12px}
-.power-hour-banner .ph-sub{font-size:11px}
-.evan-card{font-size:12px;padding:8px 14px}
-.evan-card .ec-progress{font-size:12px}
-.evan-card .ec-reward{font-size:11px}
-.dangle-banner{font-size:12px;padding:6px 12px}
-.boss-chip{font-size:12px;padding:4px 10px}
-.boss-chip .boss-reward{font-size:11px}
-.achiev-item{width:40px;height:40px;font-size:18px}
-.achiev-item .achiev-tip{font-size:11px;padding:6px 10px}
-.lucky-notice{padding:16px 24px}
-.lucky-notice .ln-text{font-size:20px}
-.lucky-notice .ln-sub{font-size:13px}
-.deck-complete{padding:20px 24px}
-.deck-complete .dc-title{font-size:18px}
-.deck-complete .dc-sub{font-size:12px}
-.deck-complete .dc-xp{font-size:14px}
 }
 </style>
 </head><body>
 <canvas id="confettiCanvas"></canvas>
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><span class="mini-level" id="topLevel" onclick="showInsightPopup()"><span class="ml-num" id="topLvlNum">1</span><span class="ml-gems" id="topGems">💎10</span></span><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
 
 <div class="modal-overlay" id="lvlModal"><div class="modal-box">
 <div class="big-lvl" id="lvlModalNum">5</div>
@@ -542,28 +286,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="ln-sub">Lucky card bonus!</div>
 </div>
 
-<section class="stats-hero">
-<div class="stats-grid">
-<div class="level-badge" id="levelBadge"><span class="lvl-num" id="lvlNum">1</span><span class="lvl-label">LEVEL</span><div class="gem-badge" id="gemBadge">💎 <span id="gemCount">10</span></div></div>
-<div class="stats-main">
-<div class="stats-row1"><span class="title" id="rankTitle">Novice</span><span class="lvl-title" id="lvlTitle">🃏 Learner</span><span class="xp-text" id="xpDisplay">0 / 50 XP</span></div>
-<div class="xp-bar-wrap"><div class="xp-bar-fill" id="xpBar" style="width:0%"></div></div>
-<div class="days-chips" id="daysChips"></div>
-</div>
-<div class="stats-right">
-<div class="stat-pill streak" id="streakPill"><span class="stat-num" id="streakNum">0</span><span class="stat-label">🔥 Day</span></div>
-<div class="stat-pill known-pill"><span class="stat-num" id="totalKnown">0</span><span class="stat-label">✅ Known</span></div>
-<div class="stat-pill achiev"><span class="stat-num" id="achievCount">0</span><span class="stat-label">🏆 Badges</span></div>
-</div>
-</div>
-<div class="stats-footer" id="statsFooter" style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:2px">
-<span class="player-type" id="playerTypeBadge">🧭 Explorer</span>
-<span class="knowledge-toggle" id="knowledgeToggle" onclick="toggleKnowledgePanel()">🌳 Knowledge Tree ▸</span>
-</div>
-<div class="knowledge-panel" id="knowledgePanel"><div class="kp-header"><div class="kp-stat"><div class="kp-num" id="kpMastered">0</div><div class="kp-label">Mastered</div></div><div class="kp-stat"><div class="kp-num" id="kpLearning">0</div><div class="kp-label">Learning</div></div><div class="kp-stat"><div class="kp-num" id="kpTotal">0</div><div class="kp-label">Total</div></div></div><div class="kp-bar"><div class="kp-bar-fill" id="kpBarFill" style="width:0%"></div></div><div class="kp-tags" id="kpTags"></div></div>
-</section>
-
-<div class="container">
+<div class="container" id="container">
 
 <!-- Narrative Banner (always visible welcome) -->
 <div class="narrative-banner" id="narrativeBanner">
@@ -615,7 +338,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="action-group">
 <div class="action-label">RESULT</div>
 <div class="rating-row" id="ratingRow">
-<button class="rating-btn btn-again" onclick="rateCard(1)">❌ Missed</button>
+<button class="rating-btn btn-again" onclick="rateCard(1)">🔄 Again</button>
 <button class="rating-btn btn-hard" onclick="rateCard(2)">🤔 Tricky</button>
 <button class="rating-btn btn-good" onclick="rateCard(3)">✅ Got It</button>
 </div>
@@ -631,24 +354,14 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 
 </div>
 
-<!-- Treasure Popup (CD7) -->
-<div class="treasure-popup" id="treasurePopup">
-<div class="tp-icon">🎁</div>
-<div class="tp-title" id="treasureTitle">Knowledge Treasure!</div>
-<div class="tp-sub" id="treasureSub">Bonus XP and gems</div>
-</div>
-
-<!-- Cascade Toast (CD2) -->
-<div class="cascade-toast" id="cascadeToast">
-<div class="ct-icon">🔥</div>
-<div class="ct-title" id="cascadeTitle">Streak Cascade!</div>
-<div class="ct-sub" id="cascadeSub">Bonus for consecutive daily completions</div>
-</div>
-
-<!-- Easter Egg Target (CD7) -->
-<div class="easter-target" id="easterTarget" onclick="clickEaster()">🥚</div>
-
 <div class="toast" id="toast"></div>
+
+<!-- Hidden containers for JS rendering (formerly in stats-hero) -->
+<div id="knowledgePanel" style="display:none"><div class="kp-header"><div class="kp-stat"><div class="kp-num" id="kpMastered">0</div><div class="kp-label">Mastered</div></div><div class="kp-stat"><div class="kp-num" id="kpLearning">0</div><div class="kp-label">Learning</div></div><div class="kp-stat"><div class="kp-num" id="kpTotal">0</div><div class="kp-label">Total</div></div></div><div class="kp-bar"><div class="kp-bar-fill" id="kpBarFill" style="width:0%"></div></div><div class="kp-tags" id="kpTags"></div></div>
+<span id="knowledgeToggle" style="display:none"></span>
+<span id="playerTypeBadge" style="display:none">🧭 Explorer</span>
+<div id="pbDisplay" style="display:none"></div>
+<div id="achievWall" style="display:none"></div>
 
 <!-- Popup Overlay (replaces gear panel) -->
 <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
@@ -732,31 +445,6 @@ function calcSM2(quality,card){
   const next=new Date();next.setDate(next.getDate()+interval);
   return {ef,interval,reps,nextReview:next.toISOString().slice(0,10),ease:quality};
 }
-
-function renderChallenges(){
-const dc=document.getElementById('dailyCard'),wc=document.getElementById('weeklyCard');
-if(stats.daily_challenge){dc.classList.add('visible'),dc.classList.toggle('done',stats.daily_challenge_done);
-document.getElementById('dailyText').textContent=stats.daily_challenge;
-document.getElementById('dailyProgress').textContent=`${stats.daily_progress||0}/${stats.daily_goal||1}`;
-document.getElementById('dailyReward').textContent=stats.daily_challenge_done?'✅ Done!':`+${stats.daily_reward_xp||25} XP`}
-if(stats.weekly_challenge){wc.classList.add('visible'),wc.classList.toggle('done',stats.weekly_done);
-document.getElementById('weeklyText').textContent=stats.weekly_challenge;
-document.getElementById('weeklyProgress').textContent=`${stats.weekly_progress||0}/${stats.weekly_goal||1}`;
-document.getElementById('weeklyReward').textContent=stats.weekly_done?'✅ Done!':`+${stats.weekly_reward_xp||150} XP`}
-}
-
-function renderAchievements(){
-const wall=document.getElementById('achievWall');wall.innerHTML='';
-const unlocked=stats.achievements||[],hidden=stats.hidden_achievements||[];
-for(const a of ACHIEVEMENTS){
-const item=document.createElement('div');
-if(a.hidden&&!unlocked.includes(a.id)){item.className='achiev-item hidden';item.innerHTML='<span>❓</span><div class="achiev-tip"><strong>???</strong><br>Hidden achievement</div>'}
-else{const isU=unlocked.includes(a.id);item.className='achiev-item '+(isU?'unlocked':'locked');
-item.innerHTML=`<span>${a.icon}</span><div class="achiev-tip"><strong>${a.name}</strong><br>${a.desc}</div>`}
-wall.appendChild(item)}
-}
-
-function toggleSection(id){const b=document.getElementById('c-'+id),p=document.getElementById('cb-'+id);b.classList.toggle('open');p.classList.toggle('open')}
 function openPopup(title,html){document.getElementById('popupTitle').textContent=title;document.getElementById('popupBody').innerHTML=html;document.getElementById('popupOverlay').classList.add('open');document.getElementById('popupBox').classList.add('open')}
 function closePopup(){document.getElementById('popupOverlay').classList.remove('open');document.getElementById('popupBox').classList.remove('open')}
 
@@ -764,83 +452,100 @@ function showCardPopup(){openPopup('📊 Progress',`<div style="text-align:cente
 
 function showStatsPopup(){const k=document.getElementById('knownCount').textContent;const s=document.getElementById('stillCount').textContent;openPopup('📈 Session',`<div style="display:flex;gap:16px;justify-content:center;padding:12px 0"><div style="text-align:center"><div style="font-size:36px">✅</div><div style="font-size:22px;font-weight:800;color:#059669">${k}</div><div style="font-size:11px;color:#64748b;margin-top:2px">Done</div></div><div style="text-align:center"><div style="font-size:36px">📖</div><div style="font-size:22px;font-weight:800;color:#2563eb">${s}</div><div style="font-size:11px;color:#64748b;margin-top:2px">Left</div></div></div>`)}
 
-function showChallengePopup(){openPopup('🎯 Challenges & Events',`<div style="font-size:13px;color:#64748b;text-align:center;padding:16px 0">Challenges will render here</div>`)}
-
-function showPowerupPopup(){openPopup('⚡ Power-ups & Modes',`<div style="font-size:13px;color:#64748b;text-align:center;padding:16px 0">Power-ups will render here</div>`)}
-
-function showInsightPopup(){openPopup('📊 Insights & Progress',`<div style="font-size:13px;color:#64748b;text-align:center;padding:16px 0">Insights will render here</div>`)}
-
-function toggleAchievWall(){const w=document.getElementById('achievWall'),t=document.getElementById('achievToggle');w.classList.toggle('show');t.textContent=w.classList.contains('show')?'🏆 Hide Achievements':'🏆 Show Achievements'}
-
-function checkNewAchievs(sessionStats){
-const unlocked=stats.achievements||[],newA=[];
+function showChallengePopup(){
+const s=stats;
+let html='<div style="display:flex;flex-direction:column;gap:6px">';
+// Daily challenge
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#fffbeb"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">📅 Daily Challenge</span><span style="font-size:10px;color:#d97706">'+(s.daily_challenge_done?'✅ Done!':'+'+((s.daily_reward_xp||25)+' XP'))+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">'+(s.daily_challenge||'Study 10 cards')+'</div><div style="font-size:10px;color:#94a3b8">'+(s.daily_progress||0)+' / '+(s.daily_goal||1)+'</div></div>';
+// Weekly challenge
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#f0fdf4"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">📆 Weekly Challenge</span><span style="font-size:10px;color:#059669">'+(s.weekly_done?'✅ Done!':'+'+((s.weekly_reward_xp||150)+' XP'))+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">'+(s.weekly_challenge||'Master 3 topics')+'</div><div style="font-size:10px;color:#94a3b8">'+(s.weekly_progress||0)+' / '+(s.weekly_goal||1)+'</div></div>';
+// Evan Challenge
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.evan_active?'#fef2f2':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">⏳ Evanescing Challenge</span><span id="evanBadge" style="font-size:10px;color:'+(s.evan_active?'#dc2626':'#64748b')+'">'+(s.evan_active?'🔥 Active':'Inactive')+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">Review cards before they vanish!'+(s.evan_active?' Review '+(s.evan_progress||0)+'/'+(s.evan_goal||10)+' cards':'')+'</div></div>';
+// Deposit Challenge
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.deposit_amount?'#faf5ff':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">💰 Deposit Challenge</span><span id="depositBadge" style="font-size:10px;color:'+(s.deposit_amount?'#7c3aed':'#64748b')+'">'+(s.deposit_amount?s.deposit_amount+' 💎 deposited':'Deposit '+((s.deposit_goal||50)+' 💎'))+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">Build your gem savings habit</div></div>';
+// Achievements
+const unlocked=s.achievements||[];
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#f8fafc"><div style="font-weight:700;font-size:12px;margin-bottom:4px">🏆 Achievements ('+unlocked.length+'/'+ACHIEVEMENTS.length+')</div><div style="display:flex;flex-wrap:wrap;gap:2px">';
 for(const a of ACHIEVEMENTS){
-if(!unlocked.includes(a.id)&&a.check(sessionStats))newA.push(a)}
-for(const a of newA){unlocked.push(a.id);const el=document.getElementById('achievToast');
-document.getElementById('achievIcon').textContent=a.icon;
-document.getElementById('achievTitle').textContent='🏆 '+a.name+'!';
-document.getElementById('achievDesc').textContent=a.desc;el.classList.add('show');
-clearTimeout(el._hide);el._hide=setTimeout(()=>el.classList.remove('show'),4000);SND.achiev();spawnConf(40)}
-stats.achievements=unlocked;renderAchievements();return newA}
+const isU=unlocked.includes(a.id);
+html+='<span style="font-size:14px;opacity:'+(isU?'1':'.3')+';cursor:default" title="'+(a.hidden&&!isU?'???':a.name+': '+a.desc)+'">'+(a.hidden&&!isU?'❓':a.icon)+'</span>'}
+html+='</div></div></div>';
+openPopup('🎯 Challenges & Events',html)}
 
-function showLevelUp(l){const t=getLvlTitle(l);document.getElementById('lvlModalNum').textContent=l;document.getElementById('lvlModalTitle').textContent=t.title;document.getElementById('lvlModalDesc').textContent=`You reached ${t.rank}!`;document.getElementById('lvlModal').classList.add('show')}
-function closeLvlModal(){document.getElementById('lvlModal').classList.remove('show')}
+function showPowerupPopup(){
+const s=stats;
+let html='<div style="display:flex;flex-direction:column;gap:6px">';
+// Mentor
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.mentor_message?'#eff6ff':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">🧙 Mentor</span><span style="font-size:10px;color:'+(s.mentor_message?'#2563eb':'#64748b')+'">'+(s.mentor_message?'Active':'Idle')+'</span></div>'+(s.mentor_message?'<div style="font-size:11px;color:#475569;margin:3px 0">'+s.mentor_message+'</div>':'')+'</div>';
+// Power Hour
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.is_power_hour?'#fff7ed':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">⚡ Power Hour</span><span style="font-size:10px;color:'+(s.is_power_hour?'#ea580c':'#64748b')+'">'+(s.is_power_hour?'🔥 Active (x2 XP)':'Inactive')+'</span></div>'+(s.is_power_hour?'<div style="font-size:11px;color:#475569;margin:3px 0">Double XP for next '+(s.power_hour_remaining||'')+' min!</div>':'')+'</div>';
+// Player Type
+const pts=s.player_type_scores;
+if(pts){
+const types=[{k:'achiever',i:'🏆',l:'Achiever'},{k:'explorer',i:'🧭',l:'Explorer'},{k:'socializer',i:'💬',l:'Socializer'},{k:'killer',i:'⚔️',l:'Killer'}];
+let typeHtml='';let topT='';
+for(const t of types)if(pts[t.k]){if(!topT||pts[t.k]>pts[topT])topT=t.k;typeHtml+='<span style="font-size:10px">'+t.i+' '+t.l+': '+pts[t.k]+'</span><br>'}
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#f0f9ff"><div style="font-weight:700;font-size:12px;margin-bottom:2px">🎮 Player Type</div><div style="font-size:11px;color:#475569">'+typeHtml+'<span style="font-weight:600;color:#2563eb">Dominant: '+(types.find(t=>t.k===topT)?.i||'')+' '+topT.charAt(0).toUpperCase()+topT.slice(1)+'</span></div></div>'}
+// Dangling Offer
+html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'#fef2f2':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">🎁 Special Offer</span><span style="font-size:10px;color:'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'#dc2626':'#64748b')+'">'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'🔴 Claim now!':'Empty')+'</span></div></div></div>';
+openPopup('⚡ Power-ups & Modes',html)}
 
-function renderBosses(){
-const div=document.getElementById('bossChallenges');div.innerHTML='';
-const bc=stats.boss_challenges||{};
-const BOSSES=[{n:'Speed Demon',d:'Speed deck',xp:100,g:10},{n:'Perfect Run',d:'Perfect deck',xp:80,g:8},{n:'Marathon',d:'Study session',xp:150,g:15},{n:'Night Owl',d:'Late study',xp:120,g:12}];
-for(const b of BOSSES){
-const chip=document.createElement('div');chip.className='boss-chip';
-const prog=bc[b.n]||{progress:0,done:false};
-if(prog.done)chip.classList.add('done');
-const goal=b.n==='Marathon'?4:b.n==='Night Owl'?3:1;
-chip.textContent=`${b.n==='Speed Demon'?'⚡':b.n==='Perfect Run'?'🎯':b.n==='Marathon'?'🏃':'🦉'} ${b.n} ${prog.done?'✅':prog.progress+'/'+goal}`;
-chip.title=`+${b.xp} XP, 💎${b.g}`;div.appendChild(chip)}
+function showInsightPopup(){openPopup('📊 Insights & Progress',`<div style="text-align:center;margin-bottom:8px"><span id="popRankTitle" style="font-size:20px;font-weight:800;color:#1e293b">Novice</span> <span id="popLvlTitle" style="font-size:13px;color:#64748b">🃏 Learner</span></div><div style="margin:0 0 4px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:1px"><span id="popXpDisplay">0 / 50 XP</span><span style="font-weight:700;color:#f59e0b">Lv.<span id="popLvlNum">1</span></span></div><div class="xp-bar-wrap" style="background:#e2e8f0"><div class="xp-bar-fill" id="popXpBar" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b,#ef4444)"></div></div></div><div style="display:flex;gap:8px;justify-content:center;margin:8px 0"><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#fffbeb"><div style="font-size:18px">🔥</div><div style="font-size:16px;font-weight:800;color:#d97706" id="popStreakNum">0</div><div style="font-size:9px;color:#92400e;font-weight:600">Day</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#f0fdf4"><div style="font-size:18px">✅</div><div style="font-size:16px;font-weight:800;color:#059669" id="popKnownNum">0</div><div style="font-size:9px;color:#166534;font-weight:600">Known</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#faf5ff"><div style="font-size:18px">🏆</div><div style="font-size:16px;font-weight:800;color:#7c3aed" id="popAchivNum">0</div><div style="font-size:9px;color:#581c87;font-weight:600">Badges</div></div></div><div style="text-align:center;font-size:11px;color:#94a3b8;margin-top:6px" id="popPlayerType">🧭 Explorer</div>`)}
+
+function updateStatsUI(){
+const l=stats.level,xpL=stats.xp-(l-1)*50,need=xpNeeded(l),pct=Math.min(100,(xpL/need)*100);
+try{document.getElementById('lvlNum').textContent=l}catch(e){}
+try{document.getElementById('xpDisplay').textContent=xpL+' / '+need+' XP'}catch(e){}
+try{document.getElementById('xpBar').style.width=pct+'%'}catch(e){}
+try{document.getElementById('gemCount').textContent=stats.gems||0}catch(e){}
+const ttl=getLvlTitle(l);
+const rank=stats.equipped_title||ttl.title;
+try{document.getElementById('rankTitle').textContent=rank}catch(e){}
+try{document.getElementById('lvlTitle').textContent=ttl.rank}catch(e){}
+try{document.getElementById('totalKnown').textContent=stats.total_known||0}catch(e){}
+try{document.getElementById('achievCount').textContent=(stats.achievements||[]).length}catch(e){}
+try{document.getElementById('streakNum').textContent=stats.streak||0}catch(e){}
+try{document.getElementById('streakPill').classList.toggle('has-streak',(stats.streak||0)>0)}catch(e){}
+// Topbar mini-level
+try{document.getElementById('topLvlNum').textContent=l}catch(e){}
+try{document.getElementById('topGems').textContent='💎'+(stats.gems||0)}catch(e){}
+// Popup elements
+try{document.getElementById('popRankTitle').textContent=rank}catch(e){}
+try{document.getElementById('popLvlTitle').textContent=ttl.rank}catch(e){}
+try{document.getElementById('popXpDisplay').textContent=xpL+' / '+need+' XP'}catch(e){}
+try{document.getElementById('popLvlNum').textContent=l}catch(e){}
+try{document.getElementById('popXpBar').style.width=pct+'%'}catch(e){}
+try{document.getElementById('popStreakNum').textContent=stats.streak||0}catch(e){}
+try{document.getElementById('popKnownNum').textContent=stats.total_known||0}catch(e){}
+try{document.getElementById('popAchivNum').textContent=(stats.achievements||[]).length}catch(e){}
+try{document.getElementById('popPlayerType').textContent='🧭 '+(stats.player_type||'Explorer')}catch(e){}
+// Knowledge tree body (already in DOM)
+
+// Level 3: Personal Bests
+renderPersonalBests();
+
+// Knowledge tree body (already in DOM)
 }
-
-// Load
-async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');if(r.ok){const d=await r.json();stats={...stats,...d};updateStatsUI();renderChallenges();renderAchievements();renderBosses()}}catch(e){}}
-let currentTopic='';
-async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
-const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns"];
-function loadTopics(){
-  const grid=document.getElementById('topicGrid');grid.innerHTML='';
-  const srs=loadSRS();const today=todayStr();
-  const icons={Python:'🐍','Data Structures':'🗂️',Concurrency:'⚡',Databases:'🗄️','System Design':'🏗️',Security:'🔒',Testing:'🧪',DevOps:'🚀','Design Patterns':'🏛️'};
-  TOPICS.forEach(t=>{
-    const b=document.createElement('button');b.className='topic-card';
-    if(recentTopics.includes(t))b.classList.add('recent');
-    let due=0;
-    if(deckCache){
-      const pool=deckCache[t]||[];
-      due=pool.filter((_,i)=>{const id=t+':'+i;const sc=srs[id];return !sc||sc.nextReview<=today}).length
-    }
-    b.innerHTML='<div class="tc-icon">'+(icons[t]||'📘')+'</div><div class="tc-name">'+t+'</div>';
-    if(due>0)b.innerHTML+='<div class="tc-due">'+due+'</div>';
-    b.onclick=()=>selectTopic(t);grid.appendChild(b)
-  })
-}
-
-
-// Generate
-async function generateDeck(topic){
-if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a topic first','error');return}
-isLoading=true;document.getElementById('deckComplete').classList.remove('show')
-try{const r=await fetch('./flashcard_decks.json');if(!r.ok)throw Error('Failed to load deck data');const d=await r.json();const pool=d[topic]||[];if(!pool.length){showToast('No cards for '+topic,'error');isLoading=false;return}
-const srs=loadSRS();const t=todayStr();
-const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c._oidx;const sc=srs[id];return !sc||sc.nextReview<=t});
-if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
-const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
-if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
-document.getElementById('studyTopic').textContent=topic;
-document.getElementById('topicArea').style.display='none';
-document.getElementById('flashcardArea').classList.add('visible');
-document.getElementById('backTopics').classList.add('show');
-document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block:'center'});
-showCard();SND.click()}catch(e){showToast('Failed: '+e.message,'error')}
-isLoading=false}
-
+function toggleNav(){const e=document.getElementById('navLinks');if(e)e.classList.toggle('open')}
+function closeLvlModal(){const e=document.getElementById('lvlModal');if(e)e.classList.remove('show')}
+function backToTopics(){
+document.getElementById('topicArea').style.display='flex';
+document.getElementById('flashcardArea').classList.remove('visible');
+document.getElementById('backTopics').classList.remove('show');
+document.getElementById('studyTopic').textContent='';
+loadTopics()}
+function flipCard(e){if(e.target.closest('button'))return;const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Tap card to flip'};if(isFlipped)SND.flip()}
+function dismissHint(){const h=document.getElementById('cardHint');h.dataset.dismissed='1';h.style.display='none'}
+function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
+function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
+function switchTier(tier){
+currentTier=tier;SND.click();
+if(cards.length&&cards[currentIndex]){
+document.getElementById('backText').innerHTML=(cards[currentIndex][tier]||'').replace(/\n/g,'<br>')}
+updateTierButtons()}
+function updateTierButtons(){
+document.querySelectorAll('.tier-btn').forEach(b=>{
+const t=b.id.replace('tier','').toLowerCase();b.classList.toggle('active',t===currentTier)})}
 function showCard(){
 if(!cards.length)return;const c=cards[currentIndex];
 document.getElementById('frontText').textContent=c.front;
@@ -851,7 +556,6 @@ document.getElementById('prevBtn').disabled=currentIndex===0;
 document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
 isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
 const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Tap card to flip';
-// SRS state
 const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
 if(!sc)document.getElementById('srsState').textContent='🆕 New card';
 else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
@@ -860,21 +564,6 @@ document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=false);
 document.getElementById('knownCount').textContent=currentIndex;
 document.getElementById('stillCount').textContent=cards.length-currentIndex;
 updateTierButtons()}
-
-function switchTier(tier){
-currentTier=tier;SND.click();
-if(cards.length&&cards[currentIndex]){
-document.getElementById('backText').innerHTML=(cards[currentIndex][tier]||'').replace(/\n/g,'<br>')}
-updateTierButtons()}
-
-function updateTierButtons(){
-document.querySelectorAll('.tier-btn').forEach(b=>{
-const t=b.id.replace('tier','').toLowerCase();b.classList.toggle('active',t===currentTier)})}
-
-function flipCard(e){if(e.target.closest('button'))return;const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Tap card to flip'};if(isFlipped)SND.flip()}
-
-function dismissHint(){const h=document.getElementById('cardHint');h.dataset.dismissed='1';h.style.display='none'}
-
 function rateCard(quality){
 if(!cards.length||isLoading)return;SND.click();
 const c=cards[currentIndex];const cardId=currentTopic+':'+c._oidx;
@@ -893,36 +582,80 @@ setTimeout(()=>{
   else{showToast('🎉 All due cards reviewed for '+currentTopic+'!','success');document.getElementById('srsState').textContent='✅ All caught up!'}
 },400);
 recordStudy({action:['','missed','tricky','got_it'][quality],topic:currentTopic,quality})}
-function backToTopics(){
-document.getElementById('topicArea').style.display='flex';
-document.getElementById('flashcardArea').classList.remove('visible');
-document.getElementById('backTopics').classList.remove('show');
-document.getElementById('studyTopic').textContent='';
-loadTopics()}
-function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
-function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
-
-// Mystery
+function showLevelUp(l){try{
+const t=getLvlTitle(l);
+const e=document.getElementById('lvlModal');if(!e)return;
+document.getElementById('lvlModalNum').textContent=l;
+document.getElementById('lvlModalTitle').textContent=t.title;
+document.getElementById('lvlModalDesc').textContent='You reached '+t.rank+'!';
+e.classList.add('show')}catch(ex){}}
+function checkNewAchievs(sessionStats){
+const unlocked=stats.achievements||[];
+for(const a of ACHIEVEMENTS){
+if(!unlocked.includes(a.id)&&a.check(sessionStats)){
+fetch(API_BASE+'/flashcard/unlock-achievement',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({achievement_id:a.id})});
+spawnFloat('🏆 '+a.name+'!','gold');showToast('🏆 Achievement unlocked: '+a.name,'success');SND.achiev();spawnConf(30)
+}}}
+function renderBosses(){
+const div=document.getElementById('bossChallenges');if(!div)return;
+div.innerHTML='';
+const bc=stats.boss_challenges||{};
+const BOSSES=[{n:'Speed Demon',d:'Speed deck',xp:100,g:10},{n:'Perfect Run',d:'Perfect deck',xp:80,g:8},{n:'Marathon',d:'Study session',xp:150,g:15},{n:'Night Owl',d:'Late study',xp:120,g:12}];
+for(const b of BOSSES){
+const chip=document.createElement('div');chip.className='boss-chip';
+const prog=bc[b.n]||{progress:0,done:false};
+if(prog.done)chip.classList.add('done');
+const goal=b.n==='Marathon'?4:b.n==='Night Owl'?3:1;
+chip.textContent=''+(b.n==='Speed Demon'?'⚡':b.n==='Perfect Run'?'🎯':b.n==='Marathon'?'🏃':'🦉')+' '+b.n+' '+(prog.done?'✅':prog.progress+'/'+goal);
+chip.title='+'+b.xp+' XP, 💎'+b.g;div.appendChild(chip)}}
+let currentTopic='';
+async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');if(r.ok){const d=await r.json();stats={...stats,...d};updateStatsUI()}}catch(e){}}
+async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
+const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns"];
+function loadTopics(){
+  const grid=document.getElementById('topicGrid');grid.innerHTML='';
+  const srs=loadSRS();const today=todayStr();
+  const icons={Python:'🐍','Data Structures':'🗂️',Concurrency:'⚡',Databases:'🗄️','System Design':'🏗️',Security:'🔒',Testing:'🧪',DevOps:'🚀','Design Patterns':'🏛️'};
+  TOPICS.forEach(t=>{
+    const b=document.createElement('button');b.className='topic-card';
+    if(recentTopics.includes(t))b.classList.add('recent');
+    let due=0;
+    if(deckCache){
+      const pool=deckCache[t]||[];
+      due=pool.filter((_,i)=>{const id=t+':'+i;const sc=srs[id];return !sc||sc.nextReview<=today}).length
+    }
+    b.innerHTML='<div class="tc-icon">'+(icons[t]||'📘')+'</div><div class="tc-name">'+t+'</div>';
+    if(due>0)b.innerHTML+='<div class="tc-due">'+due+'</div>';
+    b.onclick=()=>selectTopic(t);grid.appendChild(b)
+  })}
+async function generateDeck(topic){
+if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a topic first','error');return}
+isLoading=true;const dc=document.getElementById('deckComplete');if(dc)dc.classList.remove('show')
+try{const r=await fetch('./flashcard_decks.json');if(!r.ok)throw Error('Failed to load deck data');const d=await r.json();const pool=d[topic]||[];if(!pool.length){showToast('No cards for '+topic,'error');isLoading=false;return}
+const srs=loadSRS();const t=todayStr();
+const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c._oidx;const sc=srs[id];return sc&&sc.nextReview<=t});
+if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
+const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
+if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
+document.getElementById('studyTopic').textContent=topic;
+document.getElementById('topicArea').style.display='none';
+document.getElementById('flashcardArea').classList.add('visible');
+document.getElementById('backTopics').classList.add('show');
+document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block:'center'});
+showCard();SND.click()}catch(e){showToast('Failed: '+e.message,'error')}
+isLoading=false}
 async function revealMystery(){
 SND.mystery();const x=5+Math.floor(Math.random()*20);
 stats.xp+=x;stats.level=calcLevel(stats.xp);
 updateStatsUI();spawnFloat('+'+x+' XP','purple');
 showToast('🎁 Mystery card! +'+x+' XP','xp');
-document.getElementById('mysteryBtn').disabled=true;document.getElementById('mysteryBtn').textContent='🎁 Used Today';
+const mb=document.getElementById('mysteryBtn');if(mb){mb.disabled=true;mb.textContent='🎁 Used Today'}
 document.getElementById('cardInner').classList.add('lucky');
 setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1000);
 if(stats.level>calcLevel(stats.xp-x)){SND.levelUp();showLevelUp(stats.level);spawnConf(60)}
 await recordStudy({action:'mystery',bonus_xp:x})}
-
-// Booster
 async function activateBooster(){
-try{const r=await fetch(API_BASE+'/flashcard/activate-booster',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cost_gems:5,cards_count:3})});const d=await r.json();if(d.success){stats.gems=d.gems;stats.xp_booster_active=true;stats.xp_booster_cards_remaining=d.xp_booster_cards_remaining;updateStatsUI();SND.booster();showToast('⚡ 2× Booster active for 3 cards!','xp');document.getElementById('boosterBtn').textContent='⚡ 2× (3 cards left)';document.getElementById('boosterBtn').classList.add('active')}else{showToast('Need 5 gems for booster','error')}}catch(e){showToast('Failed','error')}}
-
-// Streak Freeze
-async function buyStreakFreeze(){
-try{const r=await fetch(API_BASE+'/flashcard/buy-streak-freeze',{method:'POST'});const d=await r.json();if(d.success){stats.gems=d.gems;stats.streak_freezes=d.streak_freezes;updateStatsUI();SND.freeze();showToast('❄️ Streak Freeze purchased!','info')}else{showToast('Need 15 gems for freeze','error')}}catch(e){showToast('Failed','error')}}
-
-// Record study
+try{const r=await fetch(API_BASE+'/flashcard/activate-booster',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cost_gems:5,cards_count:3})});const d=await r.json();if(d.success){stats.gems=d.gems;stats.xp_booster_active=true;stats.xp_booster_cards_remaining=d.xp_booster_cards_remaining;updateStatsUI();SND.booster();showToast('⚡ 2× Booster active for 3 cards!','xp');const bb=document.getElementById('boosterBtn');if(bb){bb.textContent='⚡ 2× (3 cards left)';bb.classList.add('active')}}else{showToast('Need 5 gems for booster','error')}}catch(e){showToast('Failed','error')}}
 async function recordStudy(data){
 try{
 const payload={action:data.action,topic:data.topic||'',card_index:currentIndex,total_cards:cards.length,deck_known:0,deck_still:0,deck_complete:false,quality:data.quality||0,bonus_xp:data.bonus_xp||0,use_booster:stats.xp_booster_active,study_mode:stats.study_mode||'normal'};
@@ -930,191 +663,17 @@ const r=await fetch(API_BASE+'/flashcard/study',{method:'POST',headers:{'Content
 if(r.ok){
 const d=await r.json();const oldLevel=stats.level,oldXp=stats.xp,oldGems=stats.gems||0;
 stats={...stats,...d};
-// Check level up
-if(stats.level>oldLevel){SND.levelUp();showLevelUp(stats.level);spawnConf(60);document.getElementById('levelBadge').classList.add('pulse');setTimeout(()=>document.getElementById('levelBadge').classList.remove('pulse'),500)}
-// XP gained
+if(stats.level>oldLevel){SND.levelUp();showLevelUp(stats.level);spawnConf(60)}
 const xg=stats.xp-oldXp;if(xg>0&&data.action!=='known'&&data.action!=='still')spawnFloat('+'+xg+' XP','green');
-// Gem gain
 const gg=(d.gems||0)-oldGems;if(gg>0){SND.gem();spawnFloat('+'+gg+' 💎','pink')}
-// Lucky card
-if(d.last_lucky_amount>0){document.getElementById('luckyAmount').textContent='+'+d.last_lucky_amount+' XP! 🍀';document.getElementById('luckyNotice').classList.add('show');setTimeout(()=>document.getElementById('luckyNotice').classList.remove('show'),2000);document.getElementById('cardInner').classList.add('lucky');setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1500)}
-updateStatsUI();renderChallenges();renderBosses();
+if(d.last_lucky_amount>0){try{document.getElementById('luckyAmount').textContent='+'+d.last_lucky_amount+' XP! 🍀';document.getElementById('luckyNotice').classList.add('show');setTimeout(()=>document.getElementById('luckyNotice').classList.remove('show'),2000)}catch(e){};document.getElementById('cardInner').classList.add('lucky');setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1500)}
+updateStatsUI();
 const ss={total_studied:d.total_studied||0,total_known:d.total_known||0,decks_completed:d.decks_completed||0,best_streak:d.best_streak||0,speed_flips:d.speed_flips||0,decks_in_day:d.decks_in_day||0,topics_count:d.topics_count||0,night_studies:d.night_studies||0,level:stats.level,lucky_cards_today:d.lucky_cards_today||0,gems:stats.gems||0,boosters_used:0,boss_done:0};
 checkNewAchievs(ss)
-// Update booster button
-if(stats.xp_booster_active&&stats.xp_booster_cards_remaining>0){document.getElementById('boosterBtn').textContent='⚡ 2× ('+stats.xp_booster_cards_remaining+' cards left)';document.getElementById('boosterBtn').classList.add('active')}
-else if(!stats.xp_booster_active){document.getElementById('boosterBtn').textContent='⚡ 2× Booster (💎5)';document.getElementById('boosterBtn').classList.remove('active')}
-
-// ── Octalysis post-study updates ──
-
-// CD1: Milestone
-if(d._milestone_reached){
-document.getElementById('milestoneBanner').classList.add('show');
-document.getElementById('milestoneTitle').textContent='📜 Narrative Milestone — Level '+d._milestone_reached+'!';
-document.getElementById('milestoneDesc').textContent=d._milestone_msg||'You have reached a new chapter.';
-SND.levelUp();spawnConf(60);
-setTimeout(()=>document.getElementById('milestoneBanner').classList.remove('show'),6000)}
-
-// CD5: Mentor message
-if(d.mentor_message&&d.mentor_message!==stats.mentor_message){
-document.getElementById('mentorBar').style.display='flex';
-document.getElementById('mentorText').textContent=d.mentor_message;
-stats.mentor_message=d.mentor_message}
-
-// CD6: Power Hour
-if(d.is_power_hour&&d._power_hour){
-document.getElementById('powerHourBanner').classList.add('show');
-showToast('⚡ Power Hour bonus! 1.5× XP applied','xp')}
-
-// CD6: Evanescing
-renderEvan();
-if(d._ec_done){showToast('⏳ Evanescing Challenge Complete!','success');SND.achiev();spawnConf(40)}
-
-// CD6: Dangling
-if(d.dangling_offer_active&&!d.dangling_offer_claimed){
-document.getElementById('dangleBanner').classList.add('show')}
-
-// CD7: Treasure
-if(d._treasure){
-document.getElementById('treasurePopup').classList.add('show');
-document.getElementById('treasureTitle').textContent='🎁 Knowledge Treasure #'+d._treasure_count+'!';
-document.getElementById('treasureSub').textContent='+'+d._treasure_xp+' XP, +'+d._treasure_gems+' 💎';
-SND.mystery();spawnConf(30);
-setTimeout(()=>document.getElementById('treasurePopup').classList.remove('show'),3000)}
-
-// CD7: Easter egg
-if(d._easter_egg){
-stats.easter_egg_found=true;document.getElementById('easterTarget').classList.add('found')}
-
-// CD8: Decay warning
-if(d._decay_warning){
-document.getElementById('decayWarning').classList.add('show');
-document.getElementById('missedDays').textContent=d._missed_days||'3'}
-
-// CD8: Deposit
-renderDeposit();
-if(d._deposit_claimed){spawnFloat('+'+d._deposit_reward+' 💎','green');SND.gem();showToast('💰 Deposit complete! +'+d._deposit_reward+' gems, +50 XP','success');spawnConf(40)}
-
-// CD2: Cascade bonus
-if(d._cascade_bonus){
-document.getElementById('cascadeToast').classList.add('show');
-document.getElementById('cascadeTitle').textContent='🔥 '+d._cascade_bonus+' Daily Streak Cascade!';
-document.getElementById('cascadeSub').textContent='+100 XP, +15 Gems';
-SND.levelUp();spawnConf(60);
-setTimeout(()=>document.getElementById('cascadeToast').classList.remove('show'),5000)}
-
-// CD2: Topic mastery
-if(d._topic_mastered){
-showToast('📚 Topic Mastered: '+d._topic_mastered+'! +30 XP, +5 Gems','success');
-SND.deckComplete();spawnConf(50);
-renderMastery()}
-
-// CD6: Special topic bonus
-if(d._special_bonus>0){
-spawnFloat('+'+d._special_bonus+' 🌟 Special','gold')}
-
-// Update gem exchange button
-const exchangeBtn=document.getElementById('exchangeBtn');
-if(stats.gems<5||(stats.gems_exchanged_today||0)>=50){exchangeBtn.disabled=true}
-else{exchangeBtn.disabled=false}
+if(stats.xp_booster_active&&stats.xp_booster_cards_remaining>0){const bb=document.getElementById('boosterBtn');if(bb){bb.textContent='⚡ 2× ('+stats.xp_booster_cards_remaining+' cards left)';bb.classList.add('active')}}
+else if(!stats.xp_booster_active){const bb=document.getElementById('boosterBtn');if(bb){bb.textContent='⚡ 2× Booster (💎5)';bb.classList.remove('active')}}
+if(d._special_bonus>0){spawnFloat('+'+d._special_bonus+' 🌟 Special','gold')}
 }}catch(e){}}
-
-function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
-
-// ── CD5: Mentor Message ──
-function dismissMentor(){document.getElementById('mentorBar').style.display='none'}
-
-// ── CD4: Title Panel ──
-function toggleTitlePanel(){document.getElementById('titlePanel').classList.toggle('show')}
-
-function renderTitles(){
-const list=document.getElementById('titleList');list.innerHTML='';
-const unlocked=stats.unlocked_titles||[],equipped=stats.equipped_title||'The Chosen';
-const allTiers=['The Chosen','Dawn Walker','First Seeker','Code Weaver','Logic Keeper','Stack Surfer','Query Seeker','Hook Master','Container Captain','Test Guardian','Architect','Sage of Systems','Concurrency King','ML Mystic','Design Guru','Security Warden','Grand Architect','Omniscient One','Legend of Tech'];
-for(const t of allTiers){
-const btn=document.createElement('button');btn.className='tp-title-btn';
-if(t===equipped)btn.classList.add('equipped');
-if(!unlocked.includes(t))btn.classList.add('locked');
-btn.textContent=t+(t===equipped?' ✓':'');
-if(unlocked.includes(t)&&t!==equipped){btn.onclick=async()=>{try{const r=await fetch(API_BASE+'/flashcard/equip-title',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:t})});const d=await r.json();if(d.success){stats.equipped_title=t;renderTitles();updateStatsUI();showToast('👑 Title equipped: '+t,'info')}}catch(e){}}}
-list.appendChild(btn)}
-}
-
-// ── CD3: Study Mode ──
-async function setStudyMode(mode){
-try{await fetch(API_BASE+'/flashcard/set-study-mode?mode='+mode);stats.study_mode=mode;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));SND.click();showToast('📖 Mode: '+mode+' ('+(mode==='speed'?'0.8×':mode==='deep'?'1.5×':'1×')+' XP)','info')}catch(e){}}
-
-// ── CD3: Exchange Gems ──
-async function exchangeGems(){
-try{const r=await fetch(API_BASE+'/flashcard/exchange-gems',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:5})});const d=await r.json();if(d.success){stats.gems=d.gems;stats.xp=d.xp;spawnFloat('+'+d.xp_gained+' XP','pink');SND.gem();updateStatsUI();showToast('💎 Exchanged 5 gems → '+d.xp_gained+' XP','xp')}else{showToast('Need 5 gems','error')}}catch(e){}}
-
-// ── CD8: Deposit ──
-async function startDeposit(){
-try{const r=await fetch(API_BASE+'/flashcard/start-deposit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:10})});const d=await r.json();if(d.success){stats.deposit_active=true;stats.deposit_amount=d.deposit_amount;stats.deposit_goal=d.goal;stats.gems-=stats.deposit_amount;updateStatsUI();renderDeposit();SND.click();showToast('💰 Deposit started! Stake '+d.deposit_amount+' gems for 5 days','success')}else{showToast(d.reason,'error')}}catch(e){}}
-
-function renderDeposit(){
-const card=document.getElementById('depositCard');
-if(stats.deposit_active&&!stats._deposit_claimed){
-card.classList.add('show');
-document.getElementById('depositAmount').textContent=stats.deposit_amount||10;
-document.getElementById('depositGoal').textContent=stats.deposit_goal||5;
-document.getElementById('depositProgress').textContent=(stats.deposit_days||0)+'/'+(stats.deposit_goal||5)}
-else card.classList.remove('show')}
-
-// ── CD6: Dangling Offer ──
-async function claimDangle(){
-try{const r=await fetch(API_BASE+'/flashcard/claim-dangling-offer',{method:'POST'});const d=await r.json();if(d.success){stats.xp_booster_active=true;stats.xp_booster_cards_remaining=d.xp_booster_cards_remaining;document.getElementById('dangleBanner').classList.remove('show');SND.booster();showToast('🎁 Free booster claimed! 5 cards of 2× XP','xp');document.getElementById('boosterBtn').textContent='⚡ 2× ('+stats.xp_booster_cards_remaining+' cards left)';document.getElementById('boosterBtn').classList.add('active')}else{showToast('Offer expired','error')}}catch(e){}}
-
-// ── CD7: Easter Egg ──
-async function clickEaster(){
-try{const r=await fetch(API_BASE+'/flashcard/easter-egg',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({click_target:'logo'})});const d=await r.json();if(d.success){stats.easter_egg_found=true;stats.xp+=d.xp_gained;stats.gems+=d.gems_gained;spawnFloat('+'+d.xp_gained+' XP 🥚','gold');SND.mystery();spawnConf(40);showToast('🥚 Easter Egg! +'+d.xp_gained+' XP, +'+d.gems_gained+' Gems','xp');document.getElementById('easterTarget').classList.add('found')}else{tone(300,.1,'triangle',.05)}}catch(e){}}
-
-// ── Render Evanescing Challenge ──
-function renderEvan(){
-const card=document.getElementById('evanCard');
-if(stats.evanescing_challenge&&!stats.evanescing_challenge_done){
-card.classList.add('show');
-document.getElementById('evanText').textContent=stats.evanescing_challenge.desc||'Challenge';
-document.getElementById('evanProgress').textContent=(stats.evanescing_challenge_progress||0)+'/'+(stats.evanescing_challenge.goal||1);
-document.getElementById('evanReward').textContent='+'+stats.evanescing_challenge.reward_xp+' XP, 💎'+stats.evanescing_challenge.reward_gems}
-else card.classList.remove('show')}
-
-// ── Render Mastery ──
-function renderMastery(){
-const div=document.getElementById('masteryDisplay');div.innerHTML='';
-const topics=stats.mastered_topics||[];
-document.getElementById('masteryCount').textContent=topics.length;
-for(const t of topics){const chip=document.createElement('span');chip.className='mastery-chip';chip.textContent='✅ '+t;div.appendChild(chip)}
-}
-
-// ── Update stats UI (extended) ──
-function updateStatsUI(){
-const l=stats.level,xpL=stats.xp-(l-1)*50,need=xpNeeded(l),pct=Math.min(100,(xpL/need)*100);
-document.getElementById('lvlNum').textContent=l;
-document.getElementById('xpDisplay').textContent=xpL+' / '+need+' XP';
-document.getElementById('xpBar').style.width=pct+'%';
-document.getElementById('gemCount').textContent=stats.gems||0;
-const ttl=getLvlTitle(l);
-document.getElementById('rankTitle').textContent=stats.equipped_title||ttl.title;
-document.getElementById('lvlTitle').textContent=ttl.rank;
-document.getElementById('totalKnown').textContent=stats.total_known||0;
-document.getElementById('achievCount').textContent=(stats.achievements||[]).length;
-document.getElementById('streakNum').textContent=stats.streak||0;
-document.getElementById('streakPill').classList.toggle('has-streak',(stats.streak||0)>0);
-const chips=document.getElementById('daysChips');chips.innerHTML='';
-const days=stats.streak_days||[],today=new Date().toISOString().slice(0,10);
-for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*86400000),ds=d.toISOString().slice(0,10),c=document.createElement('div');c.className='day-chip';if(days.includes(ds))c.classList.add('done');if(ds===today&&days.includes(ds))c.classList.add('today');if(!days.includes(ds)&&ds<today)c.classList.add('missed');c.textContent=['S','M','T','W','T','F','S'][d.getDay()];chips.appendChild(c)}
-// Narrative
-const stage=Math.min(stats.narrative_stage||1,REALMS.length);
-document.getElementById('narrText').innerHTML=stage<=1?'<strong>The Knowledge Seeker</strong> — Your journey begins. Study topics to unlock new realms.':`<strong>The Knowledge Seeker</strong> — Realm ${stage}: ${REALMS[stage-1]}`;
-document.getElementById('narrStage').textContent=`Realm ${stage}: ${REALMS[stage-1]}`;
-
-// Level 3: Personal Bests
-renderPersonalBests();
-
-// Knowledge tree body (already in DOM)
-// Footer always visible; knowledge panel shown/hidden by toggle
-}
 
 // ── Level 2: Tutorial ──
 const TUTORIAL_STEPS=[
@@ -1183,42 +742,6 @@ function closeWeeklySummary(){
   document.getElementById('weeklySummary').classList.remove('show');
 }
 
-// ── Level 3: Knowledge Tree ──
-function toggleKnowledgePanel(){
-  const p=document.getElementById('knowledgePanel');
-  const t=document.getElementById('knowledgeToggle');
-  p.classList.toggle('show');
-  t.textContent=p.classList.contains('show')?'🌳 Knowledge Tree ▾':'🌳 Knowledge Tree ▸';
-  if(p.classList.contains('show')&&stats.knowledge_tree){
-    renderKnowledgeTree(stats.knowledge_tree);
-  }
-}
-function renderKnowledgeTree(tree){
-  if(!tree)return;
-  const masteredCnt=Array.isArray(tree.mastered)?tree.mastered.length:0;
-  const learningCnt=Array.isArray(tree.learning)?tree.learning.length:0;
-  const totalCnt=tree.total_topics||(masteredCnt+learningCnt)||1;
-  const pct=tree.mastery_pct||Math.round((masteredCnt/totalCnt)*100);
-  const coverage=tree.coverage||Math.round(((masteredCnt+learningCnt)/totalCnt)*100);
-  document.getElementById('kpMastered').textContent=masteredCnt;
-  document.getElementById('kpLearning').textContent=learningCnt;
-  document.getElementById('kpTotal').textContent=totalCnt;
-  document.getElementById('kpBarFill').style.width=pct+'%';
-  const tags=document.getElementById('kpTags');tags.innerHTML='';
-  (tree.mastered||[]).forEach(t=>{
-    const el=document.createElement('span');
-    el.className='kp-tag mastered';
-    el.textContent='✅ '+t;
-    tags.appendChild(el);
-  });
-  (tree.learning||[]).forEach(t=>{
-    const el=document.createElement('span');
-    el.className='kp-tag learning';
-    el.textContent='📖 '+t;
-    tags.appendChild(el);
-  });
-}
-
 // ── Level 3: Personal Bests ──
 function renderPersonalBests(){
   const pb=stats.personal_bests||{};
@@ -1253,38 +776,24 @@ async function init(){
 await loadStats();
 try{const r=await fetch('./flashcard_decks.json');if(r.ok)deckCache=await r.json()}catch(e){}
 loadTopics();
-renderAchievements();
-renderTitles();
-renderMastery();
-renderEvan();
-renderDeposit();
 
 // CD1: Beginner's blessing
 if(stats._beginner_blessed){
-document.getElementById('blessingBanner').classList.add('show');
-document.getElementById('blessTitle').textContent='🌟 Beginner\'s Blessing!';
-document.getElementById('blessSub').textContent='+'+stats._blessing_xp+' XP and '+stats._blessing_gems+' Gems to begin your journey';
-SND.levelUp();spawnConf(60);spawnFloat('+'+stats._blessing_xp+' XP','gold')
-document.getElementById('levelBadge').classList.add('pulse');
-setTimeout(()=>document.getElementById('levelBadge').classList.remove('pulse'),500);
-setTimeout(()=>document.getElementById('blessingBanner').classList.remove('show'),5000)}
+spawnFloat('+'+stats._blessing_xp+' XP','gold');SND.levelUp();spawnConf(60)}
 
 // CD1: Milestone
 if(stats._milestone_reached){
-document.getElementById('milestoneBanner').classList.add('show');
-document.getElementById('milestoneTitle').textContent='📜 Narrative Milestone — Level '+stats._milestone_reached+'!';
-document.getElementById('milestoneDesc').textContent=stats._milestone_msg||'You have reached a new chapter in your journey.';
-SND.levelUp();spawnConf(60);
-setTimeout(()=>document.getElementById('milestoneBanner').classList.remove('show'),6000)}
+spawnConf(60);SND.levelUp()}
 
 // CD5: Mentor message
 if(stats.mentor_message){
-document.getElementById('mentorBar').style.display='flex';
-document.getElementById('mentorText').textContent=stats.mentor_message}
+const m=document.getElementById('mentorMessageDisplay');
+if(m){m.style.display='flex';m.textContent=stats.mentor_message}}
 
 // CD6: Power Hour
 if(stats.is_power_hour){
-document.getElementById('powerHourBanner').classList.add('show')}
+const b=document.getElementById('powerHourChip');
+if(b)b.classList.add('active')}
 
 // CD6: Daily special topic
 if(stats.daily_special_topic){
@@ -1294,26 +803,17 @@ c.classList.add('special');
 const badge=document.createElement('span');badge.className='special-badge';badge.textContent='+'+stats.daily_special_bonus+'XP';
 c.appendChild(badge)}})}
 
-// CD6: Dangling offer
-if(stats.dangling_offer_active&&!stats.dangling_offer_claimed){
-document.getElementById('dangleBanner').classList.add('show')}
-
 // CD7: Treasure
 if(stats._treasure){
-document.getElementById('treasurePopup').classList.add('show');
-document.getElementById('treasureTitle').textContent='🎁 Knowledge Treasure #'+stats._treasure_count+'!';
-document.getElementById('treasureSub').textContent='+'+stats._treasure_xp+' XP, +'+stats._treasure_gems+' 💎';
-SND.mystery();spawnConf(30);
-setTimeout(()=>document.getElementById('treasurePopup').classList.remove('show'),3000)}
+SND.mystery();spawnConf(30)}
 
 // CD7: Easter egg
 if(stats.easter_egg_found){
-document.getElementById('easterTarget').classList.add('found')}
+const e=document.getElementById('easterTarget');
+if(e)e.classList.add('found')}
 
 // CD8: Decay warning
 if(stats._decay_warning){
-document.getElementById('decayWarning').classList.add('show');
-document.getElementById('missedDays').textContent=stats._missed_days||'3';
 SND.still()}
 
 // CD8: Deposit claimed
@@ -1323,11 +823,7 @@ spawnConf(40)}
 
 // CD2: Cascade bonus
 if(stats._cascade_bonus){
-document.getElementById('cascadeToast').classList.add('show');
-document.getElementById('cascadeTitle').textContent='🔥 '+stats._cascade_bonus+' Daily Streak Cascade!';
-document.getElementById('cascadeSub').textContent='+100 XP, +15 Gems for '+(stats._cascade_bonus||5)+' consecutive daily completions';
-SND.levelUp();spawnConf(60);
-setTimeout(()=>document.getElementById('cascadeToast').classList.remove('show'),5000)}
+spawnConf(60);SND.levelUp()}
 
 // CD2: Mastery
 if(stats._topic_mastered){
@@ -1339,7 +835,16 @@ if(stats._ec_done){
 showToast('⏳ Evanescing Challenge Complete!','success');SND.achiev();spawnConf(40)}
 
 // Mystery button
-if(stats.mystery_available!==false){}else document.getElementById('mysteryBtn').disabled=true
+if(stats.mystery_available!==false){}else{
+const mb=document.getElementById('mysteryBtn');
+if(mb)mb.disabled=true}
+
+// Narrative
+const stage=Math.min(stats.narrative_stage||1,REALMS.length);
+const nt=document.getElementById('narrText');
+const ns=document.getElementById('narrStage');
+if(nt)nt.innerHTML=stage<=1?'<strong>The Knowledge Seeker</strong> — Your journey begins. Study topics to unlock new realms.':`<strong>The Knowledge Seeker</strong> — Realm ${stage}: ${REALMS[stage-1]}`;
+if(ns)ns.textContent=`Realm ${stage}: ${REALMS[stage-1]}`;
 
 // Study mode UI
 if(stats.study_mode){document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===stats.study_mode))}
