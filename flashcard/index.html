@@ -589,7 +589,7 @@ document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
 isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
 const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Tap card to flip';
 const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
-if(!sc)document.getElementById('srsState').textContent='🆕 New card';
+if(!sc)document.getElementById('srsState').textContent='';
 else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
 else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
 document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=false);
