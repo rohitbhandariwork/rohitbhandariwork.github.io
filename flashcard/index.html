@@ -722,6 +722,7 @@ function toggleTimer(){
     timerRunning=true;document.getElementById('timerBtn').textContent='⏸️';
     timerInterval=setInterval(()=>{
       timerRemaining--;if(timerRemaining<0)timerRemaining=0;
+      if(timerRemaining>0)tone(1200,.04,'sine',.04);
       updateTimerDisplay();
       if(timerRemaining===0){
         clearInterval(timerInterval);timerRunning=false;
