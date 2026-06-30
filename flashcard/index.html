@@ -69,6 +69,12 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .pwr-btn:disabled{opacity:.3;cursor:default;transform:none}
 .pwr-btn.active{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}
 
+/* Timer row */
+.timer-row{flex-shrink:0;display:flex;gap:4px;justify-content:center;align-items:center;padding:1px 0}
+.timer-display{font-size:13px;font-weight:800;color:#6366f1;font-variant-numeric:tabular-nums;min-width:44px;text-align:center;letter-spacing:.5px}
+.timer-display.urgent{color:#dc2626;animation:timerPulse .5s ease infinite}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.4}}
+
 /* Booster & Mystery Row (deprecated — kept for legacy) */
 .action-btn:disabled{opacity:.4;cursor:not-allowed}
 
@@ -331,6 +337,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="power-row">
 <button class="pwr-btn" id="mysteryBtn" onclick="confirmMystery()" title="Mystery card">🎁</button>
 <button class="pwr-btn" id="boosterBtn" onclick="confirmBooster()" title="XP Booster">⚡</button>
+</div>
+<div class="timer-row">
+<span class="timer-display" id="timerDisplay">05:00</span>
+<button class="pwr-btn" id="timerBtn" onclick="toggleTimer()" title="Start timer">▶️</button>
+<button class="pwr-btn" id="timerReset" onclick="resetTimer()" title="Reset">↺</button>
 </div>
 <div class="card-section">
 <div class="card-wrapper" onclick="flipCard(event)">
@@ -696,6 +707,30 @@ function confirmBooster(){
   const bb=document.getElementById('boosterBtn');
   if(bb&&bb.disabled){showToast('⚡ Booster already active','info');return}
   openPopup('⚡ XP Booster',`<div style="text-align:center;padding:12px 0"><div style="font-size:48px;margin-bottom:8px">⚡</div><div style="font-size:16px;font-weight:800;color:#1e293b">Activate XP Booster</div><div style="font-size:12px;color:#64748b;margin:8px 0;line-height:1.5">Double XP for the next 3 cards!<br>Cost: <strong>💎5 Gems</strong></div><div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button onclick="closePopup();activateBooster()" style="padding:8px 20px;border-radius:999px;border:none;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-size:13px;font-weight:700;cursor:pointer">⚡ Activate</button><button onclick="closePopup()" style="padding:8px 20px;border-radius:999px;border:none;background:#f1f5f9;color:#64748b;font-size:13px;font-weight:700;cursor:pointer">Cancel</button></div></div>`)}
+// ── Study Timer (default 5 min) ──
+let timerRemaining=300,timerRunning=false,timerInterval=null;
+function fmtTime(s){const m=Math.floor(s/60);const sec=s%60;return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')}
+function updateTimerDisplay(){
+  const d=document.getElementById('timerDisplay');
+  if(!d)return;
+  d.textContent=fmtTime(timerRemaining);
+  d.classList.toggle('urgent',timerRemaining<=10)}
+function toggleTimer(){
+  if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerBtn').textContent='▶️'}
+  else{
+    if(timerRemaining<=0)resetTimer();
+    timerRunning=true;document.getElementById('timerBtn').textContent='⏸️';
+    timerInterval=setInterval(()=>{
+      timerRemaining--;if(timerRemaining<0)timerRemaining=0;
+      updateTimerDisplay();
+      if(timerRemaining===0){
+        clearInterval(timerInterval);timerRunning=false;
+        document.getElementById('timerBtn').textContent='▶️';
+        SND.levelUp();showToast('⏰ Time\'s up!','xp');spawnConf(30)}},1000)}}
+function resetTimer(){
+  clearInterval(timerInterval);timerRunning=false;timerRemaining=300;
+  document.getElementById('timerBtn').textContent='▶️';
+  updateTimerDisplay()}
 async function recordStudy(data){
 try{
 const payload={action:data.action,topic:data.topic||'',card_index:currentIndex,total_cards:cards.length,deck_known:0,deck_still:0,deck_complete:false,quality:data.quality||0,bonus_xp:data.bonus_xp||0,use_booster:stats.xp_booster_active,study_mode:stats.study_mode||'normal'};
