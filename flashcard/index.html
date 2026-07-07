@@ -75,49 +75,51 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .timer-display.urgent{color:#dc2626;animation:timerPulse .5s ease infinite}
 @keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* Booster & Mystery Row (deprecated — kept for legacy) */
 .action-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* Card */
-.card-section{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;width:100%;max-width:560px}
-/* Card nav arrows */
+/* Card — Instagram Reel inspired */
+.card-section{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;width:100%}
 .card-wrapper{perspective:1200px;margin:0 auto;width:100%;cursor:pointer;position:relative}
-.nav-arrow{position:absolute;bottom:-18px;z-index:10;width:32px;height:32px;border-radius:50%;border:1.5px solid #cbd5e1;background:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;touch-action:manipulation;box-shadow:0 1px 4px rgba(0,0,0,.06);color:#64748b}
-.nav-arrow:active{transform:scale(.9);background:#f1f5f9}
-.nav-arrow:disabled{opacity:.2;cursor:default;transform:none}
-.nav-arrow.prev{left:-4px}
-.nav-arrow.next{right:-4px}
-.card-inner{position:relative;width:100%;min-height:180px;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:20px}
-.card-inner.flipped{transform:rotateY(180deg)}
-.card-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:20px;padding:20px 16px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(0,0,0,.06)}
+.card-inner{position:relative;width:100%;min-height:200px;max-height:65vh;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:20px}
+.card-inner.flipped{transform:rotateX(180deg)}
+.card-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:20px;padding:24px 16px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(0,0,0,.06)}
 .card-front{background:linear-gradient(135deg,#e0e7ff,#c7d2fe);box-shadow:0 4px 20px rgba(99,102,241,.15);color:#1e1b4b;align-items:center}
 .card-front .card-label{color:#6366f1}
-.card-back{background:linear-gradient(135deg,#d1fae5,#a7f3d0);transform:rotateY(180deg);box-shadow:0 4px 20px rgba(16,185,129,.15);color:#064e3b}
+.card-back{background:linear-gradient(135deg,#d1fae5,#a7f3d0);transform:rotateX(180deg);box-shadow:0 4px 20px rgba(16,185,129,.15);color:#064e3b}
 .card-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6b7280;text-align:center;flex-shrink:0}
 .card-label.front{color:#6366f1}
 .card-label.back{color:#059669}
-.card-front .card-text{font-size:18px;font-weight:700;line-height:1.5;text-align:center;max-width:90%}
-.card-back .card-text{font-size:14px;line-height:1.5;text-align:center;padding:0 4px}
+.card-front .card-text{font-size:20px;font-weight:700;line-height:1.5;text-align:center;max-width:90%}
+.card-back .card-text{font-size:15px;line-height:1.6;text-align:center;padding:0 8px}
 .card-back .card-text code{background:rgba(5,150,105,.1);padding:1px 4px;border-radius:3px;font-size:13px}
 .card-hint{font-size:10px;color:#94a3b8;text-align:center;margin-top:4px;flex-shrink:0}
-/* Action section labels */
-.action-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;text-align:center;flex-shrink:0;margin:0 0 4px}
 
-.action-group{flex-shrink:0;display:flex;flex-direction:column;padding:0 4px;margin-bottom:4px}
-.action-group + .action-group{margin-top:2px;padding-top:2px;border-top:1px solid #e2e8f0}
+/* Instagram Reel layout: card + right action column */
+.reel-layout{flex:1;display:flex;gap:6px;align-items:center;justify-content:center;padding:0 4px;width:100%;max-width:600px;margin:0 auto}
+.card-section{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+/* Reel right action column (like Instagram) */
+.reel-actions{flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:4px 2px;align-items:center}
+.reel-action-btn{width:44px;height:44px;border-radius:50%;border:none;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;touch-action:manipulation;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#64748b;position:relative}
+.reel-action-btn:active{transform:scale(.85);box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.reel-action-btn .rab-label{position:absolute;bottom:-14px;font-size:8px;font-weight:600;color:#94a3b8;white-space:nowrap;letter-spacing:.3px}
+.reel-action-btn.liked{color:#ef4444;background:#fef2f2;animation:likePop .3s ease}
+@keyframes likePop{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.reel-action-btn.saved{color:#6366f1;background:#eef2ff}
+.reel-action-btn.rewound{color:#d97706;background:#fffbeb}
 
-.tier-row,.rating-row{display:flex;gap:8px;width:100%}
-.tier-row .tier-btn,.rating-row .rating-btn{flex:1;min-width:0;text-align:center}
-/* Tier buttons */
-.tier-btn{padding:10px 0;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:38px;opacity:.5;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.tier-btn.active{opacity:1;transform:scale(1.03);box-shadow:0 2px 12px rgba(0,0,0,.12)}
-.tier-btn:active{transform:scale(.97)}
-.tier-normal{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;border:1px solid rgba(59,130,246,.3)}
+/* Reel bottom bar — tier selector + srs info */
+.reel-bottom{flex-shrink:0;display:flex;flex-direction:column;gap:4px;padding:4px 8px;width:100%;max-width:600px;margin:0 auto}
+.reel-bottom .tier-row{display:flex;gap:8px;width:100%;align-items:center;justify-content:center}
+.reel-bottom .tier-btn{flex:1;max-width:120px;padding:8px 0;border:none;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:34px;opacity:.5;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.reel-bottom .tier-btn.active{opacity:1;transform:scale(1.03);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.reel-bottom .tier-btn:active{transform:scale(.95)}
+.tier-normal{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;border:1px solid rgba(59,130,246,.2)}
 .tier-normal.active{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
-.tier-hard{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1px solid rgba(245,158,11,.3)}
+.tier-hard{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1px solid rgba(245,158,11,.2)}
 .tier-hard.active{background:linear-gradient(135deg,#fef3c7,#fde68a)}
-.tier-expert{background:linear-gradient(135deg,#faf5ff,#f3e8ff);color:#7c3aed;border:1px solid rgba(147,51,234,.3)}
+.tier-expert{background:linear-gradient(135deg,#faf5ff,#f3e8ff);color:#7c3aed;border:1px solid rgba(147,51,234,.2)}
 .tier-expert.active{background:linear-gradient(135deg,#f3e8ff,#e9d5ff)}
+.srs-state{text-align:center;font-size:10px;font-weight:600;color:#64748b;flex-shrink:0}
 .card-inner.lucky{animation:luckyGlow 1s ease}
 @keyframes luckyGlow{0%,100%{box-shadow:0 0 0 rgba(255,215,0,0)}50%{box-shadow:0 0 30px rgba(255,215,0,.3)}}
 /* Float XP */
@@ -130,17 +132,6 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .float-xp.pink{color:#ec4899}
 .float-xp.blue{color:#3b82f6}
 
-/* Rating Buttons (SRS) */
-.rating-btn{padding:10px 0;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;touch-action:manipulation;min-height:38px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.rating-btn:disabled{opacity:.3;cursor:not-allowed}
-.rating-btn:not(:disabled):active{transform:scale(.97)}
-.btn-again{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#dc2626;border:1px solid rgba(220,38,38,.2)}
-.btn-again:not(:disabled):active{background:linear-gradient(135deg,#fee2e2,#fecaca)}
-.btn-hard{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1px solid rgba(245,158,11,.2)}
-.btn-hard:not(:disabled):active{background:linear-gradient(135deg,#fef3c7,#fde68a)}
-.btn-good{background:linear-gradient(135deg,#f0fdf4,#dcfce7);color:#059669;border:1px solid rgba(5,150,105,.2)}
-.btn-good:not(:disabled):active{background:linear-gradient(135deg,#dcfce7,#bbf7d0)}
-.srs-state{text-align:center;font-size:10px;font-weight:600;color:#64748b;flex-shrink:0}
 .due-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 6px;min-width:20px;height:20px;margin-left:4px;vertical-align:middle}
 .counter{text-align:center;font-size:10px;font-weight:600;color:#94a3b8;flex-shrink:0}
 .progress-bar-wrap{height:3px;background:#e2e8f0;border-radius:3px;overflow:hidden;flex-shrink:0}
@@ -251,6 +242,9 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .hamburger{display:none}
 .nav-links{display:flex;position:static;flex-direction:row;background:none;border-bottom:none;padding:0;gap:4px;align-items:center;justify-content:flex-end;box-shadow:none}
 .nav-links a{padding:6px 12px;border-radius:999px;font-size:12px;justify-content:flex-start}
+.reel-layout{max-width:560px}
+.card-inner{min-height:240px}
+.reel-action-btn{width:44px;height:44px;font-size:20px}
 .modal-box{margin:0 auto;max-width:340px}
 }
 
@@ -263,15 +257,16 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .topic-card .tc-icon{font-size:28px}
 .topic-card .tc-name{font-size:13px}
 .back-topics button{font-size:11px;padding:4px 12px}
-.card-wrapper{max-width:540px}
-.card-face{padding:14px 12px}
+.reel-layout{max-width:600px}
+.card-inner{min-height:260px}
+.card-face{padding:32px 24px}
 .card-label{font-size:10px;letter-spacing:1px}
-.card-front .card-text{font-size:20px;line-height:1.5}
-.card-back .card-text{font-size:15px;line-height:1.5}
+.card-front .card-text{font-size:22px;line-height:1.5}
+.card-back .card-text{font-size:16px;line-height:1.6}
 .card-back .card-text code{font-size:13px;padding:2px 6px}
 .card-hint{font-size:11px}
-.tier-btn{padding:10px 12px;font-size:14px;min-height:40px}
-.rating-btn{padding:10px 12px;font-size:14px;min-height:40px}
+.reel-action-btn{width:48px;height:48px;font-size:22px}
+.reel-bottom .tier-btn{padding:8px 16px;font-size:13px;min-height:36px;max-width:140px}
 .srs-state{font-size:11px}
 .modal-box{max-width:360px;padding:28px 24px}
 .modal-box .big-lvl{font-size:64px}
@@ -343,6 +338,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <button class="pwr-btn" id="timerBtn" onclick="toggleTimer()" title="Start timer">▶️</button>
 <button class="pwr-btn" id="timerReset" onclick="resetTimer()" title="Reset">↺</button>
 </div>
+<div class="reel-layout">
 <div class="card-section">
 <div class="card-wrapper" onclick="flipCard(event)">
 <div class="card-inner" id="cardInner">
@@ -352,28 +348,28 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <div class="card-text" id="backText"></div>
 </div>
 </div>
-<button class="nav-arrow prev" id="prevBtn" onclick="event.stopPropagation();prevCard()">←</button>
-<button class="nav-arrow next" id="nextBtn" onclick="event.stopPropagation();nextCard()">→</button>
 </div>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
 </div>
-<div class="action-group">
-<div class="action-label">ANSWER</div>
+<div class="reel-actions" id="reelActions">
+<button class="reel-action-btn" id="likeBtn" onclick="rateCard(3)" title="Got it">❤️<span class="rab-label">Got It</span></button>
+<button class="reel-action-btn" onclick="event.stopPropagation();flipCard(event)" title="Flip">💬<span class="rab-label">Answer</span></button>
+<button class="reel-action-btn" id="bookmarkBtn" onclick="rateCard(2)" title="Tricky">🔖<span class="rab-label">Tricky</span></button>
+<button class="reel-action-btn" id="rewindBtn" onclick="rateCard(1)" title="Again">🔄<span class="rab-label">Again</span></button>
+</div>
+</div>
+<div class="reel-bottom">
 <div class="tier-row" id="tierRow">
 <button class="tier-btn tier-normal active" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
 <button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Detailed</button>
 <button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
 </div>
-</div>
-<div class="action-group">
-<div class="action-label">RESULT</div>
-<div class="rating-row" id="ratingRow">
-<button class="rating-btn btn-again" onclick="rateCard(1)">🔄 Again</button>
-<button class="rating-btn btn-hard" onclick="rateCard(2)">🤔 Tricky</button>
-<button class="rating-btn btn-good" onclick="rateCard(3)">✅ Got It</button>
-</div>
+<div style="display:flex;gap:8px;justify-content:center;align-items:center">
+<button class="reel-action-btn" style="width:36px;height:36px;font-size:16px" id="prevBtn" onclick="prevCard()" title="Previous">‹<span class="rab-label">Prev</span></button>
+<button class="reel-action-btn" style="width:36px;height:36px;font-size:16px" id="nextBtn" onclick="nextCard()" title="Next">›<span class="rab-label">Next</span></button>
 </div>
 <div class="srs-state" id="srsState"></div>
+</div>
 <div class="deck-complete" id="deckComplete">
 <div class="dc-icon">🎉</div>
 <div class="dc-title">Deck Complete!</div>
@@ -449,12 +445,34 @@ const ACHIEVEMENTS=[
 {id:'hero_boss',icon:'👹',name:'Boss Slayer',desc:'Complete a boss challenge',hidden:true,check:s=>s.boss_done>=1},
 ];
 
-// Audio
+// Audio — Instagram Reels inspired sounds
 let audioCtx=null;
-function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx}
-function tone(f,d,t,g){try{const c=getCtx(),o=c.createOscillator(),a=c.createGain();o.type=t||'sine';o.frequency.value=f;a.gain.setValueAtTime(g||.15,c.currentTime);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(a);a.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
-function melody(notes){try{const c=getCtx();notes.forEach(([f,s,d,t,g])=>{const o=c.createOscillator(),a=c.createGain();o.type=t||'sine';o.frequency.value=f;a.gain.setValueAtTime(g||.12,c.currentTime+s);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+s+d);o.connect(a);a.connect(c.destination);o.start(c.currentTime+s);o.stop(c.currentTime+s+d)})}catch(e){}}
-const SND={flip:()=>tone(800,.08,'sine',.08),correct:()=>melody([[523.25,0,.12,'sine',.12],[659.25,.08,.12,'sine',.12],[783.99,.16,.2,'sine',.12]]),still:()=>melody([[440,0,.15,'triangle',.1],[349.23,.12,.2,'triangle',.1]]),levelUp:()=>melody([[523.25,0,.1,'square',.06],[659.25,.1,.1,'square',.06],[783.99,.2,.1,'square',.06],[1046.5,.3,.3,'square',.06]]),achiev:()=>melody([[587.33,0,.12,'sine',.1],[783.99,.1,.12,'sine',.1],[1046.5,.2,.15,'sine',.12],[1174.66,.3,.3,'sine',.12]]),deckComplete:()=>melody([[523.25,0,.1,'sine',.1],[659.25,.1,.1,'sine',.1],[783.99,.2,.1,'sine',.1],[1046.5,.3,.15,'sine',.12],[1318.51,.4,.25,'sine',.12],[1567.98,.5,.4,'sine',.1]]),click:()=>tone(1200,.04,'sine',.04),mystery:()=>melody([[440,0,.1,'sine',.06],[554.37,.08,.1,'sine',.06],[659.25,.16,.1,'sine',.06],[880,.24,.2,'sine',.1]]),gem:()=>melody([[659.25,0,.1,'sine',.08],[880,.08,.15,'sine',.08]]),booster:()=>melody([[523.25,0,.08,'square',.05],[698.46,.08,.08,'square',.05],[880,.16,.15,'square',.05]]),freeze:()=>tone(600,.3,'triangle',.1)};
+function getCtx(){if(!audioCtx){const C=window.AudioContext||window.webkitAudioContext;audioCtx=new C();if(audioCtx.state==='suspended')audioCtx.resume()}return audioCtx}
+function ensureAudio(){const c=getCtx();if(c.state==='suspended')c.resume();return c}
+function tone(f,d,t,g){try{const c=ensureAudio(),o=c.createOscillator(),a=c.createGain();o.type=t||'sine';o.frequency.value=f;a.gain.setValueAtTime(g||.15,c.currentTime);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(a);a.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
+function melody(notes){try{const c=ensureAudio();notes.forEach(([f,s,d,t,g])=>{const o=c.createOscillator(),a=c.createGain();o.type=t||'sine';o.frequency.value=f;a.gain.setValueAtTime(g||.12,c.currentTime+s);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+s+d);o.connect(a);a.connect(c.destination);o.start(c.currentTime+s);o.stop(c.currentTime+s+d)})}catch(e){}}
+// Reel-like whoosh effect
+function whoosh(){try{const c=ensureAudio();const o=c.createOscillator();const g=c.createGain();o.type='sine';o.frequency.setValueAtTime(800,c.currentTime);o.frequency.exponentialRampToValueAtTime(200,c.currentTime+.2);g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.25);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.25)}catch(e){}}
+// Reel-like pop (like Instagram like sound)
+function pop(){try{const c=ensureAudio();const o=c.createOscillator();const a=c.createGain();o.type='sine';o.frequency.setValueAtTime(600,c.currentTime);o.frequency.exponentialRampToValueAtTime(1200,c.currentTime+.08);a.gain.setValueAtTime(.1,c.currentTime);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+.12);o.connect(a);a.connect(c.destination);o.start();o.stop(c.currentTime+.12)}catch(e){}}
+// Reel-like heart / like activation
+function heartSound(){try{const c=ensureAudio();melody([[880,0,.06,'sine',.1],[1108.73,.05,.06,'sine',.1],[1318.51,.1,.1,'sine',.1]]);setTimeout(()=>melody([[880,0,.04,'sine',.08],[1108.73,.04,.04,'sine',.08],[1318.51,.08,.08,'sine',.08]]),150)}catch(e){}}
+// Reel-like smooth transition
+function swoosh(){try{const c=ensureAudio();const buf=c.createBuffer(1,c.sampleRate*.15,c.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++){const p=i/d.length;d[i]=(Math.random()*2-1)*p*(1-p)*4}const src=c.createBufferSource();src.buffer=buf;const g=c.createGain();g.gain.setValueAtTime(.04,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.18);const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=3000;f.Q.value=2;src.connect(f);f.connect(g);g.connect(c.destination);src.start();src.stop(c.currentTime+.18)}catch(e){}}
+const SND={
+  flip:()=>{whoosh()},
+  correct:()=>{heartSound()},
+  still:()=>{pop()},
+  levelUp:()=>melody([[523.25,0,.06,'sine',.08],[659.25,.06,.06,'sine',.08],[783.99,.12,.06,'sine',.08],[1046.5,.18,.08,'sine',.1],[1318.51,.24,.15,'sine',.12]]),
+  achiev:()=>melody([[783.99,0,.08,'sine',.1],[1046.5,.08,.08,'sine',.1],[1318.51,.16,.12,'sine',.12],[1567.98,.24,.25,'sine',.12]]),
+  deckComplete:()=>melody([[523.25,0,.08,'sine',.08],[783.99,.1,.08,'sine',.08],[1046.5,.2,.08,'sine',.08],[1396.91,.3,.12,'sine',.1],[1760,.4,.2,'sine',.12]]),
+  click:()=>{pop()},
+  mystery:()=>melody([[440,0,.06,'sine',.08],[554.37,.06,.06,'sine',.08],[659.25,.12,.08,'sine',.08],[880,.2,.15,'sine',.1]]),
+  gem:()=>melody([[1318.51,0,.06,'sine',.1],[1567.98,.06,.1,'sine',.1]]),
+  booster:()=>melody([[523.25,0,.05,'square',.06],[740,.06,.05,'square',.06],[1046.5,.12,.1,'square',.08]]),
+  freeze:()=>tone(600,.3,'triangle',.1),
+  swoosh:()=>{swoosh()},
+};
 
 // Confetti
 let cp=[],cr=false;
@@ -577,7 +595,7 @@ document.getElementById('flashcardArea').classList.remove('visible');
 document.getElementById('backTopics').classList.remove('show');
 document.getElementById('studyTopic').textContent='';
 loadTopics()}
-function flipCard(e){if(e.target.closest('button'))return;const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Tap card to flip'};if(isFlipped)SND.flip()}
+function flipCard(e){if(e.target.closest('button')||e.target.closest('.reel-action-btn'))return;const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Tap card to flip'};if(isFlipped)SND.flip()}
 function dismissHint(){const h=document.getElementById('cardHint');h.dataset.dismissed='1';h.style.display='none'}
 function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
 function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
@@ -590,41 +608,50 @@ function updateTierButtons(){
 document.querySelectorAll('.tier-btn').forEach(b=>{
 const t=b.id.replace('tier','').toLowerCase();b.classList.toggle('active',t===currentTier)})}
 function showCard(){
-if(!cards.length)return;const c=cards[currentIndex];
-document.getElementById('frontText').textContent=c.front;
-document.getElementById('backText').innerHTML=(c[currentTier]||c.normal||'').replace(/\n/g,'<br>');
-document.getElementById('counter').textContent=(currentIndex+1)+'/'+cards.length;
-document.getElementById('progressFill').style.width=((currentIndex+1)/cards.length*100)+'%';
-document.getElementById('prevBtn').disabled=currentIndex===0;
-document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
-isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
-const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Tap card to flip';
-const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
-if(!sc)document.getElementById('srsState').textContent='';
-else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
-else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
-document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=false);
-document.getElementById('knownCount').textContent=currentIndex;
-document.getElementById('stillCount').textContent=cards.length-currentIndex;
-updateTierButtons()}
+  if(!cards.length)return;const c=cards[currentIndex];
+  document.getElementById('frontText').textContent=c.front;
+  document.getElementById('backText').innerHTML=(c[currentTier]||c.normal||'').replace(/\n/g,'<br>');
+  document.getElementById('counter').textContent=(currentIndex+1)+'/'+cards.length;
+  document.getElementById('progressFill').style.width=((currentIndex+1)/cards.length*100)+'%';
+  document.getElementById('prevBtn').disabled=currentIndex===0;
+  document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
+  isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
+  const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Tap card to flip';
+  const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
+  if(!sc)document.getElementById('srsState').textContent='';
+  else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
+  else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
+  document.querySelectorAll('.reel-action-btn').forEach(b=>b.disabled=false);
+  document.getElementById('knownCount').textContent=currentIndex;
+  document.getElementById('stillCount').textContent=cards.length-currentIndex;
+  updateTierButtons()}
 function rateCard(quality){
-if(!cards.length||isLoading)return;SND.click();
-const c=cards[currentIndex];const cardId=currentTopic+':'+c._oidx;
-const srs=loadSRS();
-const old=srs[cardId]||{ef:2.5,interval:0,reps:0,nextReview:todayStr()};
-srs[cardId]=calcSM2(quality,old);saveSRS(srs);
-const xpMap=[0,3,7,12];const xp=xpMap[quality]||0;
-spawnFloat('+'+xp+' XP',quality>=3?'green':'orange');
-if(quality>=3)SND.correct();else SND.still();
-document.querySelectorAll('.rating-btn').forEach(b=>b.disabled=true);
-const rd=new Date(srs[cardId].nextReview);
-const diff=Math.ceil((rd-new Date())/86400000);
-showToast('📅 Next review: '+rd.toLocaleDateString()+(diff>0?' ('+diff+'d)':''),'info');
-setTimeout(()=>{
-  if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}
-  else{showToast('🎉 All due cards reviewed for '+currentTopic+'!','success');document.getElementById('srsState').textContent='✅ All caught up!'}
-},400);
-recordStudy({action:['','missed','tricky','got_it'][quality],topic:currentTopic,quality})}
+  if(!cards.length||isLoading)return;
+  // Visual feedback like Instagram reel
+  const btnMap={1:'rewindBtn',2:'bookmarkBtn',3:'likeBtn'};
+  const btn=document.getElementById(btnMap[quality]);
+  if(btn){
+    const cls=quality===3?'liked':quality===2?'saved':'rewound';
+    btn.classList.add(cls);
+    setTimeout(()=>btn.classList.remove(cls),400);
+  }
+  if(quality===3){SND.correct();spawnFloat('❤️ +12 XP','green')}
+  else if(quality===2){SND.still();spawnFloat('🔖 +7 XP','orange')}
+  else{SND.still();spawnFloat('🔄 +3 XP','purple')}
+  const c=cards[currentIndex];const cardId=currentTopic+':'+c._oidx;
+  const srs=loadSRS();
+  const old=srs[cardId]||{ef:2.5,interval:0,reps:0,nextReview:todayStr()};
+  srs[cardId]=calcSM2(quality,old);saveSRS(srs);
+  const xpMap=[0,3,7,12];const xp=xpMap[quality]||0;
+  document.querySelectorAll('.reel-action-btn').forEach(b=>b.disabled=true);
+  const rd=new Date(srs[cardId].nextReview);
+  const diff=Math.ceil((rd-new Date())/86400000);
+  SND.swoosh();
+  setTimeout(()=>{
+    if(currentIndex<cards.length-1){currentIndex++;showCard();SND.swoosh()}
+    else{showToast('🎉 All due cards reviewed for '+currentTopic+'!','success');document.getElementById('srsState').textContent='✅ All caught up!'}
+  },400);
+  recordStudy({action:['','missed','tricky','got_it'][quality],topic:currentTopic,quality})}
 function showLevelUp(l){try{
 const t=getLvlTitle(l);
 const e=document.getElementById('lvlModal');if(!e)return;
@@ -919,7 +946,9 @@ checkWeeklySummary();
 updatePlayerType();
 }
 
-document.addEventListener('click',()=>{if(!audioCtx)getCtx()},{once:true});
+function initAudio(){const c=getCtx();if(c&&c.state==='suspended')c.resume();return c}
+document.addEventListener('click',initAudio,{once:true});
+document.addEventListener('touchstart',initAudio,{once:true});
 init();
 </script>
 
