@@ -79,8 +79,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 
 /* Card — Instagram Reel inspired */
 .card-section{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;width:100%}
-.card-wrapper{perspective:1200px;margin:0 auto;width:100%;cursor:pointer;position:relative}
-.card-inner{position:relative;width:100%;min-height:200px;max-height:65vh;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:20px}
+.card-wrapper{perspective:1200px;margin:0 auto;width:100%;cursor:pointer;position:relative;padding:24px 0}
+.card-inner{position:relative;width:100%;min-height:240px;max-height:80vh;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:20px}
 .card-inner.flipped{transform:rotateX(180deg)}
 .card-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:20px;padding:24px 16px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(0,0,0,.06)}
 .card-front{background:linear-gradient(135deg,#e0e7ff,#c7d2fe);box-shadow:0 4px 20px rgba(99,102,241,.15);color:#1e1b4b;align-items:center}
@@ -92,6 +92,10 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .card-front .card-text{font-size:20px;font-weight:700;line-height:1.5;text-align:center;max-width:90%}
 .card-back .card-text{font-size:15px;line-height:1.6;text-align:center;padding:0 8px}
 .card-back .card-text code{background:rgba(5,150,105,.1);padding:1px 4px;border-radius:3px;font-size:13px}
+.card-nav-btn{position:absolute;left:50%;transform:translateX(-50%);z-index:10;width:36px;height:36px;border-radius:50%;border:none;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#64748b;touch-action:manipulation;transition:.15s}
+.card-nav-btn:active{transform:translateX(-50%) scale(.88)}
+.card-nav-prev{top:2px}
+.card-nav-next{bottom:2px}
 .card-hint{font-size:10px;color:#94a3b8;text-align:center;margin-top:4px;flex-shrink:0}
 
 /* Instagram Reel layout: card + right action column */
@@ -243,7 +247,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .nav-links{display:flex;position:static;flex-direction:row;background:none;border-bottom:none;padding:0;gap:4px;align-items:center;justify-content:flex-end;box-shadow:none}
 .nav-links a{padding:6px 12px;border-radius:999px;font-size:12px;justify-content:flex-start}
 .reel-layout{max-width:560px}
-.card-inner{min-height:240px}
+.card-inner{min-height:280px;max-height:82vh}
 .reel-action-btn{width:44px;height:44px;font-size:20px}
 .modal-box{margin:0 auto;max-width:340px}
 }
@@ -258,7 +262,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .topic-card .tc-name{font-size:13px}
 .back-topics button{font-size:11px;padding:4px 12px}
 .reel-layout{max-width:600px}
-.card-inner{min-height:260px}
+.card-inner{min-height:320px;max-height:84vh}
 .card-face{padding:32px 24px}
 .card-label{font-size:10px;letter-spacing:1px}
 .card-front .card-text{font-size:22px;line-height:1.5}
@@ -281,7 +285,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </style>
 </head><body>
 <canvas id="confettiCanvas"></canvas>
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><span class="mini-level" id="topLevel" onclick="showInsightPopup()"><span class="ml-num" id="topLvlNum">1</span><span class="ml-gems" id="topGems">💎10</span></span><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks"><a href="../">← Back to Portfolio</a><a href="../course/">📘 Open Course</a><a href="../news/">📰 AI News</a><a href="../jobtool/">💼 Apply Job</a><a href="../interview/">🎙️ AI Interview</a><a href="./" class="active">🃏 Flashcards</a><a href="../timer/">⏱️ Timer</a><a href="../shop/">🛒 Shop</a></div></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><span class="mini-level" id="topLevel" onclick="showInsightPopup()"><span class="ml-num" id="topLvlNum">1</span><span class="ml-gems" id="topGems">💎10</span></span><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks"><a href="../apps.html">📱 Apps</a></div></div>
 
 <div class="modal-overlay" id="lvlModal"><div class="modal-box">
 <div class="big-lvl" id="lvlModalNum">5</div>
@@ -340,7 +344,8 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </div>
 <div class="reel-layout">
 <div class="card-section">
-<div class="card-wrapper" onclick="flipCard(event)">
+<button class="card-nav-btn card-nav-prev" id="prevBtn" onclick="event.stopPropagation();prevCard()" title="Previous">‹</button>
+<div class="card-wrapper" onclick="handleCardTap(event)">
 <div class="card-inner" id="cardInner">
 <div class="card-face card-front"><div class="card-label front">QUESTION</div><div class="card-text" id="frontText">Pick a topic to start</div></div>
 <div class="card-face card-back">
@@ -349,11 +354,11 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 </div>
 </div>
 </div>
+<button class="card-nav-btn card-nav-next" id="nextBtn" onclick="event.stopPropagation();nextCard()" title="Next">›</button>
 <div class="card-hint" id="cardHint">Tap card to flip</div>
 </div>
 <div class="reel-actions" id="reelActions">
 <button class="reel-action-btn" id="likeBtn" onclick="rateCard(3)" title="Got it">❤️<span class="rab-label">Got It</span></button>
-<button class="reel-action-btn" onclick="event.stopPropagation();flipCard(event)" title="Flip">💬<span class="rab-label">Answer</span></button>
 <button class="reel-action-btn" id="bookmarkBtn" onclick="rateCard(2)" title="Tricky">🔖<span class="rab-label">Tricky</span></button>
 <button class="reel-action-btn" id="rewindBtn" onclick="rateCard(1)" title="Again">🔄<span class="rab-label">Again</span></button>
 </div>
@@ -364,10 +369,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 <button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Detailed</button>
 <button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
 </div>
-<div style="display:flex;gap:8px;justify-content:center;align-items:center">
-<button class="reel-action-btn" style="width:36px;height:36px;font-size:16px" id="prevBtn" onclick="prevCard()" title="Previous">‹<span class="rab-label">Prev</span></button>
-<button class="reel-action-btn" style="width:36px;height:36px;font-size:16px" id="nextBtn" onclick="nextCard()" title="Next">›<span class="rab-label">Next</span></button>
-</div>
+
 <div class="srs-state" id="srsState"></div>
 </div>
 <div class="deck-complete" id="deckComplete">
@@ -595,7 +597,8 @@ document.getElementById('flashcardArea').classList.remove('visible');
 document.getElementById('backTopics').classList.remove('show');
 document.getElementById('studyTopic').textContent='';
 loadTopics()}
-function flipCard(e){if(e.target.closest('button')||e.target.closest('.reel-action-btn'))return;const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Tap card to flip'};if(isFlipped)SND.flip()}
+let lastTap=0;function handleCardTap(e){if(e.target.closest('button')||e.target.closest('.reel-action-btn'))return;const now=Date.now();if(now-lastTap<300&&lastTap>0){lastTap=0;flipCard(e)}else{lastTap=now}}
+function flipCard(e){const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Double-tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Double-tap card to flip'};if(isFlipped)SND.flip()}
 function dismissHint(){const h=document.getElementById('cardHint');h.dataset.dismissed='1';h.style.display='none'}
 function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
 function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
@@ -616,7 +619,7 @@ function showCard(){
   document.getElementById('prevBtn').disabled=currentIndex===0;
   document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
   isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
-  const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Tap card to flip';
+  const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Double-tap card to flip';
   const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
   if(!sc)document.getElementById('srsState').textContent='';
   else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
@@ -681,11 +684,11 @@ chip.title='+'+b.xp+' XP, 💎'+b.g;div.appendChild(chip)}}
 let currentTopic='';
 async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');if(r.ok){const d=await r.json();stats={...stats,...d};updateStatsUI()}}catch(e){}}
 async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
-const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns"];
+const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns","Behaviour/HR Round"];
 function loadTopics(){
   const grid=document.getElementById('topicGrid');grid.innerHTML='';
   const srs=loadSRS();const today=todayStr();
-  const icons={Python:'🐍','Data Structures':'🗂️',Concurrency:'⚡',Databases:'🗄️','System Design':'🏗️',Security:'🔒',Testing:'🧪',DevOps:'🚀','Design Patterns':'🏛️'};
+  const icons={Python:'🐍','Data Structures':'🗂️',Concurrency:'⚡',Databases:'🗄️','System Design':'🏗️',Security:'🔒',Testing:'🧪',DevOps:'🚀','Design Patterns':'🏛️','Behaviour/HR Round':'🤝'};
   TOPICS.forEach(t=>{
     const b=document.createElement('button');b.className='topic-card';
     if(recentTopics.includes(t))b.classList.add('recent');

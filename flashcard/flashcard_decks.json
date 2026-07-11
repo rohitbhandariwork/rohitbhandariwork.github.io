@@ -234,9 +234,9 @@
     {
       "front": "How does pickle serialization work and its risks?",
       "easy": "It helps you learn about pickle.",
-      "normal": "pickle serializes objects by encoding type. Insecure — untrusted pickle executes arbitrary. Use json/protobuf for untrusted data.",
-      "hard": "pickle serializes objects by encoding type and data into bytes, reconstructing via __reduce__ or copyreg. Insecure — untrusted pickle executes arbitrary code. Use json/protobuf for untrusted data.",
-      "expert": "pickle serializes objects by encoding type and data into bytes, reconstructing via __reduce__ or copyreg. Insecure — untrusted pickle executes arbitrary code. Use json/protobuf for untrusted data. Consider performance and maintainability."
+      "normal": "pickle serializes objects by encoding type. Insecure \u2014 untrusted pickle executes arbitrary. Use json/protobuf for untrusted data.",
+      "hard": "pickle serializes objects by encoding type and data into bytes, reconstructing via __reduce__ or copyreg. Insecure \u2014 untrusted pickle executes arbitrary code. Use json/protobuf for untrusted data.",
+      "expert": "pickle serializes objects by encoding type and data into bytes, reconstructing via __reduce__ or copyreg. Insecure \u2014 untrusted pickle executes arbitrary code. Use json/protobuf for untrusted data. Consider performance and maintainability."
     },
     {
       "front": "How does Python typing support generic types?",
@@ -263,8 +263,8 @@
       "front": "Difference between @lru_cache and @cache?",
       "easy": "It helps you learn about Difference.",
       "normal": "@functools.cache 3.9+ is shorthand for @lru_cachemaxsize=None. Use cache for finite inputs; lru_cache.",
-      "hard": "@functools.cache (3.9+) is shorthand for @lru_cache(maxsize=None) — unbounded. lru_cache has bounded LRU eviction; cache grows indefinitely. Use cache for finite inputs; lru_cache for streaming.",
-      "expert": "@functools.cache (3.9+) is shorthand for @lru_cache(maxsize=None) — unbounded. lru_cache has bounded LRU eviction; cache grows indefinitely. Use cache for finite inputs; lru_cache for streaming. Context determines the best approach."
+      "hard": "@functools.cache (3.9+) is shorthand for @lru_cache(maxsize=None) \u2014 unbounded. lru_cache has bounded LRU eviction; cache grows indefinitely. Use cache for finite inputs; lru_cache for streaming.",
+      "expert": "@functools.cache (3.9+) is shorthand for @lru_cache(maxsize=None) \u2014 unbounded. lru_cache has bounded LRU eviction; cache grows indefinitely. Use cache for finite inputs; lru_cache for streaming. Context determines the best approach."
     },
     {
       "front": "What is the purpose of __future__ imports?",
@@ -515,8 +515,8 @@
       "front": "How does Python ast module work?",
       "easy": "It helps you learn about Python.",
       "normal": "ast module parses Python source into. Useful for linting, refactoring, code gen. NodeTransformer enables tree transformations.",
-      "hard": "ast module parses Python source into AST — tree of AST nodes. Useful for linting, refactoring, code gen, static analysis. compile() compiles AST to code objects. NodeTransformer enables tree transformations.",
-      "expert": "ast module parses Python source into AST — tree of AST nodes. Useful for linting, refactoring, code gen, static analysis. compile() compiles AST to code objects. NodeTransformer enables tree transformations. Consider performance and maintainability."
+      "hard": "ast module parses Python source into AST \u2014 tree of AST nodes. Useful for linting, refactoring, code gen, static analysis. compile() compiles AST to code objects. NodeTransformer enables tree transformations.",
+      "expert": "ast module parses Python source into AST \u2014 tree of AST nodes. Useful for linting, refactoring, code gen, static analysis. compile() compiles AST to code objects. NodeTransformer enables tree transformations. Consider performance and maintainability."
     },
     {
       "front": "What is the purpose of @dataclass(order=True)?",
@@ -528,9 +528,9 @@
     {
       "front": "How does unittest.mock work?",
       "easy": "It helps you learn about unittest.",
-      "normal": "unittest.mock creates mock objects recording usage. Mock attributes lazy — create child.",
-      "hard": "unittest.mock creates mock objects recording usage and returning configured values. Mock attributes lazy — create child mocks on demand. spec restricts to class interface. patch() replaces objects during tests.",
-      "expert": "unittest.mock creates mock objects recording usage and returning configured values. Mock attributes lazy — create child mocks on demand. spec restricts to class interface. patch() replaces objects during tests. Context determines the best approach."
+      "normal": "unittest.mock creates mock objects recording usage. Mock attributes lazy \u2014 create child.",
+      "hard": "unittest.mock creates mock objects recording usage and returning configured values. Mock attributes lazy \u2014 create child mocks on demand. spec restricts to class interface. patch() replaces objects during tests.",
+      "expert": "unittest.mock creates mock objects recording usage and returning configured values. Mock attributes lazy \u2014 create child mocks on demand. spec restricts to class interface. patch() replaces objects during tests. Context determines the best approach."
     },
     {
       "front": "What are contextlib.suppress and redirect_stdout?",
@@ -5611,8 +5611,8 @@
       "front": "Explain the difference between taints/tolerations and node affinity.",
       "easy": "It helps you learn about difference.",
       "normal": "Taints repel pods from nodes unless. Node affinity attracts pods to nodes. Taints are for node-level constraints.",
-      "hard": "Taints repel pods from nodes unless the pod has a matching toleration (node → pod: 'do not schedule here unless you tolerate'). Node affinity attracts pods to nodes based on labels (pod → node: 'I prefer to run here'). Taints are for node-level constraints (dedicated nodes, GPU nodes); affinity is for pod placement preferences and requirements.",
-      "expert": "Taints repel pods from nodes unless the pod has a matching toleration (node → pod: 'do not schedule here unless you tolerate'). Node affinity attracts pods to nodes based on labels (pod → node: 'I prefer to run here'). Taints are for node-level constraints (dedicated nodes, GPU nodes); affinity is for pod placement preferences and requirements. Context determines the best approach."
+      "hard": "Taints repel pods from nodes unless the pod has a matching toleration (node \u2192 pod: 'do not schedule here unless you tolerate'). Node affinity attracts pods to nodes based on labels (pod \u2192 node: 'I prefer to run here'). Taints are for node-level constraints (dedicated nodes, GPU nodes); affinity is for pod placement preferences and requirements.",
+      "expert": "Taints repel pods from nodes unless the pod has a matching toleration (node \u2192 pod: 'do not schedule here unless you tolerate'). Node affinity attracts pods to nodes based on labels (pod \u2192 node: 'I prefer to run here'). Taints are for node-level constraints (dedicated nodes, GPU nodes); affinity is for pod placement preferences and requirements. Context determines the best approach."
     }
   ],
   "Design Patterns": [
@@ -6315,6 +6315,708 @@
       "normal": "Pool: general resource reuse . Object Pool: specific pattern for reusable. Pool is concept, Object Pool is. Connection pool , Thread pool . Object Pool is one specific type.",
       "hard": "Pool: general resource reuse (connections, workers, threads). Object Pool: specific pattern for reusable objects with acquire/release. Pool is concept, Object Pool is implementation. Connection pool (SQLAlchemy pool), Thread pool (concurrent.futures.ThreadPoolExecutor). Object Pool is one specific type of pool.",
       "expert": "Pool: general resource reuse (connections, workers, threads). Object Pool: specific pattern for reusable objects with acquire/release. Pool is concept, Object Pool is implementation. Connection pool (SQLAlchemy pool), Thread pool (concurrent.futures.ThreadPoolExecutor). Object Pool is one specific type of pool. Choose based on your specific requirements."
+    }
+  ],
+  "Behaviour/HR Round": [
+    {
+      "front": "Tell me about yourself.",
+      "easy": "Give a brief summary of your background and key skills.",
+      "normal": "Start with your current role, then highlight 2-3 key achievements and how they connect to the role you're applying for.",
+      "hard": "Structure it as Present-Past-Future: current role & key contribution, relevant past experience that led here, and why this role is the logical next step.",
+      "expert": "Use the Present-Past-Future framework. Present: current role and 1 standout metric. Past: pivot points in your career that built relevant skills. Future: how this role aligns with your 3-year trajectory. Keep it under 90 seconds and tie every point back to the job description."
+    },
+    {
+      "front": "What is your greatest strength?",
+      "easy": "Pick a strength relevant to the role and give a brief example.",
+      "normal": "Choose one strength, explain why it matters for this role, and back it with a specific achievement or metric.",
+      "hard": "Identify a strength that differentiates you (e.g., analytical problem-solving), give a concrete example with measurable impact, and explain how you developed it.",
+      "expert": "Select a strength that is critical for the role but rare. Use the STAR format: Situation (complex project), Task (your responsibility), Action (your unique approach), Result (quantified outcome). Explain how you continue to refine this strength through deliberate practice."
+    },
+    {
+      "front": "What is your greatest weakness?",
+      "easy": "Name a real weakness and what you are doing to improve it.",
+      "normal": "Pick a genuine weakness that is not a core requirement for the role, and describe specific steps you are taking to address it.",
+      "hard": "Choose a weakness you have actively worked on. Describe the situation that revealed it, the system you implemented to improve, and the measurable progress you have made.",
+      "expert": "Use the 'weakness with a trajectory' approach. Name a real but non-fatal weakness (e.g., public speaking early in career), describe the trigger event that made you aware, detail the structured improvement plan (coaching, practice groups, tracked metrics), and share current results (e.g., now lead weekly team presentations)."
+    },
+    {
+      "front": "Where do you see yourself in 5 years?",
+      "easy": "Describe your career growth aspirations realistically.",
+      "normal": "Connect your 5-year goal to the growth path this role and company can offer, showing ambition and self-awareness.",
+      "hard": "Articulate a vision that includes technical depth, leadership scope, and domain expertise, all anchored to realistic milestones at this company.",
+      "expert": "Present a 5-year vision with 3 dimensions: technical mastery (e.g., becoming the go-to expert in X), leadership impact (e.g., mentoring juniors or leading a practice area), and business value (e.g., driving X% efficiency gains). Show you have researched how this company supports such growth through internal mobility, learning budgets, or mentorship programs."
+    },
+    {
+      "front": "Why do you want to work here?",
+      "easy": "Mention what you like about the company and role.",
+      "normal": "Combine specific company attributes (mission, tech, culture) with how your skills align with their current challenges.",
+      "hard": "Demonstrate deep research: cite recent company news, product launches, or engineering blogs. Connect your experience to a specific problem they are solving.",
+      "expert": "Show you understand their business model, competitive landscape, and engineering challenges. Reference specific public statements from leadership, recent GitHub repos, or tech talks. Then bridge to how your unique combination of skills directly addresses a gap they have, using their own language from the job description."
+    },
+    {
+      "front": "Tell me about a time you faced a conflict at work.",
+      "easy": "Describe a minor disagreement and how you resolved it.",
+      "normal": "Use STAR: Situation where opinions differed, Task to find common ground, Action through active listening and compromise, Result of successful collaboration.",
+      "hard": "Detail a real conflict with a colleague over approach. Explain how you separated ego from problem, used data to align, and reached a solution that was better than either original idea.",
+      "expert": "Describe a cross-functional conflict (e.g., engineering vs product). Explain the root cause (misaligned incentives, communication gaps). Detail your mediation approach: active listening to understand each side, reframing around shared goals, proposing a data-informed compromise. Result: improved cross-team process that reduced similar conflicts by 70%."
+    },
+    {
+      "front": "Describe a time you failed.",
+      "easy": "Share a small failure and what you learned.",
+      "normal": "Choose a real failure, own it without excuses, explain what went wrong, and describe the specific lesson that changed your approach.",
+      "hard": "Pick a meaningful failure with stakes. Analyze the root causes (technical, process, or communication). Detail the corrective actions taken and the system changes implemented to prevent recurrence.",
+      "expert": "Use the 'failure \u2192 learning \u2192 system change' narrative. Describe a project that missed a deadline or went over budget. Conduct a blameless post-mortem identifying 2-3 root causes. Explain the process improvements you championed (e.g., better estimation framework, earlier stakeholder check-ins). Show measurable improvement: next project delivered 20% faster. This demonstrates ownership and continuous improvement."
+    },
+    {
+      "front": "Tell me about a time you showed leadership.",
+      "easy": "Describe a situation where you took initiative.",
+      "normal": "STAR format: Situation that needed direction, Task of rallying the team, Action of delegating and motivating, Result of successful delivery.",
+      "hard": "Describe a time you led without authority - influencing peers or seniors to adopt a better approach. Explain your persuasion strategy and the outcome.",
+      "expert": "Share a leadership example that shows strategic thinking. Situation: team was siloed, causing delays. Action: you proposed and implemented a cross-functional sync structure, created shared OKRs, and introduced lightweight status tracking. Result: 30% faster delivery, improved team morale scores. Highlight that you adapted your style to different stakeholders - directive with juniors, consultative with peers, influential with seniors."
+    },
+    {
+      "front": "How do you handle pressure or stressful situations?",
+      "easy": "Stay calm and prioritize tasks.",
+      "normal": "Describe a specific high-pressure situation, your approach to triage and prioritization, and how you communicated with stakeholders.",
+      "hard": "Explain your stress management framework: (1) immediate triage to contain damage, (2) communicate transparently with stakeholders, (3) break down into manageable pieces, (4) post-incident review to prevent recurrence.",
+      "expert": "Describe a system for operating under pressure. Pre-pressure: build slack into estimates, maintain runbooks. During pressure: use the 'OODA loop' (Observe, Orient, Decide, Act) - first 30 seconds to assess, then communicate status, then execute. Use structured thinking tools like decision matrices when time is tight. Post-pressure: conduct blameless post-mortem and implement preventive measures. Give an example showing this system in action during a production incident."
+    },
+    {
+      "front": "Why are you leaving your current job?",
+      "easy": "Focus on growth and opportunity, not negativity.",
+      "normal": "Frame it positively: seeking more challenge, growth, or alignment with your career direction. Never criticize your current employer.",
+      "hard": "Give a genuine but diplomatic reason: limited growth trajectory, desire for larger impact, or pivot toward a domain you are passionate about. Connect it to what this role offers.",
+      "expert": "Articulate a 'pull' rather than 'push' narrative. You are not running away from something; you are running toward something. Example: 'I have learned a lot at my current company (mention specific achievement), but I have reached a point where I want to work on [specific problem domain] at scale, and your company's work on [specific initiative] aligns perfectly with where I want to grow next.'"
+    },
+    {
+      "front": "Tell me about a time you worked in a team.",
+      "easy": "Describe a successful team project and your role.",
+      "normal": "STAR format highlighting collaboration: how you contributed, how you handled disagreements, and what made the team effective.",
+      "hard": "Describe a cross-functional team experience. Explain how you handled dependencies, communicated across roles, and ensured alignment despite different priorities.",
+      "expert": "Share a team experience that required navigating different working styles. Use the situation to show emotional intelligence: how you adapted communication for introverts vs extroverts, how you resolved a conflict between two strong opinions using data, and how you celebrated team wins to build morale. Result: the team delivered ahead of schedule and members rated collaboration highly in retrospective."
+    },
+    {
+      "front": "How do you prioritize your work?",
+      "easy": "List tasks by urgency and importance.",
+      "normal": "Use a framework like Eisenhower Matrix (urgent vs important) combined with stakeholder input and deadlines.",
+      "hard": "Describe your prioritization system: daily triage of incoming requests, weekly planning with stakeholders, use of impact vs effort scoring for larger decisions.",
+      "expert": "Explain a multi-horizon prioritization approach. Daily: use the Ivy Lee method - pick top 6 tasks, order by true priority, focus on one at a time. Weekly: align with manager on OKRs and reprioritize based on changed context. Quarterly: participate in roadmap planning to ensure your work ties to business goals. Give an example where reprioritization based on shifting business needs led to a better outcome."
+    },
+    {
+      "front": "Describe a time you had to learn something new quickly.",
+      "easy": "Pick a new tool or skill and how you learned it.",
+      "normal": "STAR: Situation requiring new skill, resources used (docs, courses, mentorship), hands-on application, and successful outcome.",
+      "hard": "Explain your learning methodology: first principles understanding, building a minimal viable prototype, iterating through feedback loops. Include timeframes and specific resources.",
+      "expert": "Describe a time you had to ramp up on a completely unfamiliar technology in under 2 weeks. Detail your accelerated learning system: (1) identify 20% of the topic that gives 80% utility, (2) build a throwaway prototype to test understanding, (3) find an expert to review your mental model, (4) contribute a small fix to validate depth. Result: you delivered the project on time and later became the team's subject matter expert."
+    },
+    {
+      "front": "How do you deal with a difficult coworker?",
+      "easy": "Stay professional and communicate openly.",
+      "normal": "Describe a specific situation, your approach to understanding their perspective, finding common ground, and establishing productive communication.",
+      "hard": "Outline a structured approach: (1) assume positive intent, (2) schedule a private conversation to understand their constraints, (3) find mutual goals, (4) agree on working norms, (5) escalate only if needed.",
+      "expert": "Share a real example with nuance. Explain how you used the 'situation-behavior-impact' feedback model to address the issue non-confrontationally. Describe how you identified the root cause (often misaligned incentives or communication preferences rather than personality). Show how the relationship improved and resulted in better team outcomes. This demonstrates emotional intelligence and conflict resolution maturity."
+    },
+    {
+      "front": "What are your salary expectations?",
+      "easy": "Give a range based on market research.",
+      "normal": "Provide a researched range and express openness to discussion based on total compensation.",
+      "hard": "Base your range on market data (Glassdoor, Levels.fyi), your experience level, and the role's responsibilities. Frame it as 'I am targeting roles in the X to Y range based on my skills and market value.'",
+      "expert": "Delay salary discussion until you fully understand the role scope. Then say: 'Based on my research of comparable roles at companies of this size and stage, and considering my specific experience in [domain], I am looking at a base salary range of X to Y. However, I am also evaluating total compensation including equity, benefits, and growth opportunities. Can you share the budgeted range for this role?' This shows research, flexibility, and strategic thinking."
+    },
+    {
+      "front": "Tell me about a time you went above and beyond.",
+      "easy": "Describe extra effort on a task or project.",
+      "normal": "STAR format: a situation where standard effort was not enough, the extra initiative you took, and the positive impact on the team or business.",
+      "hard": "Share an example where you identified an opportunity no one asked you to pursue. Explain the risk/reward calculation you did, the effort invested, and the measurable outcome.",
+      "expert": "Describe a time you proactively identified a gap in processes or technology, built a business case, secured buy-in from stakeholders, implemented a solution, and measured the results. Example: you noticed manual reporting was consuming 10 hours/week, built an automated dashboard nobody requested, and saved the team 400+ hours annually. This demonstrates initiative, business acumen, and execution capability."
+    },
+    {
+      "front": "How do you handle criticism?",
+      "easy": "Accept it constructively and learn from it.",
+      "normal": "Describe a specific instance of receiving feedback, your initial reaction, how you processed it, and the changes you made.",
+      "hard": "Explain your feedback framework: (1) listen without defending, (2) ask clarifying questions, (3) thank the giver, (4) take time to reflect, (5) create an action plan, (6) follow up.",
+      "expert": "Share a specific example of receiving tough feedback that initially stung. Detail your emotional regulation strategy (e.g., 'thank you, I need time to process this'), how you sought a second perspective, the concrete changes you made, and how you later thanked the person. Show that the feedback led to measurable improvement (e.g., code review cycle time decreased after you changed your approach based on feedback)."
+    },
+    {
+      "front": "Describe a time you made a difficult decision.",
+      "easy": "Discuss a choice you made with trade-offs.",
+      "normal": "STAR: describe the decision context, options considered, decision criteria, and why you chose the path you did.",
+      "hard": "Detail a high-stakes decision with incomplete information. Explain your decision-making framework, how you gathered input, and how you managed the risk.",
+      "expert": "Share a decision that involved significant trade-offs (e.g., choosing between speed and quality, or between two good candidates). Describe your structured approach: (1) framed the problem, (2) identified 3-4 viable options, (3) evaluated each against weighted criteria (impact, effort, risk, alignment with goals), (4) made the call with clear rationale, (5) communicated it transparently, (6) monitored outcomes and adjusted. This shows strategic thinking and decisiveness."
+    },
+    {
+      "front": "Tell me about your communication style.",
+      "easy": "I am clear, concise, and adapt to my audience.",
+      "normal": "Describe how you adjust your communication for different stakeholders (technical vs non-technical, written vs verbal).",
+      "hard": "Explain your communication approach: proactive status updates, tailored detail levels, documentation-first culture, and active listening.",
+      "expert": "Share a structured communication philosophy. Written: use the 'bottom line up front' (BLUF) approach for emails and updates. Verbal: use the 'situation-solution-ask' framework. Cross-functional: create shared context through documentation. Crisis: over-communicate early and often. Give a specific example where your communication approach prevented a misunderstanding or aligned a distributed team."
+    },
+    {
+      "front": "How do you stay updated with industry trends?",
+      "easy": "Read blogs and follow news.",
+      "normal": "I subscribe to newsletters, follow thought leaders, attend webinars, and participate in relevant communities.",
+      "hard": "I have a structured learning system: daily RSS feeds, weekly deep-dive reading, monthly project to apply new knowledge, and quarterly review of my learning goals.",
+      "expert": "Describe a multi-channel continuous learning system. Input: curated RSS/Substack feeds, conference talks at 1.5x speed on my commute, and a 'learning buddy' for accountability. Processing: I maintain a digital garden / notes repository where I synthesize learnings. Application: I build small side projects to test concepts. Output: I share learnings through team tech talks or internal documentation, which reinforces my understanding. This creates a virtuous learning loop."
+    },
+    {
+      "front": "Why should we hire you?",
+      "easy": "Summarize your key qualifications for the role.",
+      "normal": "Connect your top 3 strengths directly to the job requirements, backed by specific achievements.",
+      "hard": "Make a structured case: (1) I have the exact skills you need because of X, (2) I bring a unique perspective from Y experience, (3) I have a track record of Z results that match your challenges.",
+      "expert": "Present a value proposition tailored to their specific situation. Reference the job description and any research: 'You mentioned needing someone to lead X initiative. At my current company, I led a similar effort that resulted in Y% improvement. Additionally, your team is facing Z challenge based on [recent article/interview], and my experience in [relevant domain] positions me to contribute from day one. I am not just looking for any job - I am specifically excited about this role because of [specific reason].'"
+    },
+    {
+      "front": "Describe your ideal work environment.",
+      "easy": "I prefer a collaborative and growth-oriented culture.",
+      "normal": "I thrive in environments with clear communication, autonomy, psychological safety, and opportunities for learning.",
+      "hard": "My ideal environment balances structure and autonomy: clear OKRs and priorities, but freedom in execution. A culture of blameless post-mortems, written documentation, and regular feedback.",
+      "expert": "Describe your ideal environment in terms of team maturity and organizational values using the 'five dysfunctions of a team' framework: trust (psychological safety), productive conflict (ideas debated freely), commitment (clear decisions after debate), accountability (peer accountability), and results (focus on outcomes). Give an example of a team environment where you were most productive and explain the specific cultural elements that enabled it."
+    },
+    {
+      "front": "How do you set and achieve goals?",
+      "easy": "Write down specific, measurable goals with deadlines.",
+      "normal": "I use the SMART framework and break large goals into weekly milestones with regular check-ins.",
+      "hard": "I use OKRs for quarterly goals with measurable key results. Monthly I review progress and adjust. Weekly I maintain a task list aligned to those OKRs.",
+      "expert": "Describe a multi-horizon goal system. Long-term (1-3 years): define a 'compass' - your north star that guides decisions. Medium-term (quarterly): set 2-3 OKRs with leading and lagging indicators. Short-term (weekly): use the 'big 3' approach - identify 3 most important tasks that drive OKRs. Daily: time-block the most important work first. Review system: monthly retrospective on what worked, quarterly OKR grading. Share a concrete example of achieving a challenging goal using this system."
+    },
+    {
+      "front": "Tell me about a time you had to persuade someone.",
+      "easy": "Explain how you convinced a colleague of your idea.",
+      "normal": "STAR: situation needing buy-in, how you built your case with evidence and empathy, and the successful outcome.",
+      "hard": "Describe a persuasion challenge with a resistant stakeholder. Explain your strategy: understand their motivations, frame the proposal in terms of their goals, provide proof of concept, and build coalition support.",
+      "expert": "Share a high-stakes persuasion example (e.g., convincing leadership to invest in a new technology). Detail your approach: (1) did pre-work to understand stakeholders' hidden concerns, (2) framed the proposal in terms of ROI and risk mitigation, (3) built a small proof of concept to reduce perceived risk, (4) found a champion in leadership, (5) addressed objections with data, (6) proposed a phased rollout to limit exposure. Result: secured budget and team successfully delivered."
+    },
+    {
+      "front": "How do you handle ambiguity?",
+      "easy": "Ask clarifying questions and break down the problem.",
+      "normal": "I thrive in ambiguity by defining the problem scope, identifying knowns and unknowns, creating hypotheses, and iterating based on feedback.",
+      "hard": "My approach: (1) define what 'done' looks like with stakeholders, (2) identify the minimum viable next step, (3) build a prototype or research spike to reduce uncertainty, (4) iterate based on early signals.",
+      "expert": "Describe a systematic approach to ambiguity: (1) frame the problem space using first principles, (2) identify the key uncertainty that, if resolved, would clarify the path forward, (3) design the cheapest experiment to resolve that uncertainty, (4) set decision gates with clear criteria, (5) execute in short cycles with frequent stakeholder check-ins. Give a real example where this approach turned an ambiguous project into a clear, deliverable plan."
+    },
+    {
+      "front": "Tell me about a time you received difficult feedback.",
+      "easy": "I listened, reflected, and made changes.",
+      "normal": "Describe a specific feedback instance, your immediate reaction, the reflection process, and the concrete changes you made.",
+      "hard": "Share feedback that was hard to hear but valuable. Explain your emotional regulation, the specific action plan you created, and how you followed up to show progress.",
+      "expert": "Describe a 360-degree feedback moment that challenged your self-perception. Detail your process: (1) initial defensiveness followed by deliberate reflection, (2) seeking a second opinion from a trusted mentor, (3) identifying the underlying truth in the feedback, (4) creating a 30-60-90 day improvement plan with measurable behaviors, (5) periodic check-ins with the feedback giver to track progress. Show how this changed a specific behavior and improved your working relationships."
+    },
+    {
+      "front": "What motivates you?",
+      "easy": "Solving problems and making an impact.",
+      "normal": "I am motivated by challenging problems, learning new skills, seeing the impact of my work, and being part of a great team.",
+      "hard": "I am intrinsically motivated by mastery, autonomy, and purpose. I thrive when I can deep-dive into complex problems, own outcomes, and see how my work contributes to business goals.",
+      "expert": "Reference self-determination theory: I am motivated by autonomy (ownership of outcomes), competence (mastering hard skills), and relatedness (collaborating with talented people). Give a specific example: 'In my last project, I was given ownership of the migration strategy [autonomy], I invested in learning the new tech stack deeply [competence], and I mentored two juniors through the process [relatedness]. The project succeeded and I felt deeply engaged throughout.'"
+    },
+    {
+      "front": "How do you handle multiple priorities?",
+      "easy": "I prioritize based on impact and deadlines.",
+      "normal": "I triage by urgency and importance, communicate with stakeholders about trade-offs, and use calendars/time-blocking to protect focus time.",
+      "hard": "I use a combination of Eisenhower Matrix for daily prioritization, weekly alignment with stakeholders, and transparent communication about capacity. I say no or negotiate deadlines when necessary.",
+      "expert": "Share a specific scenario where you had competing high-priority demands. Detail your process: (1) clarified the business impact of each priority with stakeholders, (2) proposed a sequenced approach (which first, which second, which parallel), (3) negotiated realistic deadlines with trade-offs made explicit, (4) protected deep work time for the #1 priority, (5) provided weekly status updates on all fronts. Result: both priorities were delivered successfully with clear stakeholder alignment."
+    },
+    {
+      "front": "Describe a time you improved a process.",
+      "easy": "Share a small improvement you made.",
+      "normal": "STAR: identify an inefficient process, propose a solution, implement it, and measure the improvement.",
+      "hard": "Detail a process improvement from identification to implementation: measuring baseline, identifying root causes, designing solution, getting buy-in, rolling out, and tracking metrics.",
+      "expert": "Describe a process improvement that required organizational change, not just technical change. Example: you noticed code reviews were a bottleneck. You analyzed the data (average review time 3 days), identified root causes (PRs too large, reviewers overloaded), implemented a system of smaller PRs with mandatory review within 4 hours, created a rotating reviewer schedule, and set up dashboards. Result: review cycle time dropped to 3 hours, deployment frequency increased 2x."
+    },
+    {
+      "front": "Tell me about a time you had to work with limited resources.",
+      "easy": "Share how you made the most of what was available.",
+      "normal": "STAR: a project with tight budget/time, how you prioritized essential features, and delivered maximum value with constraints.",
+      "hard": "Describe resource constraints that required creative problem-solving. Explain how you identified the critical path, eliminated waste, found alternative solutions, and still delivered.",
+      "expert": "Share a project with severe constraints (e.g., reduced team, tight deadline, limited budget). Detail your approach: (1) ruthless prioritization using MoSCoW method, (2) identifying quick wins to build momentum, (3) leveraging existing tools instead of building new ones, (4) negotiating scope with stakeholders transparently, (5) automating repetitive tasks to amplify team output. Result: delivered core functionality on time with 60% of normal resources."
+    },
+    {
+      "front": "How do you build relationships with stakeholders?",
+      "easy": "Communicate regularly and understand their needs.",
+      "normal": "I proactively schedule check-ins, listen to their pain points, deliver on commitments, and communicate transparently about progress and challenges.",
+      "hard": "I use a stakeholder mapping approach: identify key players, understand their priorities and communication preferences, establish regular touchpoints, and build trust by consistently delivering value.",
+      "expert": "Describe a structured stakeholder management approach: (1) quadrant mapping (power vs interest) to categorize stakeholders, (2) tailored communication plans for each group (weekly exec summary for high-power/low-interest, daily updates for high-power/high-interest), (3) regular 'listening tours' to surface concerns early, (4) proactive status reporting before being asked, (5) building personal rapport alongside professional trust. Share a real example of how this approach turned a skeptical stakeholder into a champion."
+    },
+    {
+      "front": "Tell me about a time you worked under a tight deadline.",
+      "easy": "Describe how you managed your time effectively.",
+      "normal": "STAR: a deadline-driven project, how you prioritized, communicated, and delivered on time without burning out.",
+      "hard": "Explain your deadline management: scope negotiation, time-boxing, focused sprints, daily check-ins, and transparent status communication.",
+      "expert": "Share a specific tight deadline scenario. Detail: (1) initial assessment to identify must-haves vs nice-to-haves, (2) negotiated a phased delivery with stakeholder, (3) created a war room approach with clear ownership and daily standups, (4) used time-blocking to protect focus, (5) maintained quality through automated checks, (6) communicated progress proactively including flagging risks early. Result: delivered on time with high quality rating and set up a follow-up phase for remaining features."
+    },
+    {
+      "front": "How do you ensure quality in your work?",
+      "easy": "I review my work thoroughly before submitting.",
+      "normal": "I follow established processes, use checklists, review my own work, and seek peer feedback before delivery.",
+      "hard": "I build quality in from the start: clear requirements, automated checks where possible, peer reviews, and post-delivery retrospective to identify improvements.",
+      "expert": "Describe a comprehensive quality framework: (1) prevention over inspection - clear acceptance criteria before starting work, (2) automated quality gates (linting, tests, security scanning) in CI/CD, (3) peer review with specific focus areas per reviewer, (4) staged delivery with feedback loops at each stage, (5) metrics tracking (defect rate, rework time) with monthly review, (6) blameless post-mortems for any quality incidents. Share how this framework reduced defects in a project."
+    },
+    {
+      "front": "Describe a time you had to explain a technical concept to a non-technical person.",
+      "easy": "Use analogies and simple language.",
+      "normal": "STAR: need to explain a complex topic, how you adapted your language and used analogies, and the stakeholder's understanding.",
+      "hard": "Describe your communication adaptation: assess their level of technical knowledge, use analogies from their domain, avoid jargon, and confirm understanding through questions.",
+      "expert": "Share a specific example of translating a complex technical decision to business stakeholders. Detail your framework: (1) identify the business impact of the technical concept, (2) use a visual analogy from their domain (e.g., comparing technical debt to financial debt), (3) present options in terms of trade-offs they care about (cost, speed, risk), (4) confirm understanding by asking them to rephrase. Result: stakeholders made an informed decision and appreciated your clear communication."
+    },
+    {
+      "front": "What makes you unique?",
+      "easy": "Share a skill or experience that sets you apart.",
+      "normal": "Identify a combination of skills, experiences, or perspectives that differentiate you from other candidates.",
+      "hard": "Articulate your unique value proposition: the intersection of rare skills, domain expertise, and personal qualities that make you a one-of-a-kind fit for this role.",
+      "expert": "Craft a compelling differentiator statement: 'Most candidates with my technical skills don't have my domain expertise in X. Most with my domain expertise don't have my experience scaling Y. I combine both, which means I can [specific outcome] faster and more effectively.' Back this with 2-3 specific achievements that only someone with your unique combination could deliver."
+    },
+    {
+      "front": "Tell me about a time you had to adapt your communication style.",
+      "easy": "Share an example of adjusting how you communicated.",
+      "normal": "STAR: a situation requiring different communication, how you adapted, and the positive outcome.",
+      "hard": "Describe a cross-cultural or cross-functional communication challenge. Explain how you adapted your style to different norms and expectations.",
+      "expert": "Share a nuanced example of adapting communication across levels and cultures. Example: presenting the same project update differently to executives (bottom line up front, 2 slides), peers (detailed technical discussion, whiteboarding), and juniors (mentoring approach, open questions). Also adapt for remote vs in-person, written vs verbal, and different personality types. Show you have a framework for communication adaptation, not just intuition."
+    },
+    {
+      "front": "How do you approach problem-solving?",
+      "easy": "Break problems into smaller parts and solve step by step.",
+      "normal": "I follow a structured approach: understand the problem, gather data, generate options, evaluate trade-offs, implement, and review.",
+      "hard": "I use first principles thinking: break down to fundamental truths, challenge assumptions, generate creative solutions, and validate through quick experiments.",
+      "expert": "Describe a multi-phased problem-solving methodology: (1) problem framing - define scope and success criteria, (2) root cause analysis using techniques like 5 Whys or fishbone diagram, (3) divergent thinking to generate 5+ potential solutions, (4) convergent thinking to evaluate against weighted criteria (impact, effort, risk), (5) rapid prototyping to test assumptions, (6) implementation with monitoring, (7) retrospective to capture learnings. Share a real problem you solved this way."
+    },
+    {
+      "front": "Describe a time you took a risk.",
+      "easy": "Share a calculated risk with positive outcome.",
+      "normal": "STAR: situation requiring a risky decision, how you assessed the risk/reward, and what happened.",
+      "hard": "Detail a risk that had real downside but high potential upside. Explain your risk assessment framework, mitigation strategies, and why you decided the risk was worth taking.",
+      "expert": "Share a career-defining risk. Example: you proposed a major architecture change that could have delayed the product launch. Walk through your process: (1) quantified the risk (cost of being wrong, timeline impact), (2) built a small POC to de-risk, (3) outlined clear success/failure criteria upfront, (4) got buy-in by framing as incremental adoption, (5) had a rollback plan. Result: the risk paid off - performance improved 10x. But also share that you learned something valuable even from the risk assessment process itself."
+    },
+    {
+      "front": "How do you handle success?",
+      "easy": "Celebrate with the team and reflect on lessons.",
+      "normal": "I acknowledge the team's contributions, celebrate appropriately, capture lessons learned, and channel the momentum into the next challenge.",
+      "hard": "I use success as an opportunity to: (1) celebrate team members publicly, (2) document what worked for reuse, (3) conduct a project retrospective, (4) update processes based on learnings, (5) set more ambitious goals.",
+      "expert": "Share a balanced approach to success. Describe a major achievement where you ensured credit was distributed, used the momentum to push for process improvements that were deprioritized before, and personally reflected on what you could have done better even in success. This shows leadership maturity - celebrating wins while staying grounded and continuously improving. Give an example of a post-success retrospective that led to meaningful improvements."
+    },
+    {
+      "front": "Tell me about a time you mentored someone.",
+      "easy": "Share how you helped a colleague learn.",
+      "normal": "STAR: identify a need for mentoring, how you structured the guidance, and the measurable improvement in the person's performance.",
+      "hard": "Describe your mentoring philosophy and approach: how you assess mentee needs, adapt your style, provide constructive feedback, and help them build independence.",
+      "expert": "Share a detailed mentoring example. Explain your approach: (1) establish trust through vulnerability-sharing, (2) use the 'situational leadership' model - directing when they are new, coaching when they are developing, supporting when they are competent, delegating when they are expert, (3) provide feedback using the SBI model (Situation-Behavior-Impact), (4) gradually increase complexity of tasks, (5) celebrate their wins publicly. Result: your mentee went from struggling to leading their own project within 6 months."
+    },
+    {
+      "front": "What does teamwork mean to you?",
+      "easy": "Working together toward a common goal.",
+      "normal": "Teamwork means leveraging diverse strengths, communicating openly, supporting each other, and putting collective success above individual credit.",
+      "hard": "Teamwork is psychological safety plus accountability: creating an environment where everyone can speak up, disagree productively, and hold each other to high standards.",
+      "expert": "Frame teamwork through the lens of high-performing team characteristics: (1) psychological safety - members feel safe to take risks, (2) dependability - members deliver quality work on time, (3) structure and clarity - clear goals and roles, (4) meaning - work is personally significant, (5) impact - members believe their work matters. Give an example of a team that had these qualities and what you contributed to maintaining them."
+    },
+    {
+      "front": "How do you deal with uncertainty?",
+      "easy": "Focus on what I can control and adapt.",
+      "normal": "I embrace uncertainty by gathering information, creating scenarios, making decisions with available data, and adjusting as new information emerges.",
+      "hard": "My strategy: (1) identify what I know vs what I don't, (2) design experiments to reduce key uncertainties, (3) make reversible decisions quickly, (4) set decision gates for irreversible ones, (5) maintain optionality.",
+      "expert": "Share a specific high-uncertainty situation. Detail your approach using real options theory: treat decisions as options - reversible decisions can be made quickly with available information, irreversible ones need more analysis. Use scenario planning for the 3-5 most likely outcomes. Set trigger points for when to switch between scenarios. Maintain a 'prepared mind' by monitoring leading indicators. Result: navigated uncertainty successfully and positioned the team to capitalize on emerging opportunities."
+    },
+    {
+      "front": "Describe a time you went against the consensus.",
+      "easy": "Share a time you had a different opinion.",
+      "normal": "STAR: a situation where you disagreed with the group, how you voiced your perspective respectfully, and what happened.",
+      "hard": "Detail a time you challenged the prevailing view with data. Explain how you prepared your argument, built your case, and navigated the social dynamics of disagreement.",
+      "expert": "Share an example of constructive dissent. Situation: the team was heading in a direction you believed was wrong. Your approach: (1) sought first to understand why others held that view, (2) gathered data to test your hypothesis, (3) framed your concern as a question (e.g., 'What would happen if...?'), (4) proposed a small experiment to test both approaches, (5) built coalitions with individuals who shared your concern. Result: your alternative approach was validated, or you were persuaded by the team's reasoning and committed fully. Either way, the outcome was better."
+    },
+    {
+      "front": "How do you stay organized?",
+      "easy": "I use to-do lists and calendars.",
+      "normal": "I use a combination of digital tools (task manager, calendar, notes) and systems (weekly planning, daily prioritization, regular review).",
+      "hard": "I use a personal knowledge management system: tasks in a tracker with priority labels, notes in a searchable system, calendar time-blocking, and weekly reviews to keep everything aligned.",
+      "expert": "Describe a complete personal organization system. Input capture: inbox-zero approach for emails, quick-capture for ideas. Processing: weekly review to process inbox items into appropriate systems. Tasks: categorized by context and energy level, with MITs (Most Important Tasks) identified daily. Schedule: time-blocked calendar with deep work blocks, meeting buffers, and admin time. Knowledge: searchable notes system with regular review. Share how this system has evolved and a specific example of how it saved you during a complex project."
+    },
+    {
+      "front": "Tell me about a time you had to say no.",
+      "easy": "Share a time you declined a request professionally.",
+      "normal": "STAR: a situation where you needed to decline, how you communicated the no, and what alternative you offered.",
+      "hard": "Explain your approach to saying no: assess your capacity and priorities, communicate the no with clear reasoning, and offer alternatives or compromises.",
+      "expert": "Share a nuanced 'no' situation. Example: a stakeholder asked for a feature that would derail the timeline. Your approach: (1) acknowledged their request and its importance, (2) explained the impact on existing commitments with data, (3) proposed alternatives (reduce scope, defer to next phase, find a simpler solution), (4) let them make the choice with full understanding of trade-offs. This maintains the relationship while protecting your team's focus. Result: stakeholder felt heard and respected, and chose a phased approach."
+    },
+    {
+      "front": "How do you contribute to team culture?",
+      "easy": "Be supportive and collaborative.",
+      "normal": "I contribute through positive attitude, knowledge sharing, celebrating wins, and supporting team members during challenges.",
+      "hard": "I actively shape culture by modeling desired behaviors (transparency, ownership, respect), running knowledge-sharing sessions, and advocating for team health in retrospectives.",
+      "expert": "Describe a specific contribution to team culture. Example: you noticed the team was avoiding difficult conversations, leading to unresolved tensions. You proposed and implemented a 'retrospective with teeth' format that encouraged psychological safety. You modeled vulnerability by sharing your own mistakes. You also started a 'weekly wins' channel to celebrate small victories. Over 3 months, team engagement scores improved and cross-functional collaboration became smoother. This shows proactive culture building, not just passive participation."
+    },
+    {
+      "front": "What do you do when you don't know the answer?",
+      "easy": "I research or ask someone who knows.",
+      "normal": "I acknowledge the gap honestly, then take action: research, ask colleagues, or set up a learning plan to find the answer.",
+      "hard": "I see 'not knowing' as the starting point for learning. My approach: ask clarifying questions, identify the specific gap, then systematically fill it through documentation, experiments, and expert consultation.",
+      "expert": "Share a specific example where you had to solve a problem outside your expertise. Describe your learning methodology: (1) identify the core concepts needed, (2) find the 20% of knowledge that covers 80% of the problem, (3) build a prototype to test understanding, (4) find a domain expert to validate your approach, (5) document learnings for others. This demonstrates that not knowing is fine - what matters is your systematic approach to finding answers and your intellectual honesty."
+    },
+    {
+      "front": "Describe a time you had to make a quick decision.",
+      "easy": "Share a time you decided under time pressure.",
+      "normal": "STAR: a situation requiring fast action, how you assessed options quickly, and the outcome.",
+      "hard": "Explain your rapid decision-making framework: use available data, apply heuristics from experience, identify the reversibility of the decision, and commit fully once decided.",
+      "expert": "Share a high-stakes quick decision. Detail your approach using the 70% rule (if you have 70% of the information, make the decision - waiting for 100% means you missed the opportunity). Describe how you assessed the situation in under 60 seconds, identified the critical path, made the call with available information, and quickly adapted as new information came in. Result: the quick decision prevented a bigger problem or captured an opportunity that would have been lost with deliberation."
+    },
+    {
+      "front": "How do you handle a project that is falling behind?",
+      "easy": "Communicate early and reprioritize.",
+      "normal": "I assess the gap, identify the critical path, communicate transparently with stakeholders, and propose a recovery plan with trade-offs.",
+      "hard": "My recovery framework: (1) stop digging - freeze scope, (2) assess root cause (effort underestimated? blocker? scope creep?), (3) create a recovery plan with compressed timeline and focused scope, (4) communicate with stakeholders, offering options, (5) execute with daily check-ins.",
+      "expert": "Share a real project recovery example. Situation: project was 3 weeks behind a 12-week timeline. Your approach: (1) conducted a rapid audit to identify exact status and bottlenecks, (2) categorized remaining work into must-have vs nice-to-have, (3) negotiated a reduced scope for on-time delivery, (4) reorganized team to parallelize work, (5) introduced daily standups and a visible burn-down chart, (6) communicated the recovery plan with leadership including the scope trade-off. Result: delivered must-haves on time, built trust through transparency, and deferred non-critical items to a follow-up phase."
+    },
+    {
+      "front": "Tell me about a time you were proud of your work.",
+      "easy": "Share an accomplishment you are proud of.",
+      "normal": "STAR: a project that delivered significant value, your specific contribution, and why it mattered.",
+      "hard": "Describe a project that had measurable impact on the business. Explain the challenge, your innovative approach, the metrics that improved, and why this work was personally meaningful.",
+      "expert": "Share a project that combined technical excellence with business impact AND personal growth. Example: you architected a system that reduced infrastructure costs by 40% while improving reliability. But go deeper: describe the innovative approach you took (e.g., unconventional architecture decision), the challenges you overcame (e.g., convincing stakeholders), and what you learned about yourself in the process. This shows self-awareness and the ability to connect technical work to business outcomes and personal development."
+    },
+    {
+      "front": "How do you keep your skills current?",
+      "easy": "Take courses and read regularly.",
+      "normal": "I dedicate time each week to learning through online courses, technical books, side projects, and following industry leaders.",
+      "hard": "I have a structured learning plan aligned to my career goals: quarterly learning objectives, a mix of depth (books, courses) and breadth (news, talks), and application through side projects.",
+      "expert": "Describe a deliberate learning system. Strategic: align learning to your 3-year career target (e.g., 'I want to become a Staff Engineer, so I focus on system design, mentoring, and cross-functional influence'). Tactical: weekly 2-hour deep-dive sessions, monthly book summaries, quarterly certification or project. Social: learn in public through blog posts or tech talks. Feedback: review learning outcomes quarterly and adjust. Share a specific skill you developed through this system and how you applied it at work."
+    },
+    {
+      "front": "Describe a time you influenced a decision without authority.",
+      "easy": "Share how you convinced people without being their boss.",
+      "normal": "STAR: a situation where you needed buy-in from peers or seniors, your persuasion strategy, and the outcome.",
+      "hard": "Explain your influence toolkit: building relationships, using data to make your case, finding allies, understanding other's motivations, and framing proposals in terms of shared goals.",
+      "expert": "Share a detailed example of leading without authority. Situation: you needed a cross-functional team to adopt a new process. Approach: (1) first, built relationships with key individuals 1:1, (2) understood their pain points and framed the proposal as solving their problems, (3) started with a pilot to demonstrate value with low risk, (4) recruited early adopters as champions, (5) presented results to leadership with their testimonials. Result: the new process was adopted org-wide in 3 months. This shows strategic influencing, not just persuasion."
+    },
+    {
+      "front": "What do you look for in a manager?",
+      "easy": "Support, clear communication, and growth opportunities.",
+      "normal": "I value managers who provide clear expectations, regular feedback, growth opportunities, and psychological safety.",
+      "hard": "I look for a manager who: (1) sets clear vision and context, (2) trusts me to execute, (3) provides honest feedback regularly, (4) advocates for my growth, (5) creates psychological safety.",
+      "expert": "Describe your ideal manager using the 'servant leadership' framework: someone who removes obstacles for the team, invests in individual growth, provides clear context but autonomy in execution, gives candid and specific feedback, and models the values they expect. Share a specific example of a great manager you had and what you learned from their approach. This shows you have thought about what enables your best work and can articulate it maturely."
+    },
+    {
+      "front": "Tell me about a time you solved a complex problem.",
+      "easy": "Describe a challenging problem you solved.",
+      "normal": "STAR: a complex problem, your analytical approach, the solution, and the measurable outcome.",
+      "hard": "Detail the complexity: multiple variables, incomplete information, cross-functional dependencies. Explain your systematic approach and how you validated the solution.",
+      "expert": "Share a truly complex problem with multiple dimensions (technical, organizational, timeline). Detail your approach: (1) problem decomposition - broke it into manageable sub-problems, (2) prioritized sub-problems by impact and dependency, (3) used first principles to identify the core challenge, (4) designed 3 approaches with trade-off analysis, (5) built a prototype to validate the chosen approach, (6) implemented with careful monitoring, (7) documented the solution and train others. Result: solved a problem that had stumped the team for months."
+    },
+    {
+      "front": "How do you handle mistakes?",
+      "easy": "Own up, fix, and learn.",
+      "normal": "I take responsibility immediately, focus on fixing the issue, communicate transparently with affected parties, and implement changes to prevent recurrence.",
+      "hard": "My mistake framework: (1) acknowledge and own it immediately, (2) contain the damage, (3) communicate with stakeholders honestly, (4) conduct a root cause analysis, (5) implement systemic fixes, (6) share learnings with the team.",
+      "expert": "Share a specific mistake you made and how you handled it. Example: you accidentally broke the production build. Your response: (1) immediately owned Up with 'I broke the build' in the team channel, (2) rolled back within 2 minutes, (3) communicated impact to affected teams, (4) analyzed root cause (no pre-commit hooks), (5) set up Git hooks and CI checks to prevent recurrence, (6) wrote a blameless post-mortem and shared it in the team's learning channel. This turned a mistake into a team improvement and earned respect for your accountability."
+    },
+    {
+      "front": "Describe a time you had to manage expectations.",
+      "easy": "Communicate realistic timelines and progress.",
+      "normal": "STAR: a situation where expectations exceeded reality, how you reset them, and how you maintained trust through transparency.",
+      "hard": "Explain your expectation management approach: under-promise and over-deliver, regular status updates, flagging risks early, and having data to support timeline estimates.",
+      "expert": "Share a nuanced expectation management scenario. Situation: stakeholder expected a 3-month delivery, but you knew it would take 6. Your approach: (1) acknowledged their desired outcome, (2) shared your estimate with clear rationale (complexity, dependencies, team capacity), (3) offered a phased approach - MVP in 3 months with core value, full scope in 6, (4) provided data from similar past projects to support your estimate, (5) set up regular demo cycles to show progress and adjust. Result: stakeholder agreed to phased approach, MVP was delivered on time, trust was strengthened."
+    },
+    {
+      "front": "What does success look like to you?",
+      "easy": "Achieving goals and making an impact.",
+      "normal": "Success means delivering value, growing professionally, building great relationships, and finding meaning in my work.",
+      "hard": "Success is a combination of external impact (business results, customer value) and internal fulfillment (learning, growth, mastery). I measure it by outcomes and growth trajectory.",
+      "expert": "Articulate a holistic view of success across dimensions: (1) professional - delivering measurable impact through your craft, advancing in mastery and responsibility, (2) relationships - building trust and helping others grow through mentoring and collaboration, (3) personal - maintaining curiosity, health, and work-life integration. Share how you define success for yourself currently, how it has evolved, and what your North Star is for the next phase of your career."
+    },
+    {
+      "front": "Tell me about a time you had to deliver bad news.",
+      "easy": "Share how you communicated an unfortunate update.",
+      "normal": "STAR: a situation requiring bad news, how you delivered it honestly and empathetically, and how you managed the fallout.",
+      "hard": "Explain your approach: prepare thoroughly (data, alternatives, recovery plan), deliver in person or video call, be direct but empathetic, and focus on solutions rather than blame.",
+      "expert": "Share a real example of delivering bad news (e.g., missed deadline, bug in production, lost deal). Detail your preparation: gathered all facts, anticipated questions, prepared mitigation plan. Delivery: started with the bottom line, acknowledged impact, explained causes (without excuses), presented recovery plan, invited questions. Follow-up: over-communicated progress on recovery, conducted post-mortem, implemented preventive measures. Result: stakeholder appreciated the transparency and the relationship was strengthened despite the bad news."
+    },
+    {
+      "front": "How do you build trust with your team?",
+      "easy": "Be reliable and transparent.",
+      "normal": "I build trust by being consistent, delivering on commitments, being transparent about challenges, and showing genuine care for team members.",
+      "hard": "Trust is built through: (1) competence - delivering quality work, (2) reliability - doing what you say, (3) vulnerability - admitting mistakes, (4) generosity - sharing credit and helping others.",
+      "expert": "Describe the trust equation: Trust = (Credibility \u00d7 Reliability \u00d7 Intimacy) / Self-Orientation. Give examples of each dimension in your behavior. Credibility: you share knowledge and are honest about what you don't know. Reliability: you meet deadlines and follow through. Intimacy: you show empathy and maintain confidentiality. Self-orientation: you put team success first. Share a specific example where you built trust with a skeptical colleague or stakeholder using this framework."
+    },
+    {
+      "front": "Describe your leadership style.",
+      "easy": "Collaborative and supportive.",
+      "normal": "I lead by example, empower team members, provide clear direction, and create an environment of psychological safety and accountability.",
+      "hard": "My leadership style is situational: I adapt between directing, coaching, supporting, and delegating based on the person's competence and commitment for each task.",
+      "expert": "Describe your leadership approach using the 'Level 5 Leadership' framework: you combine personal humility with professional will. You give credit to the team for successes and take responsibility for failures. You set high standards and provide the support needed to meet them. You invest in developing future leaders. Share a specific example where your situational leadership helped a team member grow significantly or helped the team navigate a challenging period."
+    },
+    {
+      "front": "What is your approach to feedback?",
+      "easy": "Give and receive feedback regularly and constructively.",
+      "normal": "I give feedback promptly and specifically, using a framework like SBI (Situation-Behavior-Impact). I receive feedback with an open mind and a commitment to improve.",
+      "hard": "I seek feedback proactively (not just during reviews), give feedforward (future-oriented suggestions) as well as feedback, and create regular rhythms for 1:1 feedback exchanges.",
+      "expert": "Describe a comprehensive feedback philosophy: (1) create safety by asking for feedback on yourself first, (2) give feedback with specific examples and impact, (3) separate intent from impact, (4) offer actionable suggestions, (5) follow up on feedback given and received. Share a story: you implemented a 'feedback Friday' practice where the team exchanged quick feedback each week. Initially awkward, it became a valued ritual that improved collaboration and caught small issues before they became big ones."
+    },
+    {
+      "front": "Tell me about a time you managed a difficult project.",
+      "easy": "Share a challenging project you delivered.",
+      "normal": "STAR: a project with significant challenges, how you managed it, and the successful outcome.",
+      "hard": "Describe a project that was difficult due to multiple factors (scope, stakeholders, timeline, technology). Explain your project management approach and key decisions.",
+      "expert": "Share a war story of a genuinely difficult project. Examples: integration of two legacy systems, migrating a monolith during active development, or launching with an impossible deadline. Detail: (1) initial assessment of challenges, (2) prioritization framework used, (3) key risk mitigation strategies, (4) how you maintained team morale, (5) stakeholder management approach, (6) what you would do differently. Show deep reflection on what made it difficult and what you learned about complex project management."
+    },
+    {
+      "front": "How do you handle a heavy workload?",
+      "easy": "Prioritize and manage time effectively.",
+      "normal": "I triage tasks by impact and urgency, communicate with stakeholders about capacity, protect deep work time, and ask for help when needed.",
+      "hard": "My approach: (1) map all tasks and deadlines, (2) negotiate priorities with stakeholders, (3) batch similar tasks for efficiency, (4) use time-blocking for focused work, (5) identify what can be delegated or deferred.",
+      "expert": "Share a specific period of extreme workload. Detail your survival and performance strategy: (1) used an Eisenhower matrix to sort everything, (2) had honest conversations about capacity with stakeholders - gave them options rather than just saying no, (3) protected 3 hours of deep work daily by scheduling it as non-negotiable, (4) batched meetings in the afternoon, (5) maintained quality by reducing context switches, (6) tracked energy levels and scheduled demanding work during peak energy. Result: delivered all critical items without burnout."
+    },
+    {
+      "front": "What do you think makes a great team?",
+      "easy": "Good communication and shared goals.",
+      "normal": "A great team has psychological safety, clear roles, shared purpose, effective communication, and mutual respect.",
+      "hard": "Using Google's Project Aristotle research: psychological safety, dependability, structure and clarity, meaning, and impact. A great team excels in all five.",
+      "expert": "Describe the five dynamics of high-performing teams with specific examples: (1) psychological safety - members take risks without fear of embarrassment (e.g., someone admitted a mistake, and the team responded supportively), (2) dependability - team consistently meets commitments, (3) structure and clarity - clear goals and individual accountability, (4) meaning - work feels personally significant, (5) impact - team believes their work matters. Share a team you were on that exemplified these and what you contributed to creating that culture."
+    },
+    {
+      "front": "Tell me about a time you had to negotiate.",
+      "easy": "Share a negotiation experience.",
+      "normal": "STAR: a negotiation situation, your strategy, and the win-win outcome.",
+      "hard": "Explain your negotiation approach: prepare (BATNA, ZOPA), understand their interests, focus on value creation before value claiming, and maintain relationships.",
+      "expert": "Share a detailed work negotiation (resource allocation, timeline, or scope). Describe your preparation: researched their constraints, identified your BATNA, mapped the ZOPA. During negotiation: focused on interests not positions, used objective criteria, created value by finding trade-offs between differently-valued items, and maintained collaborative tone. Result: reached an agreement that was better than your fallback and preserved the relationship. Show that you understand principled negotiation."
+    },
+    {
+      "front": "How do you approach innovation?",
+      "easy": "Look for better ways to do things.",
+      "normal": "I stay curious, question existing processes, experiment with new approaches, and share ideas with the team.",
+      "hard": "My innovation process: (1) observe and identify pain points, (2) generate multiple ideas without judgment, (3) prototype the most promising quickly, (4) test with real users, (5) iterate based on feedback.",
+      "expert": "Describe a structured innovation approach using design thinking: empathize (understand user needs deeply), define (frame the problem), ideate (generate diverse solutions), prototype (build cheap experiments), test (get real feedback). Share an example of an innovation you drove that didn't just improve efficiency but changed how something was done. Explain the resistance you faced and how you overcame it through persistence, coalition-building, and demonstrating value incrementally."
+    },
+    {
+      "front": "Describe a time you worked across departments.",
+      "easy": "Share a cross-functional collaboration experience.",
+      "normal": "STAR: working with another department, handling different priorities, and finding common ground.",
+      "hard": "Describe a cross-functional initiative. Explain how you navigated different incentives, communication styles, and work rhythms to achieve a shared goal.",
+      "expert": "Share a complex cross-functional project (e.g., engineering + marketing + operations). Detail the challenges: different vocabularies, conflicting priorities, different pace of work. Your approach: (1) created a shared glossary to align terminology, (2) mapped each department's incentives and framed the project in terms of their goals, (3) established regular syncs with clear agendas, (4) created a shared dashboard for transparency, (5) celebrated joint milestones. Result: delivered a product launch that required tight coordination across 3 departments, with strong relationships maintained."
+    },
+    {
+      "front": "What is your biggest professional achievement?",
+      "easy": "Share a significant accomplishment.",
+      "normal": "STAR: describe the achievement, your role, and the measurable impact.",
+      "hard": "Choose an achievement that demonstrates multiple qualities: technical skill, leadership, business impact, and overcoming challenges.",
+      "expert": "Select a career-defining achievement and tell it as a compelling story. Start with the context and stakes, describe the obstacles, explain your unique contribution (not just 'I led the team' but 'I made the critical decision to...'), detail the measurable outcome, and reflect on what made this achievement significant for your growth. This answer should make the interviewer think 'we need this person on our team.' Focus on depth over breadth."
+    },
+    {
+      "front": "How do you handle tight deadlines?",
+      "easy": "Focus and prioritize.",
+      "normal": "I assess what's critical, create a focused plan, communicate with stakeholders about scope, and execute with intensity.",
+      "hard": "My tight deadline approach: (1) clarify the must-have vs nice-to-have, (2) negotiate scope immediately, (3) eliminate all non-essential meetings and context switches, (4) time-box tasks, (5) communicate progress daily.",
+      "expert": "Share a specific tight deadline experience. Walk through the chronology: when you learned of the deadline, what you assessed in the first 10 minutes, how you re-scoped with the stakeholder, how you reorganized your work, how you communicated with dependents, what you sacrificed (and why it was the right trade-off), and how you delivered. Show that you can make tough trade-off decisions under pressure and communicate them effectively."
+    },
+    {
+      "front": "What do you do for professional development?",
+      "easy": "Take courses and read.",
+      "normal": "I dedicate weekly time to structured learning, attend industry events, and take on stretch assignments at work.",
+      "hard": "I have a personal development plan with quarterly goals: technical depth (book/course), breadth (conference talks), and soft skills (mentoring, public speaking). I track progress and adjust.",
+      "expert": "Describe a deliberate professional development system. Diagnosis: annual self-assessment against your role's competency model. Planning: identify 2-3 growth areas per quarter with specific learning objectives. Execution: mix of structured learning (courses, certifications), applied learning (side projects, stretch assignments), and social learning (mentoring, communities). Measurement: track progress through concrete outcomes (projects delivered, talks given, people mentored). Share how this system has evolved your career in a specific direction."
+    },
+    {
+      "front": "Tell me about a time you received praise/recognition.",
+      "easy": "Share when you were recognized for good work.",
+      "normal": "STAR: what you did to earn recognition, why it mattered, and how you felt about it.",
+      "hard": "Describe an achievement that earned recognition from leadership or customers. Explain the effort behind it and what it taught you about the value of your work.",
+      "expert": "Share a recognition story that reveals your values. Example: a customer sent a glowing email about your feature, and you forwarded it to the whole team, highlighting your teammates' contributions. Or you received an award but used the platform to shine light on the unsung heroes. This shows humility, team-orientation, and that you value impact over credit. The recognition isn't the point - how you handled it reveals your character."
+    },
+    {
+      "front": "How do you ensure diversity and inclusion in your work?",
+      "easy": "Respect different perspectives.",
+      "normal": "I actively seek diverse perspectives, ensure everyone's voice is heard in meetings, and advocate for inclusive practices.",
+      "hard": "I practice inclusive behaviors: (1) call on quieter team members in meetings, (2) use asynchronous communication for input, (3) check my own biases before decisions, (4) advocate for diverse candidates in hiring.",
+      "expert": "Share a specific action you took for D&I. Example: you noticed that certain team members were consistently interrupted in meetings. You implemented a 'round-robin' check-in at the start of each meeting where everyone spoke before the discussion. Or you advocated for inclusive language in documentation. Or you mentored someone from an underrepresented group. Show understanding that D&I is about daily behaviors, not just company policies. Share what you are still learning in this area."
+    },
+    {
+      "front": "Describe a time you had to deal with a difficult customer.",
+      "easy": "Share how you handled a challenging client.",
+      "normal": "STAR: a customer issue, how you listened, empathized, and resolved it.",
+      "hard": "Describe a difficult customer situation where you had to balance their needs with company policy. Explain your de-escalation and resolution approach.",
+      "expert": "Share a challenging customer interaction. Your approach: (1) listened actively without interrupting, (2) acknowledged their frustration and apologized for the experience, (3) asked questions to understand the root issue, (4) identified what you could and couldn't do, (5) proposed a solution that addressed their core need, (6) went an extra step to surprise them. Result: turned a detractor into a promoter. Show emotional intelligence, problem-solving, and the ability to represent the company with empathy and professionalism."
+    },
+    {
+      "front": "What is your approach to continuous improvement?",
+      "easy": "Always look for ways to do better.",
+      "normal": "I regularly reflect on my work, seek feedback, and implement small improvements incrementally.",
+      "hard": "I use the PDCA cycle (Plan-Do-Check-Act) for continuous improvement. I set improvement goals, experiment, measure results, and standardize what works.",
+      "expert": "Describe a systematic approach to continuous improvement at multiple levels: personal (weekly reflection on what went well and what to improve), team (retrospectives with actionable improvements tracked to completion), and process (quarterly reviews of workflows with metrics). Share an example of a 'kaizen' (small improvement) that compounded over time - e.g., saving 5 minutes per day on a task by automating one step, which saved 20 hours per year across the team."
+    },
+    {
+      "front": "Tell me about a time you grew from feedback.",
+      "easy": "Share how feedback helped you improve.",
+      "normal": "STAR: specific feedback received, how you processed it, and the changes you made.",
+      "hard": "Describe feedback that significantly changed your approach to work. Explain the before and after in specific behavioral terms.",
+      "expert": "Share a transformative feedback experience. Example: a manager told you that you were too eager to provide solutions instead of letting the team figure things out. This stung because you thought you were being helpful. After reflection, you realized it was creating dependency. Your action: started asking questions instead of giving answers, created space for others to contribute, and shifted from 'hero' to 'coach' mindset. Result: team became more autonomous, you had more time for strategic work, and your relationships improved. This shows deep self-awareness and genuine growth."
+    },
+    {
+      "front": "How do you celebrate wins?",
+      "easy": "Acknowledge contributions and reflect on success.",
+      "normal": "I celebrate team wins publicly, acknowledge individual contributions, and take time to reflect on what went well.",
+      "hard": "I have a celebration ritual: immediate recognition in team channels, deeper acknowledgment in 1:1s, and quarterly team celebrations for major milestones.",
+      "expert": "Describe a thoughtful approach to celebration: (1) immediate - recognize wins in real-time on team channels, being specific about who did what, (2) weekly - share a 'wins' roundup in team meetings, (3) major milestones - organize team celebrations that match the achievement (coffee chat for small wins, team lunch for medium, offsite for big), (4) personal - acknowledge individual growth moments in 1:1s. Share how you celebrated a recent win and the positive impact on team morale. This shows you understand the importance of recognition."
+    },
+    {
+      "front": "What questions do you have for me?",
+      "easy": "Ask about team culture and growth.",
+      "normal": "Prepare thoughtful questions about the role, team, culture, and company direction.",
+      "hard": "Ask strategic questions that show your research: about challenges the team faces, success metrics for the role, growth opportunities, and company direction.",
+      "expert": "Have 3-5 questions sorted by category: (1) role-specific (What does success look like in the first 90 days?), (2) team (How does the team handle disagreements?), (3) culture (What is something you wish you knew before joining?), (4) growth (What does career progression look like for this role?), (5) strategic (What are the biggest challenges facing the company this year?). Adapt based on the conversation. Your questions should be as well-researched as your answers."
+    },
+    {
+      "front": "Describe a time you volunteered for a challenging assignment.",
+      "easy": "Share a time you took on extra responsibility.",
+      "normal": "STAR: a challenging opportunity, why you volunteered, how you approached it, and the outcome.",
+      "hard": "Describe a stretch assignment you proactively sought. Explain the risk/reward calculation, the skills you developed, and the value you delivered.",
+      "expert": "Share a time you volunteered for something outside your comfort zone that stretched you significantly. Example: you volunteered to lead a project in a domain you had no experience in. Detail your motivation (growth, filling a gap), your preparation (rapid learning, finding mentors), the challenges you faced (imposter syndrome, learning curve), how you overcame them, and the outcome. Explain what this experience taught you about your capabilities and how it shaped your career trajectory."
+    },
+    {
+      "front": "How do you maintain work-life balance?",
+      "easy": "Set boundaries and prioritize.",
+      "normal": "I set clear boundaries, protect personal time, use time management effectively, and communicate my availability.",
+      "hard": "I practice intentional work-life integration: define my most productive hours, protect family/health time, use tools to reduce after-hours work, and check in regularly with myself on burnout risk.",
+      "expert": "Describe a sustainable approach to work-life balance. Acknowledge that balance looks different week to week. Your system: (1) set hard boundaries (no email after 8 PM, protected family dinner), (2) use intentional recovery - exercise, hobbies, sleep, (3) track energy not just time, (4) communicate boundaries clearly with team, (5) periodically audit - are you working to live or living to work? Share a specific practice (e.g., 'I take a 30-minute walk every afternoon without my phone') and how it impacts your work performance positively."
+    },
+    {
+      "front": "Tell me about a time you demonstrated resilience.",
+      "easy": "Share how you bounced back from a setback.",
+      "normal": "STAR: a difficult situation, how you persisted, and the eventual positive outcome.",
+      "hard": "Describe a prolonged challenge (not a single setback). Explain what sustained your motivation, how you adapted your approach over time, and what you learned.",
+      "expert": "Share a story of resilience through a difficult period (a project that failed, a role that didn't work out, a personal challenge). Describe the emotional journey: disappointment, reflection, recommitment. Explain the specific strategies that helped you persevere (e.g., breaking down into small wins, finding a support network, focusing on learning rather than outcomes). Show that resilience isn't about being invulnerable but about bouncing back with new insights. End with what you now know about yourself that you didn't know before."
+    },
+    {
+      "front": "What does integrity mean to you?",
+      "easy": "Doing the right thing even when no one is watching.",
+      "normal": "Integrity means being honest, taking responsibility, keeping commitments, and aligning actions with values.",
+      "hard": "Integrity is consistency between words and actions, especially when it's costly. It means making the right decision for the right reasons.",
+      "expert": "Share a specific example of integrity in action. A time when you had to choose between the easy wrong and the hard right. Example: you discovered a bug in released code that would have cost the company money to fix, but not fixing it would compromise user data. You advocated for the fix even though it meant delaying a feature launch. You took responsibility for the miss, implemented a fix, and added automated checks. This cost time and political capital, but it was the right thing. Explain how you navigated the situation and what it reinforced about your values."
+    },
+    {
+      "front": "Describe a time you had to deliver under pressure.",
+      "easy": "Share a high-pressure work situation.",
+      "normal": "STAR: a high-stakes situation, how you stayed focused, and the outcome.",
+      "hard": "Describe a pressure situation with real consequences. Explain your stress management techniques and decision-making under pressure.",
+      "expert": "Share a specific high-pressure scenario. Example: a production outage affecting customers. Walk through moment-by-moment: (1) initial response - remain calm, assess severity, communicate status, (2) triage - gather the right people, establish command structure, (3) investigation - systematic debugging, ruling out causes, (4) resolution - implement fix, verify, (5) follow-up - post-mortem, preventive measures. Highlight your emotional regulation (deep breaths, focusing on what you can control) and your systematic approach despite pressure."
+    },
+    {
+      "front": "How do you approach risk management?",
+      "easy": "Identify potential issues and plan for them.",
+      "normal": "I identify risks early, assess their impact and likelihood, create mitigation plans, and monitor them throughout the project.",
+      "hard": "I use a risk management framework: identify, assess (probability x impact), prioritize, plan responses (avoid, mitigate, transfer, accept), and monitor with regular reviews.",
+      "expert": "Describe a comprehensive risk management approach. Process: (1) stakeholder interviews to identify risks, (2) probability-impact matrix to prioritize, (3) risk response planning for top 5 risks with clear owners, (4) trigger conditions for each risk, (5) regular risk review as a standing agenda item. Share a specific example where risk management saved a project. Example: you identified a dependency risk early, created a mitigation plan, and when the risk materialized, the team was able to execute the plan without missing the deadline."
+    },
+    {
+      "front": "Tell me about your experience with remote work.",
+      "easy": "I am productive and communicative remotely.",
+      "normal": "I thrive in remote environments through over-communication, async-first documentation, and maintaining structured daily routines.",
+      "hard": "My remote work best practices: (1) dedicated workspace, (2) structured daily schedule with clear start/end, (3) async communication with thorough documentation, (4) proactive video check-ins, (5) intentional social connections.",
+      "expert": "Share specific remote work skills you have developed. Communication: you write clear, structured updates and documentation. Self-management: you maintain focus without supervision through time-blocking and task management. Collaboration: you use async tools effectively and know when to sync. Boundaries: you maintain separation between work and personal life. Share a specific remote collaboration challenge you overcame - e.g., a misunderstanding that happened because of text-only communication and how you solved it by switching to video for complex discussions."
+    },
+    {
+      "front": "What do you do when you disagree with your manager?",
+      "easy": "Respectfully share your perspective.",
+      "normal": "I prepare my reasoning and data, schedule a 1:1, present my view respectfully, and accept the final decision gracefully.",
+      "hard": "My approach: (1) understand their perspective first, (2) frame my disagreement in terms of shared goals, (3) provide data and alternatives, (4) propose a small experiment to test both approaches, (5) commit fully once a decision is made.",
+      "expert": "Share a specific example of disagreeing with a manager. Walk through: (1) initial reaction - listened to understand, didn't push back immediately, (2) preparation - gathered data, considered alternatives, rehearsed framing, (3) conversation - started with curiosity ('Help me understand...'), shared your perspective as a proposal not a challenge, offered a compromise or experiment, (4) outcome - whether they agreed with you or not, you committed fully to the decision. Show that you can disagree respectfully and then execute wholeheartedly."
+    },
+    {
+      "front": "How do you handle interruptions to your work?",
+      "easy": "Manage interruptions and stay focused.",
+      "normal": "I minimize interruptions through focused work sessions, communicate my availability, and have a system to capture and triage interruptions.",
+      "hard": "My interruption management system: (1) time-block deep work (no meetings, no notifications), (2) batch interrupts into response windows, (3) use a capture system ('parking lot') for ideas, (4) triage by urgency, (5) maintain a visible status.",
+      "expert": "Describe a sophisticated interruption management approach. Protection: create 'maker time' blocks (3+ hours) with calendar as 'busy', turn off notifications, use a focus playlist. Capture: keep a scratchpad for interruption items - acknowledge, capture, return to focus. Triage: at the end of each block, process captured items - what needs immediate response, what can wait, what can be delegated. Communication: set expectations with team about response times and availability. Share a metric: 'After implementing this system, my deep work output increased by 40%.'"
+    },
+    {
+      "front": "Describe a time you went the extra mile for a customer or user.",
+      "easy": "Share how you exceeded expectations.",
+      "normal": "STAR: a user need beyond normal scope, how you addressed it, and the positive impact.",
+      "hard": "Describe a time you anticipated a user need before they asked. Explain your customer empathy and the effort you invested to deliver unexpected value.",
+      "expert": "Share a user-centric story that shows deep empathy. Example: you noticed a pattern in support tickets where users were struggling with a feature. Instead of just fixing individual issues, you created a short video tutorial, updated the documentation, and added an in-app tooltip. You then reached out to affected users personally with the resource. Result: support tickets on that topic dropped 80%, and you received personal thank-you notes from users. This shows proactive, empathetic thinking beyond your immediate responsibilities."
+    },
+    {
+      "front": "How do you approach decision-making?",
+      "easy": "Gather information and weigh options.",
+      "normal": "I use a structured process: define the decision, gather data, identify options, evaluate trade-offs, make the call, and review the outcome.",
+      "hard": "My decision-making framework: (1) frame the problem, (2) identify 3+ options, (3) evaluate against weighted criteria (impact, effort, risk, alignment), (4) check for biases, (5) make the call with clear rationale.",
+      "expert": "Describe a nuanced decision-making approach. For high-impact decisions: use a decision matrix with weighted criteria, consult diverse perspectives, check for cognitive biases (confirmation, anchoring, recency), consider opportunity cost, and write down your pre-decision expectations to prevent hindsight bias. For reversible decisions: make them quickly. For irreversible: deliberate more but set a deadline. Share a specific example of a difficult decision where this framework led to a better outcome than intuition alone would have."
+    },
+    {
+      "front": "Tell me about a time you dealt with ambiguity in a project.",
+      "easy": "Share how you clarified an unclear situation.",
+      "normal": "STAR: an ambiguous project, how you brought clarity, and the successful outcome.",
+      "hard": "Describe ambiguity in goals, requirements, or approach. Explain your process of iterative clarification using hypotheses and experiments.",
+      "expert": "Share a project that started with extreme ambiguity (e.g., 'figure out how to improve X'). Detail your approach: (1) defined the problem space broadly, (2) conducted user research to identify real needs, (3) framed hypotheses, (4) prototyped and tested the riskiest assumption first, (5) iterated based on feedback, (6) converged on a clear product direction. Show how you moved from chaos to clarity using a structured but flexible process. Result: delivered something genuinely useful that wouldn't have been discovered with a waterfall approach."
+    },
+    {
+      "front": "What are your career aspirations?",
+      "easy": "Growth and increased responsibility.",
+      "normal": "I want to grow into a role with more responsibility, impact, and leadership, while deepening my expertise in [domain].",
+      "hard": "In 3 years, I aim to be a Subject Matter Expert in [domain] and a mentor to junior team members. In 5 years, I see myself leading technical strategy as a Staff Engineer or Architect.",
+      "expert": "Articulate a specific, believable career trajectory. Short-term (1 year): master the role you're applying for, understand the business deeply, build relationships. Medium-term (2-3 years): become the go-to person in your domain, lead complex initiatives, start mentoring. Long-term (4-5 years): influence technical strategy, architecture decisions, and team culture. Connect this to what the company offers: 'Your track record of promoting from within and the complexity of your technical challenges make this the ideal place for that trajectory.'"
+    },
+    {
+      "front": "Describe a time you turned a no into a yes.",
+      "easy": "Share how you persuaded someone who initially said no.",
+      "normal": "STAR: an initial rejection, how you addressed concerns, and the eventual approval.",
+      "hard": "Describe a situation where you received a 'no' but didn't accept it as final. Explain your persistence strategy and how you built a stronger case.",
+      "expert": "Share a specific example of transforming resistance into support. Situation: a budget holder said no to a project you proposed. Your approach: (1) understood their concerns (they hadn't rejected the idea, they had rejected the proposal), (2) identified the gap between your proposal and their priorities, (3) reframed the proposal to address their concerns, (4) found a small win to demonstrate proof of concept, (5) came back with a revised proposal including risk mitigation and phased approach. Result: they not only approved but became your advocate."
+    },
+    {
+      "front": "How do you help others succeed?",
+      "easy": "Share knowledge and support colleagues.",
+      "normal": "I mentor juniors, share knowledge through documentation and brown bags, give constructive feedback, and celebrate others' wins.",
+      "hard": "I practice 'servant leadership': removing obstacles for teammates, investing in their growth, giving them visibility and credit, and creating psychological safety.",
+      "expert": "Share a specific example of investing in someone's growth. Example: a junior team member was struggling with a skill. Instead of just giving answers, you created a structured learning path, paired with them on progressively complex tasks, gave specific and timely feedback, and advocated for them in performance reviews. 6 months later, they were independently handling complex tasks and mentoring the next new hire. This shows that your success is measured by the success of those around you."
+    },
+    {
+      "front": "Tell me about a time you handled a change in direction.",
+      "easy": "Share how you adapted to a change.",
+      "normal": "STAR: a change in plans or priorities, how you adapted, and the outcome.",
+      "hard": "Describe a significant change (strategy pivot, re-org, technology change). Explain your mindset and how you helped the team navigate the transition.",
+      "expert": "Share a major change management experience. Example: leadership decided to pivot to a new technology stack mid-project. Your response: (1) acknowledged the frustration but framed it positively (this is a growth opportunity), (2) created a migration plan with clear milestones, (3) set up knowledge-sharing sessions to ramp up the team, (4) identified quick wins to build momentum, (5) maintained team morale through transparency about the 'why.' Show your adaptability and your ability to lead others through change."
+    },
+    {
+      "front": "What does accountability mean to you?",
+      "easy": "Taking ownership of your work.",
+      "normal": "Accountability means owning outcomes, not just tasks. Taking responsibility for both successes and failures, and following through on commitments.",
+      "hard": "Accountability is a commitment to deliver and communicate proactively when things go off track. It's not about blame but about ownership and follow-through.",
+      "expert": "Share a specific example of accountability. Example: you made a commitment to deliver a feature by a certain date. When you realized you would miss the deadline, you didn't wait to be asked - you proactively communicated, explained the root cause, presented options, and proposed a revised timeline. You then worked with the team to implement the solution and delivered successfully. This shows the difference between passive responsibility and active ownership. Accountability means being the first to raise your hand when things go wrong."
+    },
+    {
+      "front": "How do you handle a situation where a project's requirements change frequently?",
+      "easy": "Stay flexible and communicate.",
+      "normal": "I maintain flexibility, document changes, and communicate the impact of changes on timeline and scope with stakeholders.",
+      "hard": "My approach: (1) understand why requirements are changing (are we learning or is there a process problem?), (2) implement a change request process, (3) estimate impact of each change, (4) build buffer into estimates, (5) use agile methodology to embrace change.",
+      "expert": "Share a project with changing requirements. Distinguish between helpful iteration (learning more) and harmful churn (poor planning). Your approach: (1) for the helpful kind, embraced it - shorter feedback loops, user testing to validate direction, (2) for harmful churn, implemented a change control process with impact assessment - stakeholders could make any change but had to explicitly accept timeline/cost impact. Result: requirements stabilized because stakeholders now had visibility into the cost of changes. This shows mature project management thinking."
+    },
+    {
+      "front": "Describe a time you had to analyze data to make a decision.",
+      "easy": "Share how data informed your choice.",
+      "normal": "STAR: a data-driven decision, the data sources you used, your analysis, and the outcome.",
+      "hard": "Describe a complex data analysis: multiple sources, cleaning challenges, choosing the right metrics, and avoiding biased interpretation.",
+      "expert": "Share a data-driven decision with nuance. Example: you were choosing between two architectures. You collected data on performance, cost, maintenance overhead, and team capability. You weighted each factor, ran sensitivity analysis, presented findings objectively (including the downsides of your recommended option), and documented the decision rationale. Show that you use data rigorously but also understand its limitations - you didn't let data override intuition entirely, but used it to inform judgment."
+    },
+    {
+      "front": "What does good mentorship look like to you?",
+      "easy": "Patient guidance and knowledge sharing.",
+      "normal": "Good mentorship is creating a safe learning space, providing structured guidance, challenging the mentee to grow, and celebrating their progress.",
+      "hard": "Effective mentorship uses situational leadership: direct when they are new, coach when they are developing, support when they are competent, and delegate when they are expert. It's tailored to the individual.",
+      "expert": "Describe a specific mentorship experience from either side. If you mentored: how you assessed their learning style, what framework you used, how you balanced support with challenge, the moment you saw them become independent. If you were mentored: what made the relationship effective, specific advice that changed your approach, how you now pay it forward. Show you understand that mentorship is not about having all the answers but about asking the right questions and creating conditions for growth."
+    },
+    {
+      "front": "Tell me about a time you managed a conflict between team members.",
+      "easy": "Share how you mediated a disagreement.",
+      "normal": "STAR: a team conflict, how you mediated, and the resolution.",
+      "hard": "Describe a conflict where you facilitated a difficult conversation. Explain your approach: listen to each side separately, identify common ground, facilitate a joint conversation, agree on forward action.",
+      "expert": "Share a detailed conflict mediation example. Situation: two senior team members had a fundamental disagreement about technical approach that was affecting team morale. Your steps: (1) met with each individually to understand their perspective without judgment, (2) identified that they actually agreed on goals but disagreed on means, (3) framed the conversation around shared objectives, (4) proposed an experiment to test both approaches with clear evaluation criteria, (5) facilitated a respectful debate where each felt heard, (6) the team chose a path and both committed to it. Result: not only resolved the conflict but created a better technical outcome."
+    },
+    {
+      "front": "How do you approach your own performance reviews?",
+      "easy": "Reflect on achievements and areas for growth.",
+      "normal": "I prepare thoroughly with specific examples of my contributions, request feedback from colleagues in advance, and come with a clear development plan.",
+      "hard": "I treat performance reviews as a strategic conversation: (1) self-assess against role expectations with evidence, (2) gather 360 feedback in advance, (3) identify patterns in feedback received during the period, (4) come with a proposed development plan, (5) align on priorities for next period.",
+      "expert": "Describe a systematic approach to performance reviews. Preparation: maintain a 'brag document' updated weekly with achievements, feedback, and learnings. Before the review: analyze patterns, identify 2-3 development areas with specific improvement plans, prepare a draft self-assessment. During: drive the conversation by presenting your assessment first, ask specific questions about blind spots, align on priorities for next period. After: create an action plan with specific behaviors and checkpoints. This turns the review from a passive assessment into an active career development tool."
+    },
+    {
+      "front": "Describe a time you had to be very detail-oriented.",
+      "easy": "Share a task that required close attention to detail.",
+      "normal": "STAR: a situation where attention to detail was critical, how you ensured accuracy, and the positive outcome.",
+      "hard": "Describe a high-stakes scenario where a small error would have had major consequences. Explain your quality assurance process.",
+      "expert": "Share a scenario where detail orientation prevented a significant problem. Example: during a code review, you noticed a subtle edge case that would have caused data corruption in production. Walk through your review process: (1) systematic approach - you didn't just scan, you traced through every code path, (2) edge case thinking - you actively looked for what could break, (3) testing - you wrote a test that exposed the bug. Result: caught before deployment, preventing a data integrity issue. Show that your detail orientation comes from systematic processes, not just innate carefulness."
     }
   ]
 }

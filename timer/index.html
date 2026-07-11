@@ -13,7 +13,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,system-ui,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6;overflow-x:hidden;min-height:100vh;-webkit-tap-highlight-color:transparent;padding-top:calc(52px + env(safe-area-inset-top,0));-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body{height:100%;overflow:hidden}body{font-family:-apple-system,system-ui,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6;min-height:100vh;-webkit-tap-highlight-color:transparent;padding-top:calc(52px + env(safe-area-inset-top,0));-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.modal-overlay{position:fixed;inset:0;z-index:200000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(4px)}.modal-overlay.show{display:flex}.modal-box{background:#fff;border-radius:24px;padding:24px 20px;max-width:340px;text-align:center;box-shadow:0 0 60px rgba(99,102,241,.1);border:1px solid #e2e8f0;animation:modalIn .4s cubic-bezier(.4,0,.2,1)}@keyframes modalIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}.modal-box .big-lvl{font-size:56px;font-weight:900;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}.modal-box .big-lvl-title{font-size:20px;font-weight:800;color:#1e293b;margin-top:4px}.modal-box .big-lvl-desc{font-size:12px;color:#64748b;margin-top:6px;line-height:1.5}.modal-box button{margin-top:12px;padding:8px 24px;border:none;border-radius:999px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:.2s}.modal-box button:active{transform:scale(.97)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:#e2e8f0}
 ::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:3px}
@@ -163,9 +164,7 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f8fafc;color:#1e
 <div id="topbar">
 <button class="hamburger" onclick="toggleNav()">☰</button>
 <div class="nav-links" id="navLinks">
-<a href="../">← Back to Portfolio</a>
-<a href="../flashcard/">🃏 Flashcards</a>
-<a href="./" class="active">⏱️ Focus Timer</a>
+<a href="../apps.html">📱 Apps</a>
 </div>
 </div>
 
@@ -224,6 +223,12 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f8fafc;color:#1e
 <div class="flash-overlay" id="flashOverlay"></div>
 <div class="confetti-container" id="confettiContainer"></div>
 <div class="toast" id="toast"></div>
+<div class="modal-overlay" id="lvlModal"><div class="modal-box">
+<div class="big-lvl" id="lvlModalNum">2</div>
+<div class="big-lvl-title" id="lvlModalTitle">Flow Starter</div>
+<div class="big-lvl-desc" id="lvlModalDesc">Keep building your focus!</div>
+<button onclick="closeLvlModal()">Continue</button>
+</div></div>
 
 <script>
 // ── Audio ──
@@ -287,6 +292,14 @@ function getTitle(level){
 
 function xpNeeded(level){return level*50}
 
+function showLevelUp(l){
+  const t=getTitle(l);
+  document.getElementById('lvlModalNum').textContent=l;
+  document.getElementById('lvlModalTitle').textContent=t||'Focus Master';
+  document.getElementById('lvlModalDesc').textContent='You reached '+t+'! Keep building your focus streak.';
+  document.getElementById('lvlModal').classList.add('show')
+}
+function closeLvlModal(){document.getElementById('lvlModal').classList.remove('show')}
 function addXP(amount){
   stats.xp+=amount;
   while(stats.xp>=xpNeeded(stats.level)){
@@ -294,7 +307,7 @@ function addXP(amount){
     stats.level++;
     SND.levelUp();
     spawnConf(40);
-    showToast('🎉 Level Up! You are now Level '+stats.level,'warning');
+    showLevelUp(stats.level);
   }
   updateStatsUI();
   saveStats();
