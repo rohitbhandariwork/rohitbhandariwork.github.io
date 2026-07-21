@@ -14,320 +14,223 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  
   <style>
-/* Brand Type Scale */
 :root {
-  --font-primary: 'Manrope', -apple-system, system-ui, sans-serif;
-  --font-display: 'Manrope', sans-serif;
-  --font-reading: 'Inter', -apple-system, system-ui, sans-serif;
-  --font-editorial: 'Playfair Display', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-reading: 'Inter', -apple-system, sans-serif;
+  --bg: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #86868b;
+  --accent: #667eea;
+  --accent-dark: #4338ca;
+  --accent-light: rgba(102,126,234,.1);
+  --amber: #f59e0b;
+  --amber-dark: #d97706;
+  --border: rgba(0,0,0,.08);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,.12);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-full: 980px;
 }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family:'Manrope',-apple-system,system-ui,sans-serif;
-      background: #faf6f0; color: #1f2f5f; line-height: 1.6;
-    }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font); background: var(--bg-secondary); color: var(--text); line-height: 1.5; }
 
-    #topbar {
-      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000;
-      background: rgba(251,247,240,0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(29,36,51,.08);
-      display: flex; align-items: center; gap: 4px; padding: 0 8px;
-    }
-    .hamburger {
-      display: none; background: none; border: none; cursor: pointer;
-      font-size: 22px; color: #5d6678; padding: 6px 10px; border-radius: 8px; transition: .2s;
-      font-family:'Manrope',-apple-system,system-ui,sans-serif;
-    }
-    .hamburger:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
-    .nav-links a {
-      display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px;
-      border-radius: 999px; font-size: 12px; font-weight: 600;
-      color: #5d6678; text-decoration: none; transition: .2s; white-space: nowrap;
-      font-family:'Manrope',-apple-system,system-ui,sans-serif;
-    }
-    .nav-links a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    .nav-links a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
-    body { padding-top: 52px; }
-    @media (max-width: 768px) {
-      .hamburger { display: block; }
-      .nav-links {
-        display: none; position: fixed; top: 52px; left: 0; right: 0;
-        flex-direction: column; background: rgba(251,247,240,0.98);
-        backdrop-filter: blur(12px); border-bottom: 1px solid rgba(29,36,51,.08);
-        padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 8px 24px rgba(0,0,0,.08);
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
-    }
+/* ── Nav ── */
+.nav { position: fixed; top: 0; left: 0; right: 0; height: 48px; z-index: 10000; background: rgba(255,255,255,.88); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+.nav-brand { font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none; }
+.nav-links { display: flex; gap: 8px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--text-secondary); text-decoration: none; padding: 6px 12px; border-radius: var(--radius-full); transition: all .2s; }
+.nav-links a:hover { color: var(--text); background: rgba(0,0,0,.04); }
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-hamburger svg { width: 20px; height: 20px; fill: var(--text-secondary); }
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; }
+  .nav-links { display: none; position: fixed; top: 48px; left: 0; right: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(20px); flex-direction: column; padding: 8px 16px 16px; gap: 4px; border-bottom: 1px solid var(--border); }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px 16px; font-size: 15px; border-radius: var(--radius); }
+}
+body { padding-top: 48px; }
 
-    .hero {
-      text-align: center; padding: 48px 24px 32px;
-      background: linear-gradient(135deg, #1f2f5f 0%, #2a3f7a 100%);
-      color: #fff;
-    }
-    .hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.5px; }
-    .hero p { font-size: 16px; color: #c8d0e0; margin-top: 8px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .hero .badge {
-      display: inline-block; margin-top: 12px; padding: 6px 16px;
-      border-radius: 999px; font-size: 13px; font-weight: 600;
-      background: rgba(255,255,255,.12); color: #c8d0e0;
-    }
+/* ── Hero ── */
+.hero { text-align: center; padding: 72px 24px 48px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #fff; }
+.hero-icon { width: 64px; height: 64px; background: rgba(255,255,255,.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
+.hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -.02em; margin-bottom: 8px; }
+.hero p { font-size: 16px; color: #94a3b8; max-width: 480px; margin: 0 auto; }
+.hero-badge { display: inline-block; margin-top: 16px; padding: 6px 16px; border-radius: var(--radius-full); font-size: 13px; font-weight: 600; background: rgba(255,255,255,.08); color: #94a3b8; }
 
-    .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+/* ── Container ── */
+.container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
-    .progress-bar-wrap {
-      margin: 20px auto 12px; max-width: 600px;
-      background: #e8e4de; border-radius: 999px; height: 6px; overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%; background: #f59e0b; border-radius: 999px;
-      transition: width .4s ease; width: 0%;
-    }
-    .progress-label {
-      text-align: center; font-size: 13px; color: #5d6678; font-weight: 600;
-      margin-bottom: 4px;
-    }
+/* ── Start Screen ── */
+.start-screen { text-align: center; padding: 64px 20px; }
+.start-icon { width: 72px; height: 72px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; box-shadow: 0 8px 24px rgba(102,126,234,.3); }
+.start-screen h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.start-screen > p { color: var(--text-secondary); font-size: 15px; max-width: 440px; margin: 0 auto; }
+.focus-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 24px 0; }
+.focus-tag { padding: 8px 16px; border-radius: var(--radius-full); font-size: 13px; font-weight: 600; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.start-hint { font-size: 12px; color: var(--text-tertiary); margin-top: -8px; margin-bottom: 24px; }
+.btn-start { padding: 14px 48px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-full); font-family: var(--font); font-size: 16px; font-weight: 700; cursor: pointer; transition: all .2s; box-shadow: 0 4px 12px rgba(102,126,234,.3); }
+.btn-start:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(102,126,234,.4); }
+.btn-start:disabled { background: var(--text-tertiary); cursor: not-allowed; box-shadow: none; transform: none; }
 
-    .chat-box {
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
-      border-radius: 16px; border: 1px solid rgba(29,36,51,.08);
-      padding: 24px; margin: 12px auto 16px; max-height: 460px;
-      overflow-y: auto;
-    }
-    .chat-box::-webkit-scrollbar { width: 4px; }
-    .chat-box::-webkit-scrollbar-thumb { background: #d4d8dd; border-radius: 4px; }
+/* ── Progress ── */
+.progress-section { margin: 24px 0 16px; }
+.progress-label { text-align: center; font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px; }
+.progress-track { background: var(--border); border-radius: var(--radius-full); height: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: var(--radius-full); transition: width .4s ease; width: 0%; }
 
-    .msg { display: flex; gap: 12px; margin-bottom: 20px; animation: fadeIn .3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+/* ── Timer ── */
+.timer-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 0; font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.timer-ring { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--text-secondary); transition: all .3s; }
+.timer-ring.warn { border-color: var(--amber); color: var(--amber-dark); }
+.timer-ring.danger { border-color: #ef4444; color: #ef4444; animation: pulse .5s infinite; }
+@keyframes pulse { 50% { opacity: .5; } }
 
-    .msg-avatar {
-      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; font-weight: 700;
-    }
-    .msg-ai { background: #1f2f5f; color: #fff; }
-    .msg-user { background: #f59e0b; color: #fff; }
+/* ── Chat ── */
+.chat-box { background: var(--bg); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 20px; margin: 16px 0; max-height: 480px; overflow-y: auto; box-shadow: var(--shadow-sm); }
+.chat-box::-webkit-scrollbar { width: 4px; }
+.chat-box::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
 
-    .msg-bubble {
-      background: #fff; padding: 14px 18px; border-radius: 14px;
-      font-size: 14px; line-height: 1.65; color: #1f2f5f;
-      border: 1px solid rgba(29,36,51,.06); flex: 1;
-      box-shadow: 0 1px 4px rgba(0,0,0,.04);
-    }
-    .msg-user .msg-bubble { background: #fef9ef; }
+.msg { display: flex; gap: 12px; margin-bottom: 20px; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    .msg-bubble .area-tag {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      padding: 2px 8px; border-radius: 999px; margin-bottom: 8px;
-    }
-    .area-tag.python { background: #e8f5e9; color: #2e7d32; }
-    .area-tag.concurrency { background: #fff3e0; color: #e65100; }
-    .area-tag.react { background: #e3f2fd; color: #1565c0; }
-    .area-tag.sql { background: #f3e5f5; color: #6a1b9a; }
+.msg-avatar { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.msg-avatar.ai { background: var(--accent); color: #fff; }
+.msg-avatar.user { background: var(--amber); color: #fff; }
 
-    .typing {
-      display: flex; align-items: center; gap: 6px; padding: 8px 0 4px 44px;
-      font-size: 13px; color: #94a3b8;
-    }
-    .typing-dot { width: 6px; height: 6px; background: #94a3b8; border-radius: 50%; animation: bounce 1.4s infinite; }
-    .typing-dot:nth-child(2) { animation-delay: .2s; }
-    .typing-dot:nth-child(3) { animation-delay: .4s; }
-    @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+.msg-bubble { background: var(--bg-secondary); padding: 14px 18px; border-radius: var(--radius); font-size: 14px; line-height: 1.65; color: var(--text); flex: 1; font-family: var(--font-reading); }
+.msg.user-msg .msg-bubble { background: var(--accent-light); }
 
-    .input-area {
-      display: flex; gap: 8px; margin: 0 auto 32px; max-width: 720px; padding: 0 20px;
-    }
-    .input-area textarea {
-      flex: 1; padding: 12px 16px; border: 1px solid #d4d8dd;
-      border-radius: 12px; font-family:'Manrope',-apple-system,system-ui,sans-serif; font-size: 14px;
-      resize: none; height: 52px; background: #fff; color: #1f2f5f;
-      transition: border .2s, box-shadow .2s;
-    }
-    .input-area textarea:focus {
-      outline: none; border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.15);
-    }
-    .input-area button {
-      width: 52px; height: 52px; border: none; border-radius: 12px;
-      background: #f59e0b; color: #fff; font-size: 20px;
-      cursor: pointer; transition: background .2s; flex-shrink: 0;
-    }
-    .input-area button:hover { background: #d97706; }
-    .input-area button:disabled { background: #94a3b8; cursor: not-allowed; }
+.area-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full); margin-bottom: 8px; }
+.area-tag.python { background: #dcfce7; color: #166534; }
+.area-tag.concurrency { background: #fed7aa; color: #9a3412; }
+.area-tag.react { background: #dbeafe; color: #1e40af; }
+.area-tag.sql { background: #f3e8ff; color: #7e22ce; }
 
-    .start-screen {
-      text-align: center; padding: 60px 20px;
-    }
-    .start-screen .icon {
-      width: 72px; height: 72px; border-radius: 20px;
-      background: linear-gradient(135deg, #1f2f5f, #2a3f7a);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px; font-size: 36px;
-    }
-    .start-screen h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-    .start-screen p { color: #5d6678; font-size: 14px; max-width: 480px; margin: 0 auto 8px; }
-    .start-screen .focus-list {
-      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 16px 0 24px;
-    }
-    .start-screen .focus-list span {
-      padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
-      background: #e8e4de; color: #1f2f5f;
-    }
-    .btn-start {
-      padding: 14px 48px; background: #f59e0b; color: #fff; border: none;
-      border-radius: 999px; font-family:'Manrope',-apple-system,system-ui,sans-serif;
-      font-size: 16px; font-weight: 700; cursor: pointer; transition: background .2s;
-    }
-    .btn-start:hover { background: #d97706; }
-    .btn-start:disabled { background: #94a3b8; cursor: not-allowed; }
+.eval-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.eval-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; }
+.eval-badge.good { background: #dcfce7; color: #166534; }
+.eval-badge.ok { background: #fed7aa; color: #9a3412; }
+.eval-badge.needs-work { background: #fee2e2; color: #991b1b; }
+.eval-text { font-size: 13px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+.eval-tip { font-size: 12px; color: var(--amber-dark); margin-top: 4px; }
 
-    .eval-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .eval-badge.good { background: #e8f5e9; color: #2e7d32; }
-    .eval-badge.ok { background: #fff3e0; color: #e65100; }
-    .eval-badge.needs-work { background: #ffebee; color: #c62828; }
+/* ── Typing ── */
+.typing { display: flex; align-items: center; gap: 8px; padding: 8px 0 4px 44px; font-size: 13px; color: var(--text-tertiary); }
+.typing-dot { width: 6px; height: 6px; background: var(--text-tertiary); border-radius: 50%; animation: bounce 1.4s infinite; }
+.typing-dot:nth-child(2) { animation-delay: .2s; }
+.typing-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 
-    .result-card {
-      display: none; background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
-      border-radius: 16px; border: 1px solid rgba(29,36,51,.08);
-      padding: 32px; margin: 24px auto 32px; max-width: 640px;
-    }
-    .result-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-    .result-card .score-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;
-    }
-    .result-card .score-item {
-      background: #fff; padding: 14px; border-radius: 12px;
-      border: 1px solid rgba(29,36,51,.06);
-    }
-    .result-card .score-item .label { font-size: 12px; color: #94a3b8; font-weight: 600; }
-    .result-card .score-item .value { font-size: 24px; font-weight: 800; margin-top: 2px; }
-    .result-card .summary-text {
-      font-size: 14px; line-height: 1.7; color: #5d6678; margin: 16px 0;
-      white-space: pre-wrap;
-    }
-    .btn-secondary {
-      display: inline-block; padding: 10px 24px;
-      background: #1f2f5f; color: #fff; border: none; border-radius: 999px;
-      font-family:'Manrope',-apple-system,system-ui,sans-serif; font-size: 14px; font-weight: 700;
-      cursor: pointer; text-decoration: none; transition: background .2s;
-    }
-    .btn-secondary:hover { background: #2a3f7a; }
+/* ── Input ── */
+.input-area { display: flex; gap: 8px; margin: 0 0 32px; }
+.input-area textarea { flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font); font-size: 14px; resize: none; height: 48px; background: var(--bg); color: var(--text); transition: border .2s, box-shadow .2s; }
+.input-area textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(102,126,234,.12); }
+.input-area textarea::placeholder { color: var(--text-tertiary); }
+.input-area button { width: 48px; height: 48px; border: none; border-radius: var(--radius); background: var(--accent); color: #fff; font-size: 18px; cursor: pointer; transition: background .2s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.input-area button:hover { background: var(--accent-dark); }
+.input-area button:disabled { background: var(--text-tertiary); cursor: not-allowed; }
 
-    .spinner {
-      display: inline-block; width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
-      border-radius: 50%; animation: spin .6s linear infinite;
-      vertical-align: middle; margin-right: 6px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+/* ── Results ── */
+.result-card { display: none; background: var(--bg); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 32px; margin: 24px 0 32px; box-shadow: var(--shadow-md); }
+.result-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.result-card .subtitle { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+.score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.score-item { background: var(--bg-secondary); padding: 16px; border-radius: var(--radius); }
+.score-item .label { font-size: 12px; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
+.score-item .value { font-size: 24px; font-weight: 800; margin-top: 4px; }
+.summary-text { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; white-space: pre-wrap; font-family: var(--font-reading); }
+.btn-restart { padding: 12px 28px; background: var(--text); color: #fff; border: none; border-radius: var(--radius-full); font-family: var(--font); font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .2s; }
+.btn-restart:hover { opacity: .85; }
 
-        .timer-row {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      margin: -8px 0 8px; font-size: 13px; font-weight: 600;
-    }
-    .timer-ring {
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 3px solid #d4d8dd; display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: #5d6678; transition: border-color .3s;
-    }
-    .timer-ring.warn { border-color: #f59e0b; color: #e65100; }
-    .timer-ring.danger { border-color: #dc2626; color: #dc2626; animation: pulse .5s infinite; }
-    @keyframes pulse { 50% { opacity: .5; } }
-    .timer-text { color: #94a3b8; }
-    .timer-text.warn { color: #e65100; }
-    .timer-text.danger { color: #dc2626; }
+/* ── Toast ── */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100000; padding: 14px 28px; border-radius: var(--radius-full); font-weight: 600; font-size: 14px; display: none; box-shadow: var(--shadow-lg); }
+.toast.show { display: block; }
+.toast.error { background: #ef4444; color: #fff; }
 
-    .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      z-index: 100000; padding: 14px 24px; border-radius: 999px;
-      font-weight: 600; font-size: 14px; display: none;
-      box-shadow: 0 4px 16px rgba(0,0,0,.15);
-    }
-    .toast.error { background: #991b1b; color: #fff; display: block; }
-
-    @media (max-width: 640px) {
-      .hero h1 { font-size: 26px; }
-      .hero { padding: 32px 16px 24px; }
-      .chat-box { padding: 16px; max-height: 360px; }
-      .result-card .score-grid { grid-template-columns: 1fr; }
-    }
-  
-    .nav-dropdown{position:relative}
-    .nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:6px;min-width:140px;z-index:10001}
-    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
-    .nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap}
+/* ── Spinner ── */
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks">
-<a href="../portfolio/">💼 Portfolio</a>
-<div class="nav-dropdown" onclick="this.classList.toggle('open')">
-<a href="javascript:void(0)">📱 Applications ▾</a>
-<div class="nav-dropdown-menu">
-<a href="../applications/4-7.html">👶 Ages 4–7</a>
-<a href="../applications/8-11.html">🧒 Ages 8–11</a>
-<a href="../applications/12-15.html">🧑 Ages 12–15</a>
-<a href="../applications/15-17.html">🎓 Ages 15–17</a>
-<a href="../applications/18+.html">💼 Ages 18+</a>
-</div></div>
-<a href="../news/">📰 News</a>
-<a href="../portfolio/#contact">📞 Contact</a>
-</div>
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a href="../" class="nav-brand">RBPN</a>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="../portfolio/">Portfolio</a>
+    <a href="../applications/18+.html">Apps</a>
+    <a href="../news/">News</a>
+    <a href="../portfolio/#contact">Contact</a>
+  </div>
+</nav>
 
+<!-- ── Hero ── -->
 <section class="hero">
-  <h1>🎙️ AI Interview</h1>
-  <p>A conversational technical interview with our AI recruiter. Covers the areas that matter most for the role.</p>
-  <span class="badge">4 focus areas • no time limit</span>
+  <div class="hero-icon">🎙️</div>
+  <h1>AI Interview</h1>
+  <p>A conversational technical interview with our AI recruiter. Real questions, real-time feedback.</p>
+  <span class="hero-badge">4 focus areas · no time limit</span>
 </section>
 
+<!-- ── Content ── -->
 <div class="container">
+
+  <!-- Start Screen -->
   <div id="startScreen" class="start-screen">
-    <div class="icon">🤖</div>
+    <div class="start-icon">🤖</div>
     <h2>Ready for your interview?</h2>
-    <p>You'll answer ~20 questions across 4 technical areas. The AI recruiter will guide you through each one with real-time feedback.</p>
-    <div class="focus-list">
-      <span>🐍 Python &amp; FastAPI</span>
-      <span>⚡ Concurrency &amp; Optimization</span>
-      <span>⚛️ React</span>
-      <span>🗄️ SQL</span>
+    <p>You'll answer ~20 questions across 4 technical areas. The AI recruiter will guide you through each one.</p>
+    <div class="focus-tags">
+      <span class="focus-tag">🐍 Python & FastAPI</span>
+      <span class="focus-tag">⚡ Concurrency</span>
+      <span class="focus-tag">⚛️ React</span>
+      <span class="focus-tag">🗄️ SQL</span>
     </div>
-    <p style="font-size:12px;color:#94a3b8;margin-top:-8px;">Find a quiet spot and take your time. Each answer is evaluated as you go.</p>
+    <p class="start-hint">Find a quiet spot. Each answer is evaluated as you go.</p>
     <button class="btn-start" id="startBtn" onclick="startInterview()">Start Interview</button>
   </div>
 
+  <!-- Interview View -->
   <div id="interviewView" style="display:none;">
-    <div class="progress-label" id="progressLabel">Question 0 of 0</div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progressFill"></div>
+    <div class="progress-section">
+      <div class="progress-label" id="progressLabel">Question 0 of 0</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
     </div>
     <div class="timer-row" id="timerRow">
       <div class="timer-ring" id="timerRing">120</div>
-      <span class="timer-text" id="timerText">2:00 remaining</span>
+      <span id="timerText">2:00 remaining</span>
     </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="input-area" id="inputArea">
       <textarea id="answerInput" rows="1" placeholder="Type your answer..." disabled></textarea>
-      <button id="sendBtn" disabled>➤</button>
+      <button id="sendBtn" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
     </div>
   </div>
 
+  <!-- Results -->
   <div class="result-card" id="resultCard">
-    <h3>📋 Interview Complete</h3>
-    <p style="color:#64748b;font-size:14px;" id="resultSub">Here's how you performed.</p>
+    <h3>Interview Complete</h3>
+    <p class="subtitle" id="resultSub">Here's how you performed.</p>
     <div class="score-grid" id="scoreGrid"></div>
     <div class="summary-text" id="summaryText"></div>
-    <button class="btn-secondary" onclick="location.reload()">Take Another Interview</button>
+    <button class="btn-restart" onclick="location.reload()">Take Another Interview</button>
   </div>
 </div>
 
@@ -335,19 +238,13 @@
 
 <script>
 const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
-let sessionId = null;
-let currentIdx = 0;
-let totalQ = 0;
-let isProcessing = false;
-let autoScrolling = false;
-let timerInterval = null;
-let timeLeft = 0;
-const TIME_PER_QUESTION = 120; // seconds
+let sessionId = null, currentIdx = 0, totalQ = 0, isProcessing = false, autoScrolling = false;
+let timerInterval = null, timeLeft = 0;
+const TIME_PER_QUESTION = 120;
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast error';
+  t.textContent = msg; t.className = 'toast show error';
   setTimeout(() => { t.className = 'toast'; }, 4000);
 }
 
@@ -365,20 +262,17 @@ function scrollChat() {
   const box = document.getElementById('chatBox');
   if (box && !autoScrolling) {
     autoScrolling = true;
-    requestAnimationFrame(() => {
-      box.scrollTop = box.scrollHeight;
-      autoScrolling = false;
-    });
+    requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; autoScrolling = false; });
   }
 }
 
 function addMessage(role, text, extra) {
   const box = document.getElementById('chatBox');
   const div = document.createElement('div');
-  div.className = 'msg';
+  div.className = 'msg' + (role === 'user' ? ' user-msg' : '');
 
   const avatar = document.createElement('div');
-  avatar.className = 'msg-avatar msg-' + role;
+  avatar.className = 'msg-avatar ' + role;
   avatar.textContent = role === 'ai' ? 'AI' : 'U';
   div.appendChild(avatar);
 
@@ -398,19 +292,19 @@ function addMessage(role, text, extra) {
 
   if (extra && extra.evaluation) {
     const evalDiv = document.createElement('div');
-    evalDiv.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid rgba(29,36,51,.06);font-size:13px;color:#64748b;';
+    evalDiv.className = 'eval-section';
     const score = extra.score || 0;
     const badge = document.createElement('span');
     badge.className = 'eval-badge ' + (score >= 8 ? 'good' : score >= 5 ? 'ok' : 'needs-work');
     badge.textContent = 'Score: ' + score + '/10';
     evalDiv.appendChild(badge);
     const evP = document.createElement('p');
-    evP.style.cssText = 'margin-top:6px;';
+    evP.className = 'eval-text';
     evP.textContent = extra.evaluation;
     evalDiv.appendChild(evP);
     if (extra.tip) {
       const tipP = document.createElement('p');
-      tipP.style.cssText = 'margin-top:4px;font-size:12px;color:#e65100;';
+      tipP.className = 'eval-tip';
       tipP.textContent = '💡 ' + extra.tip;
       evalDiv.appendChild(tipP);
     }
@@ -425,113 +319,64 @@ function addMessage(role, text, extra) {
 function showTyping() {
   const box = document.getElementById('chatBox');
   const div = document.createElement('div');
-  div.className = 'typing';
-  div.id = 'typingIndicator';
-  for (let i = 0; i < 3; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'typing-dot';
-    div.appendChild(dot);
-  }
+  div.className = 'typing'; div.id = 'typingIndicator';
+  for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'typing-dot'; div.appendChild(dot); }
   const label = document.createElement('span');
-  label.textContent = 'AI recruiter is thinking...';
-  label.style.cssText = 'font-size:13px;color:#94a3b8;margin-left:4px;';
+  label.textContent = 'AI recruiter is thinking...'; label.style.marginLeft = '4px';
   div.appendChild(label);
   box.appendChild(div);
   scrollChat();
 }
 
-function hideTyping() {
-  const el = document.getElementById('typingIndicator');
-  if (el) el.remove();
-}
+function hideTyping() { const el = document.getElementById('typingIndicator'); if (el) el.remove(); }
 
 async function startInterview() {
   const btn = document.getElementById('startBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Starting...';
-
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Starting...';
   try {
     const resp = await fetch(API_BASE + '/interview/start', { method: 'POST' });
     if (!resp.ok) throw new Error('Server error: ' + resp.status);
     const data = await resp.json();
-
-    sessionId = data.session_id;
-    currentIdx = 0;
-    totalQ = data.total;
-
+    sessionId = data.session_id; currentIdx = 0; totalQ = data.total;
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('interviewView').style.display = 'block';
     document.getElementById('inputArea').style.display = 'flex';
-
     updateProgress(0, totalQ);
     addMessage('ai', data.question, { area: data.area });
-
     enableInput(true);
-  } catch (err) {
-    btn.disabled = false;
-    btn.innerHTML = 'Start Interview';
-    showToast('Failed: ' + err.message);
-  }
+  } catch (err) { btn.disabled = false; btn.textContent = 'Start Interview'; showToast('Failed: ' + err.message); }
 }
 
 function updateProgress(idx, total) {
   document.getElementById('progressLabel').textContent = 'Question ' + (idx + 1) + ' of ' + total;
-  const pct = total > 0 ? ((idx) / total * 100) : 0;
-  document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
+  document.getElementById('progressFill').style.width = Math.min((idx / total * 100), 100) + '%';
 }
 
-function stopTimer() {
-  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-}
-
+function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
 function startTimer() {
-  stopTimer();
-  timeLeft = TIME_PER_QUESTION;
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerDisplay();
-    if (timeLeft <= 0) {
-      stopTimer();
-      autoSubmitOnTimeout();
-    }
-  }, 1000);
+  stopTimer(); timeLeft = TIME_PER_QUESTION; updateTimerDisplay();
+  timerInterval = setInterval(() => { timeLeft--; updateTimerDisplay(); if (timeLeft <= 0) { stopTimer(); autoSubmitOnTimeout(); } }, 1000);
 }
-
 function updateTimerDisplay() {
-  const ring = document.getElementById('timerRing');
-  const text = document.getElementById('timerText');
-  const m = Math.floor(timeLeft / 60);
-  const s = timeLeft % 60;
-  ring.textContent = timeLeft;
-  text.textContent = m + ':' + (s < 10 ? '0' : '') + s + ' remaining';
-  ring.className = 'timer-ring';
-  text.className = 'timer-text';
-  if (timeLeft <= 15) { ring.classList.add('danger'); text.classList.add('danger'); }
-  else if (timeLeft <= 30) { ring.classList.add('warn'); text.classList.add('warn'); }
+  const ring = document.getElementById('timerRing'), text = document.getElementById('timerText');
+  const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+  ring.textContent = timeLeft; text.textContent = m + ':' + (s < 10 ? '0' : '') + s + ' remaining';
+  ring.className = 'timer-ring'; text.style.color = '';
+  if (timeLeft <= 15) { ring.classList.add('danger'); text.style.color = '#ef4444'; }
+  else if (timeLeft <= 30) { ring.classList.add('warn'); text.style.color = '#d97706'; }
 }
 
 function autoSubmitOnTimeout() {
   if (isProcessing) return;
   const input = document.getElementById('answerInput');
-  if (input.value.trim()) {
-    submitAnswer();
-  } else {
-    // Force submit with placeholder
-    input.value = '(no answer)';
-    submitAnswer();
-  }
+  if (input.value.trim()) submitAnswer();
+  else { input.value = '(no answer)'; submitAnswer(); }
 }
 
 function enableInput(enabled) {
   document.getElementById('answerInput').disabled = !enabled;
   document.getElementById('sendBtn').disabled = !enabled;
-  if (enabled) {
-    document.getElementById('answerInput').focus();
-    startTimer();
-  } else {
-    stopTimer();
-  }
+  if (enabled) { document.getElementById('answerInput').focus(); startTimer(); } else stopTimer();
 }
 
 async function submitAnswer() {
@@ -539,97 +384,52 @@ async function submitAnswer() {
   const input = document.getElementById('answerInput');
   const answer = input.value.trim();
   if (!answer) return;
-
-  isProcessing = true;
-  stopTimer();
+  isProcessing = true; stopTimer();
   document.getElementById('answerInput').disabled = true;
   document.getElementById('sendBtn').disabled = true;
-
-  addMessage('user', answer);
-  input.value = '';
-  showTyping();
-
+  addMessage('user', answer); input.value = ''; showTyping();
   try {
-    const resp = await fetch(API_BASE + '/interview/answer', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId, answer }),
-    });
+    const resp = await fetch(API_BASE + '/interview/answer', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session_id: sessionId, answer }) });
     if (!resp.ok) throw new Error('Server error: ' + resp.status);
-    const data = await resp.json();
-
-    hideTyping();
-
+    const data = await resp.json(); hideTyping();
     if (data.status === 'completed') {
-      addMessage('ai', 'Thank you! That was the final question. Let me generate your summary...');
+      addMessage('ai', 'Thank you! That was the final question. Generating your summary...');
       showTyping();
-
-      // Fetch the final summary
       const stateResp = await fetch(API_BASE + '/interview/' + sessionId);
-      const state = await stateResp.json();
-      hideTyping();
-
+      const state = await stateResp.json(); hideTyping();
       document.getElementById('interviewView').style.display = 'none';
       document.getElementById('inputArea').style.display = 'none';
-      showResults(state);
-      return;
+      showResults(state); return;
     }
-
     addMessage('ai', data.question, { area: data.area, evaluation: data.evaluation, score: data.score, tip: data.tip });
-    currentIdx = data.index;
-    updateProgress(currentIdx, data.total);
-    isProcessing = false;
-    enableInput(true);
-    return;
-  } catch (err) {
-    hideTyping();
-    showToast('Failed: ' + err.message);
-  }
-  isProcessing = false;
+    currentIdx = data.index; updateProgress(currentIdx, data.total);
+    isProcessing = false; enableInput(true);
+  } catch (err) { hideTyping(); showToast('Failed: ' + err.message); isProcessing = false; }
 }
 
 function showResults(state) {
-  const card = document.getElementById('resultCard');
-  card.style.display = 'block';
-
-  // Area scores
+  const card = document.getElementById('resultCard'); card.style.display = 'block';
   const answers = state.answers || [];
   const areaScores = {};
-  for (const a of answers) {
-    if (!areaScores[a.area]) areaScores[a.area] = [];
-    areaScores[a.area].push(a.score || 0);
-  }
-
-  const grid = document.getElementById('scoreGrid');
-  grid.innerHTML = '';
+  for (const a of answers) { if (!areaScores[a.area]) areaScores[a.area] = []; areaScores[a.area].push(a.score || 0); }
+  const grid = document.getElementById('scoreGrid'); grid.innerHTML = '';
   for (const [area, scores] of Object.entries(areaScores)) {
     const avg = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
-    const div = document.createElement('div');
-    div.className = 'score-item';
-    div.innerHTML = '<div class="label">' + area + '</div><div class="value" style="color:' + (parseFloat(avg) >= 7 ? '#2e7d32' : parseFloat(avg) >= 5 ? '#e65100' : '#c62828') + '">' + avg + '/10</div>';
+    const div = document.createElement('div'); div.className = 'score-item';
+    div.innerHTML = '<div class="label">' + area + '</div><div class="value" style="color:' + (parseFloat(avg) >= 7 ? '#166534' : parseFloat(avg) >= 5 ? '#9a3412' : '#991b1b') + '">' + avg + '/10</div>';
     grid.appendChild(div);
   }
-
   const overall = answers.reduce((a, b) => a + (b.score || 0), 0) / (answers.length || 1);
-  document.getElementById('resultSub').textContent = 'Overall score: ' + overall.toFixed(1) + '/10 — ' + (overall >= 8 ? 'Strong performance 🎉' : overall >= 6 ? 'Solid showing 👍' : overall >= 4 ? 'Room for growth 💪' : 'Needs improvement 📚');
-
-  const summary = state.summary || 'Your interview results have been recorded.';
-  document.getElementById('summaryText').textContent = summary;
-
-  document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('resultSub').textContent = 'Overall: ' + overall.toFixed(1) + '/10 — ' + (overall >= 8 ? 'Strong performance' : overall >= 6 ? 'Solid showing' : overall >= 4 ? 'Room for growth' : 'Needs improvement');
+  document.getElementById('summaryText').textContent = state.summary || 'Your interview results have been recorded.';
+  card.scrollIntoView({ behavior: 'smooth' });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  const input = document.getElementById('answerInput');
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      submitAnswer();
-    }
-  });
+  document.getElementById('answerInput').addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitAnswer(); } });
   document.getElementById('sendBtn').addEventListener('click', submitAnswer);
 });
-function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 </script>
 </body>
 </html>
