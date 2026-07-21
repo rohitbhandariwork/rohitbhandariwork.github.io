@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
 
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -49,6 +49,15 @@
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
   <style>
+/* Brand Type Scale */
+:root {
+  --font-primary: 'Manrope', -apple-system, system-ui, sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-reading: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-editorial: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
     #topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
     .hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s;font-family:'Manrope',sans-serif}
     .hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
@@ -491,7 +500,7 @@
 #nl-modal h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#1d2433;margin-bottom:6px}
 #nl-modal p.sub{color:#5d6678;font-size:14px;line-height:1.6;margin-bottom:26px;font-family:'Manrope',sans-serif}
 #nl-form{display:flex;flex-direction:column;gap:12px}
-#nl-form input{font-family:'Manrope',sans-serif;background:#f5f2ed;border:1px solid rgba(29,36,51,.1);border-radius:999px;padding:14px 20px;font-size:14px;color:#1d2433;outline:none;transition:border .2s}
+#nl-form input{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#f5f2ed;border:1px solid rgba(29,36,51,.1);border-radius:999px;padding:14px 20px;font-size:14px;color:#1d2433;outline:none;transition:border .2s}
 #nl-form input:focus{border-color:#db6d3f}
 #nl-form input::placeholder{color:#9aa1ae}
 #nl-form button{font-family:'Syne',sans-serif;background:#db6d3f;border:none;border-radius:999px;padding:14px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .2s}

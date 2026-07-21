@@ -14,15 +14,24 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7055279960383042" crossorigin="anonymous"></script>
 
   
   <style>
+/* Brand Type Scale */
+:root {
+  --font-primary: 'Manrope', -apple-system, system-ui, sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-reading: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-editorial: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Manrope', -apple-system, system-ui, sans-serif;
+      font-family:'Manrope',-apple-system,system-ui,sans-serif;
       background: #faf6f0; color: #1f2f5f; line-height: 1.6;
     }
 
@@ -36,7 +45,7 @@
     .hamburger {
       display: none; background: none; border: none; cursor: pointer;
       font-size: 22px; color: #5d6678; padding: 6px 10px; border-radius: 8px; transition: .2s;
-      font-family: 'Manrope', sans-serif;
+      font-family:'Manrope',-apple-system,system-ui,sans-serif;
     }
     .hamburger:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
     .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
@@ -44,7 +53,7 @@
       display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px;
       border-radius: 999px; font-size: 12px; font-weight: 600;
       color: #5d6678; text-decoration: none; transition: .2s; white-space: nowrap;
-      font-family: 'Manrope', sans-serif;
+      font-family:'Manrope',-apple-system,system-ui,sans-serif;
     }
     .nav-links a:hover { color: #1f2f5f; background: rgba(31,47,95,.06); }
     .nav-links a.active { color: #1f2f5f; background: rgba(31,47,95,.06); }
@@ -133,7 +142,7 @@
     .btn-buy {
       display: inline-block; width: 100%; padding: 10px 20px;
       background: #1f2f5f; color: #fff; border: none; border-radius: 999px;
-      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+      font-family:'Manrope',-apple-system,system-ui,sans-serif; font-size: 14px; font-weight: 700;
       cursor: pointer; transition: background .2s; margin-top: 12px;
     }
     .btn-buy:hover { background: #2a3f7a; }
@@ -165,7 +174,7 @@
     .form-group label { display: block; font-size: 13px; font-weight: 600; color: #1f2f5f; margin-bottom: 5px; }
     .form-group input, .form-group textarea {
       width: 100%; padding: 10px 14px; border: 1px solid #d4d8dd;
-      border-radius: 8px; font-family: 'Manrope', sans-serif; font-size: 14px;
+      border-radius: 8px; font-family:'Manrope',-apple-system,system-ui,sans-serif; font-size: 14px;
       background: #fff; color: #1f2f5f; transition: border .2s;
     }
     .form-group input:focus, .form-group textarea:focus {
@@ -176,7 +185,7 @@
 
     .btn-submit {
       width: 100%; padding: 12px 24px; background: #f59e0b; color: #fff;
-      border: none; border-radius: 999px; font-family: 'Manrope', sans-serif;
+      border: none; border-radius: 999px; font-family:'Manrope',-apple-system,system-ui,sans-serif;
       font-size: 15px; font-weight: 700; cursor: pointer; transition: background .2s;
     }
     .btn-submit:hover { background: #d97706; }
