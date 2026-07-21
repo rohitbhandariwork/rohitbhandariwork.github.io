@@ -1,104 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ages 15–17 | Future Leaders</title>
-<link rel="canonical" href="https://rohitbhandariwork.github.io/applications/15-17.html">
-<meta property="og:title" content="Ages 15–17 | Future Leaders">
-<meta property="og:url" content="https://rohitbhandariwork.github.io/applications/15-17.html">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="../assets/img/favicon.png">
-<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Lab — Ages 15–17 | Education, Reimagined</title>
+  <meta name="description" content="Applied AI/ML. Linear algebra, probability, real ML projects, competitions, and hackathons.">
+  <link rel="canonical" href="https://rohitbhandariwork.github.io/applications/15-17.html">
+  <meta property="og:title" content="AI Lab — Ages 15–17">
+  <meta property="og:description" content="Applied AI/ML.">
+  <meta property="og:url" content="https://rohitbhandariwork.github.io/applications/15-17.html">
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: 'Manrope', -apple-system, sans-serif;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --bg: #fff;
+      --bg-alt: #f5f3ff;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --border: #ddd6fe;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: #f8fafc; color: var(--text); padding-top: 52px; }
 
-#topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
-.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s;font-family:'Manrope',sans-serif}
-.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
-.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap;font-family:'Manrope',sans-serif}
-.nav-links a:hover,.nav-links a.active{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-dropdown{position:relative}
-.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);padding:6px;min-width:140px;z-index:10001}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
-.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;color:#334155;transition:.15s}
-.nav-dropdown-menu a:hover{background:#f1f5f9;color:#1e293b}
-@media(min-width:992px){#topbar{padding-right:44px}}
+    #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; font-family: var(--font); }
+    .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
+    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; font-family: var(--font); }
+    .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,.1); padding: 6px; min-width: 140px; z-index: 10001; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { display: block; padding: 8px 14px; border-radius: 8px; font-size: 13px; white-space: nowrap; color: #334155; transition: .15s; }
+    .nav-dropdown-menu a:hover { background: #f1f5f9; color: #1e293b; }
+    @media (min-width: 992px) { #topbar { padding-right: 44px; } }
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 10px 15px rgba(0,0,0,.1); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
+      .nav-dropdown-menu { position: static; box-shadow: none; background: #f1f5f9; border-radius: 10px; margin-top: 4px; display: none; }
+      .nav-dropdown.open .nav-dropdown-menu { display: block; }
+      .nav-dropdown-menu a { padding: 10px 14px; font-size: 14px; }
+    }
 
-@media(max-width:768px){.hamburger{display:block}.nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 10px 15px rgba(0,0,0,.1)}.nav-links.open{display:flex}.nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}.nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}.nav-dropdown.open .nav-dropdown-menu{display:block}.nav-dropdown-menu a{padding:10px 14px;font-size:14px}}
+    .main { max-width: 640px; margin: 0 auto; padding: 48px 20px 60px; }
+    .hero-card { background: var(--bg); border: 2px solid var(--border); border-radius: 24px; padding: 48px 28px; margin-bottom: 28px; text-align: center; }
+    .hero-emoji { font-size: 80px; margin-bottom: 20px; }
+    .stage-badge { display: inline-block; padding: 6px 16px; background: var(--bg-alt); border-radius: 999px; font-size: 12px; font-weight: 700; color: #7c3aed; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12px; }
+    .hero-card h1 { font-size: 36px; font-weight: 800; color: var(--text); letter-spacing: -.02em; }
+    .hero-card .course-name { font-size: 18px; font-weight: 700; color: #7c3aed; margin-top: 4px; }
+    .hero-card p { font-size: 16px; color: var(--text-secondary); margin-top: 12px; line-height: 1.6; }
 
-/* Brand Type Scale */
-:root {
-  --font-primary: 'Manrope', -apple-system, system-ui, sans-serif;
-  --font-display: 'Manrope', sans-serif;
-  --font-reading: 'Inter', -apple-system, system-ui, sans-serif;
-  --font-editorial: 'Playfair Display', serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
+    .section { background: var(--bg); border-radius: 20px; padding: 28px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
+    .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+    .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .focus-item { background: var(--bg-alt); border-radius: 14px; padding: 16px 12px; text-align: center; }
+    .focus-item .icon { font-size: 28px; margin-bottom: 8px; }
+    .focus-item .label { font-size: 13px; font-weight: 600; color: var(--text); }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh;;}-webkit-font-smoothing:antialiased}
+    .activities-list { display: flex; flex-direction: column; gap: 10px; }
+    .activity { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border-radius: 12px; }
+    .activity .icon { font-size: 24px; flex-shrink: 0; }
+    .activity .name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .activity .desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
 
-
-.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
-
-
-
-
-
-
-
-@media(max-width:768px){
-  
-  
-  .nav-links.open{display:flex}
-  
-  
-  .nav-dropdown.open 
-  
-}
-.main{max-width:600px;margin:0 auto;padding:48px 16px 40px;text-align:center}
-.hero-card{background:#fff;border:2px solid #ddd6fe;border-radius:24px;padding:40px 24px;margin-bottom:24px}
-.hero-emoji{font-size:72px;margin-bottom:16px}
-.hero h1{font-family:'Manrope',sans-serif;font-size:32px;font-weight:800;color:#0f172a}
-.hero p{font-size:15px;color:#64748b;margin-top:10px;line-height:1.6}
-.cta-btn{display:inline-block;margin-top:20px;padding:12px 28px;background:linear-gradient(135deg, #8b5cf6, #06b6d4);color:#fff;text-decoration:none;border-radius:999px;font-size:14px;font-weight:700;transition:.2s}
-.cta-btn:active{transform:scale(.96)}
-.footer{margin-top:40px}
-.footer a{color:#8b5cf6;text-decoration:none;font-size:12px;font-weight:600;padding:8px 16px;border-radius:999px;transition:.2s}
-.footer a:hover{background:#f5f3ff}
-</style>
+    .cta-btn { display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, var(--purple), var(--cyan)); color: #fff; text-decoration: none; border-radius: 999px; font-size: 15px; font-weight: 700; transition: .2s; margin-top: 8px; }
+    .cta-btn:active { transform: scale(.96); }
+  </style>
 </head>
 <body>
+
 <div id="topbar">
   <button class="hamburger" onclick="toggleNav()">☰</button>
   <div class="nav-links" id="navLinks">
-    <a href="../portfolio/">💼 Portfolio</a>
+    <a href="../portfolio/">Portfolio</a>
     <div class="nav-dropdown" onclick="this.classList.toggle('open')">
-      <a href="javascript:void(0)">📱 Applications ▾</a>
+      <a href="javascript:void(0)">Applications ▾</a>
       <div class="nav-dropdown-menu">
-        <a href="4-7.html">👶 Ages 4–7</a>
-        <a href="8-11.html">🧒 Ages 8–11</a>
-        <a href="12-15.html">🧑 Ages 12–15</a>
-        <a href="15-17.html" class="active">🎓 Ages 15–17</a>
-        <a href="18+.html">💼 Ages 18+</a>
+        <a href="4-7.html">Ages 4–7</a>
+        <a href="8-11.html">Ages 8–11</a>
+        <a href="12-15.html">Ages 12–15</a>
+        <a href="15-17.html" class="active">Ages 15–17</a>
+        <a href="18+.html">Ages 18+</a>
       </div>
     </div>
-    <a href="../news/">📰 News</a>
-    <a href="../portfolio/#contact">📞 Contact</a>
+    <a href="../news/">News</a>
+    <a href="../portfolio/#contact">Contact</a>
   </div>
 </div>
+
 <div class="main">
   <div class="hero-card">
     <div class="hero-emoji">🎓</div>
-    <h1>15 – 17</h1>
+    <div class="stage-badge">Applied AI/ML</div>
+    <h1>Ages 15–17</h1>
+    <div class="course-name">AI Lab</div>
     <p>Don't wait for permission. Start building your career now.</p>
+  </div>
+
+  <div class="section">
+    <h2>Focus Areas</h2>
+    <div class="focus-grid">
+      <div class="focus-item">
+        <div class="icon">📐</div>
+        <div class="label">Linear Algebra</div>
+      </div>
+      <div class="focus-item">
+        <div class="icon">🎲</div>
+        <div class="label">Probability</div>
+      </div>
+      <div class="focus-item">
+        <div class="icon">🧠</div>
+        <div class="label">Real ML Projects</div>
+      </div>
+      <div class="focus-item">
+        <div class="icon">🔬</div>
+        <div class="label">Competitions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Example Activities</h2>
+    <div class="activities-list">
+      <div class="activity">
+        <div class="icon">🏆</div>
+        <div>
+          <div class="name">Competitions</div>
+          <div class="desc">AI/ML challenges and hackathons</div>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="icon">📂</div>
+        <div>
+          <div class="name">GitHub Projects</div>
+          <div class="desc">Build your developer portfolio</div>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="icon">🚀</div>
+        <div>
+          <div class="name">Hackathons</div>
+          <div class="desc">Rapid prototyping and teamwork</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center">
     <a href="../" class="cta-btn">← Back to Applications</a>
   </div>
 </div>
+
 <script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}</script>
 </body>
 </html>
