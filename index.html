@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Applications | Rohit Kumar Bhandari</title>
-<meta name="description" content="Applications and tools by Rohit Kumar Bhandari — learning, productivity, and career tools for all ages.">
+<title>Bellion — Education, Reimagined</title>
+<meta name="description" content="AI-powered learning platform for every age group. Courses, flashcards, interview prep, career tools — the new education system.">
 <link rel="canonical" href="https://rohitbhandariwork.github.io/">
-<meta property="og:title" content="Applications | Rohit Kumar Bhandari">
-<meta property="og:description" content="Learning, productivity, and career tools for all ages.">
+<meta property="og:title" content="Bellion — Education, Reimagined">
+<meta property="og:description" content="AI-powered learning platform for every age group.">
 <meta property="og:url" content="https://rohitbhandariwork.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://rohitbhandariwork.github.io/assets/img/profile-img.png">
@@ -24,21 +24,22 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#f8fafc
 
 /* Topbar */
 #topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
-.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#5d6678;padding:6px 10px;border-radius:8px;transition:.2s}
-.hamburger:hover{color:#1f2f5f;background:rgba(31,47,95,.06)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s}
+.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
 .nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
-.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#5d6678;text-decoration:none;transition:.2s;white-space:nowrap}
-.nav-links a:hover,.nav-links a.active{color:#1f2f5f;background:rgba(31,47,95,.06)}
+.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:#1e293b;background:rgba(30,41,59,.06)}
 @media(max-width:768px){
   .hamburger{display:block}
-  .nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 10px 15px rgba(0,0,0,.1)}
   .nav-links.open{display:flex}
   .nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}
 }
 .nav-dropdown{position:relative}
-.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:6px;min-width:140px;z-index:10001}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);padding:6px;min-width:140px;z-index:10001}
 .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
-.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap}
+.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;color:#334155;transition:.15s}
+.nav-dropdown-menu a:hover{background:#f1f5f9;color:#1e293b}
 @media(max-width:768px){
   .nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}
   .nav-dropdown.open .nav-dropdown-menu{display:block}
@@ -47,35 +48,65 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#f8fafc
 
 /* Main content */
 .main{padding:72px 16px 40px;max-width:600px;margin:0 auto}
-.hero{text-align:center;margin-bottom:32px}
-.hero h1{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
-.hero p{font-size:14px;color:#64748b;margin-top:8px;line-height:1.5}
+.hero{text-align:center;margin-bottom:36px}
+.hero-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#667eea;margin-bottom:8px}
+.hero h1{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#0f172a;line-height:1.15}
+.hero h1 span{background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:15px;color:#64748b;margin-top:10px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto}
 
 /* Age group grid */
 .age-grid{display:grid;grid-template-columns:1fr;gap:12px}
 .age-card{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:20px;text-decoration:none;transition:.2s;display:flex;align-items:center;gap:16px;touch-action:manipulation}
 .age-card:active{transform:scale(.98)}
-.age-card .age-icon{font-size:40px;flex-shrink:0;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#f1f5f9;border-radius:14px}
+.age-card .age-icon{font-size:36px;flex-shrink:0;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px}
 .age-card .age-info{flex:1}
 .age-card .age-range{font-size:18px;font-weight:800;color:#1e293b}
-.age-card .age-label{font-size:12px;color:#64748b;margin-top:2px}
-.age-card .age-arrow{font-size:18px;color:#94a3b8;flex-shrink:0}
+.age-card .age-label{font-size:12px;color:#64748b;margin-top:2px;line-height:1.4}
+.age-card .age-arrow{font-size:20px;color:#94a3b8;flex-shrink:0;transition:.2s}
+.age-card:hover .age-arrow{transform:translateX(2px);color:#667eea}
+
+/* Age-specific colors */
+.age-card.age-4-7{border-color:#fbcfe8}
+.age-card.age-4-7:hover{border-color:#f472b6;box-shadow:0 4px 12px rgba(244,114,182,.15)}
+.age-card.age-4-7 .age-icon{background:#fdf2f8}
+
+.age-card.age-8-11{border-color:#a7f3d0}
+.age-card.age-8-11:hover{border-color:#34d399;box-shadow:0 4px 12px rgba(52,211,153,.15)}
+.age-card.age-8-11 .age-icon{background:#ecfdf5}
+
+.age-card.age-12-15{border-color:#fde68a}
+.age-card.age-12-15:hover{border-color:#f59e0b;box-shadow:0 4px 12px rgba(245,158,11,.15)}
+.age-card.age-12-15 .age-icon{background:#fffbeb}
+
+.age-card.age-15-17{border-color:#ddd6fe}
+.age-card.age-15-17:hover{border-color:#8b5cf6;box-shadow:0 4px 12px rgba(139,92,246,.15)}
+.age-card.age-15-17 .age-icon{background:#f5f3ff}
+
+.age-card.age-18plus{border-color:#c7d2fe}
+.age-card.age-18plus:hover{border-color:#667eea;box-shadow:0 4px 12px rgba(102,126,234,.15)}
+.age-card.age-18plus .age-icon{background:#eef2ff}
+
 .age-card.primary{background:linear-gradient(135deg,#667eea,#764ba2);border-color:transparent}
+.age-card.primary:hover{box-shadow:0 8px 24px rgba(102,126,234,.3);transform:scale(.98)}
 .age-card.primary .age-icon{background:rgba(255,255,255,.2)}
 .age-card.primary .age-range{color:#fff}
 .age-card.primary .age-label{color:rgba(255,255,255,.8)}
 .age-card.primary .age-arrow{color:rgba(255,255,255,.6)}
-.age-card.soon{opacity:.6}
-.age-card.soon .age-icon{background:#f1f5f9}
+.age-card.primary:hover .age-arrow{color:#fff}
+
+.age-card.soon{opacity:.65}
+.age-card.soon:hover{opacity:1}
 
 @media(min-width:480px){
   .age-grid{grid-template-columns:repeat(2,1fr)}
+  .age-card.primary{grid-column:1/-1}
 }
 
 /* Footer */
-.footer{text-align:center;margin-top:40px;padding:16px}
-.footer a{color:#94a3b8;text-decoration:none;font-size:12px;font-weight:600;padding:8px 16px;border-radius:999px;transition:.2s}
-.footer a:active{background:#e2e8f0}
+.footer{text-align:center;margin-top:48px;padding:16px}
+.footer-text{font-size:12px;color:#94a3b8;margin-bottom:8px}
+.footer a{color:#667eea;text-decoration:none;font-size:12px;font-weight:600;padding:8px 16px;border-radius:999px;transition:.2s}
+.footer a:hover{background:rgba(102,126,234,.08)}
 </style>
 </head>
 <body>
@@ -101,54 +132,58 @@ body{font-family:'Manrope',-apple-system,system-ui,sans-serif;background:#f8fafc
 
 <div class="main">
   <div class="hero">
-    <h1>Applications</h1>
-    <p>Learning, productivity, and career tools — built for every age group.</p>
+    <div class="hero-eyebrow">Bellion Education</div>
+    <h1>Education, <span>Reimagined</span></h1>
+    <p>AI-powered learning for every age. Courses, flashcards, interview prep, career tools — the new education system starts here.</p>
   </div>
 
   <div class="age-grid">
-    <a class="age-card soon" href="applications/4-7.html">
+    <a class="age-card age-4-7 soon" href="applications/4-7.html">
       <div class="age-icon">👶</div>
       <div class="age-info">
         <div class="age-range">4 – 7</div>
-        <div class="age-label">Apps coming soon</div>
+        <div class="age-label">Little Learners — Apps coming soon</div>
       </div>
       <div class="age-arrow">›</div>
     </a>
-    <a class="age-card soon" href="applications/8-11.html">
+    <a class="age-card age-8-11 soon" href="applications/8-11.html">
       <div class="age-icon">🧒</div>
       <div class="age-info">
         <div class="age-range">8 – 11</div>
-        <div class="age-label">Apps coming soon</div>
+        <div class="age-label">Curious Minds — Apps coming soon</div>
       </div>
       <div class="age-arrow">›</div>
     </a>
-    <a class="age-card soon" href="applications/12-15.html">
+    <a class="age-card age-12-15 soon" href="applications/12-15.html">
       <div class="age-icon">🧑</div>
       <div class="age-info">
         <div class="age-range">12 – 15</div>
-        <div class="age-label">Apps coming soon</div>
+        <div class="age-label">Trailblazers — Apps coming soon</div>
       </div>
       <div class="age-arrow">›</div>
     </a>
-    <a class="age-card soon" href="applications/15-17.html">
+    <a class="age-card age-15-17 soon" href="applications/15-17.html">
       <div class="age-icon">🎓</div>
       <div class="age-info">
         <div class="age-range">15 – 17</div>
-        <div class="age-label">Apps coming soon</div>
+        <div class="age-label">Future Leaders — Apps coming soon</div>
       </div>
       <div class="age-arrow">›</div>
     </a>
-    <a class="age-card primary" href="applications/18+.html" style="grid-column:1/-1">
+    <a class="age-card primary" href="applications/18+.html">
       <div class="age-icon">💼</div>
       <div class="age-info">
         <div class="age-range">18+</div>
-        <div class="age-label">7 apps — courses, flashcards, interview prep, jobs & more</div>
+        <div class="age-label">Game Changers — 7 apps ready: courses, flashcards, interview prep, jobs & more</div>
       </div>
       <div class="age-arrow">›</div>
     </a>
   </div>
 
-  <div class="footer"><a href="portfolio/">← Back to Portfolio</a></div>
+  <div class="footer">
+    <div class="footer-text">Built for learners, by learners.</div>
+    <a href="portfolio/">View Portfolio →</a>
+  </div>
 </div>
 
 <script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}</script>

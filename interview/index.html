@@ -315,7 +315,7 @@
 
   <div class="result-card" id="resultCard">
     <h3>📋 Interview Complete</h3>
-    <p style="color:#5d6678;font-size:14px;" id="resultSub">Here's how you performed.</p>
+    <p style="color:#64748b;font-size:14px;" id="resultSub">Here's how you performed.</p>
     <div class="score-grid" id="scoreGrid"></div>
     <div class="summary-text" id="summaryText"></div>
     <button class="btn-secondary" onclick="location.reload()">Take Another Interview</button>
@@ -389,7 +389,7 @@ function addMessage(role, text, extra) {
 
   if (extra && extra.evaluation) {
     const evalDiv = document.createElement('div');
-    evalDiv.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid rgba(29,36,51,.06);font-size:13px;color:#5d6678;';
+    evalDiv.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid rgba(29,36,51,.06);font-size:13px;color:#64748b;';
     const score = extra.score || 0;
     const badge = document.createElement('span');
     badge.className = 'eval-badge ' + (score >= 8 ? 'good' : score >= 5 ? 'ok' : 'needs-work');
