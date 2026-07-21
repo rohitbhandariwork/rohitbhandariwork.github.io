@@ -29,10 +29,10 @@
     body { font-family: var(--font); background: #f8fafc; color: var(--text); padding-top: 52px; }
 
     #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
-    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; font-family: var(--font); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
     .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
     .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
-    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; font-family: var(--font); }
+    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; }
     .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
     .nav-dropdown { position: relative; }
     .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,.1); padding: 6px; min-width: 140px; z-index: 10001; }
@@ -64,6 +64,14 @@
     .focus-item { background: var(--bg-alt); border-radius: 14px; padding: 16px 12px; text-align: center; }
     .focus-item .icon { font-size: 28px; margin-bottom: 8px; }
     .focus-item .label { font-size: 13px; font-weight: 600; color: var(--text); }
+
+    /* ── App Grid ── */
+    .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+    .app-card { background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid #f1f5f9; text-decoration: none; color: var(--text); transition: .2s; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .app-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .app-card .icon { font-size: 36px; margin-bottom: 12px; }
+    .app-card .name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .app-card .desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 
     .activities-list { display: flex; flex-direction: column; gap: 10px; }
     .activity { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border-radius: 12px; }
@@ -116,6 +124,43 @@
         <div class="icon">🌍</div>
         <div class="label">Real-World Exposure</div>
       </div>
+    </div>
+  </div>
+
+  <!-- Apps Grid -->
+  <div class="section">
+    <h2>Your Apps</h2>
+    <div class="apps-grid">
+      <a href="../course/" class="app-card">
+        <div class="icon">📚</div>
+        <div class="name">AI Course</div>
+        <div class="desc">Structured learning paths</div>
+      </a>
+      <a href="../flashcard/" class="app-card">
+        <div class="icon">🃏</div>
+        <div class="name">Flashcards</div>
+        <div class="desc">Spaced repetition study</div>
+      </a>
+      <a href="../interview/" class="app-card">
+        <div class="icon">🎙️</div>
+        <div class="name">AI Interview</div>
+        <div class="desc">Practice technical interviews</div>
+      </a>
+      <a href="../timer/" class="app-card">
+        <div class="icon">⏱️</div>
+        <div class="name">Focus Timer</div>
+        <div class="desc">Deep work sessions</div>
+      </a>
+      <a href="../jobtool/" class="app-card">
+        <div class="icon">💼</div>
+        <div class="name">Job Tool</div>
+        <div class="desc">Job application tracker</div>
+      </a>
+      <a href="../shop/" class="app-card">
+        <div class="icon">🛒</div>
+        <div class="name">AI Shop</div>
+        <div class="desc">Ebooks and resources</div>
+      </a>
     </div>
   </div>
 

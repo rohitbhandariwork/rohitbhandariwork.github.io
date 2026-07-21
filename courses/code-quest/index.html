@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Quest — Ages 12–15 | Education, Reimagined</title>
+  <meta name="description" content="Real programming and math. Python, JavaScript, algebra, and machine learning.">
+  <link rel="canonical" href="https://rohitbhandariwork.github.io/courses/code-quest/">
+  <link rel="icon" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: 'Manrope', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --amber-light: #fffbeb;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --border: #fde68a;
+      --success: #22c55e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: #fffbeb; color: var(--text); padding-top: 52px; min-height: 100vh; }
+
+    #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
+    .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
+    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; }
+    .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 8px 12px; gap: 4px; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
+    }
+
+    .game-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--border); }
+    .game-bar .streak { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #ef4444; }
+    .game-bar .xp { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #d97706; }
+    .game-bar .level { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #b45309; }
+    .game-bar .coins { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #d97706; }
+
+    .main { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
+
+    .hero { background: linear-gradient(135deg, var(--amber), var(--red)); border-radius: 24px; padding: 40px 24px; text-align: center; color: #fff; margin-bottom: 24px; }
+    .hero-emoji { font-size: 72px; margin-bottom: 16px; }
+    .hero h1 { font-size: 32px; font-weight: 800; }
+    .hero p { font-size: 15px; color: rgba(255,255,255,0.9); margin-top: 8px; }
+
+    .mission-card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 2px solid var(--border); }
+    .mission-card .badge { display: inline-block; padding: 4px 12px; background: var(--amber-light); border-radius: 999px; font-size: 11px; font-weight: 700; color: #d97706; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12px; }
+    .mission-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .mission-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    .xp-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
+    .xp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .xp-header h3 { font-size: 15px; font-weight: 700; }
+    .xp-header span { font-size: 13px; font-weight: 600; color: #d97706; }
+    .xp-track { background: #fef3c7; border-radius: 999px; height: 12px; overflow: hidden; }
+    .xp-fill { height: 100%; background: linear-gradient(90deg, var(--amber), #f59e0b); border-radius: 999px; transition: width .5s ease; }
+
+    /* ── Code Editor Preview (Creativity) ── */
+    .code-card { background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; overflow: hidden; }
+    .code-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .code-dot.red { background: #ef4444; }
+    .code-dot.yellow { background: #f59e0b; }
+    .code-dot.green { background: #22c55e; }
+    .code-title { font-size: 12px; color: #94a3b8; margin-left: 8px; font-family: var(--font-mono); }
+    .code-body { font-family: var(--font-mono); font-size: 13px; line-height: 1.8; color: #e2e8f0; }
+    .code-body .keyword { color: #c084fc; }
+    .code-body .string { color: #34d399; }
+    .code-body .comment { color: #64748b; }
+
+    .skill-tree { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
+    .skill-tree h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .skills { display: flex; flex-direction: column; gap: 12px; }
+    .skill { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f8fafc; border-radius: 14px; border: 1px solid #e2e8f0; }
+    .skill .icon { font-size: 28px; flex-shrink: 0; }
+    .skill .info { flex: 1; }
+    .skill .name { font-size: 14px; font-weight: 600; }
+    .skill .desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .skill .progress { width: 100%; height: 6px; background: #e2e8f0; border-radius: 999px; margin-top: 8px; overflow: hidden; }
+    .skill .progress-fill { height: 100%; background: var(--amber); border-radius: 999px; }
+
+    .challenges { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
+    .challenges h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .challenge-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8fafc; border-radius: 12px; margin-bottom: 8px; }
+    .challenge-item .icon { font-size: 24px; }
+    .challenge-item .info { flex: 1; }
+    .challenge-item .name { font-size: 14px; font-weight: 600; }
+    .challenge-item .reward { font-size: 12px; color: #d97706; font-weight: 600; }
+    .challenge-item .check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; }
+    .challenge-item .check.done { background: var(--success); border-color: var(--success); color: #fff; }
+
+    .social-card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
+    .social-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .leaderboard { display: flex; flex-direction: column; gap: 8px; }
+    .lb-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #f8fafc; border-radius: 10px; }
+    .lb-item .rank { font-size: 14px; font-weight: 700; width: 24px; text-align: center; }
+    .lb-item .avatar { font-size: 20px; }
+    .lb-item .name { flex: 1; font-size: 14px; font-weight: 600; }
+    .lb-item .score { font-size: 13px; font-weight: 700; color: #d97706; }
+    .lb-item.you { background: var(--amber-light); border: 1px solid var(--amber); }
+
+    .mystery-card { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; cursor: pointer; transition: .2s; border: 2px dashed #d97706; }
+    .mystery-card:hover { transform: scale(1.02); }
+    .mystery-card .icon { font-size: 48px; margin-bottom: 12px; }
+    .mystery-card h3 { font-size: 16px; font-weight: 700; color: #92400e; }
+    .mystery-card p { font-size: 13px; color: #a16207; margin-top: 4px; }
+
+    .back-link { display: block; text-align: center; margin-top: 24px; font-size: 14px; font-weight: 600; color: #d97706; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div id="topbar">
+  <button class="hamburger" onclick="toggleNav()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="../../portfolio/">Portfolio</a>
+    <a href="../../applications/12-15.html">← Back</a>
+    <a href="../../news/">News</a>
+    <a href="../../portfolio/#contact">Contact</a>
+  </div>
+</div>
+
+<div class="game-bar">
+  <div class="streak">🔥 7 day streak</div>
+  <div class="xp">⭐ 1,240 XP</div>
+  <div class="level">🏆 Level 6</div>
+  <div class="coins">🪙 340</div>
+</div>
+
+<div class="main">
+  <div class="hero">
+    <div class="hero-emoji">🐍</div>
+    <h1>Code Quest</h1>
+    <p>Real programming. Real math. Real projects.</p>
+  </div>
+
+  <div class="mission-card">
+    <div class="badge">Your Mission</div>
+    <h2>Build the AI That Solves the Puzzle!</h2>
+    <p>You've discovered an ancient code that only runs when you solve 10 coding challenges. Each challenge teaches a new concept. Can you unlock the AI before time runs out?</p>
+  </div>
+
+  <div class="xp-card">
+    <div class="xp-header">
+      <h3>Level 6 Progress</h3>
+      <span>1,240 / 1,500 XP</span>
+    </div>
+    <div class="xp-track">
+      <div class="xp-fill" style="width: 82%"></div>
+    </div>
+  </div>
+
+  <!-- Creativity: Code Editor -->
+  <div class="code-card">
+    <div class="code-header">
+      <div class="code-dot red"></div>
+      <div class="code-dot yellow"></div>
+      <div class="code-dot green"></div>
+      <span class="code-title">main.py</span>
+    </div>
+    <div class="code-body">
+      <span class="comment"># Your next challenge</span><br>
+      <span class="keyword">def</span> solve_puzzle(data):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> item <span class="keyword">in</span> data:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> item <span class="keyword">is</span> <span class="keyword">None</span>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"Found it!"</span>
+    </div>
+  </div>
+
+  <div class="skill-tree">
+    <h3>Skill Tree</h3>
+    <div class="skills">
+      <div class="skill">
+        <div class="icon">🐍</div>
+        <div class="info">
+          <div class="name">Python Master</div>
+          <div class="desc">Variables, loops, functions</div>
+          <div class="progress"><div class="progress-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="icon">⚛️</div>
+        <div class="info">
+          <div class="name">JavaScript Ninja</div>
+          <div class="desc">DOM, events, async</div>
+          <div class="progress"><div class="progress-fill" style="width:40%"></div></div>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="icon">📐</div>
+        <div class="info">
+          <div class="name">Algebra Wizard</div>
+          <div class="desc">Equations, variables</div>
+          <div class="progress"><div class="progress-fill" style="width:60%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="challenges">
+    <h3>Daily Challenges</h3>
+    <div class="challenge-item">
+      <div class="icon">💻</div>
+      <div class="info">
+        <div class="name">Write 10 Lines of Code</div>
+        <div class="reward">+100 XP</div>
+      </div>
+      <div class="check done">✓</div>
+    </div>
+    <div class="challenge-item">
+      <div class="icon">🧮</div>
+      <div class="info">
+        <div class="name">Solve 3 Math Problems</div>
+        <div class="reward">+75 XP</div>
+      </div>
+      <div class="check"></div>
+    </div>
+    <div class="challenge-item">
+      <div class="icon">🐛</div>
+      <div class="info">
+        <div class="name">Debug the Code</div>
+        <div class="reward">+120 XP</div>
+      </div>
+      <div class="check"></div>
+    </div>
+  </div>
+
+  <div class="social-card">
+    <h3>Quest Leaderboard</h3>
+    <div class="leaderboard">
+      <div class="lb-item">
+        <div class="rank">1</div>
+        <div class="avatar">🧙</div>
+        <div class="name">Jordan</div>
+        <div class="score">2,100 XP</div>
+      </div>
+      <div class="lb-item you">
+        <div class="rank">2</div>
+        <div class="avatar">🦊</div>
+        <div class="name">You</div>
+        <div class="score">1,240 XP</div>
+      </div>
+      <div class="lb-item">
+        <div class="rank">3</div>
+        <div class="avatar">🎯</div>
+        <div class="name">Sam</div>
+        <div class="score">980 XP</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mystery-card" onclick="openMystery()">
+    <div class="icon">🎁</div>
+    <h3>Mystery Box</h3>
+    <p>Complete 5 challenges to unlock!</p>
+  </div>
+
+  <a href="../../applications/12-15.html" class="back-link">← Back to Code Quest</a>
+</div>
+
+<script>
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
+function openMystery(){
+  const rewards = ['+500 XP Bonus!', 'New Python Library!', 'Secret Algorithm!', 'Unlock ML Module!'];
+  alert('🎉 You got: ' + rewards[Math.floor(Math.random()*rewards.length)]);
+}
+</script>
+</body>
+</html>
