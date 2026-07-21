@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://rohitbhandariwork.github.io/</loc>
+    <priority>1.0</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/portfolio/</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/applications/4-7.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/applications/8-11.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/applications/12-15.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/applications/15-17.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/applications/18+.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://rohitbhandariwork.github.io/course/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
@@ -11,17 +46,32 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://rohitbhandariwork.github.io/</loc>
-    <priority>1.0</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://rohitbhandariwork.github.io/interview/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://rohitbhandariwork.github.io/jobtool/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/shop/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/shop/job/</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/timer/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://rohitbhandariwork.github.io/news/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -79,25 +129,5 @@
     <loc>https://rohitbhandariwork.github.io/news/2026/06/27/</loc>
     <priority>0.5</priority>
     <changefreq>never</changefreq>
-  </url>
-  <url>
-    <loc>https://rohitbhandariwork.github.io/news/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://rohitbhandariwork.github.io/shop/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://rohitbhandariwork.github.io/shop/job/</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://rohitbhandariwork.github.io/timer/</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
   </url>
 </urlset>

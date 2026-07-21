@@ -15,8 +15,47 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
 <link href="styles.css" rel="stylesheet">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7055279960383042" crossorigin="anonymous"></script>
+<style>
+#topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#5d6678;padding:6px 10px;border-radius:8px;transition:.2s}
+.hamburger:hover{color:#1f2f5f;background:rgba(31,47,95,.06)}
+.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
+.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#5d6678;text-decoration:none;transition:.2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:#1f2f5f;background:rgba(31,47,95,.06)}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:6px;min-width:140px;z-index:10001}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap}
+body{padding-top:52px}
+#app{padding-top:0}
+@media(max-width:768px){
+  .hamburger{display:block}
+  .nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}
+  .nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}
+  .nav-dropdown.open .nav-dropdown-menu{display:block}
+  .nav-dropdown-menu a{padding:10px 14px;font-size:14px}
+}
+</style>
 </head>
 <body>
+<div id="topbar">
+<button class="hamburger" onclick="toggleNav()">☰</button>
+<div class="nav-links" id="navLinks">
+<a href="../portfolio/">💼 Portfolio</a>
+<div class="nav-dropdown" onclick="this.classList.toggle('open')">
+<a href="javascript:void(0)">📱 Applications ▾</a>
+<div class="nav-dropdown-menu">
+<a href="../applications/4-7.html">👶 Ages 4–7</a>
+<a href="../applications/8-11.html">🧒 Ages 8–11</a>
+<a href="../applications/12-15.html">🧑 Ages 12–15</a>
+<a href="../applications/15-17.html">🎓 Ages 15–17</a>
+<a href="../applications/18+.html">💼 Ages 18+</a>
+</div></div>
+<a href="../news/">📰 News</a>
+<a href="../portfolio/#contact">📞 Contact</a>
+</div></div>
 <div id="app">
   <aside id="sidebar">
     <div class="sidebar-header">
@@ -51,5 +90,6 @@
 
 <script src="modules.js"></script>
 <script src="app.js"></script>
+<script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}</script>
 </body>
 </html>

@@ -157,12 +157,30 @@
       .form-card { padding: 24px; }
       .form-row { grid-template-columns: 1fr; }
     }
+  
+    .nav-dropdown{position:relative}
+    .nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:6px;min-width:140px;z-index:10001}
+    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
+    .nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap}
   </style>
 
 </head>
 <body>
 
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="../../course/">📘 Open Course</a><a href="../../news/">📰 AI News</a><a href="./" class="active">💼 Apply Job</a><a href="../../interview/">🎙️ AI Interview</a><a href="../../flashcard/">🃏 Flashcards</a><a href="../">🛒 Shop</a></div></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks">
+<a href="../../portfolio/">💼 Portfolio</a>
+<div class="nav-dropdown" onclick="this.classList.toggle('open')">
+<a href="javascript:void(0)">📱 Applications ▾</a>
+<div class="nav-dropdown-menu">
+<a href="../../applications/4-7.html">👶 Ages 4–7</a>
+<a href="../../applications/8-11.html">🧒 Ages 8–11</a>
+<a href="../../applications/12-15.html">🧑 Ages 12–15</a>
+<a href="../../applications/15-17.html">🎓 Ages 15–17</a>
+<a href="../../applications/18+.html">💼 Ages 18+</a>
+</div></div>
+<a href="../../news/">📰 News</a>
+<a href="../../portfolio/#contact">📞 Contact</a>
+</div>
 
 <section class="job-hero">
   <h1>Job Application Tool</h1>

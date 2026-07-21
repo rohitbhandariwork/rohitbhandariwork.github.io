@@ -282,10 +282,28 @@ body{font-family:-apple-system,system-ui,sans-serif;background:#f0f4f8;color:#1a
 .tut-card .tut-title{font-size:15px}
 .tut-card .tut-desc{font-size:12px}
 }
-</style>
+
+    .nav-dropdown{position:relative}
+    .nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:6px;min-width:140px;z-index:10001}
+    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
+    .nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap}
+  </style>
 </head><body>
 <canvas id="confettiCanvas"></canvas>
-<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><span class="mini-level" id="topLevel" onclick="showInsightPopup()"><span class="ml-num" id="topLvlNum">1</span><span class="ml-gems" id="topGems">💎10</span></span><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks"><a href="../apps.html">📱 Apps</a></div></div>
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><span class="mini-level" id="topLevel" onclick="showInsightPopup()"><span class="ml-num" id="topLvlNum">1</span><span class="ml-gems" id="topGems">💎10</span></span><div class="tool-icons"><span onclick="showChallengePopup()" title="Challenges">🎯</span><span onclick="showPowerupPopup()" title="Power-ups">⚡</span><span onclick="showInsightPopup()" title="Insights">📊</span></div><div class="nav-links" id="navLinks">
+<a href="../portfolio/">💼 Portfolio</a>
+<div class="nav-dropdown" onclick="this.classList.toggle('open')">
+<a href="javascript:void(0)">📱 Applications ▾</a>
+<div class="nav-dropdown-menu">
+<a href="../applications/4-7.html">👶 Ages 4–7</a>
+<a href="../applications/8-11.html">🧒 Ages 8–11</a>
+<a href="../applications/12-15.html">🧑 Ages 12–15</a>
+<a href="../applications/15-17.html">🎓 Ages 15–17</a>
+<a href="../applications/18+.html">💼 Ages 18+</a>
+</div></div>
+<a href="../news/">📰 News</a>
+<a href="../portfolio/#contact">📞 Contact</a>
+</div>
 
 <div class="modal-overlay" id="lvlModal"><div class="modal-box">
 <div class="big-lvl" id="lvlModalNum">5</div>

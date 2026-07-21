@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Rohit Kumar Bhandari | Azure Data Architecture Portfolio</title>
+  <meta name="description"
+    content="Azure-focused data architecture portfolio for Rohit Kumar Bhandari, featuring cloud data platform design, analytics engineering, and enterprise-scale delivery case studies.">
+  <meta name="keywords"
+    content="Rohit Kumar Bhandari, Azure Data Architect, Data Architecture, Microsoft, Azure Databricks, Azure Data Factory, Data Engineering, Analytics Engineer">
+  <link rel="canonical" href="https://rohitbhandariwork.github.io/portfolio/">
+  <meta property="og:title" content="Rohit Kumar Bhandari | Azure Data Architecture Portfolio">
+  <meta property="og:description" content="Azure-focused data architecture portfolio featuring cloud data platform design, analytics engineering, and enterprise-scale delivery case studies.">
+  <meta property="og:url" content="https://rohitbhandariwork.github.io/portfolio/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://rohitbhandariwork.github.io/assets/img/profile-img.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rohit Kumar Bhandari | Azure Data Architecture">
+  <meta name="twitter:description" content="Azure-focused data architecture portfolio by Rohit Kumar Bhandari.">
+  <meta name="google-site-verification" content="wmEHyzHIfGpvEaNgKv33X669_1K2cvLCaRsWOZWyzQc">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rohit Kumar Bhandari",
+    "url": "https://rohitbhandariwork.github.io",
+    "jobTitle": "Azure Data Architect",
+    "knowsAbout": ["Azure", "Data Architecture", "Data Engineering", "Data Factory", "Databricks"],
+    "sameAs": ["https://github.com/rohitbhandariwork"]
+  }
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7055279960383042" crossorigin="anonymous"></script>
+
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap"
+    rel="stylesheet">
+
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    #topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(251,247,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(29,36,51,.08);display:flex;align-items:center;gap:4px;padding:0 12px}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#5d6678;padding:6px 10px;border-radius:8px;transition:.2s;font-family:'Manrope',sans-serif}
+    .hamburger:hover{color:#1f2f5f;background:rgba(31,47,95,.06)}
+    .nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
+    .nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#5d6678;text-decoration:none;transition:.2s;white-space:nowrap;font-family:'Manrope',sans-serif}
+    .nav-links a:hover,.nav-links a.active{color:#1f2f5f;background:rgba(31,47,95,.06)}
+    .nav-dropdown{position:relative}
+    .nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:6px;min-width:140px;z-index:10001}
+    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
+    .nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap}
+    @media(min-width:992px){body{padding-top:52px}#topbar{padding-right:44px}}
+    @media(max-width:991px){body{padding-top:52px}}
+    @media(max-width:768px){
+      .hamburger{display:block}
+      .nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(251,247,240,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(29,36,51,.08);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+      .nav-links.open{display:flex}
+      .nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}
+      .nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}
+      .nav-dropdown.open .nav-dropdown-menu{display:block}
+      .nav-dropdown-menu a{padding:10px 14px;font-size:14px}
+    }
+  </style>
+<script>  var API = 'https://valid-scanning-watching-dealt.trycloudflare.com/tusk/subscribers/add';</script>
+</head>
+
+<body>
+  <div id="topbar">
+    <button class="hamburger" onclick="toggleNav()">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="../" class="active">💼 Portfolio</a>
+      <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+        <a href="javascript:void(0)">📱 Applications ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="../applications/4-7.html">👶 Ages 4–7</a>
+          <a href="../applications/8-11.html">🧒 Ages 8–11</a>
+          <a href="../applications/12-15.html">🧑 Ages 12–15</a>
+          <a href="../applications/15-17.html">🎓 Ages 15–17</a>
+          <a href="../applications/18+.html">💼 Ages 18+</a>
+        </div>
+      </div>
+      <a href="../news/">📰 News</a>
+      <a href="#contact">📞 Contact</a>
+    </div>
+  </div>
+
+  <section id="hero" class="hero-section d-flex flex-column justify-content-center">
+    <div class="hero-orb hero-orb-one"></div>
+    <div class="hero-orb hero-orb-two"></div>
+    <div class="container" data-aos="fade-up">
+      <div class="top-bar">
+        <div class="brand-mark">RKB</div>
+        <div class="top-bar-copy">Azure Data Architecture Portfolio</div>
+      </div>
+
+      <div class="hero-shell">
+        <div class="row align-items-center gy-5">
+          <div class="col-lg-7">
+            <span class="eyebrow">Open to Microsoft-aligned data roles</span>
+            <h1>Designing data platforms that are readable, reliable, and ready to scale.</h1>
+            <p class="hero-lead">I’m Rohit Kumar Bhandari, an Azure-focused data engineering professional building toward
+              Data Architect ownership across platform design, orchestration, governance, and cloud delivery.</p>
+
+            <div class="hero-actions">
+              <a class="btn-primary" target="_blank" rel="noreferrer"
+                href="https://drive.google.com/open?id=11nFMgU2X_yG72p2U8KCxmMXSmAbnZY7A">Download Resume</a>
+              <a class="btn-secondary scrollto" href="#case-studies">See Case Studies</a>
+            </div>
+
+            <div class="hero-microcopy">
+              <span><i class="bi bi-check-circle-fill"></i> Azure Data Factory</span>
+              <span><i class="bi bi-check-circle-fill"></i> Databricks</span>
+              <span><i class="bi bi-check-circle-fill"></i> CI/CD and DevOps</span>
+              <span><i class="bi bi-check-circle-fill"></i> Enterprise analytics delivery</span>
+            </div>
+
+            <div class="hero-stats">
+              <article class="mini-card">
+                <span class="mini-label">Target path</span>
+                <strong>Azure Data Architect</strong>
+                <p>Moving from implementation-heavy delivery toward higher-level design ownership.</p>
+              </article>
+              <article class="mini-card">
+                <span class="mini-label">Core strength</span>
+                <strong>Pipeline and platform thinking</strong>
+                <p>Strong execution across orchestration, transformation, deployment, and stakeholder alignment.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="portrait-panel" data-aos="zoom-in" data-aos-delay="120">
+              <div class="portrait-frame">
+                <img src="assets/img/profile-img.png" alt="Portrait of Rohit Kumar Bhandari" class="img-fluid profile-photo">
+              </div>
+              <div class="portrait-summary">
+                <span class="mini-label">Positioning</span>
+                <h2>Azure Data Engineer evolving into a platform-minded architect.</h2>
+                <p>I focus on building delivery systems that are structured, maintainable, and usable by business teams.</p>
+                <div class="social-links">
+                  <a href="https://www.linkedin.com/in/rohitonlinked/" class="linkedin" target="_blank" rel="noreferrer"
+                    aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+                  <a href="https://github.com/rohitbhandariwork" class="github" target="_blank" rel="noreferrer"
+                    aria-label="GitHub"><i class="bx bxl-github"></i></a>
+                  <a href="mailto:rohitbhandari.work@gmail.com" class="email" aria-label="Email"><i class="bx bx-envelope"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <section id="focus" class="section-shell">
+      <div class="container" data-aos="fade-up">
+        <div class="section-intro">
+          <span class="section-kicker">Professional focus</span>
+          <h2>Built like a hiring page, not a resume dump.</h2>
+          <p>This portfolio is structured to make your experience easy to scan. The goal is simple: help a recruiter or
+            hiring manager understand your direction, your technical fit, and your ability to communicate architecture
+            work clearly.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="feature-panel">
+              <h3>What I bring to a data architecture team</h3>
+              <p>I combine hands-on Azure delivery with a strong interest in design decisions that hold up in production:
+                separation of concerns, repeatable deployments, dependable transformations, and clean communication with
+                business stakeholders.</p>
+              <div class="feature-grid">
+                <div class="feature-item">
+                  <i class="bi bi-diagram-3"></i>
+                  <div>
+                    <strong>Platform thinking</strong>
+                    <p>Building systems that can be maintained, scaled, and extended.</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-cloud-check"></i>
+                  <div>
+                    <strong>Azure-first execution</strong>
+                    <p>Practical delivery across ADF, Databricks, and DevOps workflows.</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-kanban"></i>
+                  <div>
+                    <strong>Delivery discipline</strong>
+                    <p>Repeatable deployment habits and less manual overhead in change management.</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-chat-square-text"></i>
+                  <div>
+                    <strong>Readable communication</strong>
+                    <p>Explaining technical systems in a way business and engineering teams can act on.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="identity-panel">
+              <span class="mini-label">Profile snapshot</span>
+              <div class="fact-stack">
+                <div class="fact-row"><span>Location</span><strong>Indore, India</strong></div>
+                <div class="fact-row"><span>Email</span><strong><a href="mailto:rohitbhandari.work@gmail.com">rohitbhandari.work@gmail.com</a></strong></div>
+                <div class="fact-row"><span>Career direction</span><strong>Azure Data Architecture</strong></div>
+                <div class="fact-row"><span>Best fit</span><strong>Enterprise data platform teams</strong></div>
+                <div class="fact-row"><span>Strengths</span><strong>Cloud delivery, ownership, communication</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proof" class="section-shell section-soft">
+      <div class="container" data-aos="fade-up">
+        <div class="section-intro">
+          <span class="section-kicker">Signals recruiters can scan quickly</span>
+          <h2>Clear proof of fit for a modern Azure data role.</h2>
+        </div>
+
+        <div class="proof-grid">
+          <article class="proof-card">
+            <span class="proof-value">Azure</span>
+            <h3>Cloud-native delivery</h3>
+            <p>Experience building and supporting pipelines with Microsoft-aligned services and deployment practices.</p>
+          </article>
+          <article class="proof-card">
+            <span class="proof-value">ADF</span>
+            <h3>Orchestration capability</h3>
+            <p>Comfortable with ingestion flow design, scheduling, dependency management, and pipeline control.</p>
+          </article>
+          <article class="proof-card">
+            <span class="proof-value">DBX</span>
+            <h3>Transformation workflows</h3>
+            <p>Notebook-based transformation logic integrated into end-to-end delivery pipelines.</p>
+          </article>
+          <article class="proof-card">
+            <span class="proof-value">CI/CD</span>
+            <h3>Operational maturity</h3>
+            <p>Better environment promotion, more reliable releases, and less manual friction in data deployment work.</p>
+          </article>
+        </div>
+
+          <div class="section-intro compact-intro" style="margin-top:40px">
+            <span class="section-kicker">Capability map</span>
+            <h2>Core technical strengths.</h2>
+          </div>
+
+          <div class="proof-grid">
+            <article class="proof-card">
+              <span class="proof-value">ADF</span>
+              <h3>Azure Data Factory</h3>
+              <p>Pipeline orchestration, ingestion, scheduling, and dependency management at 95% proficiency.</p>
+            </article>
+            <article class="proof-card">
+              <span class="proof-value">DBX</span>
+              <h3>Azure Databricks</h3>
+              <p>Notebook-based transformations, Delta Lake workflows, and cluster configuration at 88% proficiency.</p>
+            </article>
+            <article class="proof-card">
+              <span class="proof-value">PIPE</span>
+              <h3>Data Pipeline Design</h3>
+              <p>End-to-end architecture with separation of concerns and maintainability patterns at 90% proficiency.</p>
+            </article>
+            <article class="proof-card">
+              <span class="proof-value">DEVOPS</span>
+              <h3>Azure DevOps &amp; CI/CD</h3>
+              <p>Environment promotion, release consistency, and automated deployment workflows at 85% proficiency.</p>
+            </article>
+            <article class="proof-card">
+              <span class="proof-value">COMMS</span>
+              <h3>Stakeholder Communication</h3>
+              <p>Translating technical decisions for business and engineering teams at 87% proficiency.</p>
+            </article>
+            <article class="proof-card">
+              <span class="proof-value">ARCH</span>
+              <h3>Architecture Documentation</h3>
+              <p>Design docs, data lineage, and system context for platform decisions at 80% proficiency.</p>
+            </article>
+          </div>
+      </div>
+    </section>
+
+    <section id="case-studies" class="section-shell">
+      <div class="container" data-aos="fade-up">
+        <div class="section-intro">
+          <span class="section-kicker">Selected work</span>
+          <h2>Case studies written for hiring managers.</h2>
+          <p>The goal here is not to show every project. It is to show how I think about architecture problems, delivery,
+            and design tradeoffs in Azure-oriented data work.</p>
+        </div>
+
+        <div class="case-study-grid">
+          <article class="case-study-card case-study-featured">
+            <span class="case-tag">Azure orchestration</span>
+            <h3>Enterprise ingestion and transformation pipelines</h3>
+            <p class="case-problem">Designed and supported data movement workflows that ingest from multiple sources,
+              standardize transformation steps, and improve delivery reliability for downstream analytics teams.</p>
+            <ul>
+              <li>Used Azure Data Factory to orchestrate ingestion, dependencies, and scheduling.</li>
+              <li>Integrated Databricks notebooks for transformation logic and reusable processing steps.</li>
+              <li>Focused on maintainability by keeping orchestration concerns separate from business transformations.</li>
+            </ul>
+          </article>
+
+          <article class="case-study-card">
+            <span class="case-tag">Platform delivery</span>
+            <h3>Deployment-ready data workflows with DevOps alignment</h3>
+            <p class="case-problem">Helped move notebooks and orchestration assets across environments with stronger
+              control and repeatability.</p>
+            <ul>
+              <li>Applied Azure DevOps practices to support environment promotion and release consistency.</li>
+              <li>Reduced manual friction around changes that affect reporting and production-facing data assets.</li>
+              <li>Built stronger habits around versioning, consistency, and operational ownership.</li>
+            </ul>
+          </article>
+
+          <article class="case-study-card">
+            <span class="case-tag">Analytics enablement</span>
+            <h3>Cloud-hosted analytics solutions for business teams</h3>
+            <p class="case-problem">Worked on analytics and application workloads where data pipelines had to support both
+              business use cases and technical reliability.</p>
+            <ul>
+              <li>Bridged data preparation, application behavior, and stakeholder-facing outputs.</li>
+              <li>Learned to design solutions around usability, not only technical completion.</li>
+              <li>Strengthened communication with teams consuming analytics results.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section-shell section-soft">
+      <div class="container" data-aos="fade-up">
+        <div class="section-intro">
+          <span class="section-kicker">Career path</span>
+          <h2>Experience that supports the move toward architecture ownership.</h2>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="timeline-panel">
+              <h3 class="resume-title">Professional experience</h3>
+              <div class="resume-item">
+                <h4>Data Engineer</h4>
+                <h5>July 2021 - Present</h5>
+                <p><em>Numantra Technologies, Mumbai</em></p>
+                <ul>
+                  <li>Built and supported Azure-based data systems for automation, machine learning, and analytics workloads.</li>
+                  <li>Created ADF pipelines for migration, orchestration, and transformation across multiple sources.</li>
+                  <li>Developed Databricks notebooks and integrated them into production-oriented delivery workflows.</li>
+                  <li>Supported environment movement of data assets through Azure DevOps and CI/CD practices.</li>
+                </ul>
+              </div>
+              <div class="resume-item">
+                <h4>Data Analyst and Cloud Engineer</h4>
+                <h5>July 2020 - June 2021</h5>
+                <p><em>Analytics Domain, Pune</em></p>
+                <ul>
+                  <li>Developed analytics and cloud-hosted application solutions for business use cases.</li>
+                  <li>Worked with Python and Django in projects combining analytics logic with user-facing outputs.</li>
+                  <li>Deployed workloads on GCP VMs with practical operational considerations.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="timeline-panel">
+              <h3 class="resume-title">Education and direction</h3>
+              <div class="resume-item">
+                <h4>Training Program in Data Science</h4>
+                <h5>2019 - 2020</h5>
+                <p><em>EXCELR Solutions</em></p>
+                <p>Built a practical base in analytics, machine learning workflows, and applied problem-solving.</p>
+              </div>
+              <div class="resume-item">
+                <h4>Bachelor of Engineering in Computer Science</h4>
+                <h5>2014 - 2018</h5>
+                <p><em>SGSITS, Indore</em></p>
+                <p>Studied cloud computing, artificial intelligence, software engineering, and core computing fundamentals.</p>
+              </div>
+              <div class="resume-item">
+                <h4>Current direction</h4>
+                <h5>Architecture growth</h5>
+                <p>I am intentionally moving from strong delivery execution toward more ownership in architecture design,
+                  governance, observability, and enterprise-scale data platform decisions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-shell">
+      <div class="container" data-aos="fade-up">
+        <div class="contact-banner">
+          <div>
+            <span class="section-kicker">Let’s connect</span>
+            <h2>Looking for Azure data engineering or architecture opportunities.</h2>
+            <p>If you’re hiring for data platform, analytics engineering, or data architecture work, I’d be glad to talk
+              about how I can contribute.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn-primary" href="mailto:rohitbhandari.work@gmail.com">Email Me</a>
+            <a class="btn-secondary" target="_blank" rel="noreferrer"
+              href="https://www.linkedin.com/in/rohitonlinked/">LinkedIn</a>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-item">
+            <i class="bi bi-envelope"></i>
+            <div>
+              <span>Email</span>
+              <a href="mailto:rohitbhandari.work@gmail.com">rohitbhandari.work@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="bi bi-linkedin"></i>
+            <div>
+              <span>LinkedIn</span>
+              <a href="https://www.linkedin.com/in/rohitonlinked/" target="_blank" rel="noreferrer">linkedin.com/in/rohitonlinked</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="bi bi-github"></i>
+            <div>
+              <span>GitHub</span>
+              <a href="https://github.com/rohitbhandariwork" target="_blank" rel="noreferrer">github.com/rohitbhandariwork</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="bi bi-file-earmark-arrow-down"></i>
+            <div>
+              <span>Resume</span>
+              <a href="https://drive.google.com/open?id=11nFMgU2X_yG72p2U8KCxmMXSmAbnZY7A" target="_blank" rel="noreferrer">Open resume</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container">
+      <h3>Rohit Kumar Bhandari</h3>
+      <p>Azure-focused job portfolio designed for readability, clarity, and recruiter-friendly scanning.</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/rohitonlinked/" class="linkedin" target="_blank" rel="noreferrer"><i class="bx bxl-linkedin"></i></a>
+        <a href="https://github.com/rohitbhandariwork" class="github" target="_blank" rel="noreferrer"><i class="bx bxl-github"></i></a>
+        <a href="mailto:rohitbhandari.work@gmail.com" class="email"><i class="bx bx-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/js/main.js"></script>
+
+<style>
+#nl-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#nl-overlay.show{opacity:1;visibility:visible}
+#nl-modal{background:#fff;border-radius:24px;padding:44px 40px 36px;max-width:440px;width:92%;position:relative;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.15)}
+#nl-close{position:absolute;top:14px;right:18px;background:none;border:none;color:#9aa1ae;font-size:26px;cursor:pointer;padding:4px;line-height:1;transition:color .2s}
+#nl-close:hover{color:#1d2433}
+#nl-icon{width:48px;height:48px;background:linear-gradient(135deg,#1f2f5f,#2a4a7a);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px}
+#nl-modal h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#1d2433;margin-bottom:6px}
+#nl-modal p.sub{color:#5d6678;font-size:14px;line-height:1.6;margin-bottom:26px;font-family:'Manrope',sans-serif}
+#nl-form{display:flex;flex-direction:column;gap:12px}
+#nl-form input{font-family:'Manrope',sans-serif;background:#f5f2ed;border:1px solid rgba(29,36,51,.1);border-radius:999px;padding:14px 20px;font-size:14px;color:#1d2433;outline:none;transition:border .2s}
+#nl-form input:focus{border-color:#db6d3f}
+#nl-form input::placeholder{color:#9aa1ae}
+#nl-form button{font-family:'Syne',sans-serif;background:#db6d3f;border:none;border-radius:999px;padding:14px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .2s}
+#nl-form button:hover{background:#bb4f24}
+#nl-form button:disabled{opacity:.5;cursor:not-allowed}
+#nl-msg{font-size:13px;margin-top:14px;min-height:22px;font-family:'Manrope',sans-serif}
+#nl-msg.ok{color:#1f2f5f;font-weight:600}
+#nl-msg.err{color:#db6d3f}
+</style>
+
+<div id="nl-overlay">
+  <div id="nl-modal">
+    <button id="nl-close">&times;</button>
+    <div id="nl-icon">🧠</div>
+    <h2>Stay sharp on AI</h2>
+    <p class="sub">5-min explainers on AI concepts — simple enough for a beginner, deep enough for a pro. No fluff, just signal.</p>
+    <form id="nl-form">
+      <input type="text" id="nl-name" placeholder="Your name" required>
+      <input type="email" id="nl-email" placeholder="Your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <div id="nl-msg"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ov = document.getElementById('nl-overlay');
+  document.getElementById('nl-close').onclick = function(){ov.classList.remove('show')};
+  ov.onclick = function(e){if(e.target===ov)ov.classList.remove('show')};
+  setTimeout(function(){ov.classList.add('show')},2000);
+  document.getElementById('nl-form').onsubmit = async function(e){
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    btn.disabled=true;btn.textContent='Subscribing...';
+    var msg = document.getElementById('nl-msg');msg.className='';msg.textContent='';
+    try{
+      var r = await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        name: document.getElementById('nl-name').value.trim(),
+        email: document.getElementById('nl-email').value.trim()
+      })});
+      var d = await r.json();
+      if(d.status==='ok'){msg.className='ok';msg.textContent="You're in! 🎉"; e.target.reset(); setTimeout(function(){ov.classList.remove('show')},2000)}
+      else{msg.className='err';msg.textContent=d.detail||'Something went wrong.'}
+    }catch(e){msg.className='err';msg.textContent='Could not reach the server.'}
+    btn.disabled=false;btn.textContent='Subscribe';
+  };
+})();
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
+</script>
+</body>
+
+</html>
