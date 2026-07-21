@@ -48,7 +48,7 @@ body { font-family: var(--font); background: var(--bg-secondary); color: var(--t
 .nav-brand { font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none; }
 .nav-links { display: flex; gap: 8px; }
 .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-secondary); text-decoration: none; padding: 6px 12px; border-radius: var(--radius-full); transition: all .2s; }
-.nav-links a:hover { color: var(--text); background: rgba(0,0,0,.04); }
+
 .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
 .nav-hamburger svg { width: 20px; height: 20px; fill: var(--text-secondary); }
 @media (max-width: 768px) {
@@ -159,25 +159,45 @@ body { padding-top: 48px; }
 /* ── Spinner ── */
 .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+  
+#topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s;font-family:'Manrope',sans-serif}
+.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
+.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
+.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap;font-family:'Manrope',sans-serif}
+.nav-links a:hover,.nav-links a.active{color:#1e293b;background:rgba(30,41,59,.06)}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);padding:6px;min-width:140px;z-index:10001}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;color:#334155;transition:.15s}
+.nav-dropdown-menu a:hover{background:#f1f5f9;color:#1e293b}
+@media(min-width:992px){}#topbar{padding-right:44px}}
+@media(max-width:991px){}}
+@media(max-width:768px){.hamburger{display:block}.nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 10px 15px rgba(0,0,0,.1)}.nav-links.open{display:flex}.nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}.nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}.nav-dropdown.open .nav-dropdown-menu{display:block}.nav-dropdown-menu a{padding:10px 14px;font-size:14px}}
+
+</style>
 </head>
 <body>
 
 <!-- ── Nav ── -->
-<nav class="nav">
-  <a href="../" class="nav-brand">RBPN</a>
-  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
-    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-  </button>
-  <div class="nav-links" id="navLinks">
-    <a href="../portfolio/">Portfolio</a>
-    <a href="../applications/18+.html">Apps</a>
-    <a href="../news/">News</a>
-    <a href="../portfolio/#contact">Contact</a>
-  </div>
-</nav>
+
 
 <!-- ── Hero ── -->
+<div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks">
+<a href="../portfolio/">💼 Portfolio</a>
+<div class="nav-dropdown" onclick="this.classList.toggle('open')">
+<a href="javascript:void(0)">📱 Applications ▾</a>
+<div class="nav-dropdown-menu">
+<a href="../applications/4-7.html">👶 Ages 4–7</a>
+<a href="../applications/8-11.html">🧒 Ages 8–11</a>
+<a href="../applications/12-15.html">🧑 Ages 12–15</a>
+<a href="../applications/15-17.html">🎓 Ages 15–17</a>
+<a href="../applications/18+.html">💼 Ages 18+</a>
+</div></div>
+<a href="../news/">📰 News</a>
+<a href="../portfolio/#contact">📞 Contact</a>
+</div>
+
 <section class="hero">
   <div class="hero-icon">🎙️</div>
   <h1>AI Interview</h1>
