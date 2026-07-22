@@ -78,6 +78,14 @@ body{font-family:var(--font);background:#f8fafc;color:var(--text);padding-top:52
 
 .footer{text-align:center;margin-top:32px;padding:16px}
 .footer-text{font-size:12px;color:var(--text-muted);margin-bottom:8px}
+
+.mission-section{margin-bottom:32px}
+.mission-card{background:#fff;border:2px solid var(--border);border-radius:24px;padding:48px 32px;text-align:center}
+.mission-emoji{font-size:48px;margin-bottom:16px}
+.mission-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--indigo);margin-bottom:16px}
+.mission-title{font-size:clamp(20px,3.5vw,28px);font-weight:800;color:var(--text);line-height:1.4;margin-bottom:16px}
+.mission-text{font-size:16px;color:var(--text-secondary);line-height:1.7;max-width:520px;margin:0 auto}
+@media(max-width:640px){.mission-card{padding:32px 20px}}
 </style>
 </head>
 <body>
@@ -140,6 +148,15 @@ body{font-family:var(--font);background:#f8fafc;color:var(--text);padding-top:52
       <div class="age-info"><div class="age-range">18+</div><div class="age-label">Career Launcher &#8212; 7 apps ready: courses, flashcards, interview prep, jobs &amp; more</div></div>
       <div class="age-arrow">&#8250;</div>
     </a>
+  </div>
+
+  <div class="mission-section">
+    <div class="mission-card">
+      <div class="mission-emoji">&#127758;</div>
+      <div class="mission-label">Our Mission</div>
+      <h2 class="mission-title">The old education system was built for the industrial age.<br>We're building for the intelligence age.</h2>
+      <p class="mission-text">World-class education, personalized and accessible for every human on the planet. No gatekeepers. No one-size-fits-all. Just learning that works.</p>
+    </div>
   </div>
 
   <div class="footer">
