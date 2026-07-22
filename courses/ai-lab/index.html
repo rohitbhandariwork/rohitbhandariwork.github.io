@@ -142,6 +142,78 @@
       .year-header { padding: 20px; }
       .year-name { font-size: 18px; }
     }
+  
+    /* ── Gamification ── */
+    .gamification-bar { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.15); backdrop-filter: blur(8px); border-radius: 12px; padding: 12px 16px; margin-top: 20px; position: relative; }
+    .gf-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; }
+    .gf-icon { font-size: 16px; }
+    .gf-xp-wrap { flex: 1; min-width: 80px; }
+    .gf-xp-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .8; margin-bottom: 4px; }
+    .gf-xp-bar { background: rgba(255,255,255,.2); border-radius: 999px; height: 8px; overflow: hidden; }
+    .gf-xp-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #fbbf24, #f59e0b); transition: width .5s ease; width: 0%; }
+    .gf-level { background: linear-gradient(135deg, rgba(255,255,255,.25), rgba(255,255,255,.1)); border: 1px solid rgba(255,255,255,.3); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 800; }
+
+    /* ── Interactive Tasks ── */
+    .task { cursor: pointer; user-select: none; }
+    .task:hover .task-text { color: var(--text); }
+    .task-check { width: 18px; height: 18px; border-radius: 6px; border: 2px solid var(--border-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: .2s; margin-top: 3px; font-size: 11px; color: transparent; }
+    .task.done .task-check { background: var(--success); border-color: var(--success); color: #fff; }
+    .task.done .task-text { text-decoration: line-through; color: var(--text-muted); }
+    .task-xp { font-size: 10px; font-weight: 700; color: #fbbf24; opacity: 0; transition: .2s; margin-left: auto; flex-shrink: 0; }
+    .task.done .task-xp { opacity: 1; }
+
+    /* ── Milestone Badges ── */
+    .milestone { display: none; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 12px; padding: 12px 16px; margin-top: 12px; color: #fff; font-size: 13px; font-weight: 700; text-align: center; }
+    .milestone.show { display: block; animation: milestone-pop .4s ease; }
+    @keyframes milestone-pop { 0% { transform: scale(.9); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+
+    /* ── Week Progress ── */
+    .week-progress { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+
+    /* ── Celebration Toast ── */
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: #fff; padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; z-index: 99999; transition: transform .3s ease; pointer-events: none; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+  
+    /* ── Mystery Challenge (Curiosity) ── */
+    .mystery-challenge { background: linear-gradient(135deg, rgba(139,92,246,.08), rgba(6,182,212,.08)); border: 2px dashed rgba(139,92,246,.3); border-radius: 14px; padding: 16px; margin-top: 12px; cursor: pointer; transition: .3s; }
+    .mystery-challenge:hover { border-color: rgba(139,92,246,.5); background: linear-gradient(135deg, rgba(139,92,246,.12), rgba(6,182,212,.12)); }
+    .mystery-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #8b5cf6; }
+    .mystery-icon { font-size: 18px; animation: mystery-pulse 2s ease infinite; }
+    @keyframes mystery-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    .mystery-reveal { display: none; margin-top: 12px; padding: 12px; background: rgba(255,255,255,.6); border-radius: 10px; }
+    .mystery-challenge.open .mystery-reveal { display: block; animation: slideDown .3s ease; }
+    .mystery-reward { font-size: 12px; font-weight: 700; color: #8b5cf6; margin-top: 8px; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Streak Nudge (Loss & Avoidance) ── */
+    .streak-nudge { display: none; background: linear-gradient(135deg, #ef4444, #f97316); border-radius: 12px; padding: 12px 16px; margin-top: 12px; color: #fff; font-size: 13px; font-weight: 600; }
+    .streak-nudge.show { display: flex; align-items: center; gap: 10px; }
+    .streak-nudge-icon { font-size: 20px; }
+    .streak-nudge-text { flex: 1; }
+    .streak-nudge-cta { background: rgba(255,255,255,.2); border: none; color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+    /* ── Peer Count (Social Influence) ── */
+    .peer-count { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border-radius: 10px; padding: 8px 12px; margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.8); font-weight: 600; }
+    .peer-avatars { display: flex; }
+    .peer-avatar { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.3); display: flex; align-items: center; justify-content: center; font-size: 10px; margin-left: -6px; }
+    .peer-avatar:first-child { margin-left: 0; }
+
+    /* ── Unlock Timer (Scarcity) ── */
+    .week-locked { opacity: .5; pointer-events: none; position: relative; }
+    .week-locked::after { content: '🔒 Complete previous tasks to unlock'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; background: rgba(255,255,255,.9); padding: 4px 12px; border-radius: 8px; }
+    .week-unlock-timer { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+
+    /* ── Stats Panel (Ownership) ── */
+    .stats-panel { background: var(--surface); border: 1px solid var(--border-light); border-radius: 14px; padding: 16px; margin-top: 16px; }
+    .stats-title { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-item { text-align: center; padding: 8px 4px; background: var(--surface-alt); border-radius: 10px; }
+    .stat-value { font-size: 18px; font-weight: 800; color: var(--text); }
+    .stat-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-top: 2px; }
+    .stats-reset { display: block; width: 100%; margin-top: 10px; background: none; border: 1px solid var(--border-light); border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: .2s; }
+    .stats-reset:hover { border-color: #ef4444; color: #ef4444; }
+
   </style>
 </head>
 <body>
@@ -149,7 +221,17 @@
 <div id="topbar">
   <button class="hamburger" onclick="toggleNav()">☰</button>
   <div class="nav-links" id="navLinks">
-    <a href="../../portfolio/">Portfolio</a>
+    <div class="stats-panel">
+    <div class="stats-title">📊 Your Stats</div>
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-value" id="stat-xp">0</div><div class="stat-label">Total XP</div></div>
+      <div class="stat-item"><div class="stat-value" id="stat-level">1</div><div class="stat-label">Level</div></div>
+      <div class="stat-item"><div class="stat-value" id="stat-streak">0</div><div class="stat-label">Best Streak</div></div>
+    </div>
+    <button class="stats-reset" onclick="if(confirm('Reset all progress?')){localStorage.removeItem('course_ai-lab');location.reload()}">Reset Progress</button>
+  </div>
+
+  <a href="../../portfolio/">Portfolio</a>
     <a href="../applications/15-17.html">← Ages 15–17</a>
     <a href="../../news/">News</a>
     <a href="../../portfolio/#contact">Contact</a>
@@ -165,6 +247,46 @@
     <p>Don't wait for permission. Start building your career now.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Years</div></div><div class="hero-stat"><div class="hero-stat-num">12</div><div class="hero-stat-label">Quarters</div></div><div class="hero-stat"><div class="hero-stat-num">29</div><div class="hero-stat-label">Weeks</div></div>
+    </div>
+  </div>
+
+  <div class="streak-nudge" id="streak-nudge">
+    <span class="streak-nudge-icon">⚠️</span>
+    <span class="streak-nudge-text">Don't break your <strong id="streak-count">0</strong>-day streak!</span>
+    <button class="streak-nudge-cta" onclick="document.getElementById('streak-nudge').classList.remove('show')">Got it</button>
+  </div>
+  <div class="gamification-bar">
+    <div class="gf-level" id="gf-level">Lv.1</div>
+    <div class="gf-xp-wrap">
+      <div class="gf-xp-label" id="gf-xp-text">0 XP</div>
+      <div class="gf-xp-bar"><div class="gf-xp-fill" id="gf-xp-fill"></div></div>
+      <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:600" id="gf-week">Week 0 of 24</div>
+    </div>
+    <div class="gf-item"><span class="gf-icon">🔥</span><span id="gf-streak">0</span></div>
+    <div class="gf-item"><span class="gf-icon">💎</span><span id="gf-gems">0</span></div>
+  </div>
+
+
+  <div class="section-label" style="margin-top:24px">Mystery Challenges</div>
+  <div class="mystery-challenge" onclick="this.classList.toggle('open')">
+    <div class="mystery-header"><span class="mystery-icon">🧠</span>Model Mystery</div>
+    <div class="mystery-reveal">
+      <div class="task-text">Guess what this neural network is classifying</div>
+      <div class="mystery-reward">🎁 Reward: +60 XP bonus!</div>
+    </div>
+  </div>
+  <div class="mystery-challenge" onclick="this.classList.toggle('open')">
+    <div class="mystery-header"><span class="mystery-icon">📊</span>Data Detective</div>
+    <div class="mystery-reveal">
+      <div class="task-text">Find the hidden pattern in this dataset</div>
+      <div class="mystery-reward">🎁 Reward: +50 XP bonus!</div>
+    </div>
+  </div>
+  <div class="mystery-challenge" onclick="this.classList.toggle('open')">
+    <div class="mystery-header"><span class="mystery-icon">🏆</span>Kaggle Sprint</div>
+    <div class="mystery-reveal">
+      <div class="task-text">Submit a solution to this competition in 24 hours</div>
+      <div class="mystery-reward">🎁 Reward: +75 XP bonus!</div>
     </div>
   </div>
 
@@ -189,5 +311,137 @@ document.querySelectorAll('.week-header').forEach(function(h){
   h.addEventListener('click',function(){this.parentElement.classList.toggle('open')});
 });
 </script>
+
+<script>
+(function(){
+  const COURSE_ID = 'ai-lab';
+  const TOTAL_TASKS = 331;
+  const TOTAL_WEEKS = 24;
+  const TOTAL_QUARTERS = 12;
+  const XP_PER_TASK = 10;
+
+  // Load state from localStorage
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem('course_' + COURSE_ID)) || { done: [], streak: 0, lastVisit: null }; }
+    catch(e) { return { done: [], streak: 0, lastVisit: null }; }
+  }
+  function saveState(state) { localStorage.setItem('course_' + COURSE_ID, JSON.stringify(state)); }
+
+  const state = loadState();
+
+  // Update streak
+  const today = new Date().toDateString();
+  if (state.lastVisit !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (state.lastVisit === yesterday) { state.streak++; }
+    else if (state.lastVisit !== today) { state.streak = 1; }
+    state.lastVisit = today;
+    saveState(state);
+  }
+
+  // Calculate XP and level
+  const xp = state.done.length * XP_PER_TASK;
+  const level = Math.floor(xp / 100) + 1;
+  const xpInLevel = xp % 100;
+
+  // Update gamification bar
+  const xpFill = document.getElementById('gf-xp-fill');
+  const xpText = document.getElementById('gf-xp-text');
+  const levelText = document.getElementById('gf-level');
+  const streakText = document.getElementById('gf-streak');
+  const gemsText = document.getElementById('gf-gems');
+  const weekText = document.getElementById('gf-week');
+
+  if (xpFill) xpFill.style.width = xpInLevel + '%';
+  if (xpText) xpText.textContent = xp + ' XP';
+  if (levelText) levelText.textContent = 'Lv.' + level;
+  if (streakText) streakText.textContent = state.streak;
+  if (gemsText) gemsText.textContent = state.done.length;
+  if (progressText) progressText.textContent = state.done.length + '/' + TOTAL_TASKS + ' tasks';
+
+  // Setup interactive tasks
+  const tasks = document.querySelectorAll('.task');
+  tasks.forEach(function(task, i) {
+    const id = COURSE_ID + '_task_' + i;
+    const check = document.createElement('div');
+    check.className = 'task-check';
+    check.textContent = '✓';
+    task.prepend(check);
+
+    const xpBadge = document.createElement('div');
+    xpBadge.className = 'task-xp';
+    xpBadge.textContent = '+' + XP_PER_TASK + ' XP';
+    task.appendChild(xpBadge);
+
+    task.addEventListener('click', function() {
+      this.classList.toggle('done');
+      if (this.classList.contains('done')) {
+        state.done.push(id);
+        showToast('+' + XP_PER_TASK + ' XP! 🎉');
+      } else {
+        state.done = state.done.filter(function(x) { return x !== id; });
+      }
+      saveState(state);
+      updateUI();
+    });
+
+    if (state.done.includes(id)) task.classList.add('done');
+  });
+
+  function updateUI() {
+    const xp = state.done.length * XP_PER_TASK;
+    const level = Math.floor(xp / 100) + 1;
+    const xpInLevel = xp % 100;
+    const week = Math.min(Math.ceil(state.done.length / (TOTAL_TASKS / TOTAL_WEEKS)), TOTAL_WEEKS);
+    if (xpFill) xpFill.style.width = xpInLevel + '%';
+    if (xpText) xpText.textContent = xp + ' XP';
+    if (levelText) levelText.textContent = 'Lv.' + level;
+    if (gemsText) gemsText.textContent = state.done.length;
+    if (weekText) weekText.textContent = 'Week ' + week + ' of ' + TOTAL_WEEKS;
+
+    // Check milestones
+    const pct = Math.round((state.done.length / TOTAL_TASKS) * 100);
+    document.querySelectorAll('.milestone').forEach(function(m) {
+      const req = parseInt(m.dataset.pct);
+      if (pct >= req) m.classList.add('show');
+    });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    if (t) { t.textContent = msg; t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 2000); }
+  }
+
+
+  // Phase 2: Streak nudge
+  const streakNudge = document.getElementById('streak-nudge');
+  const streakCount = document.getElementById('streak-count');
+  if (streakNudge && state.streak > 0) {
+    streakCount.textContent = state.streak;
+    streakNudge.classList.add('show');
+  }
+
+  // Phase 2: Stats panel
+  const bestStreak = parseInt(localStorage.getItem('course_' + COURSE_ID + '_bestStreak') || '0');
+  if (state.streak > bestStreak) {
+    localStorage.setItem('course_' + COURSE_ID + '_bestStreak', state.streak);
+  }
+  const statXp = document.getElementById('stat-xp');
+  const statLevel = document.getElementById('stat-level');
+  const statStreak = document.getElementById('stat-streak');
+  if (statXp) statXp.textContent = xp;
+  if (statLevel) statLevel.textContent = level;
+  if (statStreak) statStreak.textContent = Math.max(state.streak, bestStreak);
+
+  // Initialize task states
+  updateUI();
+
+  // Auto-expand first year
+  var firstYear = document.querySelector('.year-card');
+  if (firstYear && !firstYear.classList.contains('open')) firstYear.classList.add('open');
+})();
+</script>
+
+<div class="toast" id="toast"></div>
 </body>
 </html>
