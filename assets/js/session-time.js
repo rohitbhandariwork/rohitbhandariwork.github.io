@@ -17,6 +17,7 @@
   var sessionStart = Date.now();
   var lastWarningTime = 0;
   var popupShown = false;
+  var navigatingInternally = false; // flag: skip beforeunload for internal links
 
   // ── Storage helpers ──────────────────────────────────────────────
   function getStoredData() {
@@ -68,7 +69,6 @@
     saveData(data);
   }
 
-  // First day = no lastEarlyExitDate ever stored
   function isFirstDay() {
     var data = getStoredData();
     return !data.lastEarlyExitDate;
@@ -198,41 +198,18 @@
     }
   }
 
-  // ── beforeunload: only fire when ACTUALLY leaving the site ───────
-  function onBeforeUnload(e) {
-    // If popup is already showing, don't intercept again
-    if (popupShown) return;
-
-    // Check if user is navigating to a same-origin page (internal link)
-    // beforeunload doesn't give us the destination, so we check if
-    // there's a pending click on a same-origin link
-    // We handle this via click handler instead — see below
-
-    // For actual tab close / browser navigation to external sites:
-    var total = getTotalTime();
-    if (total < MIN_TIME) {
-      saveSessionTime();
-      logEarlyExit();
-      // Standard beforeunload prompt as fallback
-      e.preventDefault();
-      e.returnValue = '';
-      return '';
-    }
-    saveSessionTime();
-  }
-
-  // ── Click handler: skip popup for internal navigation ────────────
+  // ── Click handler: the ONLY place we decide to block or allow ────
   function onClick(e) {
     var link = e.target.closest('a');
     if (!link) return;
     var href = link.getAttribute('href');
     if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
 
-    // Internal navigation — save time but don't block
+    // Internal navigation — save time, set flag, let it through
     if (isSameOrigin(href)) {
+      navigatingInternally = true;
       saveSessionTime();
-      // Don't prevent default — let navigation happen freely
-      return;
+      return; // don't prevent default — navigation happens
     }
 
     // External navigation — check minimum time
@@ -248,6 +225,23 @@
         saveSessionTime();
       }
     }
+  }
+
+  // ── beforeunload: ONLY for tab close / browser-level navigation ──
+  function onBeforeUnload(e) {
+    // Skip if we already know it's internal navigation
+    if (navigatingInternally) return;
+    if (popupShown) return;
+
+    var total = getTotalTime();
+    if (total < MIN_TIME) {
+      saveSessionTime();
+      logEarlyExit();
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+    saveSessionTime();
   }
 
   // ── Periodic max-time warning ────────────────────────────────────
