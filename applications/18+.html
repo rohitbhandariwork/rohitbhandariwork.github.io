@@ -4,32 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Career Launcher — Ages 18+ | Education, Reimagined</title>
-  <meta name="description" content="Employment stage. Portfolio building, real-world exposure, internships, and freelance work.">
-  <link rel="canonical" href="https://rohitbhandariwork.github.io/applications/18+.html">
-  <meta property="og:title" content="Career Launcher — Ages 18+">
-  <meta property="og:description" content="Employment stage.">
-  <meta property="og:url" content="https://rohitbhandariwork.github.io/applications/18+.html">
+  <meta name="description" content="The education system failed you. We're here to fix that.">
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-    <link rel="stylesheet" href="../assets/css/buttons.css">
-<style>
+  <link rel="stylesheet" href="../assets/css/buttons.css">
+  <style>
     :root {
       --font: 'Manrope', -apple-system, sans-serif;
-      --indigo: #667eea;
-      --violet: #764ba2;
-      --bg: #fff;
-      --bg-alt: #eef2ff;
+      --color: #667eea;
+      --color2: #764ba2;
+      --bg: #eef2ff;
+      --border: #c7d2fe;
       --text: #1e293b;
       --text-secondary: #64748b;
-      --border: #c7d2fe;
+      --surface: #fff;
+      --border-light: #e2e8f0;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: #f8fafc; color: var(--text); padding-top: 52px; }
+    body { font-family: var(--font); background: #f8fafc; color: var(--text); padding-top: 52px; -webkit-font-smoothing: antialiased; }
 
+    /* ── Topbar ── */
     #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
     .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
     .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
@@ -41,7 +38,6 @@
     .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
     .nav-dropdown-menu a { display: block; padding: 8px 14px; border-radius: 8px; font-size: 13px; white-space: nowrap; color: #334155; transition: .15s; }
     .nav-dropdown-menu a:hover { background: #f1f5f9; color: #1e293b; }
-    @media (min-width: 992px) { #topbar { padding-right: 44px; } }
     @media (max-width: 768px) {
       .hamburger { display: block; }
       .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 10px 15px rgba(0,0,0,.1); }
@@ -52,36 +48,54 @@
       .nav-dropdown-menu a { padding: 10px 14px; font-size: 14px; }
     }
 
-    .main { max-width: 640px; margin: 0 auto; padding: 48px 20px 60px; }
-    .hero-card { background: linear-gradient(135deg, var(--indigo), var(--violet)); border-radius: 24px; padding: 48px 28px; margin-bottom: 28px; text-align: center; color: #fff; }
-    .hero-emoji { font-size: 80px; margin-bottom: 20px; }
-    .stage-badge { display: inline-block; padding: 6px 16px; background: rgba(255,255,255,0.15); border-radius: 999px; font-size: 12px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12px; backdrop-filter: blur(8px); }
-    .hero-card h1 { font-size: 36px; font-weight: 800; letter-spacing: -.02em; }
-    .hero-card .course-name { font-size: 18px; font-weight: 700; color: rgba(255,255,255,0.9); margin-top: 4px; }
-    .hero-card p { font-size: 16px; color: rgba(255,255,255,0.8); margin-top: 12px; line-height: 1.6; }
+    /* ── Layout ── */
+    .main { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
 
-    .section { background: var(--bg); border-radius: 20px; padding: 28px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
-    .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .focus-item { background: var(--bg-alt); border-radius: 14px; padding: 16px 12px; text-align: center; }
-    .focus-item .icon { font-size: 28px; margin-bottom: 8px; }
+    /* ── Primary: Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--color), var(--color2));
+      border-radius: 24px; padding: 48px 24px; text-align: center; color: #fff;
+      margin-bottom: 28px; position: relative; overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 250px; height: 250px; background: rgba(255,255,255,.08); border-radius: 50%; }
+    .hero-emoji { font-size: 80px; margin-bottom: 16px; position: relative; }
+    .hero .tagline { display: inline-block; margin-top: 8px; padding: 6px 16px; background: rgba(255,255,255,.15); border-radius: 999px; font-size: 13px; font-weight: 700; backdrop-filter: blur(8px); position: relative; }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -.02em; position: relative; }
+    .hero p { font-size: 16px; color: rgba(255,255,255,.85); margin-top: 12px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; position: relative; }
+
+    /* ── Secondary: Section Cards ── */
+    .section { background: var(--surface); border-radius: 20px; padding: 24px; margin-bottom: 16px; border: 1px solid var(--border-light); }
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--color); margin-bottom: 16px; }
+    .section h2 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+
+    /* ── Focus Grid ── */
+    .focus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .focus-item { background: var(--bg); border-radius: 14px; padding: 16px 12px; text-align: center; }
+    .focus-item .icon { font-size: 28px; margin-bottom: 6px; }
     .focus-item .label { font-size: 13px; font-weight: 600; color: var(--text); }
 
-    /* ── App Grid ── */
-    .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-    .app-card { background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid #f1f5f9; text-decoration: none; color: var(--text); transition: .2s; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .app-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-    .app-card .icon { font-size: 36px; margin-bottom: 12px; }
-    .app-card .name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-    .app-card .desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
-
-    .activities-list { display: flex; flex-direction: column; gap: 10px; }
-    .activity { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border-radius: 12px; }
-    .activity .icon { font-size: 24px; flex-shrink: 0; }
+    /* ── Tertiary: Activity List ── */
+    .activity { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border-light); }
+    .activity:last-child { border-bottom: none; }
+    .activity .icon { font-size: 24px; flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 10px; }
     .activity .name { font-size: 14px; font-weight: 600; color: var(--text); }
     .activity .desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .cta-btn { background: linear-gradient(135deg, var(--indigo), var(--violet)); }
-</style>
+
+    /* ── Apps Grid (18+ only) ── */
+    .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .app-card { background: var(--bg); border-radius: 14px; padding: 16px; text-decoration: none; color: var(--text); text-align: center; transition: .2s; border: 1px solid transparent; }
+    .app-card:hover { border-color: var(--color); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+    .app-card .icon { font-size: 28px; margin-bottom: 6px; }
+    .app-card .name { font-size: 13px; font-weight: 700; }
+    .app-card .desc { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .hero { padding: 36px 20px; border-radius: 20px; }
+      .hero-emoji { font-size: 64px; }
+      .focus-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -96,7 +110,7 @@
         <a href="8-11.html">Ages 8–11</a>
         <a href="12-15.html">Ages 12–15</a>
         <a href="15-17.html">Ages 15–17</a>
-        <a href="18+.html" class="active">Ages 18+</a>
+        <a href="18+.html">Ages 18+</a>
       </div>
     </div>
     <a href="../news/">News</a>
@@ -105,94 +119,42 @@
 </div>
 
 <div class="main">
-  <div class="hero-card">
+  <!-- Primary: Hero -->
+  <div class="hero">
     <div class="hero-emoji">💼</div>
-    <div class="stage-badge">Employment</div>
+    <div class="tagline">Employment</div>
     <h1>Ages 18+</h1>
-    <div class="course-name">Career Launcher</div>
     <p>The education system failed you. We're here to fix that.</p>
   </div>
 
+  <!-- Secondary: Focus Areas -->
   <div class="section">
-    <h2>Focus Areas</h2>
+    <div class="section-label">Focus Areas</div>
     <div class="focus-grid">
-      <div class="focus-item">
-        <div class="icon">📁</div>
-        <div class="label">Portfolio Building</div>
-      </div>
-      <div class="focus-item">
-        <div class="icon">🌍</div>
-        <div class="label">Real-World Exposure</div>
-      </div>
+      <div class="focus-item"><div class="icon">📁</div><div class="label">Portfolio Building</div></div>
+<div class="focus-item"><div class="icon">🌍</div><div class="label">Real-World Exposure</div></div>
     </div>
   </div>
 
-  <!-- Apps Grid -->
+  <div class="section"><div class="section-label">Your Apps</div><div class="apps-grid"><a href="../course/" class="app-card"><div class="icon">📚</div><div class="name">AI Course</div><div class="desc">Structured learning paths</div></a>
+<a href="../flashcard/" class="app-card"><div class="icon">🃏</div><div class="name">Flashcards</div><div class="desc">Spaced repetition study</div></a>
+<a href="../interview/" class="app-card"><div class="icon">🎙️</div><div class="name">AI Interview</div><div class="desc">Practice technical interviews</div></a>
+<a href="../timer/" class="app-card"><div class="icon">⏱️</div><div class="name">Focus Timer</div><div class="desc">Deep work sessions</div></a>
+<a href="../jobtool/" class="app-card"><div class="icon">💼</div><div class="name">Job Tool</div><div class="desc">Job application tracker</div></a>
+<a href="../shop/" class="app-card"><div class="icon">🛒</div><div class="name">AI Shop</div><div class="desc">Ebooks and resources</div></a></div></div>
+
+  <!-- Tertiary: Activities -->
   <div class="section">
-    <h2>Your Apps</h2>
-    <div class="apps-grid">
-      <a href="../course/" class="app-card">
-        <div class="icon">📚</div>
-        <div class="name">AI Course</div>
-        <div class="desc">Structured learning paths</div>
-      </a>
-      <a href="../flashcard/" class="app-card">
-        <div class="icon">🃏</div>
-        <div class="name">Flashcards</div>
-        <div class="desc">Spaced repetition study</div>
-      </a>
-      <a href="../interview/" class="app-card">
-        <div class="icon">🎙️</div>
-        <div class="name">AI Interview</div>
-        <div class="desc">Practice technical interviews</div>
-      </a>
-      <a href="../timer/" class="app-card">
-        <div class="icon">⏱️</div>
-        <div class="name">Focus Timer</div>
-        <div class="desc">Deep work sessions</div>
-      </a>
-      <a href="../jobtool/" class="app-card">
-        <div class="icon">💼</div>
-        <div class="name">Job Tool</div>
-        <div class="desc">Job application tracker</div>
-      </a>
-      <a href="../shop/" class="app-card">
-        <div class="icon">🛒</div>
-        <div class="name">AI Shop</div>
-        <div class="desc">Ebooks and resources</div>
-      </a>
-    </div>
+    <div class="section-label">What You'll Do</div>
+    <div class="activity"><div class="icon">🏢</div><div><div class="name">Internships</div><div class="desc">Real work experience at companies</div></div></div>
+<div class="activity"><div class="icon">💼</div><div><div class="name">Freelance Work</div><div class="desc">Build your client portfolio</div></div></div>
+<div class="activity"><div class="icon">🔬</div><div><div class="name">Research Assistant Roles</div><div class="desc">Contribute to cutting-edge projects</div></div></div>
   </div>
 
-  <div class="section">
-    <h2>Example Activities</h2>
-    <div class="activities-list">
-      <div class="activity">
-        <div class="icon">🏢</div>
-        <div>
-          <div class="name">Internships</div>
-          <div class="desc">Real work experience at companies</div>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="icon">💼</div>
-        <div>
-          <div class="name">Freelance Work</div>
-          <div class="desc">Build your client portfolio</div>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="icon">🔬</div>
-        <div>
-          <div class="name">Research Assistant Roles</div>
-          <div class="desc">Contribute to cutting-edge projects</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="btn-group">
-    <a href="../" class="btn-gray btn-md">← Back to Applications</a>
+  <!-- CTA -->
+  <div class="btn-group" style="margin-top:8px">
+    <a href="../" class="btn-gray btn-md">← Back</a>
+    
   </div>
 </div>
 

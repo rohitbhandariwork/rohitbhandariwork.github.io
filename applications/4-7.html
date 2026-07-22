@@ -4,45 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bot Buddies — Ages 4–7 | Education, Reimagined</title>
-  <meta name="description" content="Foundational thinking for little learners. Logic, patterns, and sequencing through play.">
-  <link rel="canonical" href="https://rohitbhandariwork.github.io/applications/4-7.html">
-  <meta property="og:title" content="Bot Buddies — Ages 4–7">
-  <meta property="og:description" content="Foundational thinking through play.">
-  <meta property="og:url" content="https://rohitbhandariwork.github.io/applications/4-7.html">
+  <meta name="description" content="Learning is an adventure! Let's explore together through play, patterns, and logic.">
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-    <link rel="stylesheet" href="../assets/css/buttons.css">
-<style>
+  <link rel="stylesheet" href="../assets/css/buttons.css">
+  <style>
     :root {
       --font: 'Manrope', -apple-system, sans-serif;
-      --font-reading: 'Inter', -apple-system, sans-serif;
-      --pink: #f472b6;
-      --yellow: #fbbf24;
-      --bg: #fff;
-      --bg-alt: #fdf2f8;
+      --color: #f472b6;
+      --color2: #fbbf24;
+      --bg: #fdf2f8;
+      --border: #fbcfe8;
       --text: #1e293b;
       --text-secondary: #64748b;
-      --border: #fbcfe8;
+      --surface: #fff;
+      --border-light: #e2e8f0;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: #f8fafc; color: var(--text); padding-top: 52px; }
+    body { font-family: var(--font); background: #f8fafc; color: var(--text); padding-top: 52px; -webkit-font-smoothing: antialiased; }
 
+    /* ── Topbar ── */
     #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
-    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; font-family: var(--font); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
     .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
     .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
-    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; font-family: var(--font); }
+    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; }
     .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
     .nav-dropdown { position: relative; }
     .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #fff; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,.1); padding: 6px; min-width: 140px; z-index: 10001; }
     .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
     .nav-dropdown-menu a { display: block; padding: 8px 14px; border-radius: 8px; font-size: 13px; white-space: nowrap; color: #334155; transition: .15s; }
     .nav-dropdown-menu a:hover { background: #f1f5f9; color: #1e293b; }
-    @media (min-width: 992px) { #topbar { padding-right: 44px; } }
     @media (max-width: 768px) {
       .hamburger { display: block; }
       .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 10px 15px rgba(0,0,0,.1); }
@@ -53,27 +48,53 @@
       .nav-dropdown-menu a { padding: 10px 14px; font-size: 14px; }
     }
 
-    .main { max-width: 640px; margin: 0 auto; padding: 48px 20px 60px; }
-    .hero-card { background: var(--bg); border: 2px solid var(--border); border-radius: 24px; padding: 48px 28px; margin-bottom: 28px; text-align: center; }
-    .hero-emoji { font-size: 80px; margin-bottom: 20px; }
-    .stage-badge { display: inline-block; padding: 6px 16px; background: var(--bg-alt); border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--pink); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12px; }
-    .hero-card h1 { font-size: 36px; font-weight: 800; color: var(--text); letter-spacing: -.02em; }
-    .hero-card .course-name { font-size: 18px; font-weight: 700; color: var(--pink); margin-top: 4px; }
-    .hero-card p { font-size: 16px; color: var(--text-secondary); margin-top: 12px; line-height: 1.6; }
+    /* ── Layout ── */
+    .main { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
 
-    .section { background: var(--bg); border-radius: 20px; padding: 28px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .section h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
-    .focus-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-    .focus-item { background: var(--bg-alt); border-radius: 14px; padding: 16px 12px; text-align: center; }
-    .focus-item .icon { font-size: 28px; margin-bottom: 8px; }
+    /* ── Primary: Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--color), var(--color2));
+      border-radius: 24px; padding: 48px 24px; text-align: center; color: #fff;
+      margin-bottom: 28px; position: relative; overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 250px; height: 250px; background: rgba(255,255,255,.08); border-radius: 50%; }
+    .hero-emoji { font-size: 80px; margin-bottom: 16px; position: relative; }
+    .hero .tagline { display: inline-block; margin-top: 8px; padding: 6px 16px; background: rgba(255,255,255,.15); border-radius: 999px; font-size: 13px; font-weight: 700; backdrop-filter: blur(8px); position: relative; }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -.02em; position: relative; }
+    .hero p { font-size: 16px; color: rgba(255,255,255,.85); margin-top: 12px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; position: relative; }
+
+    /* ── Secondary: Section Cards ── */
+    .section { background: var(--surface); border-radius: 20px; padding: 24px; margin-bottom: 16px; border: 1px solid var(--border-light); }
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--color); margin-bottom: 16px; }
+    .section h2 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+
+    /* ── Focus Grid ── */
+    .focus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .focus-item { background: var(--bg); border-radius: 14px; padding: 16px 12px; text-align: center; }
+    .focus-item .icon { font-size: 28px; margin-bottom: 6px; }
     .focus-item .label { font-size: 13px; font-weight: 600; color: var(--text); }
 
-    .activities-list { display: flex; flex-direction: column; gap: 10px; }
-    .activity { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border-radius: 12px; }
-    .activity .icon { font-size: 24px; flex-shrink: 0; }
+    /* ── Tertiary: Activity List ── */
+    .activity { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border-light); }
+    .activity:last-child { border-bottom: none; }
+    .activity .icon { font-size: 24px; flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 10px; }
     .activity .name { font-size: 14px; font-weight: 600; color: var(--text); }
     .activity .desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .cta-btn { background: linear-gradient(135deg, var(--pink), var(--yellow)); }
+
+    /* ── Apps Grid (18+ only) ── */
+    .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .app-card { background: var(--bg); border-radius: 14px; padding: 16px; text-decoration: none; color: var(--text); text-align: center; transition: .2s; border: 1px solid transparent; }
+    .app-card:hover { border-color: var(--color); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+    .app-card .icon { font-size: 28px; margin-bottom: 6px; }
+    .app-card .name { font-size: 13px; font-weight: 700; }
+    .app-card .desc { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .hero { padding: 36px 20px; border-radius: 20px; }
+      .hero-emoji { font-size: 64px; }
+      .focus-grid { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -85,7 +106,7 @@
     <div class="nav-dropdown" onclick="this.classList.toggle('open')">
       <a href="javascript:void(0)">Applications ▾</a>
       <div class="nav-dropdown-menu">
-        <a href="4-7.html" class="active">Ages 4–7</a>
+        <a href="4-7.html">Ages 4–7</a>
         <a href="8-11.html">Ages 8–11</a>
         <a href="12-15.html">Ages 12–15</a>
         <a href="15-17.html">Ages 15–17</a>
@@ -98,62 +119,38 @@
 </div>
 
 <div class="main">
-  <div class="hero-card">
+  <!-- Primary: Hero -->
+  <div class="hero">
     <div class="hero-emoji">👶</div>
-    <div class="stage-badge">Foundational Thinking</div>
+    <div class="tagline">Foundational Thinking</div>
     <h1>Ages 4–7</h1>
-    <div class="course-name">Bot Buddies</div>
     <p>Learning is an adventure! Let's explore together through play, patterns, and logic.</p>
   </div>
 
+  <!-- Secondary: Focus Areas -->
   <div class="section">
-    <h2>Focus Areas</h2>
+    <div class="section-label">Focus Areas</div>
     <div class="focus-grid">
-      <div class="focus-item">
-        <div class="icon">🧩</div>
-        <div class="label">Logic</div>
-      </div>
-      <div class="focus-item">
-        <div class="icon">🔗</div>
-        <div class="label">Patterns</div>
-      </div>
-      <div class="focus-item">
-        <div class="icon">🔢</div>
-        <div class="label">Sequencing</div>
-      </div>
+      <div class="focus-item"><div class="icon">🧩</div><div class="label">Logic</div></div>
+<div class="focus-item"><div class="icon">🔗</div><div class="label">Patterns</div></div>
+<div class="focus-item"><div class="icon">🔢</div><div class="label">Sequencing</div></div>
     </div>
   </div>
 
+  
+
+  <!-- Tertiary: Activities -->
   <div class="section">
-    <h2>Example Activities</h2>
-    <div class="activities-list">
-      <div class="activity">
-        <div class="icon">🎬</div>
-        <div>
-          <div class="name">Scratch.Jr</div>
-          <div class="desc">Visual programming for young creators</div>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="icon">🐝</div>
-        <div>
-          <div class="name">Bee-Bot Robots</div>
-          <div class="desc">Floor robots that teach sequencing</div>
-        </div>
-      </div>
-      <div class="activity">
-        <div class="icon">🎲</div>
-        <div>
-          <div class="name">Board Games</div>
-          <div class="desc">Strategy and critical thinking through play</div>
-        </div>
-      </div>
-    </div>
+    <div class="section-label">What You'll Do</div>
+    <div class="activity"><div class="icon">🎬</div><div><div class="name">Scratch.Jr</div><div class="desc">Visual programming for young creators</div></div></div>
+<div class="activity"><div class="icon">🐝</div><div><div class="name">Bee-Bot Robots</div><div class="desc">Floor robots that teach sequencing</div></div></div>
+<div class="activity"><div class="icon">🎲</div><div><div class="name">Board Games</div><div class="desc">Strategy and critical thinking through play</div></div></div>
   </div>
 
-  <div class="btn-group">
+  <!-- CTA -->
+  <div class="btn-group" style="margin-top:8px">
     <a href="../" class="btn-gray btn-md">← Back</a>
-    <a href="../courses/bot-buddies/" class="cta-btn">Start Course →</a>
+    <a href="../courses/bot-buddies/" class="cta-btn" style="background:linear-gradient(135deg,#f472b6,#fbbf24);order:1">Start Course →</a>
   </div>
 </div>
 
