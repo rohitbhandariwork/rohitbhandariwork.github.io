@@ -4,27 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Kids — Ages 8–11 | Education, Reimagined</title>
-  <meta name="description" content="Block-based coding and robotics. Build games, animations, and real projects.">
-  <link rel="canonical" href="https://rohitbhandariwork.github.io/courses/code-kids/">
   <link rel="icon" href="../../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/buttons.css">
   <style>
     :root {
       --font: 'Manrope', -apple-system, sans-serif;
-      --emerald: #34d399;
-      --blue: #60a5fa;
-      --emerald-light: #ecfdf5;
+      --font-reading: 'Inter', -apple-system, sans-serif;
+      --color: #34d399;
+      --color2: #60a5fa;
+      --bg: #ecfdf5;
+      --border: #a7f3d0;
       --text: #1e293b;
       --text-secondary: #64748b;
-      --border: #a7f3d0;
+      --text-muted: #94a3b8;
+      --surface: #fff;
+      --surface-alt: #f8fafc;
+      --border-light: #e2e8f0;
       --success: #22c55e;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: #ecfdf5; color: var(--text); padding-top: 52px; min-height: 100vh; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); padding-top: 52px; -webkit-font-smoothing: antialiased; }
 
+    /* ── Topbar ── */
     #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
     .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
     .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
@@ -33,74 +38,110 @@
     .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
     @media (max-width: 768px) {
       .hamburger { display: block; }
-      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 8px 12px; gap: 4px; }
+      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 10px 15px rgba(0,0,0,.1); }
       .nav-links.open { display: flex; }
       .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
     }
 
-    .game-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--border); }
-    .game-bar .streak { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #ef4444; }
-    .game-bar .xp { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #d97706; }
-    .game-bar .level { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #059669; }
+    /* ── Layout ── */
+    .main { max-width: 720px; margin: 0 auto; padding: 24px 20px 60px; }
 
-    .main { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
+    /* ── Hero (Primary Visual Anchor) ── */
+    .hero {
+      background: linear-gradient(135deg, var(--color), var(--color2));
+      border-radius: 24px; padding: 48px 24px; text-align: center; color: #fff;
+      margin-bottom: 32px; position: relative; overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; top: -50%; right: -30%; width: 300px; height: 300px; background: rgba(255,255,255,.08); border-radius: 50%; }
+    .hero-emoji { font-size: 80px; margin-bottom: 16px; position: relative; }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -.02em; position: relative; }
+    .hero .tagline { display: inline-block; margin-top: 8px; padding: 6px 16px; background: rgba(255,255,255,.15); border-radius: 999px; font-size: 13px; font-weight: 700; backdrop-filter: blur(8px); position: relative; }
+    .hero p { font-size: 16px; color: rgba(255,255,255,.85); margin-top: 12px; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto; position: relative; }
+    .hero-stats { display: flex; justify-content: center; gap: 32px; margin-top: 24px; position: relative; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 28px; font-weight: 800; }
+    .hero-stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; opacity: .7; }
 
-    .hero { background: linear-gradient(135deg, var(--emerald), var(--blue)); border-radius: 24px; padding: 40px 24px; text-align: center; color: #fff; margin-bottom: 24px; }
-    .hero-emoji { font-size: 72px; margin-bottom: 16px; }
-    .hero h1 { font-size: 32px; font-weight: 800; }
-    .hero p { font-size: 15px; color: rgba(255,255,255,0.9); margin-top: 8px; }
+    /* ── Section Headers ── */
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--color); margin-bottom: 12px; padding-left: 4px; }
 
-    .mission-card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 2px solid var(--border); }
-    .mission-card .badge { display: inline-block; padding: 4px 12px; background: var(--emerald-light); border-radius: 999px; font-size: 11px; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12px; }
-    .mission-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .mission-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    /* ── Year Cards (Primary — Large) ── */
+    .year-card {
+      background: var(--surface); border-radius: 20px; margin-bottom: 24px;
+      border: 1px solid var(--border-light); overflow: hidden;
+    }
+    .year-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px; cursor: pointer; transition: .2s;
+    }
+    .year-header:hover { background: var(--surface-alt); }
+    .year-info { flex: 1; }
+    .year-name { font-size: 20px; font-weight: 800; color: var(--text); }
+    .year-sub { font-size: 14px; color: var(--text-secondary); margin-top: 2px; font-weight: 500; }
+    .year-toggle { font-size: 20px; color: var(--text-muted); transition: .3s; flex-shrink: 0; margin-left: 12px; }
+    .year-card.open .year-toggle { transform: rotate(180deg); }
+    .year-content { display: none; padding: 0 24px 24px; }
+    .year-card.open .year-content { display: block; }
 
-    .xp-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .xp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .xp-header h3 { font-size: 15px; font-weight: 700; }
-    .xp-header span { font-size: 13px; font-weight: 600; color: #d97706; }
-    .xp-track { background: #d1fae5; border-radius: 999px; height: 12px; overflow: hidden; }
-    .xp-fill { height: 100%; background: linear-gradient(90deg, var(--emerald), #10b981); border-radius: 999px; transition: width .5s ease; }
+    /* ── Quarter Cards (Secondary — Medium) ── */
+    .quarter-card {
+      border: 1px solid var(--border-light); border-radius: 14px; margin-bottom: 12px;
+      overflow: hidden; transition: .2s;
+    }
+    .quarter-card.primary {
+      border-color: var(--color);
+      border-width: 2px;
+      background: linear-gradient(135deg, var(--bg), var(--surface));
+    }
+    .quarter-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; cursor: pointer; transition: .2s;
+    }
+    .quarter-header:hover { background: var(--surface-alt); }
+    .quarter-card.primary .quarter-header { background: var(--bg); }
+    .quarter-info { flex: 1; }
+    .quarter-name { font-size: 15px; font-weight: 700; }
+    .quarter-card.primary .quarter-name { color: var(--color); }
+    .quarter-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+    .quarter-toggle { font-size: 16px; color: var(--text-muted); transition: .3s; flex-shrink: 0; margin-left: 8px; }
+    .quarter-card.open .quarter-toggle { transform: rotate(180deg); }
+    .quarter-content { display: none; padding: 0 16px 16px; }
+    .quarter-card.open .quarter-content { display: block; }
 
-    /* ── Skill Tree (Empowerment) ── */
-    .skill-tree { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .skill-tree h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .skills { display: flex; flex-direction: column; gap: 12px; }
-    .skill { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f8fafc; border-radius: 14px; border: 1px solid #e2e8f0; }
-    .skill .icon { font-size: 28px; flex-shrink: 0; }
-    .skill .info { flex: 1; }
-    .skill .name { font-size: 14px; font-weight: 600; }
-    .skill .desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .skill .progress { width: 100%; height: 6px; background: #e2e8f0; border-radius: 999px; margin-top: 8px; overflow: hidden; }
-    .skill .progress-fill { height: 100%; background: var(--emerald); border-radius: 999px; }
+    /* ── Week Items (Tertiary — Compact) ── */
+    .week-item {
+      border-bottom: 1px solid var(--border-light); padding: 14px 0;
+    }
+    .week-item:last-child { border-bottom: none; }
+    .week-header {
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; transition: .2s;
+    }
+    .week-header:hover { opacity: .8; }
+    .week-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .week-toggle { font-size: 12px; color: var(--text-muted); transition: .3s; }
+    .week-item.open .week-toggle { transform: rotate(180deg); }
+    .week-tasks { display: none; padding: 10px 0 4px; }
+    .week-item.open .week-tasks { display: block; }
 
-    .challenges { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .challenges h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .challenge-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8fafc; border-radius: 12px; margin-bottom: 8px; }
-    .challenge-item .icon { font-size: 24px; }
-    .challenge-item .info { flex: 1; }
-    .challenge-item .name { font-size: 14px; font-weight: 600; }
-    .challenge-item .reward { font-size: 12px; color: #d97706; font-weight: 600; }
-    .challenge-item .check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; }
-    .challenge-item .check.done { background: var(--success); border-color: var(--success); color: #fff; }
+    /* ── Task Items (Atomic — Smallest) ── */
+    .task { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
+    .task-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border-light); flex-shrink: 0; margin-top: 7px; }
+    .task-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; font-family: var(--font-reading); }
 
-    .social-card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .social-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .leaderboard { display: flex; flex-direction: column; gap: 8px; }
-    .lb-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #f8fafc; border-radius: 10px; }
-    .lb-item .rank { font-size: 14px; font-weight: 700; width: 24px; text-align: center; }
-    .lb-item .avatar { font-size: 20px; }
-    .lb-item .name { flex: 1; font-size: 14px; font-weight: 600; }
-    .lb-item .score { font-size: 13px; font-weight: 700; color: #d97706; }
-    .lb-item.you { background: var(--emerald-light); border: 1px solid var(--emerald); }
+    /* ── Progress Bar ── */
+    .progress-wrap { background: var(--border-light); border-radius: 999px; height: 6px; margin-top: 16px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--color), var(--color2)); transition: width .5s ease; }
 
-    .mystery-card { background: linear-gradient(135deg, #dbeafe, #bfdbfe); border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; cursor: pointer; transition: .2s; border: 2px dashed var(--blue); }
-    .mystery-card:hover { transform: scale(1.02); }
-    .mystery-card .icon { font-size: 48px; margin-bottom: 12px; }
-    .mystery-card h3 { font-size: 16px; font-weight: 700; color: #1e40af; }
-    .mystery-card p { font-size: 13px; color: #2563eb; margin-top: 4px; }
-
-    .back-link { display: block; text-align: center; margin-top: 24px; font-size: 14px; font-weight: 600; color: #059669; text-decoration: none; }
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .hero { padding: 36px 20px; border-radius: 20px; }
+      .hero-emoji { font-size: 64px; }
+      .hero-stats { gap: 20px; }
+      .hero-stat-num { font-size: 22px; }
+      .year-header { padding: 20px; }
+      .year-name { font-size: 18px; }
+    }
   </style>
 </head>
 <body>
@@ -109,139 +150,42 @@
   <button class="hamburger" onclick="toggleNav()">☰</button>
   <div class="nav-links" id="navLinks">
     <a href="../../portfolio/">Portfolio</a>
-    <a href="../../applications/8-11.html">← Back</a>
+    <a href="../applications/8-11.html">← Ages 8–11</a>
     <a href="../../news/">News</a>
     <a href="../../portfolio/#contact">Contact</a>
   </div>
 </div>
 
-<div class="game-bar">
-  <div class="streak">🔥 5 day streak</div>
-  <div class="xp">⭐ 580 XP</div>
-  <div class="level">🏆 Level 4</div>
-</div>
-
 <div class="main">
+  <!-- Hero: Primary Visual Anchor -->
   <div class="hero">
-    <div class="hero-emoji">🧱</div>
+    <div class="hero-emoji">🧒</div>
     <h1>Code Kids</h1>
-    <p>Build games, animations, and robots through code!</p>
-  </div>
-
-  <div class="mission-card">
-    <div class="badge">Your Mission</div>
-    <h2>Build the Ultimate Game Studio!</h2>
-    <p>You're the CEO of a game studio. Create games, animations, and robots to earn coins and hire team members. The more you build, the bigger your studio gets!</p>
-  </div>
-
-  <div class="xp-card">
-    <div class="xp-header">
-      <h3>Level 4 Progress</h3>
-      <span>580 / 800 XP</span>
-    </div>
-    <div class="xp-track">
-      <div class="xp-fill" style="width: 72%"></div>
+    <div class="tagline">Intro to Coding</div>
+    <p>You're smarter than you think. Prove it through code, robots, and creation.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-label">Quarters</div></div><div class="hero-stat"><div class="hero-stat-num">9</div><div class="hero-stat-label">Weeks</div></div>
     </div>
   </div>
 
-  <!-- Empowerment of Creativity -->
-  <div class="skill-tree">
-    <h3>Skill Tree</h3>
-    <div class="skills">
-      <div class="skill">
-        <div class="icon">🎮</div>
-        <div class="info">
-          <div class="name">Game Builder</div>
-          <div class="desc">Create your first game</div>
-          <div class="progress"><div class="progress-fill" style="width:80%"></div></div>
-        </div>
-      </div>
-      <div class="skill">
-        <div class="icon">🎬</div>
-        <div class="info">
-          <div class="name">Animation Master</div>
-          <div class="desc">Make characters move</div>
-          <div class="progress"><div class="progress-fill" style="width:45%"></div></div>
-        </div>
-      </div>
-      <div class="skill">
-        <div class="icon">🤖</div>
-        <div class="info">
-          <div class="name">Robot Commander</div>
-          <div class="desc">Program a real robot</div>
-          <div class="progress"><div class="progress-fill" style="width:20%"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="year-card open"><div class="year-header"><div class="year-info"><div class="year-name">Year 1</div><div class="year-sub">Block-based Coding & Robotics</div></div><span class="year-toggle">▾</span></div><div class="year-content"><div class="quarter-card"><div class="quarter-header"><div class="quarter-info"><div class="quarter-name">Q1: Scratch Fundamentals</div><div class="quarter-meta">Days 1–91</div></div><span class="quarter-toggle">▾</span></div><div class="quarter-content"><div class="week-item"><div class="week-header"><span class="week-name">Scratch Interface</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Creating accounts</div></div><div class="task"><div class="task-dot"></div><div class="task-text">The stage and sprites</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Block palette tour</div></div></div></div><div class="week-item"><div class="week-header"><span class="week-name">Motion & Looks</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Move and turn blocks</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Say and think</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Change color and size</div></div></div></div><div class="week-item"><div class="week-header"><span class="week-name">Events & Control</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">When green flag clicked</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Wait and repeat</div></div><div class="task"><div class="task-dot"></div><div class="task-text">If/then blocks</div></div></div></div></div></div><div class="quarter-card"><div class="quarter-header"><div class="quarter-info"><div class="quarter-name">Q2: Interactive Stories</div><div class="quarter-meta">Days 92–182</div></div><span class="quarter-toggle">▾</span></div><div class="quarter-content"><div class="week-item"><div class="week-header"><span class="week-name">Story Design</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Characters and setting</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Dialogue and narration</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Branching stories</div></div></div></div><div class="week-item"><div class="week-header"><span class="week-name">Animation</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Costume changes</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Motion paths</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Scene transitions</div></div></div></div></div></div><div class="quarter-card"><div class="quarter-header"><div class="quarter-info"><div class="quarter-name">Q3: Games</div><div class="quarter-meta">Days 183–273</div></div><span class="quarter-toggle">▾</span></div><div class="quarter-content"><div class="week-item"><div class="week-header"><span class="week-name">Game Mechanics</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Score tracking</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Collision detection</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Lives and levels</div></div></div></div><div class="week-item"><div class="week-header"><span class="week-name">Build a Game</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Choose a game type</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Program gameplay</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Add polish</div></div></div></div></div></div><div class="quarter-card primary"><div class="quarter-header"><div class="quarter-info"><div class="quarter-name">Q4: Robots & AI</div><div class="quarter-meta">Days 274–365</div></div><span class="quarter-toggle">▾</span></div><div class="quarter-content"><div class="week-item"><div class="week-header"><span class="week-name">micro:bit</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Button inputs</div></div><div class="task"><div class="task-dot"></div><div class="task-text">LED display</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Sensors</div></div></div></div><div class="week-item"><div class="week-header"><span class="week-name">Teachable Machine</span><span class="week-toggle">▾</span></div><div class="week-tasks"><div class="task"><div class="task-dot"></div><div class="task-text">Train a model</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Image classification</div></div><div class="task"><div class="task-dot"></div><div class="task-text">Connect to Scratch</div></div></div></div></div></div></div></div>
 
-  <div class="challenges">
-    <h3>Daily Challenges</h3>
-    <div class="challenge-item">
-      <div class="icon">🐛</div>
-      <div class="info">
-        <div class="name">Fix 3 Bugs</div>
-        <div class="reward">+75 XP</div>
-      </div>
-      <div class="check done">✓</div>
-    </div>
-    <div class="challenge-item">
-      <div class="icon">🎨</div>
-      <div class="info">
-        <div class="name">Design a Character</div>
-        <div class="reward">+50 XP</div>
-      </div>
-      <div class="check"></div>
-    </div>
-    <div class="challenge-item">
-      <div class="icon">🚀</div>
-      <div class="info">
-        <div class="name">Publish a Project</div>
-        <div class="reward">+100 XP</div>
-      </div>
-      <div class="check"></div>
-    </div>
-  </div>
-
-  <div class="social-card">
-    <h3>Studio Leaderboard</h3>
-    <div class="leaderboard">
-      <div class="lb-item">
-        <div class="rank">1</div>
-        <div class="avatar">🦊</div>
-        <div class="name">Alex</div>
-        <div class="score">1,240 XP</div>
-      </div>
-      <div class="lb-item you">
-        <div class="rank">2</div>
-        <div class="avatar">🐻</div>
-        <div class="name">You</div>
-        <div class="score">580 XP</div>
-      </div>
-      <div class="lb-item">
-        <div class="rank">3</div>
-        <div class="avatar">🐰</div>
-        <div class="name">Maya</div>
-        <div class="score">520 XP</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mystery-card" onclick="openMystery()">
-    <div class="icon">🎁</div>
-    <h3>Mystery Box</h3>
-    <p>Complete 3 challenges to unlock!</p>
-  </div>
-
-  <a href="../../applications/8-11.html" class="back-link">← Back to Code Kids</a>
+  <a href="../../applications/8-11.html" class="btn-group" style="margin-top:8px">
+    <span class="btn-gray btn-md">← Ages 8–11</span>
+  </a>
 </div>
 
 <script>
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
-function openMystery(){
-  const rewards = ['New Sprite Pack!', '+200 XP Bonus!', 'Unlock Animation Tool!', 'Secret Code Snippet!'];
-  alert('🎉 You got: ' + rewards[Math.floor(Math.random()*rewards.length)]);
-}
+document.querySelectorAll('.year-header').forEach(function(h){
+  h.addEventListener('click',function(){this.parentElement.classList.toggle('open')});
+});
+document.querySelectorAll('.quarter-header').forEach(function(h){
+  h.addEventListener('click',function(){this.parentElement.classList.toggle('open')});
+});
+document.querySelectorAll('.week-header').forEach(function(h){
+  h.addEventListener('click',function(){this.parentElement.classList.toggle('open')});
+});
 </script>
 </body>
 </html>
