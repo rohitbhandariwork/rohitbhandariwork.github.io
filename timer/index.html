@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/buttons.css">
   <style>
     :root {
       --font: 'Manrope', -apple-system, sans-serif;
@@ -174,24 +175,7 @@
 
     /* ── Toggles ── */
     .toggle-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-    .toggle-btn {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid #cbd5e1;
-      background: #fff;
-      color: var(--text-secondary);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: .2s;
-      touch-action: manipulation;
-      min-height: 36px;
-    }
-    .toggle-btn:hover { background: #f1f5f9; }
+    /* .toggle-btn from buttons.css — timer-specific overrides below */
     .toggle-btn.active { background: rgba(124,58,237,.08); border-color: var(--purple); color: var(--purple); }
 
     /* ── Effects ── */

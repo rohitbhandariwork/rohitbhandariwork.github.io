@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/buttons.css">
 
   <style>
     :root {
@@ -270,24 +271,7 @@
       margin-top: -8px;
       margin-bottom: 28px;
     }
-    .btn-start {
-      padding: 16px 56px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-full);
-      font-family: var(--font-primary);
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all .2s;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
-    }
-    .btn-start:hover {
-      background: var(--accent-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
-    }
+    /* .btn-primary from buttons.css — interview-specific overrides below */
     .btn-start:disabled {
       background: var(--text-muted);
       cursor: not-allowed;
@@ -545,19 +529,7 @@
       white-space: pre-wrap;
       font-family: var(--font-reading);
     }
-    .btn-restart {
-      padding: 14px 32px;
-      background: var(--text-primary);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-full);
-      font-family: var(--font-primary);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-    .btn-restart:hover { opacity: .85; }
+    /* .btn-gray from buttons.css */
 
     /* ── Toast ── */
     .toast {
@@ -630,7 +602,7 @@
       <span class="focus-tag">🗄️ SQL</span>
     </div>
     <p class="start-hint">Find a quiet spot. Each answer is evaluated as you go.</p>
-    <button class="btn-start" id="startBtn" onclick="startInterview()">Start Interview</button>
+    <button class="btn-primary btn-lg" id="startBtn" onclick="startInterview()">Start Interview</button>
   </div>
 
   <div id="interviewView" style="display:none;">
@@ -656,7 +628,7 @@
     <p class="subtitle" id="resultSub">Here's how you performed.</p>
     <div class="score-grid" id="scoreGrid"></div>
     <div class="summary-text" id="summaryText"></div>
-    <button class="btn-restart" onclick="location.reload()">Take Another Interview</button>
+    <button class="btn-gray btn-lg" onclick="location.reload()">Take Another Interview</button>
   </div>
 </div>
 

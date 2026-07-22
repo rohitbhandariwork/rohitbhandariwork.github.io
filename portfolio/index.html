@@ -41,6 +41,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/buttons.css">
   <style>
 :root{--font-primary:'Manrope',-apple-system,system-ui,sans-serif;--font-display:'Manrope',sans-serif;--font-reading:'Inter',-apple-system,system-ui,sans-serif;--font-editorial:'Playfair Display',serif;--font-mono:'JetBrains Mono',monospace;--text-xs:11px;--text-sm:12px;--text-md:14px;--text-base:16px;--text-lg:18px;--text-xl:22px;--text-2xl:28px;--text-3xl:36px;--text-4xl:48px;--text-5xl:64px;--indigo:#667eea;--violet:#764ba2;--deep-indigo:#4338ca;--slate-900:#1e293b;--slate-700:#334155;--slate-500:#64748b;--slate-400:#94a3b8;--slate-200:#e2e8f0;--slate-100:#f1f5f9;--slate-50:#f8fafc}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -91,10 +92,9 @@ img{max-width:100%;height:auto}
 .hero-section h1{font-size:clamp(28px,4vw,var(--text-4xl));font-weight:800;line-height:1.1;margin-bottom:20px;color:#fff}
 .hero-lead{font-size:var(--text-lg);color:var(--slate-400);line-height:1.7;margin-bottom:32px;max-width:600px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
-.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;border-radius:999px;font-weight:700;font-size:var(--text-md);font-family:var(--font-primary);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(102,126,234,.4);color:#fff}
-.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:600;font-size:var(--text-md);font-family:var(--font-primary);transition:all .2s;cursor:pointer}
-.btn-secondary:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);color:#fff}
+/* .btn-primary from buttons.css — hero/contact overrides below */
+.btn-hero{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:600;font-size:var(--text-md);font-family:var(--font-primary);transition:all .2s;cursor:pointer}
+.btn-hero:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);color:#fff}
 .hero-microcopy{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px}
 .hero-microcopy span{display:inline-flex;align-items:center;gap:6px;font-size:var(--text-sm);color:var(--slate-400)}
 .hero-microcopy i{color:var(--indigo)}
@@ -181,7 +181,7 @@ img{max-width:100%;height:auto}
 .contact-actions{display:flex;gap:12px;flex-shrink:0}
 .contact-actions .btn-primary{background:#fff;color:var(--indigo)}
 .contact-actions .btn-primary:hover{box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.contact-actions .btn-secondary{border-color:rgba(255,255,255,.4);color:#fff}
+.contact-actions .btn-hero{border-color:rgba(255,255,255,.4);color:#fff}
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .contact-item{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid var(--slate-200);border-radius:12px;transition:transform .2s}
 .contact-item:hover{transform:translateY(-2px)}
@@ -281,7 +281,7 @@ img{max-width:100%;height:auto}
             <div class="hero-actions">
               <a class="btn-primary" target="_blank" rel="noreferrer"
                 href="https://drive.google.com/open?id=11nFMgU2X_yG72p2U8KCxmMXSmAbnZY7A">Download Resume</a>
-              <a class="btn-secondary scrollto" href="#case-studies">See Case Studies</a>
+              <a class="btn-hero scrollto" href="#case-studies">See Case Studies</a>
             </div>
 
             <div class="hero-microcopy">
@@ -586,7 +586,7 @@ img{max-width:100%;height:auto}
           </div>
           <div class="contact-actions">
             <a class="btn-primary" href="mailto:rohitbhandari.work@gmail.com">Email Me</a>
-            <a class="btn-secondary" target="_blank" rel="noreferrer"
+            <a class="btn-hero" target="_blank" rel="noreferrer"
               href="https://www.linkedin.com/in/rohitonlinked/">LinkedIn</a>
           </div>
         </div>

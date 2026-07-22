@@ -1,0 +1,176 @@
+/**
+ * Brand Button System
+ * Based on Apple HIG: https://developer.apple.com/design/human-interface-guidelines/buttons
+ * Style (not size) distinguishes the preferred choice.
+ */
+
+/* ── Base ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .2s, background .2s, border-color .2s, opacity .2s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .5; cursor: not-allowed; pointer-events: none; }
+
+/* ── Sizes ── */
+.btn-sm  { padding: 8px 16px;  font-size: 12px; border-radius: 8px;  min-height: 32px; }
+.btn-md  { padding: 12px 24px; font-size: 14px; border-radius: 999px; min-height: 40px; }
+.btn-lg  { padding: 14px 32px; font-size: 15px; border-radius: 999px; min-height: 48px; }
+.btn-xl  { padding: 16px 40px; font-size: 16px; border-radius: 999px; min-height: 56px; }
+
+/* ── Full Width ── */
+.btn-block { width: 100%; }
+
+/* ── Primary: Filled (most prominent) ── */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+.btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(102, 126, 234, .4);
+  transform: translateY(-1px);
+}
+
+/* ── Secondary: Tinted (medium prominence) ── */
+.btn-secondary {
+  background: rgba(102, 126, 234, .1);
+  color: #667eea;
+}
+.btn-secondary:hover {
+  background: rgba(102, 126, 234, .16);
+}
+
+/* ── Tertiary: Bordered ── */
+.btn-tertiary {
+  background: transparent;
+  color: #667eea;
+  border: 1.5px solid #667eea;
+}
+.btn-tertiary:hover {
+  background: rgba(102, 126, 234, .06);
+}
+
+/* ── Ghost: Plain text ── */
+.btn-ghost {
+  background: transparent;
+  color: #667eea;
+  padding-left: 0;
+  padding-right: 0;
+}
+.btn-ghost:hover {
+  color: #4338ca;
+  text-decoration: underline;
+}
+
+/* ── Gray: Low emphasis ── */
+.btn-gray {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+.btn-gray:hover {
+  background: #e2e8f0;
+}
+
+/* ── Danger: Destructive filled ── */
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+}
+.btn-danger:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, .3);
+}
+
+/* ── Danger Ghost: Destructive tinted ── */
+.btn-danger-ghost {
+  background: rgba(239, 68, 68, .08);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, .2);
+}
+.btn-danger-ghost:hover {
+  background: rgba(239, 68, 68, .14);
+}
+
+/* ── Success ── */
+.btn-success {
+  background: #22c55e;
+  color: #fff;
+}
+.btn-success:hover {
+  background: #16a34a;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, .3);
+}
+
+/* ── Toggle (for segmented controls) ── */
+.btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #64748b;
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+  min-height: 36px;
+}
+.btn-toggle:hover { background: #f1f5f9; }
+.btn-toggle.active {
+  background: rgba(102, 126, 234, .08);
+  border-color: #667eea;
+  color: #667eea;
+}
+
+/* ── Icon Button ── */
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #64748b;
+  font-size: 18px;
+}
+.btn-icon:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+/* ── CTA (application pages, age-specific gradients) ── */
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .2s;
+}
+.cta-btn:active { transform: scale(.96); }
+.cta-btn:hover { box-shadow: 0 8px 24px rgba(0,0,0,.15); }

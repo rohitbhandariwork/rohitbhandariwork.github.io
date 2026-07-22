@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/buttons.css">
 
   <style>
 :root{--bg:#fff;--bg-secondary:#f5f5f7;--text-primary:#1d1d1f;--text-secondary:#6e6e73;--text-tertiary:#86868b;--accent:#0071e3;--accent-hover:#0077ed;--border:rgba(0,0,0,.08);--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 30px rgba(0,0,0,.12);--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--radius-full:980px;--font:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
@@ -70,6 +71,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line
 .product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
 .product-price { font-size: 20px; font-weight: 700; color: var(--text-primary); }
 .product-price span { font-size: 13px; font-weight: 500; color: var(--text-tertiary); display: block; margin-top: 2px; }
+/* .btn-primary from buttons.css — shop overrides below */
 .btn-get { padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-full); font-family: var(--font); font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
 .btn-get:hover { background: var(--accent-hover); }
 
@@ -97,8 +99,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line
 .success-icon { width: 64px; height: 64px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
 .success-view h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
 .success-view p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-.btn-close-success { margin-top: 20px; padding: 10px 24px; background: var(--bg-secondary); color: var(--text-primary); border: none; border-radius: var(--radius-full); font-family: var(--font); font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
-.btn-close-success:hover { background: rgba(0,0,0,.08); }
+/* .btn-gray from buttons.css — used for Done button */
 
 /* ── Toast ── */
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100000; padding: 14px 28px; border-radius: var(--radius-full); font-weight: 600; font-size: 14px; display: none; box-shadow: var(--shadow-lg); }
@@ -184,7 +185,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line
       <div class="success-icon">✓</div>
       <h3>Submitted</h3>
       <p>You'll receive the ebook once payment is verified. Contact <strong>rohitbhandari.work@gmail.com</strong> if not received.</p>
-      <button class="btn-close-success" onclick="closeModal()">Done</button>
+      <button class="btn-gray" onclick="closeModal()">Done</button>
     </div>
   </div>
 </div>
