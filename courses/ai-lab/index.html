@@ -3,20 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Lab — Ages 15–17 | Education, Reimagined</title>
-  <meta name="description" content="Applied AI/ML. Linear algebra, probability, real ML projects, competitions, and hackathons.">
+  <title>AI Lab — 3-Year Journey | Education, Reimagined</title>
+  <meta name="description" content="1,095 days of Applied AI/ML. Linear Algebra, Probability, Real ML Projects, Competitions, Hackathons.">
   <link rel="canonical" href="https://rohitbhandariwork.github.io/courses/ai-lab/">
   <link rel="icon" href="../../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --font: 'Manrope', -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --font-reading: 'Inter', -apple-system, sans-serif;
       --purple: #8b5cf6;
       --cyan: #06b6d4;
+      --amber: #f59e0b;
       --purple-light: #f5f3ff;
       --text: #1e293b;
       --text-secondary: #64748b;
@@ -24,7 +25,7 @@
       --success: #22c55e;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: #f5f3ff; color: var(--text); padding-top: 52px; min-height: 100vh; }
+    body { font-family: var(--font); background: #f5f3ff; color: var(--text); padding-top: 52px; }
 
     #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
     .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
@@ -34,88 +35,58 @@
     .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
     @media (max-width: 768px) {
       .hamburger { display: block; }
-      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 8px 12px; gap: 4px; }
+      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 10px 15px rgba(0,0,0,.1); }
       .nav-links.open { display: flex; }
       .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
     }
 
-    .game-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--border); }
-    .game-bar .streak { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #ef4444; }
-    .game-bar .xp { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #7c3aed; }
-    .game-bar .level { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #6d28d9; }
-    .game-bar .coins { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #0891b2; }
-
-    .main { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
-
-    .hero { background: linear-gradient(135deg, var(--purple), var(--cyan)); border-radius: 24px; padding: 40px 24px; text-align: center; color: #fff; margin-bottom: 24px; }
+    .main { max-width: 720px; margin: 0 auto; padding: 24px 20px 60px; }
+    .hero { background: linear-gradient(135deg, var(--purple), var(--cyan)); border-radius: 24px; padding: 40px 24px; text-align: center; color: #fff; margin-bottom: 28px; }
     .hero-emoji { font-size: 72px; margin-bottom: 16px; }
     .hero h1 { font-size: 32px; font-weight: 800; }
     .hero p { font-size: 15px; color: rgba(255,255,255,0.9); margin-top: 8px; }
+    .hero .stats { display: flex; justify-content: center; gap: 24px; margin-top: 16px; }
+    .hero .stat { text-align: center; }
+    .hero .stat-num { font-size: 24px; font-weight: 800; }
+    .hero .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; opacity: 0.8; }
 
-    .mission-card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 2px solid var(--border); }
-    .mission-card .badge { display: inline-block; padding: 4px 12px; background: var(--purple-light); border-radius: 999px; font-size: 11px; font-weight: 700; color: #7c3aed; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12px; }
-    .mission-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .mission-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .year-block { background: #fff; border-radius: 20px; margin-bottom: 16px; border: 1px solid #f1f5f9; overflow: hidden; }
+    .year-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; cursor: pointer; transition: .2s; }
+    .year-header:hover { background: #f8fafc; }
+    .year-title { font-size: 18px; font-weight: 800; }
+    .year-subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+    .year-toggle { font-size: 18px; color: var(--text-secondary); transition: .3s; }
+    .year-block.open .year-toggle { transform: rotate(180deg); }
+    .year-quarters { display: none; padding: 0 20px 20px; }
+    .year-block.open .year-quarters { display: block; }
 
-    .xp-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .xp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .xp-header h3 { font-size: 15px; font-weight: 700; }
-    .xp-header span { font-size: 13px; font-weight: 600; color: #7c3aed; }
-    .xp-track { background: #ede9fe; border-radius: 999px; height: 12px; overflow: hidden; }
-    .xp-fill { height: 100%; background: linear-gradient(90deg, var(--purple), #7c3aed); border-radius: 999px; transition: width .5s ease; }
+    .quarter-block { border: 1px solid #e2e8f0; border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
+    .quarter-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; background: #f8fafc; transition: .2s; }
+    .quarter-header:hover { background: #f1f5f9; }
+    .quarter-name { font-size: 14px; font-weight: 700; }
+    .quarter-days { font-size: 11px; color: var(--text-secondary); font-weight: 600; }
+    .quarter-toggle { font-size: 14px; color: var(--text-secondary); transition: .3s; }
+    .quarter-block.open .quarter-toggle { transform: rotate(180deg); }
+    .quarter-weeks { display: none; padding: 12px; }
+    .quarter-block.open .quarter-weeks { display: block; }
 
-    /* ── Competition Board (Social/Scarcity) ── */
-    .comp-card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .comp-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .comp-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f8fafc; border-radius: 14px; margin-bottom: 10px; border: 1px solid #e2e8f0; }
-    .comp-item .icon { font-size: 28px; flex-shrink: 0; }
-    .comp-item .info { flex: 1; }
-    .comp-item .name { font-size: 14px; font-weight: 600; }
-    .comp-item .meta { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
-    .comp-item .prize { font-size: 13px; font-weight: 700; color: #7c3aed; }
-    .comp-item .btn { padding: 6px 14px; background: var(--purple); color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .2s; }
-    .comp-item .btn:hover { background: #6d28d9; }
+    .week-block { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+    .week-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; cursor: pointer; background: #fff; transition: .2s; }
+    .week-header:hover { background: #f8fafc; }
+    .week-name { font-size: 13px; font-weight: 600; }
+    .week-toggle { font-size: 12px; color: var(--text-secondary); transition: .3s; }
+    .week-block.open .week-toggle { transform: rotate(180deg); }
+    .week-tasks { display: none; padding: 8px 14px 14px; }
+    .week-block.open .week-tasks { display: block; }
 
-    .skill-tree { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .skill-tree h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .skills { display: flex; flex-direction: column; gap: 12px; }
-    .skill { display: flex; align-items: center; gap: 14px; padding: 14px; background: #f8fafc; border-radius: 14px; border: 1px solid #e2e8f0; }
-    .skill .icon { font-size: 28px; flex-shrink: 0; }
-    .skill .info { flex: 1; }
-    .skill .name { font-size: 14px; font-weight: 600; }
-    .skill .desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .skill .progress { width: 100%; height: 6px; background: #e2e8f0; border-radius: 999px; margin-top: 8px; overflow: hidden; }
-    .skill .progress-fill { height: 100%; background: var(--purple); border-radius: 999px; }
+    .task-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+    .task-item:last-child { border-bottom: none; }
+    .task-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #e2e8f0; flex-shrink: 0; cursor: pointer; transition: .2s; display: flex; align-items: center; justify-content: center; }
+    .task-check.done { background: var(--success); border-color: var(--success); }
+    .task-check.done::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; }
+    .task-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 
-    .code-card { background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; overflow: hidden; }
-    .code-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
-    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .code-dot.red { background: #ef4444; }
-    .code-dot.yellow { background: #f59e0b; }
-    .code-dot.green { background: #22c55e; }
-    .code-title { font-size: 12px; color: #94a3b8; margin-left: 8px; font-family: var(--font-mono); }
-    .code-body { font-family: var(--font-mono); font-size: 13px; line-height: 1.8; color: #e2e8f0; }
-    .code-body .keyword { color: #c084fc; }
-    .code-body .string { color: #34d399; }
-    .code-body .comment { color: #64748b; }
-
-    .challenges { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid #f1f5f9; }
-    .challenges h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .challenge-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8fafc; border-radius: 12px; margin-bottom: 8px; }
-    .challenge-item .icon { font-size: 24px; }
-    .challenge-item .info { flex: 1; }
-    .challenge-item .name { font-size: 14px; font-weight: 600; }
-    .challenge-item .reward { font-size: 12px; color: #7c3aed; font-weight: 600; }
-    .challenge-item .check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; }
-    .challenge-item .check.done { background: var(--success); border-color: var(--success); color: #fff; }
-
-    .mystery-card { background: linear-gradient(135deg, #ede9fe, #ddd6fe); border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; cursor: pointer; transition: .2s; border: 2px dashed var(--purple); }
-    .mystery-card:hover { transform: scale(1.02); }
-    .mystery-card .icon { font-size: 48px; margin-bottom: 12px; }
-    .mystery-card h3 { font-size: 16px; font-weight: 700; color: #5b21b6; }
-    .mystery-card p { font-size: 13px; color: #7c3aed; margin-top: 4px; }
-
-    .back-link { display: block; text-align: center; margin-top: 24px; font-size: 14px; font-weight: 600; color: #7c3aed; text-decoration: none; }
+    .back-link { display: block; text-align: center; margin-top: 24px; font-size: 14px; font-weight: 600; color: var(--purple); text-decoration: none; }
   </style>
 </head>
 <body>
@@ -130,156 +101,925 @@
   </div>
 </div>
 
-<div class="game-bar">
-  <div class="streak">🔥 12 day streak</div>
-  <div class="xp">⭐ 2,840 XP</div>
-  <div class="level">🏆 Level 9</div>
-  <div class="coins">🪙 890</div>
-</div>
-
 <div class="main">
   <div class="hero">
     <div class="hero-emoji">🧠</div>
     <h1>AI Lab</h1>
-    <p>Applied AI/ML. Build real models. Compete. Win.</p>
-  </div>
-
-  <div class="mission-card">
-    <div class="badge">Your Mission</div>
-    <h2>Build the AI That Outsmarts Everyone!</h2>
-    <p>You've been recruited by a secret AI research lab. Your first project: build a model that can predict the future. Master linear algebra, probability, and ML to complete the mission.</p>
-  </div>
-
-  <div class="xp-card">
-    <div class="xp-header">
-      <h3>Level 9 Progress</h3>
-      <span>2,840 / 3,200 XP</span>
-    </div>
-    <div class="xp-track">
-      <div class="xp-fill" style="width: 88%"></div>
+    <p>1,095 days of Applied AI/ML. Your journey from foundations to mastery.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">1,095</div><div class="stat-label">Days</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Years</div></div>
+      <div class="stat"><div class="stat-num">12</div><div class="stat-label">Quarters</div></div>
     </div>
   </div>
 
-  <!-- Social/Scarcity: Competitions -->
-  <div class="comp-card">
-    <h3>Live Competitions</h3>
-    <div class="comp-item">
-      <div class="icon">🏆</div>
-      <div class="info">
-        <div class="name">AI Prediction Challenge</div>
-        <div class="meta">Ends in 2 days · 234 participants</div>
-      </div>
-      <div class="prize">🏆 $500</div>
-    </div>
-    <div class="comp-item">
-      <div class="icon">⚡</div>
-      <div class="info">
-        <div class="name">Hackathon: Build a Chatbot</div>
-        <div class="meta">Starts tomorrow · 89 registered</div>
-      </div>
-      <div class="prize">🥇 1000 XP</div>
-    </div>
-    <div class="comp-item">
-      <div class="icon">🔬</div>
-      <div class="info">
-        <div class="name">ML Model Accuracy Race</div>
-        <div class="meta">Ongoing · 156 competitors</div>
-      </div>
-      <div class="prize">💎 500 Coins</div>
-    </div>
-  </div>
-
-  <!-- Creativity: Code -->
-  <div class="code-card">
-    <div class="code-header">
-      <div class="code-dot red"></div>
-      <div class="code-dot yellow"></div>
-      <div class="code-dot green"></div>
-      <span class="code-title">model.py</span>
-    </div>
-    <div class="code-body">
-      <span class="comment"># Your ML model</span><br>
-      <span class="keyword">import</span> torch<br>
-      <span class="keyword">from</span> transformers <span class="keyword">import</span> AutoModel<br><br>
-      model = AutoModel.from_pretrained(<span class="string">"bert-base"</span>)<br>
-      <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;param.requires_grad = <span class="keyword">True</span>
-    </div>
-  </div>
-
-  <div class="skill-tree">
-    <h3>Skill Tree</h3>
-    <div class="skills">
-      <div class="skill">
-        <div class="icon">📐</div>
-        <div class="info">
-          <div class="name">Linear Algebra</div>
-          <div class="desc">Vectors, matrices, transformations</div>
-          <div class="progress"><div class="progress-fill" style="width:70%"></div></div>
+      <div class="year-block">
+        <div class="year-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="year-info">
+            <h2 class="year-title">Year 1: Foundations</h2>
+            <p class="year-subtitle">Learn the Language of ML</p>
+          </div>
+          <span class="year-toggle">▾</span>
+        </div>
+        <div class="year-quarters">
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q1: Python for ML</span>
+              <span class="quarter-days">Days 1–91</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 1-2: Python Basics Refresher</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Variables and data types</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Lists and dictionaries</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Functions and loops</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">String manipulation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">File I/O basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">List comprehensions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Error handling</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 3-4: NumPy Fundamentals</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Array creation and indexing</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Array operations and broadcasting</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Linear algebra with NumPy</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Random number generation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Array reshaping and stacking</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Statistical functions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Performance optimization</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 5-6: Pandas for Data</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">DataFrames and Series</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Reading CSV and JSON</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data filtering and selection</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Groupby and aggregation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Handling missing data</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Merge and join operations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Time series basics</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 7-8: Data Visualization</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Matplotlib basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Seaborn statistical plots</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Customizing plots</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Subplots and layouts</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Interactive plots</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Plotting distributions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Correlation heatmaps</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 9-13: Mini Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Exploratory data analysis on housing data</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Weather data visualization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Stock price analysis</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Survey data insights</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Sales dashboard</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q2: Linear Algebra</span>
+              <span class="quarter-days">Days 92–182</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 14-15: Vectors</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Vector operations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Dot product and cross product</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Vector spaces</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Linear independence</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Basis and dimension</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Vector projections</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Geometric interpretations</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 16-17: Matrices</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Matrix operations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Matrix multiplication</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Transpose and inverse</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Determinants</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Eigenvalues and eigenvectors</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Matrix decomposition</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Applications in ML</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 18-19: Transformations</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Linear transformations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Rotation and scaling</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Shear transformations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Transformation matrices</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Composite transformations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Coordinate systems</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Change of basis</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 20-21: Advanced Topics</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Singular value decomposition</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Principal component analysis</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Matrix factorization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Low-rank approximation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Orthogonal projections</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Least squares</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Applications in recommendation systems</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 22-26: Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Image compression with SVD</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: PCA for dimensionality reduction</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Face recognition basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Linear regression from scratch</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Collaborative filtering</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q3: First ML Models</span>
+              <span class="quarter-days">Days 183–273</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 27-28: ML Foundations</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">What is machine learning?</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Supervised vs unsupervised</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Training and test sets</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Bias-variance tradeoff</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Cross-validation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature engineering basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Evaluation metrics</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 29-30: Linear Regression</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Simple linear regression</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Multiple linear regression</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Gradient descent</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Cost functions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Regularization (Ridge, Lasso)</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Polynomial regression</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model evaluation</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 31-32: Classification</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Logistic regression</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Decision boundaries</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Confusion matrix</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Precision and recall</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">ROC curves</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Naive Bayes</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">K-nearest neighbors</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 33-34: Tree Models</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Decision trees</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Information gain</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Random forests</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Bagging and boosting</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">XGBoost basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature importance</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Hyperparameter tuning</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 35-39: Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: House price predictor</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Email spam classifier</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Customer churn prediction</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Loan default prediction</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Medical diagnosis helper</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q4: Data Mastery</span>
+              <span class="quarter-days">Days 274–365</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 40-41: Data Cleaning</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Handling missing values</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Outlier detection</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data normalization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature encoding</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Text preprocessing</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Date and time handling</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data validation</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 42-43: Feature Engineering</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature creation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature selection</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Dimensionality reduction</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Encoding categorical variables</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Binning and discretization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Interaction features</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature importance</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 44-45: Advanced Visualization</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Interactive dashboards</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Geographic data</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Network graphs</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Animated plots</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">3D visualizations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Storytelling with data</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Presentation best practices</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 46-52: Capstone Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: End-to-end ML pipeline</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Data exploration portfolio</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Visualization showcase</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Year 1 capstone: Complete ML project</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Presentation and documentation</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="skill">
-        <div class="icon">🎲</div>
-        <div class="info">
-          <div class="name">Probability</div>
-          <div class="desc">Distributions, Bayes, stats</div>
-          <div class="progress"><div class="progress-fill" style="width:55%"></div></div>
+      <div class="year-block">
+        <div class="year-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="year-info">
+            <h2 class="year-title">Year 2: Applied ML</h2>
+            <p class="year-subtitle">Build Real Things</p>
+          </div>
+          <span class="year-toggle">▾</span>
+        </div>
+        <div class="year-quarters">
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q5: Probability & Statistics</span>
+              <span class="quarter-days">Days 366–456</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 1-2: Probability Basics</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Probability rules</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Conditional probability</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Bayes theorem</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Random variables</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Expected value</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Variance and standard deviation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Common distributions</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 3-4: Statistical Inference</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Sampling methods</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Central limit theorem</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Confidence intervals</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Hypothesis testing</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">p-values</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Type I and II errors</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">A/B testing</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 5-6: Advanced Probability</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Joint distributions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Marginal distributions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Covariance and correlation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Probability distributions in ML</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Maximum likelihood estimation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">MAP estimation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Information theory basics</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 7-9: Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: A/B test analyzer</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Probability simulator</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Statistical significance calculator</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q6: Deep Learning</span>
+              <span class="quarter-days">Days 457–547</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 10-11: Neural Networks Basics</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Perceptrons</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Activation functions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Backpropagation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Gradient descent variants</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Learning rate scheduling</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Batch normalization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Dropout regularization</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 12-13: PyTorch/TensorFlow</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Tensor operations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Building models</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Training loops</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Loss functions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Optimizers</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">GPU acceleration</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model saving and loading</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 14-15: CNNs</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Convolutional layers</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Pooling layers</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Architecture design</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Transfer learning</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data augmentation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Object detection basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Image segmentation intro</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 16-17: RNNs and Transformers</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Recurrent networks</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">LSTM and GRU</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Sequence-to-sequence</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Attention mechanism</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Transformer architecture</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">BERT and GPT basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Fine-tuning pretrained models</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 18-21: Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Image classifier with CNN</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Text sentiment analyzer</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Style transfer</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Chatbot prototype</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q7: Competitions</span>
+              <span class="quarter-days">Days 548–638</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 22-23: Kaggle Fundamentals</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Kaggle platform walkthrough</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Competition rules and ethics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data exploration on competitions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Baseline model creation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature engineering for competitions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model ensembling</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Submission strategies</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 24-25: Competition Practice</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Join a playground competition</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Analyze top solutions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Implement ensemble methods</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Optimize for competition metric</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Cross-validation strategies</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature selection techniques</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Hyperparameter optimization</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 26-27: Open Source</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">GitHub workflow</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Finding good first issues</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Writing documentation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Code review process</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Contributing to ML libraries</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Building your own library</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Community engagement</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 28-33: Competition Sprint</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Enter 3 Kaggle competitions</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Document your approach</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Analyze what worked</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Share solutions publicly</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Build competition portfolio</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Connect with other competitors</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q8: Advanced ML</span>
+              <span class="quarter-days">Days 639–730</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 34-35: NLP</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Text preprocessing</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Word embeddings</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Named entity recognition</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Text classification</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Sentiment analysis</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Machine translation basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Question answering</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 36-37: Computer Vision</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Image classification</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Object detection (YOLO)</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Semantic segmentation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Instance segmentation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Image generation basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">GANs introduction</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Video analysis intro</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 38-39: Reinforcement Learning</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">RL fundamentals</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Q-learning</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Policy gradient</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Deep RL</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">OpenAI Gym basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Game playing agents</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Real-world applications</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 40-42: Advanced Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: NLP pipeline</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Object detector</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Simple game AI</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Year 2 capstone: Advanced ML project</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="skill">
-        <div class="icon">🤖</div>
-        <div class="info">
-          <div class="name">ML Engineer</div>
-          <div class="desc">Training, evaluation, deployment</div>
-          <div class="progress"><div class="progress-fill" style="width:40%"></div></div>
+      <div class="year-block">
+        <div class="year-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="year-info">
+            <h2 class="year-title">Year 3: Mastery</h2>
+            <p class="year-subtitle">Compete and Contribute</p>
+          </div>
+          <span class="year-toggle">▾</span>
+        </div>
+        <div class="year-quarters">
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q9: Full-Stack ML</span>
+              <span class="quarter-days">Days 731–821</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 1-2: Model Deployment</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Flask/FastAPI for ML</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">REST API design</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model serialization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Docker basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Cloud deployment</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Monitoring and logging</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Version control for models</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 3-4: ML Pipelines</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Data pipelines</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Feature stores</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model training pipelines</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Automated retraining</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">CI/CD for ML</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">A/B testing in production</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Shadow deployment</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 5-6: MLOps</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">MLflow basics</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Experiment tracking</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model registry</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Model monitoring</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data drift detection</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Performance optimization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Cost management</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 7-9: Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Deploy a model to cloud</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Build an ML API</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: End-to-end MLOps pipeline</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q10: Hackathons</span>
+              <span class="quarter-days">Days 822–912</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 10-11: Hackathon Prep</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Hackathon strategies</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Rapid prototyping</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Team formation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Pitch preparation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Time management</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">MVP development</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Demo presentation</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 12-13: Practice Hackathons</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Online hackathon participation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">24-hour build challenge</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Team collaboration tools</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Rapid iteration</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">User feedback integration</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Presentation skills</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Post-hackathon reflection</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 14-15: Real Hackathons</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Join local hackathon</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Build a complete product</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Present to judges</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Network with developers</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Document the experience</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 16-17: Open Source Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Create your own ML tool</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Write comprehensive docs</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Build a community</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Handle issues and PRs</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Release management</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 18-21: Hackathon Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Health tech solution</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Education tool</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Social good app</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Developer tool</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q11: Research-Style Projects</span>
+              <span class="quarter-days">Days 913–1003</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 22-23: Research Methodology</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Reading ML papers</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Literature review</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Research question formulation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Experimental design</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Baseline comparison</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Statistical significance</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Writing research notes</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 24-25: Implementation</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Implementing from papers</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Reproducibility</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Ablation studies</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Performance benchmarking</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Visualization of results</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Error analysis</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Comparison tables</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 26-27: Presentation</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Writing technical reports</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Creating presentations</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Data storytelling</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Handling Q&A</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Peer review</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 28-33: Research Projects</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Replicate a paper</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Novel approach to a problem</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Project: Survey of a domain</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Year 3 capstone: Research-style project</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="quarter-block">
+            <div class="quarter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span class="quarter-name">Q12: Portfolio & Mastery</span>
+              <span class="quarter-days">Days 1004–1095</span>
+              <span class="quarter-toggle">▾</span>
+            </div>
+            <div class="quarter-weeks">
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 34-35: Portfolio Building</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Showcasing projects</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Writing case studies</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">GitHub profile optimization</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Personal website</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Blog posts</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Demo videos</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Testimonials</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 36-37: Knowledge Sharing</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Teaching concepts</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Mentoring juniors</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Creating tutorials</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Writing documentation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Community involvement</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 38-39: Mastery Review</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Review all key concepts</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Identify gaps</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Deep dive weak areas</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Advanced topics exploration</span></div>
+              </div>
+            </div>
+            <div class="week-block">
+              <div class="week-header" onclick="this.parentElement.classList.toggle('open')">
+                <span class="week-name">Week 40-52: Final Push</span>
+                <span class="week-toggle">▾</span>
+              </div>
+              <div class="week-tasks">
+                              <div class="task-item"><span class="task-check"></span><span class="task-text">Final capstone project</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Portfolio polish</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Presentation preparation</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Peer review session</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Celebration and reflection</span></div>
+              <div class="task-item"><span class="task-check"></span><span class="task-text">Transition to 18+ preparation</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="challenges">
-    <h3>Daily Challenges</h3>
-    <div class="challenge-item">
-      <div class="icon">📊</div>
-      <div class="info">
-        <div class="name">Train a Model</div>
-        <div class="reward">+200 XP</div>
-      </div>
-      <div class="check done">✓</div>
-    </div>
-    <div class="challenge-item">
-      <div class="icon">🧮</div>
-      <div class="info">
-        <div class="name">Solve Matrix Problem</div>
-        <div class="reward">+150 XP</div>
-      </div>
-      <div class="check"></div>
-    </div>
-    <div class="challenge-item">
-      <div class="icon">📝</div>
-      <div class="info">
-        <div class="name">Write Research Notes</div>
-        <div class="reward">+100 XP</div>
-      </div>
-      <div class="check"></div>
-    </div>
-  </div>
-
-  <div class="mystery-card" onclick="openMystery()">
-    <div class="icon">🎁</div>
-    <h3>Mystery Box</h3>
-    <p>Win a competition to unlock!</p>
-  </div>
 
   <a href="../../applications/15-17.html" class="back-link">← Back to AI Lab</a>
 </div>
 
 <script>
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
-function openMystery(){
-  const rewards = ['+1000 XP Bonus!', 'New GPU Access!', 'Secret Algorithm!', 'Unlock GPT Module!', 'Competition Entry Pass!'];
-  alert('🎉 You got: ' + rewards[Math.floor(Math.random()*rewards.length)]);
-}
+document.querySelectorAll('.task-check').forEach(function(el){
+  el.addEventListener('click',function(e){
+    e.stopPropagation();
+    this.classList.toggle('done');
+  });
+});
 </script>
 </body>
 </html>
