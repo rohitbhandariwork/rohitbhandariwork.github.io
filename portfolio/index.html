@@ -92,9 +92,42 @@ img{max-width:100%;height:auto}
 .hero-section h1{font-size:clamp(28px,4vw,var(--text-4xl));font-weight:800;line-height:1.1;margin-bottom:20px;color:#fff}
 .hero-lead{font-size:var(--text-lg);color:var(--slate-400);line-height:1.7;margin-bottom:32px;max-width:600px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
-/* .btn-primary from buttons.css — hero/contact overrides below */
-.btn-hero{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:600;font-size:var(--text-md);font-family:var(--font-primary);transition:all .2s;cursor:pointer}
-.btn-hero:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);color:#fff}
+/* ── Hero/Contact Button Overrides (dark backgrounds) ── */
+.hero-actions .btn-primary,
+.contact-actions .btn-primary {
+  background: #fff;
+  color: var(--indigo);
+  padding: 14px 28px;
+  font-size: var(--text-md);
+  border-radius: 999px;
+  min-height: 48px;
+}
+.hero-actions .btn-primary:hover,
+.contact-actions .btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  transform: translateY(-1px);
+}
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: var(--text-md);
+  font-family: var(--font-primary);
+  transition: all .2s;
+  cursor: pointer;
+  min-height: 48px;
+}
+.btn-hero:hover {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.5);
+  color: #fff;
+}
 .hero-microcopy{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px}
 .hero-microcopy span{display:inline-flex;align-items:center;gap:6px;font-size:var(--text-sm);color:var(--slate-400)}
 .hero-microcopy i{color:var(--indigo)}
@@ -179,9 +212,6 @@ img{max-width:100%;height:auto}
 .contact-banner p{color:rgba(255,255,255,.8);font-size:var(--text-lg);max-width:600px}
 .contact-banner .section-kicker{color:rgba(255,255,255,.7)}
 .contact-actions{display:flex;gap:12px;flex-shrink:0}
-.contact-actions .btn-primary{background:#fff;color:var(--indigo)}
-.contact-actions .btn-primary:hover{box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.contact-actions .btn-hero{border-color:rgba(255,255,255,.4);color:#fff}
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .contact-item{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid var(--slate-200);border-radius:12px;transition:transform .2s}
 .contact-item:hover{transform:translateY(-2px)}
