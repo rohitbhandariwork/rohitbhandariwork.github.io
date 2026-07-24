@@ -16,76 +16,59 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/brand.css">
 <style>
-:root{--font:'Manrope',-apple-system,sans-serif;--indigo:#667eea;--violet:#764ba2;--text:#1e293b;--text-secondary:#64748b;--text-muted:#94a3b8}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font);background:#f8fafc;color:var(--text);padding-top:52px;-webkit-font-smoothing:antialiased}
+.main { max-width: 640px; margin: 0 auto; padding: 24px 20px 60px; }
 
-#topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
-.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s}
-.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
-.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap}
-.nav-links a:hover{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-dropdown{position:relative}
-.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 10px 15px rgba(0,0,0,.1);padding:6px;min-width:140px;z-index:10001}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
-.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;color:#334155;transition:.15s}
-.nav-dropdown-menu a:hover{background:#f1f5f9;color:#1e293b}
-@media(max-width:768px){.hamburger{display:block}.nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 10px 15px rgba(0,0,0,.1)}.nav-links.open{display:flex}.nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}.nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}.nav-dropdown.open .nav-dropdown-menu{display:block}.nav-dropdown-menu a{padding:10px 14px;font-size:14px}}
+.hero { background: var(--gradient-brand); border-radius: 24px; padding: 48px 24px; text-align: center; color: #fff; margin-bottom: 32px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 250px; height: 250px; background: rgba(255,255,255,.08); border-radius: 50%; }
+.hero-emoji { font-size: 80px; margin-bottom: 16px; position: relative; }
+.hero h1 { font-size: clamp(28px,5vw,40px); font-weight: 800; letter-spacing: -.02em; position: relative; }
+.hero h1 span { background: linear-gradient(135deg,#fff,rgba(255,255,255,.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 16px; color: rgba(255,255,255,.85); margin-top: 12px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; position: relative; }
+.hero-stats { display: flex; justify-content: center; gap: 32px; margin-top: 24px; position: relative; }
+.hero-stat { text-align: center; }
+.hero-stat-num { font-size: 28px; font-weight: 800; }
+.hero-stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; opacity: .7; }
 
-.main{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--indigo); margin-bottom: 12px; padding-left: 4px; }
 
-.hero{background:linear-gradient(135deg,var(--indigo),var(--violet));border-radius:24px;padding:48px 24px;text-align:center;color:#fff;margin-bottom:32px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-40%;right:-20%;width:250px;height:250px;background:rgba(255,255,255,.08);border-radius:50%}
-.hero-emoji{font-size:80px;margin-bottom:16px;position:relative}
-.hero h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;position:relative}
-.hero h1 span{background:linear-gradient(135deg,#fff,rgba(255,255,255,.8));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:16px;color:rgba(255,255,255,.85);margin-top:12px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto;position:relative}
-.hero-stats{display:flex;justify-content:center;gap:32px;margin-top:24px;position:relative}
-.hero-stat{text-align:center}
-.hero-stat-num{font-size:28px;font-weight:800}
-.hero-stat-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;opacity:.7}
+.age-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
+.age-card { background: #fff; border: 2px solid var(--slate-200); border-radius: 16px; padding: 20px; text-decoration: none; transition: .2s; display: flex; align-items: center; gap: 16px; }
+.age-card:active { transform: scale(.98); }
+.age-card .age-icon { font-size: 36px; flex-shrink: 0; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 14px; }
+.age-card .age-info { flex: 1; }
+.age-card .age-range { font-size: 18px; font-weight: 800; color: var(--slate-900); }
+.age-card .age-label { font-size: 12px; color: var(--slate-500); margin-top: 2px; line-height: 1.4; }
+.age-card .age-arrow { font-size: 20px; color: var(--slate-400); flex-shrink: 0; transition: .2s; }
+.age-card:hover .age-arrow { transform: translateX(2px); color: var(--indigo); }
 
-.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--indigo);margin-bottom:12px;padding-left:4px}
+.age-card.age-4-7 { border-color: #fbcfe8; } .age-card.age-4-7:hover { border-color: #f472b6; box-shadow: 0 4px 12px rgba(244,114,182,.15); } .age-card.age-4-7 .age-icon { background: #fdf2f8; }
+.age-card.age-8-11 { border-color: #a7f3d0; } .age-card.age-8-11:hover { border-color: #34d399; box-shadow: 0 4px 12px rgba(52,211,153,.15); } .age-card.age-8-11 .age-icon { background: #ecfdf5; }
+.age-card.age-12-15 { border-color: #fde68a; } .age-card.age-12-15:hover { border-color: #f59e0b; box-shadow: 0 4px 12px rgba(245,158,11,.15); } .age-card.age-12-15 .age-icon { background: #fffbeb; }
+.age-card.age-15-17 { border-color: #ddd6fe; } .age-card.age-15-17:hover { border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139,92,246,.15); } .age-card.age-15-17 .age-icon { background: #f5f3ff; }
+.age-card.age-18plus { border-color: #c7d2fe; } .age-card.age-18plus:hover { border-color: #667eea; box-shadow: 0 4px 12px rgba(102,126,234,.15); } .age-card.age-18plus .age-icon { background: #eef2ff; }
 
-.age-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px}
-.age-card{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:20px;text-decoration:none;transition:.2s;display:flex;align-items:center;gap:16px}
-.age-card:active{transform:scale(.98)}
-.age-card .age-icon{font-size:36px;flex-shrink:0;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px}
-.age-card .age-info{flex:1}
-.age-card .age-range{font-size:18px;font-weight:800;color:var(--text)}
-.age-card .age-label{font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.4}
-.age-card .age-arrow{font-size:20px;color:var(--text-muted);flex-shrink:0;transition:.2s}
-.age-card:hover .age-arrow{transform:translateX(2px);color:var(--indigo)}
+.age-card.primary { background: var(--gradient-brand); border-color: transparent; }
+.age-card.primary:hover { box-shadow: 0 8px 24px rgba(102,126,234,.3); }
+.age-card.primary .age-icon { background: rgba(255,255,255,.2); }
+.age-card.primary .age-range { color: #fff; }
+.age-card.primary .age-label { color: rgba(255,255,255,.8); }
+.age-card.primary .age-arrow { color: rgba(255,255,255,.6); }
+.age-card.primary:hover .age-arrow { color: #fff; }
 
-.age-card.age-4-7{border-color:#fbcfe8}.age-card.age-4-7:hover{border-color:#f472b6;box-shadow:0 4px 12px rgba(244,114,182,.15)}.age-card.age-4-7 .age-icon{background:#fdf2f8}
-.age-card.age-8-11{border-color:#a7f3d0}.age-card.age-8-11:hover{border-color:#34d399;box-shadow:0 4px 12px rgba(52,211,153,.15)}.age-card.age-8-11 .age-icon{background:#ecfdf5}
-.age-card.age-12-15{border-color:#fde68a}.age-card.age-12-15:hover{border-color:#f59e0b;box-shadow:0 4px 12px rgba(245,158,11,.15)}.age-card.age-12-15 .age-icon{background:#fffbeb}
-.age-card.age-15-17{border-color:#ddd6fe}.age-card.age-15-17:hover{border-color:#8b5cf6;box-shadow:0 4px 12px rgba(139,92,246,.15)}.age-card.age-15-17 .age-icon{background:#f5f3ff}
-.age-card.age-18plus{border-color:#c7d2fe}.age-card.age-18plus:hover{border-color:#667eea;box-shadow:0 4px 12px rgba(102,126,234,.15)}.age-card.age-18plus .age-icon{background:#eef2ff}
+@media (min-width: 480px) { .age-grid { grid-template-columns: repeat(2,1fr); } .age-card.primary { grid-column: 1/-1; } }
 
-.age-card.primary{background:linear-gradient(135deg,var(--indigo),var(--violet));border-color:transparent}
-.age-card.primary:hover{box-shadow:0 8px 24px rgba(102,126,234,.3)}
-.age-card.primary .age-icon{background:rgba(255,255,255,.2)}
-.age-card.primary .age-range{color:#fff}
-.age-card.primary .age-label{color:rgba(255,255,255,.8)}
-.age-card.primary .age-arrow{color:rgba(255,255,255,.6)}
-.age-card.primary:hover .age-arrow{color:#fff}
+.mission-section { margin-bottom: 32px; }
+.mission-card { background: #fff; border: 2px solid var(--slate-200); border-radius: 24px; padding: 48px 32px; text-align: center; }
+.mission-emoji { font-size: 48px; margin-bottom: 16px; }
+.mission-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--indigo); margin-bottom: 16px; }
+.mission-title { font-size: clamp(20px,3.5vw,28px); font-weight: 800; color: var(--slate-900); line-height: 1.4; margin-bottom: 16px; }
+.mission-text { font-size: 16px; color: var(--slate-500); line-height: 1.7; max-width: 520px; margin: 0 auto; }
+@media (max-width: 640px) { .mission-card { padding: 32px 20px; } }
 
-@media(min-width:480px){.age-grid{grid-template-columns:repeat(2,1fr)}.age-card.primary{grid-column:1/-1}}
-
-.footer{text-align:center;margin-top:32px;padding:16px}
-.footer-text{font-size:12px;color:var(--text-muted);margin-bottom:8px}
-
-.mission-section{margin-bottom:32px}
-.mission-card{background:#fff;border:2px solid var(--border);border-radius:24px;padding:48px 32px;text-align:center}
-.mission-emoji{font-size:48px;margin-bottom:16px}
-.mission-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--indigo);margin-bottom:16px}
-.mission-title{font-size:clamp(20px,3.5vw,28px);font-weight:800;color:var(--text);line-height:1.4;margin-bottom:16px}
-.mission-text{font-size:16px;color:var(--text-secondary);line-height:1.7;max-width:520px;margin:0 auto}
-@media(max-width:640px){.mission-card{padding:32px 20px}}
+.footer { text-align: center; margin-top: 32px; padding: 16px; }
+.footer-text { font-size: 12px; color: var(--slate-400); margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -111,7 +94,7 @@ body{font-family:var(--font);background:#f8fafc;color:var(--text);padding-top:52
 
 <div class="main">
   <div class="hero">
-    <div class="hero-emoji">&#127891;</div>
+    <img src="assets/img/undraw/education_3vwh.svg" alt="Education illustration" class="hero-illustration" style="margin: 0 auto 16px; filter: brightness(0) invert(1);">
     <h1>Education, <span>Reimagined</span></h1>
     <p>AI-powered learning for every age. Courses, flashcards, interview prep, career tools &#8212; the new education system starts here.</p>
     <div class="hero-stats">
@@ -152,7 +135,7 @@ body{font-family:var(--font);background:#f8fafc;color:var(--text);padding-top:52
 
   <div class="mission-section">
     <div class="mission-card">
-      <div class="mission-emoji">&#127758;</div>
+      <img src="assets/img/undraw/online-reading_jtnx.svg" alt="Online learning illustration" class="illustration" style="margin: 0 auto 24px;">
       <div class="mission-label">Our Mission</div>
       <h2 class="mission-title">The old education system was built for the industrial age.<br>We're building for the intelligence age.</h2>
       <p class="mission-text">World-class education, personalized and accessible for every human on the planet. No gatekeepers. No one-size-fits-all. Just learning that works.</p>

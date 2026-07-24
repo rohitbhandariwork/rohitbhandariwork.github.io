@@ -9,41 +9,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/buttons.css">
-  <style>
-    :root {
-      --font: 'Manrope', -apple-system, sans-serif;
-      --font-reading: 'Inter', -apple-system, sans-serif;
+<link rel="stylesheet" href="../../assets/css/brand.css">
+<style>
+:root {
       --color: #34d399;
       --color2: #60a5fa;
       --bg: #ecfdf5;
       --border: #a7f3d0;
-      --text: #1e293b;
-      --text-secondary: #64748b;
-      --text-muted: #94a3b8;
-      --surface: #fff;
-      --surface-alt: #f8fafc;
-      --border-light: #e2e8f0;
-      --success: #22c55e;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: var(--bg); color: var(--text); padding-top: 52px; -webkit-font-smoothing: antialiased; }
+    
+    
 
-    /* ── Topbar ── */
-    #topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 10000; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; gap: 4px; padding: 0 12px; }
-    .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 22px; color: #64748b; padding: 6px 10px; border-radius: 8px; transition: .2s; }
-    .hamburger:hover { color: #1e293b; background: rgba(30,41,59,.06); }
-    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
-    .nav-links a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #64748b; text-decoration: none; transition: .2s; white-space: nowrap; }
-    .nav-links a:hover { color: #1e293b; background: rgba(30,41,59,.06); }
-    @media (max-width: 768px) {
-      .hamburger { display: block; }
-      .nav-links { display: none; position: fixed; top: 52px; left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,.06); padding: 6px 12px 12px; gap: 4px; align-items: stretch; box-shadow: 0 10px 15px rgba(0,0,0,.1); }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 10px 14px; border-radius: 10px; font-size: 14px; justify-content: center; }
-    }
-
-    /* ── Layout ── */
+    
+/* ── Layout ── */
     .main { max-width: 720px; margin: 0 auto; padding: 24px 20px 60px; }
 
     /* ── Hero (Primary Visual Anchor) ── */
@@ -213,7 +191,6 @@
     .stat-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-top: 2px; }
     .stats-reset { display: block; width: 100%; margin-top: 10px; background: none; border: 1px solid var(--border-light); border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: .2s; }
     .stats-reset:hover { border-color: #ef4444; color: #ef4444; }
-
   </style>
 </head>
 <body>
@@ -265,7 +242,6 @@
     <div class="gf-item"><span class="gf-icon">🔥</span><span id="gf-streak">0</span></div>
     <div class="gf-item"><span class="gf-icon">💎</span><span id="gf-gems">0</span></div>
   </div>
-
 
   <div class="section-label" style="margin-top:24px">Mystery Challenges</div>
   <div class="mystery-challenge" onclick="this.classList.toggle('open')">
@@ -409,7 +385,6 @@ document.querySelectorAll('.week-header').forEach(function(h){
     const t = document.getElementById('toast');
     if (t) { t.textContent = msg; t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 2000); }
   }
-
 
   // Phase 2: Streak nudge
   const streakNudge = document.getElementById('streak-nudge');

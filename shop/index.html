@@ -17,27 +17,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/buttons.css">
-
-  <style>
-:root{--bg:#fff;--bg-secondary:#f5f5f7;--text-primary:#1d1d1f;--text-secondary:#6e6e73;--text-tertiary:#86868b;--accent:#0071e3;--accent-hover:#0077ed;--border:rgba(0,0,0,.08);--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 30px rgba(0,0,0,.12);--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--radius-full:980px;--font:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line-height:1.5;padding-top:52px}
-
-#topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
-.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s;font-family:var(--font)}
-.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
-.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap;font-family:var(--font)}
+<link rel="stylesheet" href="../assets/css/brand.css">
+<style>
 .nav-links a:hover,.nav-links a.active{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-dropdown{position:relative}
-.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);padding:6px;min-width:140px;z-index:10001}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
-.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;color:#334155;transition:.15s}
-.nav-dropdown-menu a:hover{background:#f1f5f9;color:#1e293b}
-@media(min-width:992px){#topbar{padding-right:44px}}
-@media(max-width:768px){.hamburger{display:block}.nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 10px 15px rgba(0,0,0,.1)}.nav-links.open{display:flex}.nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}.nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}.nav-dropdown.open .nav-dropdown-menu{display:block}.nav-dropdown-menu a{padding:10px 14px;font-size:14px}}
+
+@media(min-width:992px){}
+@media(max-width:768px){.nav-dropdown.open }
 
 /* ── Hero ── */
 .hero { text-align: center; padding: 80px 24px 60px; background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg) 100%); }
@@ -110,14 +95,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line
 /* ── Spinner ── */
 .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-  
-
-</style>
+  </style>
 </head>
 <body>
 
 <!-- ── Navigation ── -->
-
 
 <!-- ── Hero ── -->
 <div id="topbar"><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks">
@@ -136,6 +118,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text-primary);line
 </div>
 
 <section class="hero">
+  <img src="../assets/img/undraw/book.svg" alt="Book illustration" class="hero-illustration" style="margin: 0 auto 16px;">
   <p class="hero-eyebrow">Knowledge Series</p>
   <h1>Master AI with clarity.</h1>
   <p>In-depth ebooks on Python, Deep Learning, Transformers, and more — written for learners who want real understanding, not just surface-level tutorials.</p>
