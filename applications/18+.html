@@ -44,10 +44,11 @@
     .section { background: var(--white); border-radius: 20px; padding: 24px; margin-bottom: 16px; border: 1px solid var(--slate-200); }
     .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--color); margin-bottom: 16px; }
 
-    .focus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .focus-item { background: var(--bg); border-radius: 14px; padding: 16px 12px; text-align: center; }
-    .focus-item .icon { font-size: 28px; margin-bottom: 6px; }
-    .focus-item .label { font-size: 13px; font-weight: 600; color: var(--slate-900); }
+    .focus-grid { display: flex; flex-direction: column; gap: 8px; }
+    .focus-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--slate-200); }
+    .focus-item:last-child { border-bottom: none; }
+    .focus-item .icon { font-size: 18px; flex-shrink: 0; }
+    .focus-item .label { font-size: 14px; font-weight: 600; color: var(--slate-900); }
 
     .apps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .app-card { background: var(--bg); border-radius: 14px; padding: 16px; text-decoration: none; color: var(--slate-900); text-align: center; transition: .2s; border: 1px solid transparent; }
