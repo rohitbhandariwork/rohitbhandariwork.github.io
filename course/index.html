@@ -19,105 +19,444 @@
 <meta property="og:url" content="https://rohitbhandariwork.github.io/course/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="../assets/img/favicon.png">
-  <link rel="apple-touch-icon" href="../assets/img/favicon.png">
+<link rel="icon" href="../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
-<link href="styles.css" rel="stylesheet">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7055279960383042" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/brand.css">
 <style>
+  :root {
+    --kv-green: #22c55e;
+    --kv-green-dark: #16a34a;
+    --kv-bg: var(--slate-50);
+    --kv-surface: var(--white);
+    --kv-border: var(--slate-200);
+    --kv-text: var(--slate-900);
+    --kv-text-muted: var(--slate-500);
+  }
 
-#topbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:10000;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:4px;padding:0 12px}
-.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:6px 10px;border-radius:8px;transition:.2s;font-family:'Manrope',sans-serif}
-.hamburger:hover{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end}
-.nav-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:.2s;white-space:nowrap;font-family:'Manrope',sans-serif}
-.nav-links a:hover,.nav-links a.active{color:#1e293b;background:rgba(30,41,59,.06)}
-.nav-dropdown{position:relative}
-.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:12px;box-shadow:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);padding:6px;min-width:140px;z-index:10001}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{display:block}
-.nav-dropdown-menu a{display:block;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;color:#334155;transition:.15s}
-.nav-dropdown-menu a:hover{background:#f1f5f9;color:#1e293b}
-@media(min-width:992px){#topbar{padding-right:44px}}
+  body { background: var(--kv-bg); }
 
-@media(max-width:768px){.hamburger{display:block}.nav-links{display:none;position:fixed;top:52px;left:0;right:0;flex-direction:column;background:rgba(255,255,255,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:6px 12px 12px;gap:4px;align-items:stretch;box-shadow:0 10px 15px rgba(0,0,0,.1)}.nav-links.open{display:flex}.nav-links a{padding:10px 14px;border-radius:10px;font-size:14px;justify-content:center}.nav-dropdown-menu{position:static;box-shadow:none;background:#f1f5f9;border-radius:10px;margin-top:4px;display:none}.nav-dropdown.open .nav-dropdown-menu{display:block}.nav-dropdown-menu a{padding:10px 14px;font-size:14px}}
+  /* Mobile-first: no sidebar, drawer on demand */
+  .kv-layout { padding-top: var(--topbar-height); min-height: 100vh; }
 
-/* Brand Type Scale */
-:root {
-  --font-primary: 'Manrope', -apple-system, system-ui, sans-serif;
-  --font-display: 'Manrope', sans-serif;
-  --font-reading: 'Inter', -apple-system, system-ui, sans-serif;
-  --font-editorial: 'Playfair Display', serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
+  /* Drawer toggle button (mobile) */
+  .drawer-toggle {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 16px;
+    z-index: 9999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gradient-brand);
+    color: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    touch-action: manipulation;
+  }
+  .drawer-toggle:active { transform: scale(.9); }
 
-.hamburger:hover{color:#1e293b;background:rgba(31,47,95,.06)}
+  /* Sidebar drawer */
+  .kv-drawer {
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--kv-surface);
+    border-right: 1px solid var(--kv-border);
+    z-index: 9998;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    overflow-y: auto;
+    padding: var(--space-4) 0;
+  }
+  .kv-drawer.open { transform: translateX(0); }
+  .kv-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    top: var(--topbar-height);
+    background: rgba(0,0,0,.3);
+    z-index: 9997;
+    display: none;
+  }
+  .kv-drawer-overlay.open { display: block; }
 
-}
-#app{padding-top:0}
-@media(max-width:768px){
-  
-  
-  .nav-links.open{display:flex}
-  
-  
-  .nav-dropdown.open 
-  
-}
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0 var(--space-4) var(--space-4);
+    border-bottom: 1px solid var(--kv-border);
+    margin-bottom: var(--space-2);
+  }
+  .drawer-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    background: var(--kv-green);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .drawer-title {
+    font-family: var(--font);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--kv-text);
+  }
+
+  .drawer-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--kv-text-muted);
+    text-decoration: none;
+    transition: .15s;
+    cursor: pointer;
+  }
+  .drawer-nav-item:hover { background: var(--slate-50); color: var(--kv-text); }
+  .drawer-nav-item.active {
+    background: rgba(34,197,94,.08);
+    color: var(--kv-green-dark);
+    font-weight: 600;
+  }
+  .drawer-nav-divider {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--kv-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: var(--space-4) var(--space-4) var(--space-1);
+  }
+
+  /* Main content */
+  .kv-main {
+    padding: var(--space-4) var(--space-4) 100px;
+  }
+  .kv-content { max-width: 720px; margin: 0 auto; }
+
+  /* Bottom bar */
+  .kv-bottombar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--kv-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    z-index: 9990;
+    padding: 0 var(--space-4);
+  }
+  .kv-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--kv-text-muted);
+  }
+  .kv-stat-icon { font-size: 14px; }
+  .kv-level-badge {
+    background: var(--kv-green);
+    color: var(--white);
+    border-radius: var(--radius-md);
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* Module cards */
+  .module-card {
+    background: var(--kv-surface);
+    border: 1px solid var(--kv-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    margin-bottom: var(--space-3);
+    cursor: pointer;
+    transition: .2s;
+  }
+  .module-card:hover {
+    border-color: var(--kv-green);
+    box-shadow: var(--shadow-md);
+  }
+  .module-card.active {
+    border-color: var(--kv-green);
+    background: rgba(34,197,94,.04);
+  }
+  .module-card.completed {
+    border-color: var(--slate-200);
+    opacity: .7;
+  }
+  .module-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .module-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-lg);
+    background: var(--slate-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .module-icon.done { background: rgba(34,197,94,.1); }
+  .module-title {
+    font-family: var(--font);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--kv-text);
+    flex: 1;
+  }
+  .module-meta {
+    font-size: 11px;
+    color: var(--kv-text-muted);
+    margin-top: 2px;
+  }
+
+  /* Lesson list inside module */
+  .lesson-list { margin-top: var(--space-3); display: none; }
+  .lesson-list.open { display: block; }
+  .lesson-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+    color: var(--kv-text-muted);
+    cursor: pointer;
+    transition: .15s;
+  }
+  .lesson-item:hover { background: var(--slate-50); color: var(--kv-text); }
+  .lesson-item.active { background: rgba(34,197,94,.08); color: var(--kv-green-dark); font-weight: 600; }
+  .lesson-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--slate-300);
+    flex-shrink: 0;
+  }
+  .lesson-dot.done { background: var(--kv-green); }
+
+  /* Content area styles */
+  .content-section {
+    background: var(--kv-surface);
+    border: 1px solid var(--kv-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    margin-bottom: var(--space-4);
+  }
+  .content-section h1 {
+    font-family: var(--font);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--kv-text);
+    margin-bottom: var(--space-3);
+  }
+  .content-section h2 {
+    font-family: var(--font);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--kv-text);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+  .content-section p {
+    font-family: var(--font-reading);
+    font-size: var(--text-sm);
+    color: var(--kv-text-muted);
+    line-height: 1.7;
+    margin-bottom: var(--space-3);
+  }
+  .content-section ul {
+    padding-left: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+  .content-section li {
+    font-family: var(--font-reading);
+    font-size: var(--text-sm);
+    color: var(--kv-text-muted);
+    line-height: 1.7;
+    margin-bottom: var(--space-1);
+  }
+  .content-section code {
+    background: var(--slate-100);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .content-section pre {
+    background: var(--slate-900);
+    color: #e2e8f0;
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: var(--space-3);
+  }
+
+  /* Quiz styles */
+  .quiz-option {
+    display: block;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid var(--kv-border);
+    border-radius: var(--radius-lg);
+    background: var(--kv-surface);
+    font-family: var(--font);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--kv-text);
+    text-align: left;
+    cursor: pointer;
+    transition: .2s;
+    margin-bottom: var(--space-2);
+  }
+  .quiz-option:hover { border-color: var(--kv-green); }
+  .quiz-option.correct { border-color: var(--kv-green); background: rgba(34,197,94,.08); }
+  .quiz-option.wrong { border-color: #ef4444; background: rgba(239,68,68,.08); }
+
+  /* Toast */
+  .kv-toast {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100000;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    font-family: var(--font);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    display: none;
+    white-space: nowrap;
+    box-shadow: var(--shadow-lg);
+  }
+  .kv-toast.show { display: block; animation: toastIn .3s ease; }
+  .kv-toast.success { background: var(--kv-green); color: var(--white); }
+  .kv-toast.error { background: #ef4444; color: var(--white); }
+  .kv-toast.xp { background: #f59e0b; color: var(--white); }
+
+  /* Responsive: iPad+ */
+  @media(min-width:768px) {
+    .drawer-toggle { display: none !important; }
+    .kv-drawer {
+      position: fixed;
+      transform: translateX(0);
+      top: var(--topbar-height);
+    }
+    .kv-drawer-overlay { display: none !important; }
+    .kv-main { margin-left: 280px; padding: var(--space-6) var(--space-6) 100px; }
+    .kv-bottombar { left: 280px; }
+  }
+
+  /* Responsive: Laptop+ */
+  @media(min-width:1025px) {
+    .kv-main { padding: var(--space-8) var(--space-8) 100px; }
+  }
 </style>
 </head>
 <body>
+
 <div id="topbar">
-<button class="hamburger" onclick="toggleNav()">☰</button>
-<div class="nav-links" id="navLinks">
-<a href="../portfolio/">💼 Portfolio</a>
-<div class="nav-dropdown" onclick="this.classList.toggle('open')">
-<a href="javascript:void(0)">📱 Applications ▾</a>
-<div class="nav-dropdown-menu">
-<a href="../applications/4-7.html">👶 Ages 4–7</a>
-<a href="../applications/8-11.html">🧒 Ages 8–11</a>
-<a href="../applications/12-15.html">🧑 Ages 12–15</a>
-<a href="../applications/15-17.html">🎓 Ages 15–17</a>
-<a href="../applications/18+.html">💼 Ages 18+</a>
-</div></div>
-<a href="../news/">📰 News</a>
-<a href="../portfolio/#contact">📞 Contact</a>
-</div></div>
-<div id="app">
-  <aside id="sidebar">
-    <div class="sidebar-header">
-      <div class="vault-logo">🧠</div>
-      <div class="vault-title">Knowledge Vault</div>
+  <a href="../" class="btn-back">← Back</a>
+  <button class="hamburger" onclick="toggleNav()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="../portfolio/">💼 Portfolio</a>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <a href="javascript:void(0)">📱 Applications ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="../applications/4-7.html">👶 Ages 4–7</a>
+        <a href="../applications/8-11.html">🧒 Ages 8–11</a>
+        <a href="../applications/12-15.html">🧑 Ages 12–15</a>
+        <a href="../applications/15-17.html">🎓 Ages 15–17</a>
+        <a href="../applications/18+.html">💼 Ages 18+</a>
+      </div>
     </div>
-    <nav id="nav">
-      <a href="#/" class="nav-item" data-nav="/">Dashboard</a>
-      <div class="nav-divider">Modules</div>
-      <div id="module-tree"></div>
-      <div class="nav-divider">Collection</div>
-      <a href="#/vault" class="nav-item" data-nav="/vault">🗂️ Vault</a>
-      <a href="#/badges" class="nav-item" data-nav="/badges">🏅 Badges</a>
-      <a href="#/levels" class="nav-item" data-nav="/levels">📊 Levels</a>
-      <div class="nav-divider">Tools</div>
-      <a href="#/search" class="nav-item" data-nav="/search">🔍 Search</a>
-    </nav>
-  </aside>
-  <main id="main">
-    <div id="content"></div>
-  </main>
-  <footer id="bottom-bar">
-    <div class="stat"><span class="stat-icon">⭐</span><span id="xp-display">0 XP</span></div>
-    <div class="stat"><span class="stat-icon">💎</span><span id="gem-display">0</span></div>
-    <div class="stat"><span class="stat-icon">🔥</span><span id="streak-display">0</span></div>
-    <div class="stat"><span class="stat-icon">🛡️</span><span id="shield-display">0</span></div>
-    <div class="stat"><span id="level-display" class="level-badge">Apprentice</span></div>
-    <div class="stat"><span id="quest-badge" title="Daily Quests"><span class="stat-icon">📋</span><span id="quest-count">0/3</span></span></div>
-  </footer>
+    <a href="../news/">📰 News</a>
+    <a href="../portfolio/#contact">📞 Contact</a>
+  </div>
 </div>
+
+<div class="kv-layout">
+  <!-- Mobile drawer toggle -->
+  <button class="drawer-toggle" onclick="toggleDrawer()">☰</button>
+
+  <!-- Drawer overlay -->
+  <div class="kv-drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+
+  <!-- Sidebar drawer -->
+  <div class="kv-drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-logo">🧠</div>
+      <div class="drawer-title">Knowledge Vault</div>
+    </div>
+    <div class="drawer-nav-item active" data-nav="/" onclick="navigate('/')">📊 Dashboard</div>
+    <div class="drawer-nav-divider">Modules</div>
+    <div id="module-tree"></div>
+    <div class="drawer-nav-divider">Collection</div>
+    <div class="drawer-nav-item" data-nav="/vault" onclick="navigate('/vault')">🗂️ Vault</div>
+    <div class="drawer-nav-item" data-nav="/badges" onclick="navigate('/badges')">🏅 Badges</div>
+    <div class="drawer-nav-item" data-nav="/levels" onclick="navigate('/levels')">📊 Levels</div>
+    <div class="drawer-nav-divider">Tools</div>
+    <div class="drawer-nav-item" data-nav="/search" onclick="navigate('/search')">🔍 Search</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="kv-main">
+    <div class="kv-content" id="content"></div>
+  </div>
+</div>
+
+<!-- Bottom bar -->
+<div class="kv-bottombar">
+  <div class="kv-stat"><span class="kv-stat-icon">⭐</span><span id="xp-display">0 XP</span></div>
+  <div class="kv-stat"><span class="kv-stat-icon">💎</span><span id="gem-display">0</span></div>
+  <div class="kv-stat"><span class="kv-stat-icon">🔥</span><span id="streak-display">0</span></div>
+  <div class="kv-stat"><span class="kv-stat-icon">🛡️</span><span id="shield-display">0</span></div>
+  <div class="kv-stat"><span id="level-display" class="kv-level-badge">Apprentice</span></div>
+  <div class="kv-stat"><span id="quest-badge" title="Daily Quests"><span class="kv-stat-icon">📋</span><span id="quest-count">0/3</span></span></div>
+</div>
+
 <div id="toast-container"></div>
 
 <script src="modules.js"></script>
 <script src="app.js"></script>
-<script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}</script>
+<script>
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
+function toggleDrawer(){
+  document.getElementById('drawer').classList.toggle('open');
+  document.getElementById('drawerOverlay').classList.toggle('open');
+}
+function navigate(path){
+  window.location.hash = path;
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+}
+</script>
 </body>
 </html>
