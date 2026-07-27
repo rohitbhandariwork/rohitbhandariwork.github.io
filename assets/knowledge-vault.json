@@ -1,0 +1,267 @@
+[
+  {
+    "id": "what-is-ai",
+    "level": "beginner",
+    "icon": "🤖",
+    "title": "What is AI?",
+    "readTime": "5 min",
+    "sections": [
+      {
+        "heading": "Definition",
+        "content": "Artificial Intelligence (AI) is the simulation of human intelligence by machines. It's the science of making computers think, learn, and make decisions like humans do. Instead of following only pre-written rules, AI systems can learn from data and improve over time."
+      },
+      {
+        "heading": "Why Does AI Matter?",
+        "content": "AI is transforming every industry — from healthcare diagnosing diseases to cars driving themselves. Understanding AI isn't just for engineers anymore. It's a life skill, like reading or using a computer. Whether you're a student, professional, or just curious, AI will touch your life in ways you can't imagine."
+      },
+      {
+        "heading": "Real-World Examples",
+        "content": "• Virtual assistants like Siri and Alexa\n• Netflix recommending shows you actually like\n• Email spam filters catching junk mail\n• Google Maps finding the fastest route\n• Social media feeds showing content you care about\n• Healthcare AI detecting cancer in X-rays"
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "AI isn't magic — it's math, data, and clever engineering. The more you understand it, the more you can use it to your advantage."
+      }
+    ]
+  },
+  {
+    "id": "how-machines-learn",
+    "level": "beginner",
+    "icon": "📊",
+    "title": "How Machines Learn",
+    "readTime": "5 min",
+    "sections": [
+      {
+        "heading": "The Core Idea",
+        "content": "Machine learning is how computers learn from experience. Instead of being told exactly what to do, they look at thousands (or millions) of examples and find patterns. Think of it like a child learning to recognize cats — after seeing enough cats, they just know."
+      },
+      {
+        "heading": "Three Types of Learning",
+        "content": "**Supervised Learning:** You show the computer labeled examples (this is a cat, this is a dog) and it learns to tell them apart. Like studying with an answer key.\n\n**Unsupervised Learning:** The computer finds patterns on its own without labels. Like sorting a pile of buttons by size and color without being told how.\n\n**Reinforcement Learning:** The computer learns by trial and error, getting rewards for good decisions and penalties for bad ones. Like training a dog with treats."
+      },
+      {
+        "heading": "Why It Matters",
+        "content": "Machine learning powers everything from voice recognition to fraud detection. The more data a system sees, the smarter it gets. That's why Google gets better at search over time — it's learning from billions of searches every day."
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "AI doesn't 'think' — it pattern-matches at massive scale. The magic is in the data and the algorithms that process it."
+      }
+    ]
+  },
+  {
+    "id": "types-of-ai",
+    "level": "beginner",
+    "icon": "🎯",
+    "title": "Types of AI",
+    "readTime": "5 min",
+    "sections": [
+      {
+        "heading": "By Capability",
+        "content": "**Narrow AI (ANI):** AI that does one thing really well. Siri, ChatGPT, chess engines — they're all narrow AI. This is what exists today.\n\n**General AI (AGI):** AI that can do anything a human can. Understand context, learn new tasks, transfer knowledge. This doesn't exist yet — it's the holy grail.\n\n**Super AI (ASI):** AI that's smarter than all humans combined. Purely theoretical — may never happen."
+      },
+      {
+        "heading": "By Approach",
+        "content": "**Machine Learning:** Systems that learn from data. The backbone of modern AI.\n\n**Deep Learning:** ML using neural networks with many layers. Powers image recognition, language models, and self-driving cars.\n\n**Natural Language Processing:** AI that understands human language. ChatGPT, translation tools, voice assistants.\n\n**Computer Vision:** AI that sees and interprets images and video. Face recognition, medical imaging, autonomous vehicles."
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "Don't be intimidated by the terminology. Everything starts with narrow AI doing specific tasks well. That's where all the real value is right now."
+      }
+    ]
+  },
+  {
+    "id": "ml-basics",
+    "level": "intermediate",
+    "icon": "🧠",
+    "title": "Machine Learning Basics",
+    "readTime": "10 min",
+    "sections": [
+      {
+        "heading": "The ML Pipeline",
+        "content": "Every machine learning project follows the same flow:\n\n1. **Data Collection** — Gather relevant, high-quality data\n2. **Data Preparation** — Clean, format, and split data\n3. **Feature Engineering** — Pick what inputs matter\n4. **Model Selection** — Choose the right algorithm\n5. **Training** — Let the model learn from data\n6. **Evaluation** — Test how well it performs\n7. **Deployment** — Put it into production\n8. **Monitoring** — Track performance over time"
+      },
+      {
+        "heading": "Key Algorithms",
+        "content": "**Linear Regression:** Predicts a number (house prices, sales). Draws the best-fitting line through data points.\n\n**Decision Trees:** Asks a series of yes/no questions to classify data. Easy to understand and explain.\n\n**Random Forest:** Many decision trees voting together. More accurate than a single tree.\n\n**K-Means Clustering:** Groups similar data points together without labels. Useful for customer segmentation.\n\n**Neural Networks:** Layers of connected nodes that learn complex patterns. Powers deep learning."
+      },
+      {
+        "heading": "Overfitting & Underfitting",
+        "content": "**Overfitting:** The model memorizes the training data instead of learning general patterns. Like studying only past exams instead of understanding the subject. Test scores drop on new data.\n\n**Underfitting:** The model is too simple to capture the pattern. Like trying to fit a straight line through a curve. Poor performance everywhere.\n\n**The Goal:** Find the sweet spot — a model that generalizes well to new, unseen data."
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "ML is about finding patterns in data and using them to make predictions. The quality of your data matters more than the complexity of your model."
+      }
+    ]
+  },
+  {
+    "id": "generative-ai",
+    "level": "intermediate",
+    "icon": "🎨",
+    "title": "Generative AI",
+    "readTime": "10 min",
+    "sections": [
+      {
+        "heading": "What Is Generative AI?",
+        "content": "Generative AI creates new content — text, images, music, code, video — instead of just analyzing or classifying existing data. It's the difference between an AI that recognizes a painting and one that paints."
+      },
+      {
+        "heading": "How It Works",
+        "content": "Generative models learn the underlying patterns of their training data. When you give them a prompt, they generate new content that follows those patterns.\n\n• **GPT (text):** Predicts the next most likely word, one at a time\n• **DALL-E / Midjourney (images):** Generates pixels that match a text description\n• **Suno (music):** Creates audio patterns that sound like real music\n• **GitHub Copilot (code):** Suggests code based on context and comments"
+      },
+      {
+        "heading": "Applications",
+        "content": "• Content creation (writing, designing, composing)\n• Code generation and debugging\n• Personalized learning materials\n• Drug discovery and protein design\n• Marketing copy and ad generation\n• Game asset creation\n• Scientific research"
+      },
+      {
+        "heading": "Limitations",
+        "content": "• Can 'hallucinate' — generate confident but wrong information\n• Doesn't truly understand — it pattern-matches at scale\n• Training requires massive compute and data\n• Ethical concerns around copyright, bias, and misuse\n• Output quality depends heavily on prompt quality"
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "Generative AI is a tool, not a replacement for thinking. The best results come from humans guiding AI with clear intent and critical evaluation."
+      }
+    ]
+  },
+  {
+    "id": "how-chatgpt-works",
+    "level": "intermediate",
+    "icon": "🗣️",
+    "title": "How ChatGPT Works",
+    "readTime": "10 min",
+    "sections": [
+      {
+        "heading": "The Architecture",
+        "content": "ChatGPT is built on a Transformer neural network — specifically a large language model (LLM). It was trained on billions of words from books, websites, and articles. The 'GPT' stands for Generative Pre-trained Transformer."
+      },
+      {
+        "heading": "Training Process",
+        "content": "**Step 1 — Pre-training:** The model reads trillions of words and learns to predict the next word in a sequence. 'The cat sat on the ___' → 'mat'. By doing this billions of times, it learns grammar, facts, reasoning, and even humor.\n\n**Step 2 — Fine-tuning:** Human trainers rate different responses. The model learns which answers are helpful, harmless, and honest.\n\n**Step 3 — RLHF (Reinforcement Learning from Human Feedback):** The model gets rewarded for good responses and penalized for bad ones. This aligns it with human preferences."
+      },
+      {
+        "heading": "Why It Feels So Human",
+        "content": "ChatGPT doesn't 'know' things — it's incredibly good at predicting what words should come next based on context. When you ask a question, it generates a statistically likely response based on all the text it's seen.\n\nThis is why it can write essays, code, poems, and have conversations — language patterns are universal."
+      },
+      {
+        "heading": "Limitations",
+        "content": "• Training data has a cutoff date — doesn't know recent events\n• Can generate plausible-sounding but incorrect information\n• Doesn't have real understanding or consciousness\n• Can be biased based on training data\n• Struggles with complex math and logical reasoning"
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "ChatGPT is a language prediction machine, not a knowledge database. Use it as a thinking tool, not an oracle."
+      }
+    ]
+  },
+  {
+    "id": "neural-networks",
+    "level": "advanced",
+    "icon": "⚡",
+    "title": "Neural Networks Deep Dive",
+    "readTime": "20 min",
+    "sections": [
+      {
+        "heading": "Biological Inspiration",
+        "content": "Neural networks are inspired by the human brain. Just as brain cells (neurons) connect and fire signals to each other, artificial neurons connect in layers and pass information forward. But unlike biology, these are mathematical functions — not living cells."
+      },
+      {
+        "heading": "Architecture",
+        "content": "**Input Layer:** Receives raw data (pixels, words, numbers)\n\n**Hidden Layers:** Where the magic happens. Each layer extracts increasingly complex features. In image recognition:\n- Layer 1: Edges and lines\n- Layer 2: Shapes and textures\n- Layer 3: Object parts (eyes, wheels)\n- Layer 4: Full objects (faces, cars)\n\n**Output Layer:** Final prediction (cat or dog, price, class)"
+      },
+      {
+        "heading": "How It Learns",
+        "content": "1. **Forward Pass:** Data flows through the network, producing a prediction\n2. **Loss Calculation:** Compare prediction to actual answer\n3. **Backpropagation:** Calculate how much each weight contributed to the error\n4. **Weight Update:** Adjust weights to reduce the error\n5. **Repeat** millions of times until the network gets good"
+      },
+      {
+        "heading": "Activation Functions",
+        "content": "Without activation functions, a neural network would just be a fancy linear equation. They add non-linearity, letting the network learn complex patterns.\n\n• **ReLU:** max(0, x) — simple and effective, most common\n• **Sigmoid:** Squashes output to 0-1, good for probabilities\n• **Tanh:** Squashes to -1 to 1, centered around zero\n• **Softmax:** Converts outputs to probabilities that sum to 1"
+      },
+      {
+        "heading": "Types of Neural Networks",
+        "content": "**Feedforward (FNN):** Simple, one-directional. Good for tabular data.\n\n**Convolutional (CNN):** Specialized for images. Uses filters to detect features.\n\n**Recurrent (RNN/LSTM):** Processes sequences. Good for text and time series.\n\n**Transformer:** Attention-based. Powers ChatGPT, GPT-4, and modern LLMs.\n\n**Generative Adversarial (GAN):** Two networks competing. Creates realistic images, deepfakes."
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "Neural networks are universal function approximators. Given enough data and compute, they can learn almost any pattern. The challenge is finding the right architecture and training approach for your specific problem."
+      }
+    ]
+  },
+  {
+    "id": "computer-vision",
+    "level": "advanced",
+    "icon": "👁️",
+    "title": "Computer Vision",
+    "readTime": "20 min",
+    "sections": [
+      {
+        "heading": "What Is Computer Vision?",
+        "content": "Computer vision gives machines the ability to see and interpret visual information from the world — images, videos, and real-time camera feeds. It's one of the oldest and most impactful areas of AI research."
+      },
+      {
+        "heading": "Core Tasks",
+        "content": "**Image Classification:** What is in this image? (Cat, dog, car)\n\n**Object Detection:** Where are the objects? (Bounding boxes around each)\n\n**Semantic Segmentation:** What is every pixel? (Labeling each pixel by class)\n\n**Instance Segmentation:** Which object is which? (Distinguishing between individual objects)\n\n**Pose Estimation:** Where are the body parts? (Skeletal tracking)\n\n**Optical Flow:** How is everything moving? (Tracking motion between frames)"
+      },
+      {
+        "heading": "How CNNs See Images",
+        "content": "Convolutional Neural Networks process images like a sliding window:\n\n1. A small filter (3x3 or 5x5) slides across the image\n2. At each position, it performs a mathematical operation\n3. It detects a specific feature (edge, corner, texture)\n4. Multiple filters detect different features\n5. Pooling reduces the size while keeping important info\n6. Deeper layers combine simple features into complex ones"
+      },
+      {
+        "heading": "Real-World Applications",
+        "content": "• Self-driving cars (Tesla, Waymo) — detecting lanes, signs, pedestrians\n• Medical imaging — detecting tumors, analyzing X-rays\n• Facial recognition — unlocking phones, security systems\n• Quality manufacturing — detecting defects on assembly lines\n• AR/VR — understanding and overlaying the real world\n• Agriculture — monitoring crop health from drones\n• Sports analytics — tracking players and game events"
+      },
+      {
+        "heading": "Challenges",
+        "content": "• Lighting conditions affect recognition accuracy\n• Occlusion (objects hiding behind others)\n• Adversarial attacks — tiny pixel changes can fool models\n• Real-time processing requires massive compute\n• Bias in training data leads to biased predictions\n• Privacy concerns with facial recognition"
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "Computer vision is everywhere — from your phone camera to autonomous vehicles. Understanding how it works helps you build better applications and recognize its limitations."
+      }
+    ]
+  },
+  {
+    "id": "transformers-llms",
+    "level": "advanced",
+    "icon": "🔬",
+    "title": "Transformers & LLMs",
+    "readTime": "30 min",
+    "sections": [
+      {
+        "heading": "The Transformer Revolution",
+        "content": "In 2017, Google published 'Attention Is All You Need' — the paper that created the Transformer architecture. It replaced recurrence with attention, enabling parallel processing of entire sequences. This single innovation led to GPT, BERT, T5, and every modern LLM."
+      },
+      {
+        "heading": "Self-Attention Mechanism",
+        "content": "Self-attention lets each word in a sequence look at every other word to understand context.\n\nExample: 'The cat sat on the mat because it was soft'\n\nWhen processing 'it', attention knows 'it' refers to 'mat' (soft) not 'cat'. This is how transformers understand pronouns, references, and meaning."
+      },
+      {
+        "heading": "How Transformers Work",
+        "content": "**Encoder:** Reads and understands input text (used in BERT)\n**Decoder:** Generates output text one token at a time (used in GPT)\n**Both:** Encoder-decoder architecture (used in T5, original Transformer)\n\nEach layer has:\n1. Multi-head attention (multiple attention patterns)\n2. Feed-forward network (processing)\n3. Layer normalization (stability)\n4. Residual connections (gradient flow)"
+      },
+      {
+        "heading": "Large Language Models (LLMs)",
+        "content": "LLMs are transformers trained on massive text corpora:\n\n• **GPT-4:** 1.7 trillion parameters, trained on 13 trillion tokens\n• **Claude 3:** Constitutional AI, RLHF trained\n• **Llama 3:** Open-source, 70B parameters\n• **Gemini:** Google's multimodal model\n\nThe scaling law: more parameters + more data + more compute = better performance. This is why training costs millions of dollars."
+      },
+      {
+        "heading": "Tokenization",
+        "content": "LLMs don't read words — they read tokens (subword pieces):\n\n'Tokenization' → ['Token', 'ization']\n'hamburger' → ['h', 'amb', 'urger']\n\nBPE (Byte Pair Encoding) is the most common method. It balances vocabulary size with sequence length. Fewer tokens = faster, cheaper inference."
+      },
+      {
+        "heading": "Fine-Tuning vs Prompting",
+        "content": "**Prompting:** Guide the model with instructions. No training needed. Quick to iterate.\n\n**Fine-tuning:** Retrain on your specific data. Better performance on domain-specific tasks. Requires compute and data.\n\n**RAG (Retrieval-Augmented Generation):** Give the model access to external knowledge at inference time. Best of both worlds — general knowledge + specific docs."
+      },
+      {
+        "heading": "Current Limitations",
+        "content": "• Context window limits (even 128K tokens isn't enough for a whole book)\n• No real reasoning — pattern matching at scale\n• Hallucinations persist despite RLHF\n• Inference is expensive (GPU costs)\n• Can't learn from a single example (few-shot only)\n• Environmental impact of training"
+      },
+      {
+        "heading": "The Future",
+        "content": "• **Multimodal models:** Text + images + video + audio in one\n• **Agents:** LLMs that take actions, not just generate text\n• **Reasoning models:** Chain-of-thought, tree-of-thought approaches\n• **Smaller models:** Distillation and quantization for edge devices\n• **Longer context:** Millions of tokens, entire codebases"
+      },
+      {
+        "heading": "Key Takeaway",
+        "content": "Transformers are the foundation of modern AI. Understanding attention, tokenization, and scaling laws gives you the conceptual framework to evaluate any LLM and use it effectively."
+      }
+    ]
+  }
+]
