@@ -1,0 +1,134 @@
+[
+  {
+    "id": "technical",
+    "icon": "💻",
+    "title": "Technical — Data Structures & Algorithms",
+    "description": "Test your problem-solving skills with coding and algorithm questions.",
+    "questions": [
+      {
+        "q": "Explain the difference between an array and a linked list. When would you use each?",
+        "tips": "Arrays: O(1) access by index, contiguous memory, harder to insert/delete. Linked Lists: O(n) access, non-contiguous, easy insert/delete. Use arrays for random access, linked lists for frequent insertions.",
+        "ideal": "Arrays store elements in contiguous memory, giving O(1) random access but O(n) insertion. Linked lists store elements in nodes with pointers, giving O(1) insertion but O(n) access. Use arrays when you need fast lookups (e.g., matrix operations), linked lists when you frequently add/remove elements (e.g., undo history)."
+      },
+      {
+        "q": "What is a hash table? How does it handle collisions?",
+        "tips": "Hash table maps keys to values using a hash function. Collisions happen when two keys hash to the same index. Solutions: chaining (linked lists at each bucket) or open addressing (probe next slots).",
+        "ideal": "A hash table maps keys to values using a hash function that converts keys to array indices. Average O(1) lookup/insert. Collisions occur when two keys hash to the same index. Chaining stores colliding elements in a linked list at that bucket. Open addressing probes for the next empty slot. Load factor = items/slots; resize when >0.75."
+      },
+      {
+        "q": "Explain Big O notation. What's the time complexity of binary search?",
+        "tips": "Big O describes worst-case growth rate. Binary search halves the search space each step. O(log n) — very efficient for sorted data.",
+        "ideal": "Big O notation describes how an algorithm's time/space grows with input size. Binary search works on sorted arrays by comparing the middle element and eliminating half the remaining elements each step. Time complexity: O(log n) because you halve the search space each iteration. Space: O(1) iterative, O(log n) recursive."
+      },
+      {
+        "q": "What is a binary search tree? What are its advantages over a sorted array?",
+        "tips": "BST: left < root < right. Advantages: O(log n) insert/delete vs O(n) for arrays. In-order traversal gives sorted order.",
+        "ideal": "A BST is a binary tree where each node's left subtree contains only smaller values and right subtree contains only larger values. Advantages over sorted arrays: O(log n) insertion and deletion (vs O(n) for arrays due to shifting). Supports ordered operations like finding min/max, successor, and range queries efficiently."
+      },
+      {
+        "q": "How does a stack differ from a queue? Give real-world examples of each.",
+        "tips": "Stack: LIFO (last in, first out) — browser back button, undo. Queue: FIFO (first in, first out) — print queue, BFS.",
+        "ideal": "Stack follows LIFO — last element added is first removed. Used for: function call stacks, undo/redo, expression parsing, browser back button. Queue follows FIFO — first element added is first removed. Used for: BFS traversal, print queues, task scheduling, buffering. Both are O(1) for add/remove."
+      }
+    ]
+  },
+  {
+    "id": "system-design",
+    "icon": "🏗️",
+    "title": "System Design",
+    "description": "Learn to design scalable systems and architectures.",
+    "questions": [
+      {
+        "q": "Design a URL shortener like bit.ly. What are the key components?",
+        "tips": "Components: generate short URL (hash or counter), store mapping, redirect. Consider: scalability, analytics, custom URLs, expiry. Use base62 encoding for short URLs.",
+        "ideal": "Key components: 1) API layer to create/resolve URLs 2) Database storing short→long URL mappings 3) Hash/encoding service (base62 of auto-increment ID or MD5 hash) 4) Redirect service with caching (Redis) 5) Analytics for click tracking. Scale: use consistent hashing for DB sharding, CDN for caching, rate limiting to prevent abuse."
+      },
+      {
+        "q": "How would you design a chat application like WhatsApp?",
+        "tips": "Components: user service, message service, presence service. Use WebSockets for real-time. Messages stored in message queues. End-to-end encryption.",
+        "ideal": "Components: 1) WebSocket connections for real-time messaging 2) User service (auth, profiles) 3) Message service with queues (Kafka/RabbitMQ) 4) Presence service (online/offline status) 5) Message storage (Cassandra for write-heavy) 6) Push notifications (FCM/APNs). Key decisions: WebSocket vs long-polling, message ordering, read receipts, media storage (S3)."
+      },
+      {
+        "q": "Design a news feed system. How do you handle millions of users?",
+        "tips": "Fan-out on write (push) vs fan-out on read (pull). Hybrid approach: push for regular users, pull for celebrities. Cache feed in Redis.",
+        "ideal": "Two approaches: Fan-out on write — pre-compute each user's feed when they post (fast read, slow write). Fan-out on read — compute feed at read time by aggregating followees' posts (slow read, fast write). Hybrid: push for most users, pull for celebrity accounts with millions of followers. Store feeds in Redis, backfill with database. Use message queues for async fan-out."
+      },
+      {
+        "q": "What is database sharding? When would you use it?",
+        "tips": "Sharding splits a database across multiple servers by a shard key. Use when: single DB can't handle load, data is too large, need geographic distribution.",
+        "ideal": "Sharding distributes data across multiple database instances by a shard key (e.g., user ID). Each shard holds a subset of data. When to use: 1) Single DB can't handle write throughput 2) Data exceeds single server capacity 3) Need geographic distribution. Challenges: cross-shard queries, rebalancing, maintaining consistency. Alternatives: read replicas, vertical scaling, NoSQL."
+      },
+      {
+        "q": "Explain the CAP theorem. Why is it important for distributed systems?",
+        "tips": "CAP: Consistency, Availability, Partition tolerance — pick 2. In practice, network partitions happen, so you choose between C and A. CP systems: MongoDB, HBase. AP systems: Cassandra, DynamoDB.",
+        "ideal": "CAP theorem states a distributed system can guarantee at most 2 of 3 properties: Consistency (all nodes see same data), Availability (every request gets a response), Partition tolerance (system works despite network failures). Since partitions are inevitable, you choose CP (consistent but may reject requests, e.g., MongoDB) or AP (available but may serve stale data, e.g., Cassandra). Most modern systems are AP with eventual consistency."
+      }
+    ]
+  },
+  {
+    "id": "behavioral",
+    "icon": "💼",
+    "title": "Behavioral — STAR Method",
+    "description": "Practice answering behavioral questions using the STAR method.",
+    "questions": [
+      {
+        "q": "Tell me about a time you had to deal with a difficult team member.",
+        "tips": "STAR: Situation → Task → Action → Result. Focus on your actions, not the other person's faults. Show communication skills and empathy.",
+        "ideal": "Structure your answer: S: 'In my previous role, a colleague consistently missed deadlines, affecting our sprint.' T: 'I needed to address this without escalating to management.' A: 'I scheduled a 1:1, asked about blockers, discovered they were overwhelmed with another project. We reorganized tasks together.' R: 'They improved, our sprint velocity increased 20%, and we built a better working relationship.'"
+      },
+      {
+        "q": "Describe a project where you had to learn something new quickly.",
+        "tips": "Show your learning process: research → practice → apply → iterate. Highlight the outcome and what you learned about learning.",
+        "ideal": "Example: S: 'Our team needed to migrate from MongoDB to PostgreSQL in 3 weeks.' T: 'I had no PostgreSQL experience.' A: 'I spent 2 days on docs and tutorials, set up a sandbox, migrated a test dataset, got code review from a DBA.' R: 'Completed migration on time, zero downtime, and became the team's PostgreSQL go-to person. I learned that focused immersion + hands-on practice beats passive reading.'"
+      },
+      {
+        "q": "Tell me about a time you failed. What did you learn?",
+        "tips": "Be genuine. Show self-awareness and growth. Focus on what you changed afterward, not the failure itself.",
+        "ideal": "Example: S: 'I pushed a feature to production without adequate testing.' T: 'It caused a 2-hour outage affecting 10K users.' A: 'I immediately rolled back, investigated the root cause, wrote a post-mortem, and proposed a mandatory staging environment with automated tests.' R: 'We implemented CI/CD with test gates, reducing production incidents by 80%. I learned that speed without quality costs more in the long run.'"
+      },
+      {
+        "q": "How do you handle competing priorities with tight deadlines?",
+        "tips": "Show your prioritization framework. Communication is key — stakeholders should know trade-offs.",
+        "ideal": "Example: S: 'Two stakeholders needed features by the same deadline.' T: 'I couldn't deliver both on time.' A: 'I met with both, assessed business impact, proposed delivering the higher-impact feature first with a 1-week delay on the other. Documented the trade-off and got sign-off.' R: 'Delivered both features, the higher-impact one on time, the other a week late. Stakeholders appreciated the transparency and we established a prioritization process.'"
+      },
+      {
+        "q": "Give an example of when you went above and beyond.",
+        "tips": "Show initiative and ownership. Don't just do your job — show you care about the bigger picture.",
+        "ideal": "Example: S: 'Our customer support team was manually copying data between systems.' T: 'This was taking 2 hours daily and causing errors.' A: 'I built an internal tool that automated the data sync, even though it wasn't in my job description. Spent 3 evenings coding it.' R: 'Saved the team 10 hours/week, eliminated data errors, and the tool was adopted by 3 other teams. Got an innovation award.'"
+      }
+    ]
+  },
+  {
+    "id": "ai-ml",
+    "icon": "🧠",
+    "title": "AI/ML Specific",
+    "description": "Prepare for AI and machine learning interview questions.",
+    "questions": [
+      {
+        "q": "Explain the bias-variance tradeoff in machine learning.",
+        "tips": "Bias: error from wrong assumptions (underfitting). Variance: error from sensitivity to training data (overfitting). Goal: minimize total error = bias² + variance + irreducible noise.",
+        "ideal": "Bias is error from oversimplifying — the model can't capture the true pattern (underfitting). High bias = low training accuracy. Variance is error from oversensitivity — the model captures noise in training data (overfitting). High variance = high training accuracy but low test accuracy. The tradeoff: reducing bias often increases variance and vice versa. The goal is finding the sweet spot that minimizes total error. Techniques: regularization, cross-validation, ensemble methods."
+      },
+      {
+        "q": "What is overfitting? How do you prevent it?",
+        "tips": "Overfitting = model memorizes training data. Prevention: more data, regularization, dropout, early stopping, cross-validation, simpler model.",
+        "ideal": "Overfitting occurs when a model learns noise instead of signal — high training accuracy but poor generalization. Prevention: 1) More training data 2) Regularization (L1/L2) penalizes complex models 3) Dropout randomly deactivates neurons during training 4) Early stopping when validation loss increases 5) Cross-validation to detect overfitting 6) Data augmentation 7) Reduce model complexity 8) Ensemble methods (bagging, boosting)."
+      },
+      {
+        "q": "Explain precision and recall. When would you prioritize one over the other?",
+        "tips": "Precision = true positives / (true + false positives). Recall = true positives / (true false negatives). Prioritize precision when false positives are costly (spam). Prioritize recall when false negatives are costly (cancer detection).",
+        "ideal": "Precision measures how many selected items are relevant (TP/(TP+FP)). Recall measures how many relevant items are selected (TP/(TP+FN)). Tradeoff: increasing one often decreases the other. Prioritize precision when false positives are costly — spam filtering (marking good email as spam is bad). Prioritize recall when false negatives are costly — cancer detection (missing cancer is dangerous). F1 score balances both: 2*(precision*recall)/(precision+recall)."
+      },
+      {
+        "q": "What is gradient descent? Explain the variants.",
+        "tips": "Optimization algorithm that iteratively moves toward minimum of loss function. Variants: Batch (all data), Stochastic (one sample), Mini-batch (subset). Learning rate controls step size.",
+        "ideal": "Gradient descent finds the minimum of a loss function by iteratively moving in the direction of steepest descent (negative gradient). Update rule: w = w - lr * gradient. Variants: Batch GD uses all data per step (stable but slow), SGD uses one sample (noisy but fast, can escape local minima), Mini-batch GD uses subsets (best of both, most common). Adaptive variants: Adam, RMSProp adjust learning rate per parameter. Learning rate is crucial — too high diverges, too low converges slowly."
+      },
+      {
+        "q": "How does a random forest work? Why is it better than a single decision tree?",
+        "tips": "Random Forest = many decision trees voting. Better because: reduces overfitting, handles noise, provides feature importance. Uses bagging + random feature subsets.",
+        "ideal": "Random Forest builds many decision trees on random subsets of data (bagging) and random subsets of features. Each tree votes, and the majority wins. Better than single trees because: 1) Reduces overfitting through averaging 2) More robust to noise and outliers 3) Provides feature importance rankings 4) Handles missing data well 5) No need for feature scaling. Weakness: less interpretable than single trees, slower to predict."
+      }
+    ]
+  }
+]
