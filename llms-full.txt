@@ -1,0 +1,68 @@
+# Rohit Builds — Full Content
+
+Portfolio of passion projects by Rohit Bhandari, live at https://rohitbhandariwork.github.io. This file is the full site content for LLMs and AI agents. Lightweight index in llms.txt.
+
+## Home
+
+Rohit Builds — The new education system.
+Tagline: The new education system — AI-powered, personalized, and free for every age group.
+Stats: 5 Age Groups, 7 Apps, endless potential.
+
+Choose Your Age Group:
+- Ages 4-7 — Bot Buddies
+- Ages 8-11 — Code Kids
+- Ages 12-15 — Code Quest
+- Ages 15-17 — AI Lab
+- Ages 18+ — Career Launcher
+
+Mission: Make world-class education accessible, personalized, and engaging for every human on the planet. No gatekeepers. No one-size-fits-all. Just learning that works.
+
+## Portfolio (Careers)
+
+Designing data platforms that are readable, reliable, and ready to scale.
+Subline: Azure Data Engineer evolving into a platform-minded architect.
+Built like a hiring page, not a resume dump. Clear proof of fit for a modern Azure data role. Core technical strengths, case studies written for hiring managers, experience supporting the move toward architecture ownership, and verified credentials validating hands-on skills. Currently open to Azure data engineering or architecture opportunities.
+Contact via the page contact block: rohitbhandari.work@gmail.com.
+Learning streak: GitHub github.com/rohitbhandariwork, LinkedIn linkedin.com/in/rohitonlinked.
+
+## Courses
+
+Education system courses across the age groups:
+- Bot Buddies (Ages 4-7) — playful early coding.
+- Code Kids (Ages 8-11) — core programming for kids.
+- Code Quest (Ages 12-15) — intermediate challenges.
+- AI Lab (Ages 15-17) — AI concepts and building with models.
+- Career Launcher (Ages 18+) — job-ready skills.
+Course structure includes modules such as logic basics (true vs false) inside Bot Buddies.
+
+## Applications (Age groups)
+
+Each age group has its own hub at /applications/[age]/ with age-appropriate apps and content. Five groups: 4-7, 8-11, 12-15, 15-17, 18+.
+
+## Pomoflow
+
+A focus timer app for deep work sessions.
+
+## Flashcard
+
+A flashcard learning app for spaced memorization.
+
+## Interview
+
+An AI interview prep app for practicing answers.
+
+## Jobtool
+
+A job search helper tool.
+
+## Shop
+
+A storefront project page.
+
+## News
+
+A curated AI news portal. Editions are dated (e.g. /news/2026-09-17/) and each edition carries a label plus a set of headline stories with links and commentary. The portal surfaces the latest AI developments in a digestible format.
+
+## Contact
+
+Email rohitbhandari.work@gmail.com, GitHub github.com/rohitbhandariwork, LinkedIn linkedin.com/in/rohitonlinked. Contact section on the Portfolio page.
