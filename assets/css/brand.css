@@ -1038,14 +1038,6 @@ ul, ol { padding-left: 1.4em; }
 .back-to-top.visible { opacity: 1; visibility: visible; }
 .back-to-top:hover { background: var(--deep-indigo); color: var(--white); transform: translateY(-2px); }
 
-#preloader {
-  position: fixed; inset: 0;
-  z-index: 99999;
-  background: var(--slate-50);
-  transition: opacity .4s ease;
-}
-#preloader.loaded { opacity: 0; pointer-events: none; }
-
 /* ============ 14. COURSES & LEARNING STRUCTURE ============ */
 .course-list { display: flex; flex-direction: column; gap: 14px; max-width: 720px; margin: 0 auto; padding: 0 20px 56px; }
 .course-card {
