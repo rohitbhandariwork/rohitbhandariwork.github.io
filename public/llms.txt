@@ -1,24 +1,24 @@
 # Rohit Builds
 
-> A portfolio of passion projects built by Rohit Bhandari — an AI-powered education system for every age, a curated AI news portal, and hands-on learning tools.
+> Personal brand portfolio by Rohit Bhandari — an Azure Data Engineer building learning tools and AI projects. The home page is the careers page; passion projects live on their own pages.
 
 This file is a lightweight index for LLMs and AI agents. Full site content in llms-full.txt.
 
 ## Key pages
 
-- [Home](https://rohitbhandariwork.github.io/): Rohit Builds — The new education system. AI-powered, personalized, and free for every age group. 5 age groups, 7 apps.
-- [Portfolio](https://rohitbhandariwork.github.io/portfolio/): Careers page — Azure Data Engineer evolving into a platform-minded architect.
+- [Home](https://rohitbhandariwork.github.io/): Rohit's careers/portfolio page — "Designing data platforms that are readable, reliable, and ready to scale." Azure Data Engineer evolving into a platform-minded architect.
+- [News](https://rohitbhandariwork.github.io/news/): Flagship — curated AI news portal with dated, editorial editions.
+- [Shop](https://rohitbhandariwork.github.io/shop/): Flagship — storefront project.
+- [Portfolio (legacy)](https://rohitbhandariwork.github.io/portfolio/): Redirects to Home.
 - [Courses](https://rohitbhandariwork.github.io/courses/): Education system courses — Bot Buddies (4-7), Code Kids (8-11), Code Quest (12-15), AI Lab (15-17), Career Launcher (18+).
-- [News](https://rohitbhandariwork.github.io/news/): Curated AI news portal with dated editions.
+- [Applications](https://rohitbhandariwork.github.io/applications/): Age-group hubs (4-7, 8-11, 12-15, 15-17, 18+).
 - [Pomoflow](https://rohitbhandariwork.github.io/pomoflow/): Focus timer app.
 - [Flashcard](https://rohitbhandariwork.github.io/flashcard/): Flashcard learning app.
 - [Interview](https://rohitbhandariwork.github.io/interview/): AI interview prep app.
 - [Jobtool](https://rohitbhandariwork.github.io/jobtool/): Job search helper tool.
-- [Shop](https://rohitbhandariwork.github.io/shop/): Storefront project.
-- [Applications](https://rohitbhandariwork.github.io/applications/): Age-group hubs (4-7, 8-11, 12-15, 15-17, 18+).
-- [Contact](https://rohitbhandariwork.github.io/portfolio/#contact): Reach the builder.
+- [Contact](https://rohitbhandariwork.github.io/#contact): Reach the builder.
 
 ## Notes
 
 - Site name is "Rohit Builds"; older branding ("Education Reimagined", "RBPN") is retired.
-- All projects are free and built by hand; mission is world-class education for everyone.
+- Personal brand only — the projects are demonstrations of a builder at work.

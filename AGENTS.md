@@ -4,7 +4,7 @@ Instructions for AI coding agents working in this repository. Read `README.md`, 
 
 ## Project context
 
-- Static portfolio site: "Rohit Builds" — a collection of passion projects, each on its own page (education system, AI news portal, learning tools, shop, careers page).
+- Personal brand portfolio: "Rohit Builds". The home page is the careers/portfolio page; passion projects (News, Shop as flagship; education system, courses, tools as supporting) each live on their own page. `/portfolio/` is a redirect to `/`.
 - Astro 7 static site, NO backend. Output is `./dist/`, published to GitHub Pages via the `gh-pages` branch.
 - Brand rules are mandatory: site name is always "Rohit Builds". Old branding ("Education Reimagined", "RBPN") is retired and must never reappear in copy or code.
 

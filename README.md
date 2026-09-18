@@ -6,12 +6,10 @@ Personal portfolio of passion projects, built by Rohit Bhandari. Each project li
 
 ## What this is
 
-- A static portfolio site (no server, no backend).
-- A collection of standalone interactive apps: Pomoflow (focus timer), Flashcard, Interview prep, Jobtool, Shop, News.
-- The education system project: 5 age groups (4-7, 8-11, 12-15, 15-17, 18+) with age-specific courses (Bot Buddies, Code Kids, Code Quest, AI Lab, Career Launcher).
-- A careers page (`/portfolio/`) positioning the author as an Azure Data Engineer evolving into a platform-minded architect.
-
-Brand and voice are defined in `BRAND.md` and `brand/`. Site structure is documented in `docs/SITE-STRUCTURE.md`.
+- A personal brand portfolio (static site, no backend). The home page is the careers page: "Designing data platforms that are readable, reliable, and ready to scale" — an Azure Data Engineer evolving into a platform-minded architect.
+- Flagship passion projects on their own pages: News (AI news portal, editorial voice) and Shop.
+- Supporting projects: the education system (5 age groups — 4-7, 8-11, 12-15, 15-17, 18+ — with age-specific courses Bot Buddies, Code Kids, Code Quest, AI Lab, Career Launcher) and standalone learning tools (Pomoflow, Flashcard, Interview, Jobtool).
+- `BRAND.md` and `brand/` define brand, voice, and visual identity; `docs/SITE-STRUCTURE.md` maps routes. `/portfolio/` redirects to `/`.
 
 ## Tech stack
 

@@ -8,8 +8,8 @@ Astro file-based routing: a page at `src/pages/<path>.astro` becomes `/<path>/`.
 
 | Route | Source | Kind | Content source |
 | :--- | :--- | :--- | :--- |
-| `/` | `src/pages/index.astro` | Homepage | inline markup |
-| `/portfolio/` | `src/pages/portfolio.astro` | Careers portfolio | `src/content/pages/portfolio.html` |
+| `/` | `src/pages/index.astro` | Homepage = portfolio/careers | `src/content/pages/portfolio.html` |
+| `/portfolio/` | `src/pages/portfolio.astro` | Meta-refresh redirect to `/` | — |
 | `/courses/` | `src/pages/courses/index.astro` | Courses hub | `src/content/pages/courses_index.html` |
 | `/courses/bot-buddies/` | `src/pages/courses/bot-buddies/index.astro` | Course | `src/content/pages/courses_bot-buddies.html` |
 | `/courses/bot-buddies/q1/logic-basics/true-vs-false/` | `.../true-vs-false.astro` | Course module | `src/content/pages/courses_bot-buddies_q1_logic-basics_true-vs-false.html` |
@@ -34,15 +34,21 @@ Astro file-based routing: a page at `src/pages/<path>.astro` becomes `/<path>/`.
 
 ## Navigation
 
-Topbar order: Home, Portfolio, Applications (dropdown: 4-7, 8-11, 12-15, 15-17, 18+), Courses, Pomoflow, Flashcard, Interview, Jobtool, Shop, News, Contact.
+Topbar order: Home, Applications (dropdown: 4-7, 8-11, 12-15, 15-17, 18+), Courses, Pomoflow, Flashcard, Interview, Jobtool, Shop, News, Contact. The home page is the portfolio, so there is no separate "Portfolio" nav item; Contact links to `/#contact`.
 
 ## Age groups
 
 The education system splits into 5 groups, each with a course and color identity (see `brand/visual.md`): 4-7 Bot Buddies, 8-11 Code Kids, 12-15 Code Quest, 15-17 AI Lab, 18+ Career Launcher.
 
+## Project tiers
+
+- **Flagship:** News, Shop.
+- **Supporting:** education system (applications + courses), learning tools (Pomoflow, Flashcard, Interview, Jobtool).
+- **Home:** the portfolio/careers page, which links out to the projects via nav.
+
 ## Redirects
 
-35 legacy URLs redirect to their current routes (handled in the build). Keep this list updated when routes change.
+35 legacy URLs redirect to their current routes (handled in the build). `/portfolio/` additionally redirects to `/`. Keep this list updated when routes change.
 
 ## Adding a new page
 
@@ -55,6 +61,6 @@ The education system splits into 5 groups, each with a course and color identity
 
 ## Open questions
 
-- [FILL IN] Desired ordering/priority of projects on the homepage (currently education-system-first).
 - [FILL IN] Whether `/course/` template should stay public or be removed.
 - [FILL IN] Which redirects can be dropped after a grace period.
+- [FILL IN] Whether the education system should gain its own serif editorial section treatment.

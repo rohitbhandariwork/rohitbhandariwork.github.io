@@ -4,25 +4,25 @@ Guidance for anyone writing copy for this site, including AI agents. Read `BRAND
 
 ## Personality
 
-Maker, educator, builder. Optimistic about AI and education. Down-to-earth, never corporate, never hype-y.
+Maker, educator, builder. Optimistic about AI and education. Down-to-earth, never corporate, never hype-y. Dry and factual — the humor level across the site is minimal.
 
 ## Tone by context
 
 | Context | Tone |
 | :--- | :--- |
-| Homepage hero | Confident, mission-driven, welcoming |
+| Home / careers hero | Confident, professional, proof-focused |
 | Education / age pages | Warm, encouraging, accessible to a kid and a parent alike |
-| Learning tools (Pomoflow, Flashcard, Interview, Jobtool) | Practical, playful, no jargon |
-| News portal | Neutral, informative digest voice; headline-driven, low editorializing |
-| Portfolio / careers | Professional, proof-focused; claims backed with credentials |
-| Errors / empty states | Friendly, brief, helpful — no dead ends |
+| Learning tools (Pomoflow, Flashcard, Interview, Jobtool) | Dry, practical, no jargon, no playfulness |
+| News portal | Editorial: curated headlines with a short personal take per edition |
+| Portfolio credentials / case studies | Professional; claims backed with credentials, not adjectives |
+| Errors / empty states | Friendly, brief, helpful — no dead ends, no jokes |
 
 ## Do
 
 - Use short sentences. Lead with the point.
-- Write for the learner first, the hiring manager second, the engineer third.
+- Write for the hiring manager on the home page, the reader on News, the learner on the education pages.
 - Show examples/proof over adjectives ("Verified credentials" not "you'll love this").
-- Keep microcopy plain: buttons say what they do.
+- Keep microcopy plain: buttons say what they do. Dry and informational.
 - Use active voice.
 
 ## Don't
@@ -36,7 +36,8 @@ Maker, educator, builder. Optimistic about AI and education. Down-to-earth, neve
 ## Vocabulary
 
 - Site/self always "Rohit Builds" / "Rohit".
-- Use "age groups", "passion projects", "learning tools", "AI news".
+- Use "passion projects", "flagship projects", "learning tools", "AI news".
+- Flagship projects: News, Shop. Supporting: education system, courses, tools.
 - Education system terms: Bot Buddies, Code Kids, Code Quest, AI Lab, Career Launcher.
 
 ## Banned terms (avoid)
@@ -48,13 +49,11 @@ Maker, educator, builder. Optimistic about AI and education. Down-to-earth, neve
 
 ## Model copy
 
-- Hero tagline: "The new education system — AI-powered, personalized, and free for every age group."
-- Mission: "Make world-class education accessible, personalized, and engaging for every human on the planet. No gatekeepers. No one-size-fits-all. Just learning that works."
+- Home hero: "Designing data platforms that are readable, reliable, and ready to scale."
+- Home subline: "Azure Data Engineer evolving into a platform-minded architect."
+- Education mission: "Make world-class education accessible, personalized, and engaging for every human on the planet. No gatekeepers. No one-size-fits-all. Just learning that works."
+- About line: "An Azure Data Engineer who builds learning tools and AI education products in his spare time, currently growing toward platform architecture."
 
-## Open questions to fill in together
+## News editorial convention
 
-- [FILL IN] One author-voice sentence — something only Rohit would say (e.g., a sign-off or personal line that recurs on pages).
-- [FILL IN] Whether the news portal should have an editorial slant (curated opinion) or stay strictly neutral.
-- [FILL IN] A one-line "About Rohit" for the footer/portfolio intro.
-- [FILL IN] Preferred pronouns/name usage ("Rohit" vs "Rohit Bhandari" vs "the author").
-- [FILL IN] Humor level: dry/warm/neutral for tool pages and error states.
+Each news edition is a curated digest of AI developments with one short, personal take from Rohit. Report the facts plainly, then the take. Never invent quotes or sources; always link the underlying story.

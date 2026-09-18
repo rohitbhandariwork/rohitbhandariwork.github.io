@@ -60,9 +60,7 @@ Loaded via Google Fonts (Manrope, Inter, Playfair Display, JetBrains Mono).
 - Button system: `.btn`, `.btn-outline`, `.btn-primary`, gradient fills.
 - Age cards: `.age-card` grid on the homepage.
 
-## Open questions to fill in together
+## Decisions (settled)
 
-- [FILL IN] Any accent color for the personal portfolio page distinct from the education branding.
-- [FILL IN] Dark mode — currently light-first; decide if a dark variant is wanted.
-- [FILL IN] Logomark: none today; decide if a simple mark is wanted (name-only is the current treatment).
-- [FILL IN] Whether Playfair Display (editorial) should extend beyond news/editorial sections.
+- **Dark mode:** none. Light theme only; do not add a dark variant.
+- **Logomark:** none — name-only wordmark ("Rohit Builds" in the brand gradient). Do not add a glyph/monogram.

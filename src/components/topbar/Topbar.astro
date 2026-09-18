@@ -8,7 +8,6 @@ const { active } = Astro.props;
   <button class="hamburger" onclick="toggleNav()">☰</button>
   <div class="nav-links" id="navLinks">
     <a href="/" class:list={[{ active: active === 'home' }]}>🏠 Home</a>
-    <a href="/portfolio/" class:list={[{ active: active === 'portfolio' }]}>💼 Portfolio</a>
     <div class="nav-dropdown" onclick="this.classList.toggle('open')">
       <a href="javascript:void(0)">📱 Applications ▾</a>
       <div class="nav-dropdown-menu">
@@ -26,6 +25,6 @@ const { active } = Astro.props;
     <a href="/jobtool/" class:list={[{ active: active === 'jobtool' }]}>📝 Jobtool</a>
     <a href="/shop/" class:list={[{ active: active === 'shop' }]}>🛒 Shop</a>
     <a href="/news/" class:list={[{ active: active === 'news' }]}>📰 News</a>
-    <a href="/portfolio/#contact" class:list={[{ active: active === 'contact' }]}>✉️ Contact</a>
+    <a href="/#contact" class:list={[{ active: active === 'contact' }]}>✉️ Contact</a>
   </div>
 </div>
