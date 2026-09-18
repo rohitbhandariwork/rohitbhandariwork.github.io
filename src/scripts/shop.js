@@ -43,14 +43,14 @@ function renderProducts() {
   grid.innerHTML = '';
   for (const b of PRODUCTS) {
     const card = document.createElement('div');
-    card.className = 'product-card';
+    card.className = 'book-tile';
     card.innerHTML = `
-      <div class="product-illustration"><img src="/assets/img/${b.img}" alt="${b.title} illustration"></div>
-      <h3>${b.title}</h3>
-      <p class="product-subtitle">${b.subtitle}</p>
-      <p>${b.desc}</p>
-      <div class="product-footer">
-        <div class="product-price">₹${b.price}<span>one-time</span></div>
+      <div class="book-cover"><img src="/assets/img/${b.img}" alt="${b.title} cover" loading="lazy"></div>
+      <p class="book-kicker">${b.subtitle}</p>
+      <h3 class="book-title">${b.title}</h3>
+      <p class="book-desc">${b.desc}</p>
+      <div class="book-foot">
+        <div class="book-price">₹${b.price}<span>one-time</span></div>
         <button class="btn btn-primary btn-md" onclick="openBook('${b.slug}')">Get</button>
       </div>
     `;
@@ -63,6 +63,9 @@ function openBook(slug) {
   if (!b) return;
   currentBook = b;
   $id('ebookSlug').value = b.slug;
+  $id('modalCover').src = '/assets/img/' + b.img;
+  $id('modalCover').alt = b.title + ' cover';
+  $id('modalCover').style.display = 'block';
   $id('modalTitle').textContent = b.title;
   $id('modalSub').textContent = 'Complete your order in 3 quick steps.';
   $id('modalPrice').innerHTML = `₹${b.price}<span>one-time</span>`;
@@ -89,7 +92,7 @@ function toggleTrack() {
   const p = $id('trackPanel');
   const shown = p.style.display !== 'none';
   p.style.display = shown ? 'none' : 'block';
-  $id('trackToggle').textContent = shown ? '🔎 Track my order' : '✕ Close track';
+  $id('trackToggle').textContent = shown ? 'Already purchased? Track your order' : 'Close track';
 }
 
 async function trackOrder() {

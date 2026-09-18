@@ -44,9 +44,11 @@ Order slug is used by the order API and stored in purchase records — never cha
 
 ## Shop page copy
 
-- Headline: "Master AI with clarity."
-- Hero paragraph: "In-depth ebooks on practical engineering, career leverage, and working with AI — written for engineers who want real understanding, not surface-level tutorials."
-- Section header: "All Ebooks" / "One topic per book. No fluff. Just depth."
+- Kicker: "Shop"
+- Headline: "Ebooks for working engineers."
+- Sub: "Three topics, three books — career leverage, real engineering, and working with AI. One-time price, delivered to your inbox."
+- Books section header: "The books" / "Three books. One topic each."
+- How-it-works steps: 1) Pay with UPI — Google Pay, PhonePe, or Paytm (amount shown on Get); 2) Fill the order form — name, email, UPI transaction ID; 3) Get the ebook — verified within 24 hours, delivered by email.
 
 ## Order API
 
