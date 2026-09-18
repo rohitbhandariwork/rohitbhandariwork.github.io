@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Jobtool — Rohit Builds</title><meta name="description" content="Rohit Builds — The new education system."><meta name="generator" content="Astro v7.3.3"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Inter:wght@400..800&family=Playfair+Display:wght@700..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/brand.css"><script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-P8SB720HTC"></script><script type="text/partytown">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P8SB720HTC');
+  </script><link rel="stylesheet" href="/_astro/jobtool.D8_k5QCq.css"><script>!(function(w,p,f,c){if(!window.crossOriginIsolated && !navigator.serviceWorker) return;c=w[p]=Object.assign(w[p]||{},{"lib":"/~partytown/","debug":false});c[f]=(c[f]||[]).concat(["dataLayer.push"])})(window,'partytown','forward');/* Partytown 0.13.2 - MIT QwikDev */
+const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=t]=e;return[n,{...t,...r}]},n=Object.freeze((t=>{const e=new Set;let n=[];do{Object.getOwnPropertyNames(n).forEach((t=>{"function"==typeof n[t]&&e.add(t)}))}while((n=Object.getPrototypeOf(n))!==Object.prototype);return Array.from(e)})());!function(t,r,o,i,a,s,c,l,d,p,u=t,f){function h(){f||(f=1,"/"==(c=(s.lib||"/~partytown/")+(s.debug?"debug/":""))[0]&&(d=r.querySelectorAll('script[type="text/partytown"]'),i!=t?i.dispatchEvent(new CustomEvent("pt1",{detail:t})):(l=setTimeout(v,(null==s?void 0:s.fallbackTimeout)||1e4),r.addEventListener("pt0",w),a?y(1):o.serviceWorker?o.serviceWorker.register(c+(s.swPath||"partytown-sw.js"),{scope:c}).then((function(t){t.active?y():t.installing&&t.installing.addEventListener("statechange",(function(t){"activated"==t.target.state&&y()}))}),console.error):v())))}function y(e){p=r.createElement(e?"script":"iframe"),t._pttab=Date.now(),e||(p.style.display="block",p.style.width="0",p.style.height="0",p.style.border="0",p.style.visibility="hidden",p.setAttribute("aria-hidden",!0)),p.src=c+"partytown-"+(e?"atomics.js?v=0.13.2":"sandbox-sw.html?"+t._pttab),r.querySelector(s.sandboxParent||"body").appendChild(p)}function v(n,o){for(w(),i==t&&(s.forward||[]).map((function(n){const[r]=e(n);delete t[r.split(".")[0]]})),n=0;n<d.length;n++)(o=r.createElement("script")).innerHTML=d[n].innerHTML,o.nonce=s.nonce,r.head.appendChild(o);p&&p.parentNode.removeChild(p)}function w(){clearTimeout(l)}s=t.partytown||{},i==t&&(s.forward||[]).map((function(r){const[o,{preserveBehavior:i}]=e(r);u=t,o.split(".").map((function(e,r,o){var a;u=u[o[r]]=r+1<o.length?u[o[r]]||(a=o[r+1],n.includes(a)?[]:{}):(()=>{let e=null;if(i){const{methodOrProperty:n,thisObject:r}=((t,e)=>{let n=t;for(let t=0;t<e.length-1;t+=1)n=n[e[t]];return{thisObject:n,methodOrProperty:e.length>0?n[e[e.length-1]]:void 0}})(t,o);"function"==typeof n&&(e=(...t)=>n.apply(r,...t))}return function(){let n;return e&&(n=e(arguments)),(t._ptf=t._ptf||[]).push(o,arguments),n}})()}))})),"complete"==r.readyState?h():(t.addEventListener("DOMContentLoaded",h),t.addEventListener("load",h))}(window,document,navigator,top,window.crossOriginIsolated);;(e=>{e.addEventListener("astro:before-swap",e=>{let r=document.body.querySelector("iframe[src*='/~partytown/']");if(r)e.newDocument.body.append(r)})})(document);</script></head><body><div id="topbar"><a href="/" class="btn-back">← Back</a><button class="hamburger" onclick="toggleNav()">☰</button><div class="nav-links" id="navLinks"><a href="/">🏠 Home</a><a href="/portfolio/">💼 Portfolio</a><div class="nav-dropdown" onclick="this.classList.toggle('open')"><a href="javascript:void(0)">📱 Applications ▾</a><div class="nav-dropdown-menu"><a href="/applications/4-7">👶 Ages 4–7</a><a href="/applications/8-11">🧒 Ages 8–11</a><a href="/applications/12-15">🧑 Ages 12–15</a><a href="/applications/15-17">🎓 Ages 15–17</a><a href="/applications/18+">💼 Ages 18+</a></div></div><a href="/courses/">📚 Courses</a><a href="/shop/">🛒 Shop</a><a href="/news/">📰 News</a><a href="/portfolio/#contact">✉️ Contact</a></div></div><main class="main"><div data-astro-cid-7sijclxo><section class="job-hero">
+  <img src="../assets/img/undraw/job-application.svg" alt="Job application illustration" class="hero-illustration" style="margin: 0 auto 16px;">
+  <h1>Job Application Tool</h1>
+  <p>Paste a job description and get a tailored resume + cover letter delivered to email. Quick mode for Rohit, or full form for anyone else.</p>
+</section>
+
+<div class="container">
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" id="toggleRohit" onclick="setMode('rohit')">⚡ For Rohit</button>
+    <button class="toggle-btn" id="toggleOther" onclick="setMode('other')">👤 Someone Else</button>
+  </div>
+
+  <div class="form-card" id="formCard">
+    <h2 id="formTitle">Quick Apply — Rohit</h2>
+    <p class="form-sub" id="formSub">Only the job description is needed — everything else is pre-filled.</p>
+    <form id="jobForm" onsubmit="submitJob(event)">
+      <div class="form-group">
+        <label for="jd">Job Description *</label>
+        <textarea id="jd" name="job_description" required placeholder="Paste the full job description here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company" placeholder="Optional — will auto-detect from JD">
+        <div class="hint">Leave blank to auto-detect from the job description.</div>
+      </div>
+
+      <div class="extra-fields" id="extraFields">
+        <div style="height:1px;background:#d4d8dd;margin:0 0 20px"></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candName">Full Name *</label>
+            <input type="text" id="candName" placeholder="e.g. Jane Doe">
+          </div>
+          <div class="form-group">
+            <label for="candEmail">Email *</label>
+            <input type="email" id="candEmail" placeholder="e.g. jane@example.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candPhone">Phone</label>
+            <input type="text" id="candPhone" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label for="candLinkedin">LinkedIn</label>
+            <input type="url" id="candLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:#f59e0b;font-weight:600;margin-bottom:12px;">⏱ Estimated time: ~5–7 minutes</div>
+      <button type="submit" class="btn-submit" id="submitBtn">Generate &amp; Send</button>
+    </form>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <h3>📨 Sent for Review</h3>
+    <p id="resultMsg">Your tailored resume and cover letter have been sent to <strong>rohitbhandari.work@gmail.com</strong> for review.</p>
+      <a href="./" class="btn-gray" style="display:inline-block;margin-top:16px;text-decoration:none">Apply for Another</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div></div></main><footer class="site-footer"><p>Built for learners, by learners. The new education system.</p></footer><script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body></html><script>
+import '../scripts/jobtool.js';
+</script>
