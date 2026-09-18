@@ -2,43 +2,28 @@ const API = 'https://api.rohitbuildsapp.tech';
 
 const PRODUCTS = [
   {
-    slug: 'python-foundations',
-    title: 'Python: Think in Code',
-    subtitle: 'From zero to writing idiomatic Python — data, functions, classes, and the mental model behind it all.',
-    level: 'Beginner → Intermediate',
-    price: 499,
-    pages: '~180',
-    rating: 4.9,
-    badge: 'Bestseller'
+    slug: 'career-leverage',
+    img: 'salary-booster.png',
+    title: 'Salary Booster',
+    subtitle: 'Career Leverage: From Junior to Senior',
+    desc: 'Promotions, salary negotiation, building influence, and interviews — the playbook for engineers who refuse to stay overlooked.',
+    price: 499
   },
   {
-    slug: 'deep-learning',
-    title: 'Deep Learning: From Neurons to Networks',
-    subtitle: 'Backpropagation, optimizers, CNNs, RNNs — built up layer by layer with intuition in every step.',
-    level: 'Intermediate',
-    price: 549,
-    pages: '~220',
-    rating: 4.8,
-    badge: 'New'
+    slug: 'real-engineering',
+    img: 'bug-sniper.png',
+    title: 'Bug Sniper',
+    subtitle: 'Real Engineering: Beyond the Tutorial',
+    desc: 'Production systems, debugging, architecture, CI/CD, and the trade-offs that actually matter after the tutorial ends.',
+    price: 599
   },
   {
-    slug: 'transformers',
-    title: 'Transformers & Attention: The Math That Changed AI',
-    subtitle: 'Attention, self-attention, multi-head, and the architecture that powers modern LLMs — demystified.',
-    level: 'Intermediate → Advanced',
-    price: 599,
-    pages: '~200',
-    rating: 4.9
-  },
-  {
-    slug: 'python-fastapi',
-    title: 'FastAPI in Production',
-    subtitle: 'Build, test, and ship async APIs with confidence. Includes auth, background tasks, and uvicorn in deployment.',
-    level: 'Intermediate',
-    price: 449,
-    pages: '~160',
-    rating: 4.7,
-    badge: 'Popular'
+    slug: 'ai-working-engineer',
+    img: 'ai-arsenal.png',
+    title: 'AI Arsenal',
+    subtitle: 'AI for Working Engineers',
+    desc: 'LLMs, RAG, AI-assisted coding, and production AI — practical tools for engineers who want to stay ahead of the shift.',
+    price: 699
   }
 ];
 
@@ -59,15 +44,15 @@ function renderProducts() {
   for (const b of PRODUCTS) {
     const card = document.createElement('div');
     card.className = 'product-card';
-    let badge = '';
-    if (b.badge) badge = `<span class="product-badge">${b.badge}</span>`;
     card.innerHTML = `
-      ${badge}
-      <h3 class="product-title">${b.title}</h3>
-      <p class="product-sub">${b.subtitle}</p>
-      <div class="product-meta"><span>${b.level}</span><span>${b.pages} pages</span><span>★ ${b.rating}</span></div>
-      <div class="product-foot"><span class="product-price">₹${b.price}</span>
-      <button class="btn btn-primary btn-md" onclick="openBook('${b.slug}')">Buy now</button></div>
+      <div class="product-illustration"><img src="/assets/img/${b.img}" alt="${b.title} illustration"></div>
+      <h3>${b.title}</h3>
+      <p class="product-subtitle">${b.subtitle}</p>
+      <p>${b.desc}</p>
+      <div class="product-footer">
+        <div class="product-price">₹${b.price}<span>one-time</span></div>
+        <button class="btn btn-primary btn-md" onclick="openBook('${b.slug}')">Get</button>
+      </div>
     `;
     grid.appendChild(card);
   }
@@ -81,7 +66,7 @@ function openBook(slug) {
   $id('modalTitle').textContent = b.title;
   $id('modalSub').textContent = 'Complete your order in 3 quick steps.';
   $id('modalPrice').innerHTML = `₹${b.price}<span>one-time</span>`;
-  $id('payLink').href = 'upi://pay?pa=8989059838@axisb&cu=INR';
+  $id('payLink').href = 'upi://pay?pa=8989059838@axisb&am=' + b.price + '&cu=INR&tn=' + b.slug;
   $id('successView').style.display = 'none';
   $id('purchaseForm').style.display = 'block';
   $id('modal').classList.add('open');
