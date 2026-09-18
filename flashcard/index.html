@@ -6,143 +6,153 @@
   </script><script>!(function(w,p,f,c){if(!window.crossOriginIsolated && !navigator.serviceWorker) return;c=w[p]=Object.assign(w[p]||{},{"lib":"/~partytown/","debug":false});c[f]=(c[f]||[]).concat(["dataLayer.push"])})(window,'partytown','forward');/* Partytown 0.13.2 - MIT QwikDev */
 const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=t]=e;return[n,{...t,...r}]},n=Object.freeze((t=>{const e=new Set;let n=[];do{Object.getOwnPropertyNames(n).forEach((t=>{"function"==typeof n[t]&&e.add(t)}))}while((n=Object.getPrototypeOf(n))!==Object.prototype);return Array.from(e)})());!function(t,r,o,i,a,s,c,l,d,p,u=t,f){function h(){f||(f=1,"/"==(c=(s.lib||"/~partytown/")+(s.debug?"debug/":""))[0]&&(d=r.querySelectorAll('script[type="text/partytown"]'),i!=t?i.dispatchEvent(new CustomEvent("pt1",{detail:t})):(l=setTimeout(v,(null==s?void 0:s.fallbackTimeout)||1e4),r.addEventListener("pt0",w),a?y(1):o.serviceWorker?o.serviceWorker.register(c+(s.swPath||"partytown-sw.js"),{scope:c}).then((function(t){t.active?y():t.installing&&t.installing.addEventListener("statechange",(function(t){"activated"==t.target.state&&y()}))}),console.error):v())))}function y(e){p=r.createElement(e?"script":"iframe"),t._pttab=Date.now(),e||(p.style.display="block",p.style.width="0",p.style.height="0",p.style.border="0",p.style.visibility="hidden",p.setAttribute("aria-hidden",!0)),p.src=c+"partytown-"+(e?"atomics.js?v=0.13.2":"sandbox-sw.html?"+t._pttab),r.querySelector(s.sandboxParent||"body").appendChild(p)}function v(n,o){for(w(),i==t&&(s.forward||[]).map((function(n){const[r]=e(n);delete t[r.split(".")[0]]})),n=0;n<d.length;n++)(o=r.createElement("script")).innerHTML=d[n].innerHTML,o.nonce=s.nonce,r.head.appendChild(o);p&&p.parentNode.removeChild(p)}function w(){clearTimeout(l)}s=t.partytown||{},i==t&&(s.forward||[]).map((function(r){const[o,{preserveBehavior:i}]=e(r);u=t,o.split(".").map((function(e,r,o){var a;u=u[o[r]]=r+1<o.length?u[o[r]]||(a=o[r+1],n.includes(a)?[]:{}):(()=>{let e=null;if(i){const{methodOrProperty:n,thisObject:r}=((t,e)=>{let n=t;for(let t=0;t<e.length-1;t+=1)n=n[e[t]];return{thisObject:n,methodOrProperty:e.length>0?n[e[e.length-1]]:void 0}})(t,o);"function"==typeof n&&(e=(...t)=>n.apply(r,...t))}return function(){let n;return e&&(n=e(arguments)),(t._ptf=t._ptf||[]).push(o,arguments),n}})()}))})),"complete"==r.readyState?h():(t.addEventListener("DOMContentLoaded",h),t.addEventListener("load",h))}(window,document,navigator,top,window.crossOriginIsolated);;(e=>{e.addEventListener("astro:before-swap",e=>{let r=document.body.querySelector("iframe[src*='/~partytown/']");if(r)e.newDocument.body.append(r)})})(document);</script></head> <body> <div id="topbar"> <a href="/" class="btn-back">← Back</a> <button class="hamburger" onclick="toggleNav()">☰</button> <span class="mini-level" id="topLevel" onclick="showInsightPopup()"> <span class="ml-num" id="topLvlNum">1</span> <span class="ml-gems" id="topGems">💎10</span> </span>  <div class="nav-links" id="navLinks"> <a href="/">🏠 Home</a> <div class="nav-dropdown" onclick="this.classList.toggle('open')"> <a href="javascript:void(0)">📱 Applications ▾</a> <div class="nav-dropdown-menu"> <a href="/applications/4-7">👶 Ages 4–7</a> <a href="/applications/8-11">🧒 Ages 8–11</a> <a href="/applications/12-15">🧑 Ages 12–15</a> <a href="/applications/15-17">🎓 Ages 15–17</a> <a href="/applications/18+">💼 Ages 18+</a> </div> </div> <a href="/courses/">📚 Courses</a> <a href="/pomoflow/">🍅 Pomoflow</a> <a href="/flashcard/" class="active">🃏 Flashcard</a> <a href="/interview/">🎤 Interview</a> <a href="/jobtool/">📝 Jobtool</a> <a href="/shop/">🛒 Shop</a> <a href="/news/">📰 News</a> <a href="/#contact">✉️ Contact</a> </div> </div> <main class="main">  <div><canvas id="confettiCanvas"></canvas>
 
-
-<div class="modal-overlay" id="lvlModal"><div class="modal-box">
-<div class="big-lvl" id="lvlModalNum">5</div>
-<div class="big-lvl-title" id="lvlModalTitle">Journeyman</div>
-<div class="big-lvl-desc" id="lvlModalDesc">Keep going!</div>
-<button onclick="closeLvlModal()">Continue</button>
-</div></div>
-
-<div class="achiev-toast" id="achievToast">
-<div class="achiev-icon" id="achievIcon">🏆</div>
-<div class="achiev-title" id="achievTitle">Achievement!</div>
-<div class="achiev-desc" id="achievDesc">New achievement unlocked.</div>
-</div>
+<div class="toast" id="toast"></div>
 
 <div class="lucky-notice" id="luckyNotice">
-<div class="ln-icon">🍀</div>
-<div class="ln-text" id="luckyAmount">+5 XP!</div>
-<div class="ln-sub">Lucky card bonus!</div>
+  <div class="ln-icon">🍀</div>
+  <div class="ln-text" id="luckyAmount"></div>
+  <div class="ln-sub">Daily queue complete!</div>
+</div>
+
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+<div class="popup-box" id="popupBox">
+  <div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
+  <div class="popup-body" id="popupBody"></div>
 </div>
 
 <div class="container" id="container">
 
-<!-- Narrative Banner (always visible welcome) -->
-<div class="narrative-banner" id="narrativeBanner">
-<span class="narr-icon">📜</span>
-<span class="narr-text" id="narrText"><strong>The Knowledge Seeker</strong> — Your journey begins. Study topics to unlock new realms.</span>
-<span class="narr-stage" id="narrStage">Realm 1: The Awakening</span>
-</div>
-
-<div class="topic-area" id="topicArea">
-<div class="topic-heading">📖 Pick a topic to study</div>
-<img src="../assets/img/undraw/studying_n5uj.svg" alt="Studying illustration" class="illustration" style="margin: 0 auto 16px;">
-
-<div class="topic-grid" id="topicGrid"></div>
-</div>
-
-<!-- Flashcard Area -->
-<div class="flashcard-area" id="flashcardArea">
-<div class="back-topics" id="backTopics"><button onclick="backToTopics()">← Topics</button></div>
-<div class="study-topic" id="studyTopic"></div>
-<div class="tracking-bar">
-<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-<div class="tracking-chips">
-<span class="tchip" onclick="showCardPopup()">🔢<span id="counter" class="tchip-val">0/0</span></span>
-<span class="tchip" onclick="showStatsPopup()">✅<span id="knownCount" class="tchip-val">0</span></span>
-<span class="tchip">📖<span id="stillCount" class="tchip-val">0</span></span>
-</div>
-</div>
-<div class="power-row">
-<button class="pwr-btn" id="mysteryBtn" onclick="confirmMystery()" title="Mystery card">🎁</button>
-<button class="pwr-btn" id="boosterBtn" onclick="confirmBooster()" title="XP Booster">⚡</button>
-</div>
-<div class="timer-row">
-<span class="timer-display" id="timerDisplay">05:00</span>
-<button class="pwr-btn" id="timerBtn" onclick="toggleTimer()" title="Start timer">▶️</button>
-<button class="pwr-btn" id="timerReset" onclick="resetTimer()" title="Reset">↺</button>
-</div>
-<div class="reel-layout">
-<div class="card-section">
-<button class="card-nav-btn card-nav-prev" id="prevBtn" onclick="event.stopPropagation();prevCard()" title="Previous">‹</button>
-<div class="card-wrapper" onclick="handleCardTap(event)">
-<div class="card-inner" id="cardInner">
-<div class="card-face card-front"><div class="card-label front">QUESTION</div><div class="card-text" id="frontText">Pick a topic to start</div></div>
-<div class="card-face card-back">
-<div class="card-label back">ANSWER</div>
-<div class="card-text" id="backText"></div>
-</div>
-</div>
-</div>
-<button class="card-nav-btn card-nav-next" id="nextBtn" onclick="event.stopPropagation();nextCard()" title="Next">›</button>
-<div class="card-hint" id="cardHint">Tap card to flip</div>
-</div>
-<div class="reel-actions" id="reelActions">
-<button class="reel-action-btn" id="likeBtn" onclick="rateCard(3)" title="Got it">❤️<span class="rab-label">Got It</span></button>
-<button class="reel-action-btn" id="bookmarkBtn" onclick="rateCard(2)" title="Tricky">🔖<span class="rab-label">Tricky</span></button>
-<button class="reel-action-btn" id="rewindBtn" onclick="rateCard(1)" title="Again">🔄<span class="rab-label">Again</span></button>
-</div>
-</div>
-<div class="reel-bottom">
-<div class="tier-row" id="tierRow">
-<button class="tier-btn tier-normal active" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
-<button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Detailed</button>
-<button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
-</div>
-
-<div class="srs-state" id="srsState"></div>
-</div>
-<div class="deck-complete" id="deckComplete">
-<div class="dc-icon">🎉</div>
-<div class="dc-title">Deck Complete!</div>
-<div class="dc-sub">All cards marked Known</div>
-<div class="dc-xp" id="deckCompleteXP">+50 XP + 💎3 Gems</div>
-</div>
-</div>
-
-<!-- Tutorial card at bottom -->
-<div class="tut-card" id="tutCard">
-  <button class="tut-close" onclick="skipTutorial()">✕</button>
-  <div class="tut-step" id="tutStep">Step 1/6</div>
-  <div class="tut-icon" id="tutIcon">🎯</div>
-  <div class="tut-title" id="tutTitle">Welcome, Scholar!</div>
-  <div class="tut-desc" id="tutDesc">You've entered the knowledge realm. Let's start your learning journey!</div>
-  <div class="tut-actions" id="tutActions">
-    <button class="tut-skip" onclick="skipTutorial()">Skip</button>
-    <button class="tut-next" id="tutNextBtn" onclick="nextTutorialStep()">Next →</button>
+  <!-- Onboarding (first run only) -->
+  <div class="onboard-view" id="onboardView">
+    <div class="ob-icon" id="obIcon">🧠</div>
+    <div class="ob-title" id="obTitle">Try to recall first</div>
+    <div class="ob-desc" id="obDesc">Read the question, attempt the answer in your head, then reveal. The attempt is the learning.</div>
+    <div class="ob-dots"><span id="obDot0" class="ob-dot on"></span><span id="obDot1" class="ob-dot"></span><span id="obDot2" class="ob-dot"></span></div>
+    <button class="btn btn-primary btn-lg" id="obNext" onclick="onboardNext()">Next</button>
+    <button class="btn btn-gray btn-sm ob-skip" onclick="onboardSkip()">Skip</button>
   </div>
-</div>
+
+  <!-- Review queue (home) -->
+  <div class="queue-view" id="queueView">
+    <div class="qv-head">
+      <div>
+        <h1 class="qv-title">Today</h1>
+        <p class="qv-sub" id="qvSub">Review your due cards</p>
+      </div>
+      <div class="qv-level">Level <b id="qvLevel">1</b> · <span id="qvGems">💎0</span></div>
+    </div>
+
+    <div class="qv-metrics">
+      <div class="qm qm-due">
+        <div class="qm-num" id="qmDue">0</div>
+        <div class="qm-label">Due now</div>
+      </div>
+      <div class="qm qm-new">
+        <div class="qm-num" id="qmNew">0</div>
+        <div class="qm-label">New</div>
+      </div>
+      <div class="qm qm-next">
+        <div class="qm-num" id="qmNext">—</div>
+        <div class="qm-label">Next review</div>
+      </div>
+    </div>
+
+    <div class="qv-calib">
+      <div class="qv-calib-head"><span>Recall accuracy (14 days)</span><span id="qvCalibPct"></span></div>
+      <div class="spark" id="spark"></div>
+    </div>
+
+    <div class="qv-actions">
+      <button class="btn btn-primary btn-lg btn-block" id="startBtn" onclick="startQueue()">Start review</button>
+      <button class="btn btn-ghost btn-lg btn-block" onclick="openTopics()">Study new topics</button>
+    </div>
+
+    <div class="qv-foot">
+      <span id="qvStreak">🔥 0 day streak</span>
+      <span id="qvTotal">0 reviews</span>
+    </div>
+  </div>
+
+  <!-- Topic browser (study new content) -->
+  <div class="topics-view" id="topicsView">
+    <div class="session-head">
+      <button class="icobtn" onclick="backToQueue()" title="Back">←</button>
+      <span class="sh-title">Choose a topic</span>
+    </div>
+    <p class="topics-sub">Adds cards to today's session. They enter your review schedule after the first pass.</p>
+    <div class="topic-grid" id="topicGrid"></div>
+    <div class="tier-row">
+      <span class="tier-label">Answer depth</span>
+      <button class="tier-btn tier-normal active" id="tierNormal" onclick="switchTier('normal')">Normal</button>
+      <button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">Detailed</button>
+      <button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">Expert</button>
+    </div>
+  </div>
+
+  <!-- Session -->
+  <div class="session-view" id="sessionView">
+    <div class="session-head">
+      <button class="icobtn" onclick="backToQueue()" title="Exit">✕</button>
+      <span class="sh-title" id="shTopic">Review</span>
+      <span class="sh-count" id="shCount">0 / 0</span>
+    </div>
+
+    <div class="card-section">
+      <button class="card-nav-btn card-nav-prev" id="prevBtn" onclick="event.stopPropagation();prevCard()" title="Previous">‹</button>
+      <div class="card-wrapper">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face card-front">
+            <div class="card-label" id="cardLabel">QUESTION</div>
+            <div class="card-text" id="frontText"></div>
+            <div class="card-reveal-zone" id="revealZone"></div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-label back">ANSWER</div>
+            <div class="card-text back-text" id="backText"></div>
+          </div>
+        </div>
+      </div>
+      <button class="card-nav-btn card-nav-next" id="nextBtn" onclick="event.stopPropagation();nextCard()" title="Next">›</button>
+      <div class="card-hint" id="cardHint">Try to recall the answer, then reveal</div>
+    </div>
+
+    <div class="control-stack">
+      <button class="btn btn-primary btn-lg btn-block reveal-btn" id="revealBtn" onclick="reveal()">Show answer</button>
+
+      <div class="grader-bar" id="graderBar">
+        <button class="grade-btn grade-again" onclick="grade(0)">Again</button>
+        <button class="grade-btn grade-hard" onclick="grade(1)">Hard</button>
+        <button class="grade-btn grade-good" onclick="grade(2)">Good</button>
+        <button class="grade-btn grade-easy" onclick="grade(3)">Easy</button>
+      </div>
+    </div>
+
+    <div class="power-row">
+      <span class="timer-display" id="timerDisplay">05:00</span>
+      <button class="pwr-btn" id="timerBtn" onclick="toggleTimer()" title="Focus timer">▶️</button>
+      <button class="pwr-btn" id="timerReset" onclick="resetTimer()" title="Reset">↺</button>
+      <button class="pwr-btn" onclick="mystery()" title="Mystery card">🎁</button>
+      <button class="pwr-btn" onclick="showStats()" title="Statistics">📊</button>
+    </div>
+  </div>
+
+  <!-- Session summary -->
+  <div class="done-view" id="doneView">
+    <div class="done-icon">🎉</div>
+    <h2 class="done-title">Review complete</h2>
+    <div class="done-stats">
+      <div class="ds"><div class="ds-num" id="doneCount">0</div><div class="ds-label">Reviewed</div></div>
+      <div class="ds"><div class="ds-num" id="doneAgainPct">0%</div><div class="ds-label">Again</div></div>
+      <div class="ds"><div class="ds-num" id="doneXp">+0</div><div class="ds-label">XP</div></div>
+      <div class="ds"><div class="ds-num" id="doneStreak">0</div><div class="ds-label">Day streak</div></div>
+    </div>
+    <div class="done-next">Next review in <b id="doneNext"></b></div>
+    <button class="btn btn-primary btn-lg btn-block" onclick="backToQueue()">Back to today</button>
+    <button class="btn btn-ghost btn-lg btn-block" onclick="openTopics()">Study more</button>
+  </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
-
-<!-- Hidden containers for JS rendering (formerly in stats-hero) -->
-<div id="knowledgePanel" style="display:none"><div class="kp-header"><div class="kp-stat"><div class="kp-num" id="kpMastered">0</div><div class="kp-label">Mastered</div></div><div class="kp-stat"><div class="kp-num" id="kpLearning">0</div><div class="kp-label">Learning</div></div><div class="kp-stat"><div class="kp-num" id="kpTotal">0</div><div class="kp-label">Total</div></div></div><div class="kp-bar"><div class="kp-bar-fill" id="kpBarFill" style="width:0%"></div></div><div class="kp-tags" id="kpTags"></div></div>
+<!-- Hidden containers for JS rendering -->
 <span id="knowledgeToggle" style="display:none"></span>
-<span id="playerTypeBadge" style="display:none">🧭 Explorer</span>
-<div id="pbDisplay" style="display:none"></div>
-<div id="achievWall" style="display:none"></div>
-
-<!-- Popup Overlay (replaces gear panel) -->
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-<div class="popup-box" id="popupBox">
-<div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
-<div class="popup-body" id="popupBody"></div>
-</div>
-
-
-
-<!-- Weekly Summary (Level 2) -->
-<div class="weekly-summary" id="weeklySummary">
-  <div class="ws-icon">📊</div>
-  <div class="ws-title">Weekly Roundup</div>
-  <div class="ws-row">
-    <div class="ws-item"><div class="ws-num" id="wsXp">0</div><div class="ws-label">XP</div></div>
-    <div class="ws-item"><div class="ws-num" id="wsCards">0</div><div class="ws-label">Cards</div></div>
-    <div class="ws-item"><div class="ws-num" id="wsDecks">0</div><div class="ws-label">Decks</div></div>
-  </div>
-  <div class="ws-change" id="wsChange"></div>
-  <button onclick="closeWeeklySummary()">Got it!</button>
-</div></div>  </main> <footer class="site-footer"> <p>Built for learners, by learners. The new education system.</p> </footer><script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body> </html><script type="module" src="/_astro/flashcard.astro_astro_type_script_index_0_lang.DhZog6RG.js"></script>
+<span id="playerTypeBadge" style="display:none">🧭 Explorer</span></div>  </main> <footer class="site-footer"> <p>Built for learners, by learners. The new education system.</p> </footer><script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body> </html><script type="module" src="/_astro/flashcard.astro_astro_type_script_index_0_lang.EA8OmjZe.js"></script>
