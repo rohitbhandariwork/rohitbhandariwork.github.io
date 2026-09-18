@@ -6,6 +6,8 @@ import partytown from '@astrojs/partytown';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://rohitbhandariwork.github.io',
+  compressHTML: true,
+  redirects: { '/portfolio': '/' },
   integrations: [
     sitemap(),
     partytown({

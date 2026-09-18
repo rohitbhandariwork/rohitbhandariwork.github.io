@@ -1,541 +1,397 @@
-const API_BASE = (window.SHOP_API || '/tusk').replace(/\/+$/, '');
-let cards=[],currentIndex=0,isFlipped=false,isLoading=false,currentTier='normal',recentTopics=[],deckCache=null;
-let stats={xp:0,level:1,gems:10,streak:0,total_known:0,achievements:[],hidden_achievements:[],streak_days:[],daily_challenge:null,daily_progress:0,daily_goal:0,mystery_available:true,xp_booster_active:false,xp_booster_cards_remaining:0,weekly_challenge:null,weekly_progress:0,weekly_goal:0,narrative_stage:1,boss_challenges:{},streak_freezes:0};
-
-const LVL_TITLES=[{min:1,max:2,title:'Novice',rank:'🃏 Learner'},{min:3,max:5,title:'Apprentice',rank:'📖 Student'},{min:6,max:9,title:'Journeyman',rank:'⚡ Scholar'},{min:10,max:14,title:'Expert',rank:'🧠 Thinker'},{min:15,max:20,title:'Master',rank:'👑 Master'},{min:21,max:29,title:'Grandmaster',rank:'🌟 Sage'},{min:30,max:50,title:'Legend',rank:'💎 Legend'}];
-const REALMS=['The Awakening','The Path of Knowledge','The Scholar\'s Trial','The Master\'s Crucible','The Grand Expedition','The Legendary Summit'];
-
-const ACHIEVEMENTS=[
-{id:'first_flip',icon:'🎴',name:'First Flip',desc:'Study your first card',hidden:false,check:s=>s.total_studied>=1},
-{id:'scholar',icon:'📚',name:'Scholar',desc:'Study 50 cards',hidden:false,check:s=>s.total_studied>=50},
-{id:'bookworm',icon:'📖',name:'Bookworm',desc:'Study 200 cards',hidden:false,check:s=>s.total_studied>=200},
-{id:'librarian',icon:'🏛️',name:'Librarian',desc:'Study 500 cards',hidden:false,check:s=>s.total_studied>=500},
-{id:'sharp_mind',icon:'🧠',name:'Sharp Mind',desc:'50 cards Known',hidden:false,check:s=>s.total_known>=50},
-{id:'brainiac',icon:'💡',name:'Brainiac',desc:'200 cards Known',hidden:false,check:s=>s.total_known>=200},
-{id:'genius',icon:'🌟',name:'Genius',desc:'500 cards Known',hidden:false,check:s=>s.total_known>=500},
-{id:'deck_comp',icon:'✅',name:'Deck Complete',desc:'Complete a deck',hidden:false,check:s=>s.decks_completed>=1},
-{id:'deck_master',icon:'🏆',name:'Deck Master',desc:'Complete 5 decks',hidden:false,check:s=>s.decks_completed>=5},
-{id:'deck_legend',icon:'👑',name:'Deck Legend',desc:'Complete 20 decks',hidden:false,check:s=>s.decks_completed>=20},
-{id:'streak3',icon:'🔥',name:'Streak Starter',desc:'3-day streak',hidden:false,check:s=>s.best_streak>=3},
-{id:'streak7',icon:'⚡',name:'Streak Keeper',desc:'7-day streak',hidden:false,check:s=>s.best_streak>=7},
-{id:'streak14',icon:'💪',name:'Streak Warrior',desc:'14-day streak',hidden:false,check:s=>s.best_streak>=14},
-{id:'streak30',icon:'🏅',name:'Streak Champion',desc:'30-day streak',hidden:false,check:s=>s.best_streak>=30},
-{id:'speed_reader',icon:'⚡',name:'Speed Reader',desc:'5 fast flips',hidden:false,check:s=>s.speed_flips>=5},
-{id:'seeker',icon:'🔍',name:'Knowledge Seeker',desc:'3 decks in one day',hidden:false,check:s=>s.decks_in_day>=3},
-{id:'curious',icon:'🔮',name:'Curious Mind',desc:'5 different topics',hidden:false,check:s=>s.topics_count>=5},
-{id:'night_owl',icon:'🦉',name:'Night Owl',desc:'Study after 10 PM',hidden:false,check:s=>s.night_studies>=1},
-{id:'dedicated',icon:'🎯',name:'Dedicated',desc:'7-day streak',hidden:false,check:s=>s.best_streak>=7},
-{id:'the_one',icon:'⭐',name:'The One',desc:'Level 10',hidden:false,check:s=>s.level>=10},
-// Hidden achievements
-{id:'lucky_devil',icon:'🍀',name:'Lucky Devil',desc:'Get 5 lucky cards',hidden:true,check:s=>s.lucky_cards_today>=5},
-{id:'rich',icon:'💎',name:'Gem Hoarder',desc:'Collect 100 gems',hidden:true,check:s=>s.gems>=100},
-{id:'booster',icon:'⚡',name:'Powered Up',desc:'Use 3 XP boosters',hidden:true,check:s=>s.boosters_used>=3},
-{id:'hero_boss',icon:'👹',name:'Boss Slayer',desc:'Complete a boss challenge',hidden:true,check:s=>s.boss_done>=1},
+const TOPICS = [
+  {
+    id: 'python',
+    name: '🐍 Python Basics',
+    realm: 'Realm 1: The Awakening',
+    cards: [
+      { q: 'What does `len()` return for a string?', a: 'The number of characters.', extra: 'len("hello") -> 5. Works on any sequence: str, list, tuple, dict, set.' },
+      { q: 'Difference between list and tuple?', a: 'Lists are mutable, tuples immutable.', extra: 'Tuples are also faster and can be dict keys. Use a tuple for fixed data.' },
+      { q: 'What does `import random` let you do?', a: 'Generate random numbers / pick random items.', extra: 'random.randint(a,b), random.choice(seq), random.shuffle(list).' },
+      { q: 'What is a dictionary?', a: 'Key→value pairs (hash map).', extra: 'd = {"name": "Rohit"}; d["name"]; d.get(key, default). O(1) lookups.' },
+      { q: 'What does `range(3)` produce?', a: '0, 1, 2 (stop exclusive).', extra: 'range(start, stop, step). Lazy — pair with list() or iterate directly.' },
+      { q: 'What is a function?', a: 'A reusable block of code called by name.', extra: 'def greet(name): return f"Hi {name}". Parameters, default values, *args, **kwargs.' },
+      { q: 'What is a module?', a: 'A .py file that can be imported.', extra: 'import math; math.sqrt(16). Packages are folders of modules with __init__.py.' }
+    ]
+  },
+  {
+    id: 'sql',
+    name: '🗄️ SQL',
+    realm: 'Realm 2: The Data Mines',
+    cards: [
+      { q: 'What does SELECT do?', a: 'Fetches columns from a table.', extra: 'SELECT name, age FROM users WHERE age > 18 ORDER BY name LIMIT 10.' },
+      { q: 'Difference INNER JOIN vs LEFT JOIN?', a: 'INNER keeps only matches; LEFT keeps all left rows.', extra: 'LEFT JOIN fills unmatched right side with NULL. Use LEFT when you want every user regardless of orders.' },
+      { q: 'What does GROUP BY do?', a: 'Groups rows into aggregates.', extra: 'SELECT dept, COUNT(*) FROM employees GROUP BY dept. Always pairs with aggregate: COUNT, SUM, AVG, MAX.' },
+      { q: 'What is an index?', a: 'A structure that speeds lookups.', extra: 'CREATE INDEX idx_email ON users(email). Costs write speed, helps reads. Great for WHERE/JOIN columns.' },
+      { q: 'What is a PRIMARY KEY?', a: 'A unique, non-null identifier per row.', extra: 'Usually an auto-increment id or UUID. Guarantees uniqueness and speeds joins.' },
+      { q: 'What is normalization?', a: 'Reducing redundant data.', extra: 'Split repeated data into tables + relations. 1NF/2NF/3NF remove duplication and update anomalies.' },
+      { q: 'What does WHERE vs HAVING filter?', a: 'WHERE filters rows; HAVING filters groups.', extra: 'SELECT dept, COUNT(*) FROM e GROUP BY dept HAVING COUNT(*) > 3.' }
+    ]
+  },
+  {
+    id: 'fastapi',
+    name: '⚡ FastAPI',
+    realm: 'Realm 3: The API Forges',
+    cards: [
+      { q: 'What is a route?', a: 'A URL path mapped to a function.', extra: '@app.get("/items/{id}") def get_item(id: int). FastAPI builds docs automatically.' },
+      { q: 'How does FastAPI validate JSON?', a: 'Via Pydantic models.', extra: 'class Item(BaseModel): name: str; price: float. Reject invalid payloads with 422.' },
+      { q: 'Path vs query parameters?', a: 'Path is part of URL; query after ?.', extra: '/users/42 vs /users?page=2. Path = identity, query = options/filters.' },
+      { q: 'What is `async def` for?', a: 'Non-blocking concurrency for I/O.', extra: 'await on external calls (HTTP, DB). CPU-bound logic should stay sync or use threadpoolexecutor.' },
+      { q: 'What is CORS?', a: 'Browser security rule for cross-origin calls.', extra: 'Backend sends Access-Control-Allow-Origin. FastAPI: CORSMiddleware with allowed_origins.' },
+      { q: 'What is uvicorn?', a: 'The ASGI server that runs FastAPI.', extra: 'uvicorn app:app --reload --port 8000. --reload auto-restarts on edits.' },
+      { q: 'What is a dependency?', a: 'Shared logic injected into routes.', extra: 'Depends(get_db) reuses DB sessions/auth. Clean, testable, removes boilerplate.' }
+    ]
+  },
+  {
+    id: 'react',
+    name: '⚛️ React',
+    realm: 'Realm 4: The Component Cathedral',
+    cards: [
+      { q: 'What is a component?', a: 'A function returning JSX.', extra: 'function Card({title}) { return <div>{title}</div> }. Reusable UI block.' },
+      { q: 'Props vs state?', a: 'Props are passed in; state is internal.', extra: 'Props immutable from child. Learn: one-way data flow parent→child.' },
+      { q: 'What is useState?', a: 'A hook storing reactive data.', extra: 'const [count, setCount] = useState(0). Changing state re-renders the component.' },
+      { q: 'What is a controlled input?', a: 'Value bound to state + onChange.', extra: '<input value={v} onChange={e=>setV(e.target.value)} />. Single source of truth.' },
+      { q: 'What is useEffect for?', a: 'Side effects after render.', extra: 'Fetch, subscriptions, timers. useEffect(() => {...}, [deps]). Cleanup via returned fn.' },
+      { q: 'What is the virtual DOM?', a: 'A JS replica React diffs before painting.', extra: 'Reconciliation: compare old/new virtual tree, batch minimal real-DOM changes.' },
+      { q: 'Why keys in lists?', a: 'React tracks items by key.', extra: 'key={item.id} stable + unique. Missing keys cause render bugs and wasted work.' }
+    ]
+  },
+  {
+    id: 'concurrency',
+    name: '⚙️ Concurrency',
+    realm: 'Realm 5: The Parallel Realms',
+    cards: [
+      { q: 'Threads vs processes?', a: 'Threads share memory; processes are separate.', extra: 'Threads light, blocked by GIL; processes parallel CPU work, more overhead.' },
+      { q: 'What is the GIL?', a: 'A lock letting one Python thread run bytecode at a time.', extra: 'Limits CPU-bound threading. I/O-bound is fine — releases GIL on waits.' },
+      { q: 'What is a thread pool?', a: 'A fixed set of reusable workers.', extra: 'from concurrent.futures import ThreadPoolExecutor. Bounded concurrency, no thread churn.' },
+      { q: 'What is async/await?', a: 'Cooperative single-threaded concurrency.', extra: 'one event loop, many tasks, await yields control during I/O. async def + await call.' },
+      { q: 'Blocking vs non-blocking?', a: 'Blocking waits; non-blocking continues.', extra: 'Fetch a URL = blocking call. Event-loop apps never block: schedule then resume on ready.' },
+      { q: 'What is a queue for?', a: 'Buffering work between producers/consumers.', extra: 'Backend job queues tame bursts: requests enqueue, workers drain at steady rate.' },
+      { q: 'What is idempotency?', a: 'Running an operation twice = once.', extra: 'Same order id, same result. Critical for retries and payments (avoid double charges).' }
+    ]
+  }
 ];
 
-// Audio — Instagram Reels inspired sounds
-let audioCtx=null;
-function getCtx(){if(!audioCtx){const C=window.AudioContext||window.webkitAudioContext;audioCtx=new C();if(audioCtx.state==='suspended')audioCtx.resume()}return audioCtx}
-function ensureAudio(){const c=getCtx();if(c.state==='suspended')c.resume();return c}
-function tone(f,d,t,g){try{const c=ensureAudio(),o=c.createOscillator(),a=c.createGain();o.type=t||'sine';o.frequency.value=f;a.gain.setValueAtTime(g||.15,c.currentTime);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(a);a.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
-function melody(notes){try{const c=ensureAudio();notes.forEach(([f,s,d,t,g])=>{const o=c.createOscillator(),a=c.createGain();o.type=t||'sine';o.frequency.value=f;a.gain.setValueAtTime(g||.12,c.currentTime+s);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+s+d);o.connect(a);a.connect(c.destination);o.start(c.currentTime+s);o.stop(c.currentTime+s+d)})}catch(e){}}
-// Reel-like whoosh effect
-function whoosh(){try{const c=ensureAudio();const o=c.createOscillator();const g=c.createGain();o.type='sine';o.frequency.setValueAtTime(800,c.currentTime);o.frequency.exponentialRampToValueAtTime(200,c.currentTime+.2);g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.25);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.25)}catch(e){}}
-// Reel-like pop (like Instagram like sound)
-function pop(){try{const c=ensureAudio();const o=c.createOscillator();const a=c.createGain();o.type='sine';o.frequency.setValueAtTime(600,c.currentTime);o.frequency.exponentialRampToValueAtTime(1200,c.currentTime+.08);a.gain.setValueAtTime(.1,c.currentTime);a.gain.exponentialRampToValueAtTime(.001,c.currentTime+.12);o.connect(a);a.connect(c.destination);o.start();o.stop(c.currentTime+.12)}catch(e){}}
-// Reel-like heart / like activation
-function heartSound(){try{const c=ensureAudio();melody([[880,0,.06,'sine',.1],[1108.73,.05,.06,'sine',.1],[1318.51,.1,.1,'sine',.1]]);setTimeout(()=>melody([[880,0,.04,'sine',.08],[1108.73,.04,.04,'sine',.08],[1318.51,.08,.08,'sine',.08]]),150)}catch(e){}}
-// Reel-like smooth transition
-function swoosh(){try{const c=ensureAudio();const buf=c.createBuffer(1,c.sampleRate*.15,c.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++){const p=i/d.length;d[i]=(Math.random()*2-1)*p*(1-p)*4}const src=c.createBufferSource();src.buffer=buf;const g=c.createGain();g.gain.setValueAtTime(.04,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.18);const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=3000;f.Q.value=2;src.connect(f);f.connect(g);g.connect(c.destination);src.start();src.stop(c.currentTime+.18)}catch(e){}}
-const SND={
-  flip:()=>{whoosh()},
-  correct:()=>{heartSound()},
-  still:()=>{pop()},
-  levelUp:()=>melody([[523.25,0,.06,'sine',.08],[659.25,.06,.06,'sine',.08],[783.99,.12,.06,'sine',.08],[1046.5,.18,.08,'sine',.1],[1318.51,.24,.15,'sine',.12]]),
-  achiev:()=>melody([[783.99,0,.08,'sine',.1],[1046.5,.08,.08,'sine',.1],[1318.51,.16,.12,'sine',.12],[1567.98,.24,.25,'sine',.12]]),
-  deckComplete:()=>melody([[523.25,0,.08,'sine',.08],[783.99,.1,.08,'sine',.08],[1046.5,.2,.08,'sine',.08],[1396.91,.3,.12,'sine',.1],[1760,.4,.2,'sine',.12]]),
-  click:()=>{pop()},
-  mystery:()=>melody([[440,0,.06,'sine',.08],[554.37,.06,.06,'sine',.08],[659.25,.12,.08,'sine',.08],[880,.2,.15,'sine',.1]]),
-  gem:()=>melody([[1318.51,0,.06,'sine',.1],[1567.98,.06,.1,'sine',.1]]),
-  booster:()=>melody([[523.25,0,.05,'square',.06],[740,.06,.05,'square',.06],[1046.5,.12,.1,'square',.08]]),
-  freeze:()=>tone(600,.3,'triangle',.1),
-  swoosh:()=>{swoosh()},
-};
-
-// Confetti
-let cp=[],cr=false;
-function initC(){const c=document.getElementById('confettiCanvas'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;return x}
-function spawnConf(n){const x=initC();for(let i=0;i<n;i++)cp.push({x:Math.random()*innerWidth,y:-20-Math.random()*200,w:4+Math.random()*6,h:3+Math.random()*4,color:['#f59e0b','#22c55e','#a855f7','#ef4444','#3b82f6','#ec4899','#ffd700'][Math.floor(Math.random()*7)],vx:(Math.random()-.5)*4,vy:2+Math.random()*3,rotation:Math.random()*360,rotSpeed:(Math.random()-.5)*8});if(!cr){cr=true;animC(x)}}
-function animC(x){x.clearRect(0,0,x.canvas.width,x.canvas.height);cp=cp.filter(p=>p.y<x.canvas.height+20);for(const p of cp){p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.rotation+=p.rotSpeed;x.save();x.translate(p.x,p.y);x.rotate(p.rotation*Math.PI/180);x.fillStyle=p.color;x.globalAlpha=Math.max(0,1-(p.y/x.canvas.height)*.5);x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}if(cp.length)requestAnimationFrame(()=>animC(x));else{cr=false;x.clearRect(0,0,x.canvas.width,x.canvas.height)}}
-
-function spawnFloat(t,c,parent){const e=document.createElement('div');e.className='float-xp '+c;e.textContent=t;e.style.left=(20+Math.random()*60)+'%';e.style.top='30%';(parent||document.querySelector('.card-section')||document.body).appendChild(e);setTimeout(()=>e.remove(),1200)}
-
-function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast';void t.offsetWidth;t.className='toast '+(type||'')+' show';clearTimeout(t._hide);t._hide=setTimeout(()=>{t.className='toast'},2600)}
-
-function xpForLevel(l){return l*50}
-function calcLevel(x){return Math.floor(x/50)+1}
-function getLvlTitle(l){for(const t of LVL_TITLES){if(l>=t.min&&l<=t.max)return t}return LVL_TITLES[LVL_TITLES.length-1]}
-function xpInLvl(x){return x-(calcLevel(x)-1)*50}
-function xpNeeded(l){return l*50}
-
-// ── SRS (SM‑2) Helpers ──
-const SRS_KEY='flashcard_srs';
-function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY))||{}}catch(e){return {}}}
-function saveSRS(d){try{localStorage.setItem(SRS_KEY,JSON.stringify(d))}catch(e){}}
-function todayStr(){return new Date().toISOString().slice(0,10)}
-function calcSM2(quality,card){
-  let {ef,interval,reps}=card;
-  ef=ef||2.5;interval=interval||0;reps=reps||0;
-  if(quality===1){reps=0;interval=1}
-  else if(quality===2){reps+=.5;interval=Math.max(1,interval+1)}
-  else{reps+=1;if(reps<=1)interval=1;else if(reps<=2)interval=6;else interval=Math.round(interval*ef)}
-  const q=2*quality-1;const newEf=ef+(0.1-(5-q)*(0.08+(5-q)*0.02));
-  ef=Math.max(1.3,newEf);
-  const next=new Date();next.setDate(next.getDate()+interval);
-  return {ef,interval,reps,nextReview:next.toISOString().slice(0,10),ease:quality};
-}
-function openPopup(title,html){document.getElementById('popupTitle').textContent=title;document.getElementById('popupBody').innerHTML=html;document.getElementById('popupOverlay').classList.add('open');document.getElementById('popupBox').classList.add('open')}
-function closePopup(){document.getElementById('popupOverlay').classList.remove('open');document.getElementById('popupBox').classList.remove('open')}
-
-function showCardPopup(){openPopup('📊 Progress',`<div style="text-align:center;padding:8px 0"><div style="font-size:48px;margin-bottom:8px">🔢</div><div style="font-size:18px;font-weight:800;color:#1e293b">${document.getElementById('counter').textContent}</div><div style="font-size:12px;color:#64748b;margin-top:4px">cards in this deck</div></div>`)}
-
-function showStatsPopup(){const k=document.getElementById('knownCount').textContent;const s=document.getElementById('stillCount').textContent;openPopup('📈 Session',`<div style="display:flex;gap:16px;justify-content:center;padding:12px 0"><div style="text-align:center"><div style="font-size:36px">✅</div><div style="font-size:22px;font-weight:800;color:#059669">${k}</div><div style="font-size:11px;color:#64748b;margin-top:2px">Done</div></div><div style="text-align:center"><div style="font-size:36px">📖</div><div style="font-size:22px;font-weight:800;color:#2563eb">${s}</div><div style="font-size:11px;color:#64748b;margin-top:2px">Left</div></div></div>`)}
-
-function showChallengePopup(){
-const s=stats;
-let html='<div style="display:flex;flex-direction:column;gap:6px">';
-// Daily challenge
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#fffbeb"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">📅 Daily Challenge</span><span style="font-size:10px;color:#d97706">'+(s.daily_challenge_done?'✅ Done!':'+'+((s.daily_reward_xp||25)+' XP'))+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">'+(s.daily_challenge||'Study 10 cards')+'</div><div style="font-size:10px;color:#94a3b8">'+(s.daily_progress||0)+' / '+(s.daily_goal||1)+'</div></div>';
-// Weekly challenge
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#f0fdf4"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">📆 Weekly Challenge</span><span style="font-size:10px;color:#059669">'+(s.weekly_done?'✅ Done!':'+'+((s.weekly_reward_xp||150)+' XP'))+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">'+(s.weekly_challenge||'Master 3 topics')+'</div><div style="font-size:10px;color:#94a3b8">'+(s.weekly_progress||0)+' / '+(s.weekly_goal||1)+'</div></div>';
-// Evan Challenge
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.evan_active?'#fef2f2':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">⏳ Evanescing Challenge</span><span id="evanBadge" style="font-size:10px;color:'+(s.evan_active?'#dc2626':'#64748b')+'">'+(s.evan_active?'🔥 Active':'Inactive')+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">Review cards before they vanish!'+(s.evan_active?' Review '+(s.evan_progress||0)+'/'+(s.evan_goal||10)+' cards':'')+'</div></div>';
-// Deposit Challenge
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.deposit_amount?'#faf5ff':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">💰 Deposit Challenge</span><span id="depositBadge" style="font-size:10px;color:'+(s.deposit_amount?'#7c3aed':'#64748b')+'">'+(s.deposit_amount?s.deposit_amount+' 💎 deposited':'Deposit '+((s.deposit_goal||50)+' 💎'))+'</span></div><div style="font-size:11px;color:#475569;margin:3px 0">Build your gem savings habit</div></div>';
-// Achievements
-const unlocked=s.achievements||[];
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#f8fafc"><div style="font-weight:700;font-size:12px;margin-bottom:4px">🏆 Achievements ('+unlocked.length+'/'+ACHIEVEMENTS.length+')</div><div style="display:flex;flex-wrap:wrap;gap:2px">';
-for(const a of ACHIEVEMENTS){
-const isU=unlocked.includes(a.id);
-html+='<span style="font-size:14px;opacity:'+(isU?'1':'.3')+';cursor:default" title="'+(a.hidden&&!isU?'???':a.name+': '+a.desc)+'">'+(a.hidden&&!isU?'❓':a.icon)+'</span>'}
-html+='</div></div></div>';
-openPopup('🎯 Challenges & Events',html)}
-
-function showPowerupPopup(){
-const s=stats;
-let html='<div style="display:flex;flex-direction:column;gap:6px">';
-// Mentor
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.mentor_message?'#eff6ff':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">🧙 Mentor</span><span style="font-size:10px;color:'+(s.mentor_message?'#2563eb':'#64748b')+'">'+(s.mentor_message?'Active':'Idle')+'</span></div>'+(s.mentor_message?'<div style="font-size:11px;color:#475569;margin:3px 0">'+s.mentor_message+'</div>':'')+'</div>';
-// Power Hour
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.is_power_hour?'#fff7ed':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">⚡ Power Hour</span><span style="font-size:10px;color:'+(s.is_power_hour?'#ea580c':'#64748b')+'">'+(s.is_power_hour?'🔥 Active (x2 XP)':'Inactive')+'</span></div>'+(s.is_power_hour?'<div style="font-size:11px;color:#475569;margin:3px 0">Double XP for next '+(s.power_hour_remaining||'')+' min!</div>':'')+'</div>';
-// Player Type
-const pts=s.player_type_scores;
-if(pts){
-const types=[{k:'achiever',i:'🏆',l:'Achiever'},{k:'explorer',i:'🧭',l:'Explorer'},{k:'socializer',i:'💬',l:'Socializer'},{k:'killer',i:'⚔️',l:'Killer'}];
-let typeHtml='';let topT='';
-for(const t of types)if(pts[t.k]){if(!topT||pts[t.k]>pts[topT])topT=t.k;typeHtml+='<span style="font-size:10px">'+t.i+' '+t.l+': '+pts[t.k]+'</span><br>'}
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:#f0f9ff"><div style="font-weight:700;font-size:12px;margin-bottom:2px">🎮 Player Type</div><div style="font-size:11px;color:#475569">'+typeHtml+'<span style="font-weight:600;color:#2563eb">Dominant: '+(types.find(t=>t.k===topT)?.i||'')+' '+topT.charAt(0).toUpperCase()+topT.slice(1)+'</span></div></div>'}
-// Dangling Offer
-html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;background:'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'#fef2f2':'#f1f5f9')+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:12px">🎁 Special Offer</span><span style="font-size:10px;color:'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'#dc2626':'#64748b')+'">'+(s.dangling_offer_active&&!s.dangling_offer_claimed?'🔴 Claim now!':'Empty')+'</span></div></div></div>';
-openPopup('⚡ Power-ups & Modes',html)}
-
-function showInsightPopup(){openPopup('📊 Insights',`<div style="text-align:center;margin-bottom:8px"><span id="popRankTitle" style="font-size:20px;font-weight:800;color:#1e293b">Novice</span> <span id="popLvlTitle" style="font-size:13px;color:#64748b">🃏 Learner</span></div><div style="margin:0 0 4px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:1px"><span id="popXpDisplay">0 / 50 XP</span><span style="font-weight:700;color:#f59e0b">Lv.<span id="popLvlNum">1</span></span></div><div class="xp-bar-wrap" style="background:#e2e8f0"><div class="xp-bar-fill" id="popXpBar" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b,#ef4444)"></div></div></div><div style="display:flex;gap:8px;justify-content:center;margin:8px 0"><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#fffbeb"><div style="font-size:18px">🔥</div><div style="font-size:16px;font-weight:800;color:#d97706" id="popStreakNum">0</div><div style="font-size:9px;color:#92400e;font-weight:600">Day</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#f0fdf4"><div style="font-size:18px">✅</div><div style="font-size:16px;font-weight:800;color:#059669" id="popKnownNum">0</div><div style="font-size:9px;color:#166534;font-weight:600">Known</div></div><div style="text-align:center;padding:6px 12px;border-radius:8px;background:#faf5ff"><div style="font-size:18px">🏆</div><div style="font-size:16px;font-weight:800;color:#7c3aed" id="popAchivNum">0</div><div style="font-size:9px;color:#581c87;font-weight:600">Badges</div></div></div><div style="text-align:center;font-size:11px;color:#94a3b8;margin-top:6px" id="popPlayerType">🧭 Explorer</div>`)}
-
-function updateStatsUI(){
-const l=stats.level,xpL=stats.xp-(l-1)*50,need=xpNeeded(l),pct=Math.min(100,(xpL/need)*100);
-try{document.getElementById('lvlNum').textContent=l}catch(e){}
-try{document.getElementById('xpDisplay').textContent=xpL+' / '+need+' XP'}catch(e){}
-try{document.getElementById('xpBar').style.width=pct+'%'}catch(e){}
-try{document.getElementById('gemCount').textContent=stats.gems||0}catch(e){}
-const ttl=getLvlTitle(l);
-const rank=stats.equipped_title||ttl.title;
-try{document.getElementById('rankTitle').textContent=rank}catch(e){}
-try{document.getElementById('lvlTitle').textContent=ttl.rank}catch(e){}
-try{document.getElementById('totalKnown').textContent=stats.total_known||0}catch(e){}
-try{document.getElementById('achievCount').textContent=(stats.achievements||[]).length}catch(e){}
-try{document.getElementById('streakNum').textContent=stats.streak||0}catch(e){}
-try{document.getElementById('streakPill').classList.toggle('has-streak',(stats.streak||0)>0)}catch(e){}
-// Topbar mini-level
-try{document.getElementById('topLvlNum').textContent=l}catch(e){}
-try{document.getElementById('topGems').textContent='💎'+(stats.gems||0)}catch(e){}
-// Popup elements
-try{document.getElementById('popRankTitle').textContent=rank}catch(e){}
-try{document.getElementById('popLvlTitle').textContent=ttl.rank}catch(e){}
-try{document.getElementById('popXpDisplay').textContent=xpL+' / '+need+' XP'}catch(e){}
-try{document.getElementById('popLvlNum').textContent=l}catch(e){}
-try{document.getElementById('popXpBar').style.width=pct+'%'}catch(e){}
-try{document.getElementById('popStreakNum').textContent=stats.streak||0}catch(e){}
-try{document.getElementById('popKnownNum').textContent=stats.total_known||0}catch(e){}
-try{document.getElementById('popAchivNum').textContent=(stats.achievements||[]).length}catch(e){}
-try{document.getElementById('popPlayerType').textContent='🧭 '+(stats.player_type||'Explorer')}catch(e){}
-// Knowledge tree body (already in DOM)
-
-// Level 3: Personal Bests
-renderPersonalBests();
-
-// Knowledge tree body (already in DOM)
-}
-function toggleNav(){const e=document.getElementById('navLinks');if(e)e.classList.toggle('open')}
-function closeLvlModal(){const e=document.getElementById('lvlModal');if(e)e.classList.remove('show')}
-function backToTopics(){
-document.getElementById('topicArea').style.display='flex';
-document.getElementById('flashcardArea').classList.remove('visible');
-document.getElementById('backTopics').classList.remove('show');
-document.getElementById('studyTopic').textContent='';
-loadTopics()}
-let lastTap=0;function handleCardTap(e){if(e.target.closest('button')||e.target.closest('.reel-action-btn'))return;const now=Date.now();if(now-lastTap<300&&lastTap>0){lastTap=0;flipCard(e)}else{lastTap=now}}
-function flipCard(e){const wasFlipped=isFlipped;isFlipped=!isFlipped;document.getElementById('cardInner').classList.toggle('flipped',isFlipped);const h=document.getElementById('cardHint');if(h.dataset.dismissed){h.style.display='none'}else if(isFlipped){h.textContent='Double-tap to flip back'}else if(wasFlipped){dismissHint()}else{h.textContent='Double-tap card to flip'};if(isFlipped)SND.flip()}
-function dismissHint(){const h=document.getElementById('cardHint');h.dataset.dismissed='1';h.style.display='none'}
-function prevCard(){if(currentIndex>0){currentIndex--;showCard();SND.click()}}
-function nextCard(){if(currentIndex<cards.length-1){currentIndex++;showCard();SND.click()}}
-function switchTier(tier){
-currentTier=tier;SND.click();
-if(cards.length&&cards[currentIndex]){
-document.getElementById('backText').innerHTML=(cards[currentIndex][tier]||'').replace(/\n/g,'<br>')}
-updateTierButtons()}
-function updateTierButtons(){
-document.querySelectorAll('.tier-btn').forEach(b=>{
-const t=b.id.replace('tier','').toLowerCase();b.classList.toggle('active',t===currentTier)})}
-function showCard(){
-  if(!cards.length)return;const c=cards[currentIndex];
-  document.getElementById('frontText').textContent=c.front;
-  document.getElementById('backText').innerHTML=(c[currentTier]||c.normal||'').replace(/\n/g,'<br>');
-  document.getElementById('counter').textContent=(currentIndex+1)+'/'+cards.length;
-  document.getElementById('progressFill').style.width=((currentIndex+1)/cards.length*100)+'%';
-  document.getElementById('prevBtn').disabled=currentIndex===0;
-  document.getElementById('nextBtn').disabled=currentIndex===cards.length-1;
-  isFlipped=false;document.getElementById('cardInner').classList.remove('flipped');
-  const h=document.getElementById('cardHint');h.style.display='';h.dataset.dismissed='';h.textContent='Double-tap card to flip';
-  const srs=loadSRS();const cardId=currentTopic+':'+c._oidx;const sc=srs[cardId];
-  if(!sc)document.getElementById('srsState').textContent='';
-  else if(sc.nextReview<=todayStr())document.getElementById('srsState').textContent='📖 Due for review';
-  else{document.getElementById('srsState').textContent='📅 Next: '+new Date(sc.nextReview).toLocaleDateString()}
-  document.querySelectorAll('.reel-action-btn').forEach(b=>b.disabled=false);
-  document.getElementById('knownCount').textContent=currentIndex;
-  document.getElementById('stillCount').textContent=cards.length-currentIndex;
-  updateTierButtons()}
-function rateCard(quality){
-  if(!cards.length||isLoading)return;
-  // Visual feedback like Instagram reel
-  const btnMap={1:'rewindBtn',2:'bookmarkBtn',3:'likeBtn'};
-  const btn=document.getElementById(btnMap[quality]);
-  if(btn){
-    const cls=quality===3?'liked':quality===2?'saved':'rewound';
-    btn.classList.add(cls);
-    setTimeout(()=>btn.classList.remove(cls),400);
-  }
-  if(quality===3){SND.correct();spawnFloat('❤️ +12 XP','green')}
-  else if(quality===2){SND.still();spawnFloat('🔖 +7 XP','orange')}
-  else{SND.still();spawnFloat('🔄 +3 XP','purple')}
-  const c=cards[currentIndex];const cardId=currentTopic+':'+c._oidx;
-  const srs=loadSRS();
-  const old=srs[cardId]||{ef:2.5,interval:0,reps:0,nextReview:todayStr()};
-  srs[cardId]=calcSM2(quality,old);saveSRS(srs);
-  const xpMap=[0,3,7,12];const xp=xpMap[quality]||0;
-  document.querySelectorAll('.reel-action-btn').forEach(b=>b.disabled=true);
-  const rd=new Date(srs[cardId].nextReview);
-  const diff=Math.ceil((rd-new Date())/86400000);
-  SND.swoosh();
-  setTimeout(()=>{
-    if(currentIndex<cards.length-1){currentIndex++;showCard();SND.swoosh()}
-    else{showToast('🎉 All due cards reviewed for '+currentTopic+'!','success');document.getElementById('srsState').textContent='✅ All caught up!'}
-  },400);
-  recordStudy({action:['','missed','tricky','got_it'][quality],topic:currentTopic,quality})}
-function showLevelUp(l){try{
-const t=getLvlTitle(l);
-const e=document.getElementById('lvlModal');if(!e)return;
-document.getElementById('lvlModalNum').textContent=l;
-document.getElementById('lvlModalTitle').textContent=t.title;
-document.getElementById('lvlModalDesc').textContent='You reached '+t.rank+'!';
-e.classList.add('show')}catch(ex){}}
-function checkNewAchievs(sessionStats){
-const unlocked=stats.achievements||[];
-for(const a of ACHIEVEMENTS){
-if(!unlocked.includes(a.id)&&a.check(sessionStats)){
-fetch(API_BASE+'/flashcard/unlock-achievement',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({achievement_id:a.id})});
-spawnFloat('🏆 '+a.name+'!','gold');showToast('🏆 Achievement unlocked: '+a.name,'success');SND.achiev();spawnConf(30)
-}}}
-function renderBosses(){
-const div=document.getElementById('bossChallenges');if(!div)return;
-div.innerHTML='';
-const bc=stats.boss_challenges||{};
-const BOSSES=[{n:'Speed Demon',d:'Speed deck',xp:100,g:10},{n:'Perfect Run',d:'Perfect deck',xp:80,g:8},{n:'Marathon',d:'Study session',xp:150,g:15},{n:'Night Owl',d:'Late study',xp:120,g:12}];
-for(const b of BOSSES){
-const chip=document.createElement('div');chip.className='boss-chip';
-const prog=bc[b.n]||{progress:0,done:false};
-if(prog.done)chip.classList.add('done');
-const goal=b.n==='Marathon'?4:b.n==='Night Owl'?3:1;
-chip.textContent=''+(b.n==='Speed Demon'?'⚡':b.n==='Perfect Run'?'🎯':b.n==='Marathon'?'🏃':'🦉')+' '+b.n+' '+(prog.done?'✅':prog.progress+'/'+goal);
-chip.title='+'+b.xp+' XP, 💎'+b.g;div.appendChild(chip)}}
-let currentTopic='';
-async function loadStats(){try{const r=await fetch(API_BASE+'/flashcard/stats');if(r.ok){const d=await r.json();stats={...stats,...d};updateStatsUI()}}catch(e){}}
-async function selectTopic(t){currentTopic=t;SND.click();generateDeck(t)}
-const TOPICS=["Python","Data Structures","Concurrency","Databases","System Design","Security","Testing","DevOps","Design Patterns","Behaviour/HR Round"];
-function loadTopics(){
-  const grid=document.getElementById('topicGrid');grid.innerHTML='';
-  const srs=loadSRS();const today=todayStr();
-  const icons={Python:'🐍','Data Structures':'🗂️',Concurrency:'⚡',Databases:'🗄️','System Design':'🏗️',Security:'🔒',Testing:'🧪',DevOps:'🚀','Design Patterns':'🏛️','Behaviour/HR Round':'🤝'};
-  TOPICS.forEach(t=>{
-    const b=document.createElement('button');b.className='topic-card';
-    if(recentTopics.includes(t))b.classList.add('recent');
-    let due=0;
-    if(deckCache){
-      const pool=deckCache[t]||[];
-      due=pool.filter((_,i)=>{const id=t+':'+i;const sc=srs[id];return !sc||sc.nextReview<=today}).length
-    }
-    b.innerHTML='<div class="tc-icon">'+(icons[t]||'📘')+'</div><div class="tc-name">'+t+'</div>';
-    if(due>0)b.innerHTML+='<div class="tc-due">'+due+'</div>';
-    b.onclick=()=>selectTopic(t);grid.appendChild(b)
-  })}
-async function generateDeck(topic){
-if(isLoading)return;if(!topic)topic=currentTopic;if(!topic){showToast('Select a topic first','error');return}
-isLoading=true;const dc=document.getElementById('deckComplete');if(dc)dc.classList.remove('show')
-try{const r=await fetch('./flashcard_decks.json');if(!r.ok)throw Error('Failed to load deck data');const d=await r.json();const pool=d[topic]||[];if(!pool.length){showToast('No cards for '+topic,'error');isLoading=false;return}
-const srs=loadSRS();const t=todayStr();
-const duePool=pool.map((c,i)=>({...c,_oidx:i})).filter(c=>{const id=topic+':'+c._oidx;const sc=srs[id];return !sc||sc.nextReview<=t});
-if(!duePool.length){showToast('🎉 All cards in '+topic+' are up to date!','success');isLoading=false;return}
-const shuffled=[...duePool].sort(()=>Math.random()-.5);cards=shuffled;currentIndex=0;isFlipped=false
-if(!recentTopics.includes(topic))recentTopics.unshift(topic);if(recentTopics.length>5)recentTopics.pop()
-document.getElementById('studyTopic').textContent=topic;
-document.getElementById('topicArea').style.display='none';
-document.getElementById('flashcardArea').classList.add('visible');
-document.getElementById('backTopics').classList.add('show');
-document.getElementById('flashcardArea').scrollIntoView({behavior:'smooth',block:'center'});
-showCard();SND.click()}catch(e){showToast('Failed: '+e.message,'error')}
-isLoading=false}
-async function revealMystery(){
-  SND.mystery();const x=5+Math.floor(Math.random()*20);
-  stats.xp+=x;stats.level=calcLevel(stats.xp);
-  updateStatsUI();spawnFloat('+'+x+' XP','purple');
-  showToast('🎁 Mystery card! +'+x+' XP','xp');
-  const mb=document.getElementById('mysteryBtn');if(mb)mb.disabled=true;
-  document.getElementById('cardInner').classList.add('lucky');
-  setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1000);
-  if(stats.level>calcLevel(stats.xp-x)){SND.levelUp();showLevelUp(stats.level);spawnConf(60)}
-  await recordStudy({action:'mystery',bonus_xp:x})}
-async function activateBooster(){
-  try{const r=await fetch(API_BASE+'/flashcard/activate-booster',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cost_gems:5,cards_count:3})});const d=await r.json();if(d.success){stats.gems=d.gems;stats.xp_booster_active=true;stats.xp_booster_cards_remaining=d.xp_booster_cards_remaining;updateStatsUI();SND.booster();showToast('⚡ 2× Booster active for 3 cards!','xp');const bb=document.getElementById('boosterBtn');if(bb){bb.classList.add('active');bb.disabled=true}}else{showToast('Need 5 gems for booster','error')}}catch(e){showToast('Failed','error')}}
-function confirmMystery(){
-  const mb=document.getElementById('mysteryBtn');
-  if(mb&&mb.disabled){showToast('🎁 Mystery already used today','info');return}
-  openPopup('🎁 Mystery Card',`<div style="text-align:center;padding:12px 0"><div style="font-size:48px;margin-bottom:8px">🎁</div><div style="font-size:16px;font-weight:800;color:#1e293b">Reveal a Mystery Card</div><div style="font-size:12px;color:#64748b;margin:8px 0;line-height:1.5">Get bonus XP (5–20) from a random card!<br>Free — once per day.</div><div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button onclick="closePopup();revealMystery()" style="padding:8px 20px;border-radius:999px;border:none;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-size:13px;font-weight:700;cursor:pointer">✨ Reveal!</button><button onclick="closePopup()" style="padding:8px 20px;border-radius:999px;border:none;background:#f1f5f9;color:#64748b;font-size:13px;font-weight:700;cursor:pointer">Cancel</button></div></div>`)}
-function confirmBooster(){
-  const bb=document.getElementById('boosterBtn');
-  if(bb&&bb.disabled){showToast('⚡ Booster already active','info');return}
-  openPopup('⚡ XP Booster',`<div style="text-align:center;padding:12px 0"><div style="font-size:48px;margin-bottom:8px">⚡</div><div style="font-size:16px;font-weight:800;color:#1e293b">Activate XP Booster</div><div style="font-size:12px;color:#64748b;margin:8px 0;line-height:1.5">Double XP for the next 3 cards!<br>Cost: <strong>💎5 Gems</strong></div><div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button onclick="closePopup();activateBooster()" style="padding:8px 20px;border-radius:999px;border:none;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-size:13px;font-weight:700;cursor:pointer">⚡ Activate</button><button onclick="closePopup()" style="padding:8px 20px;border-radius:999px;border:none;background:#f1f5f9;color:#64748b;font-size:13px;font-weight:700;cursor:pointer">Cancel</button></div></div>`)}
-// ── Study Timer (default 5 min) ──
-let timerRemaining=300,timerRunning=false,timerInterval=null;
-function fmtTime(s){const m=Math.floor(s/60);const sec=s%60;return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')}
-function updateTimerDisplay(){
-  const d=document.getElementById('timerDisplay');
-  if(!d)return;
-  d.textContent=fmtTime(timerRemaining);
-  d.classList.toggle('urgent',timerRemaining<=10)}
-function toggleTimer(){
-  if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById('timerBtn').textContent='▶️'}
-  else{
-    if(timerRemaining<=0)resetTimer();
-    timerRunning=true;document.getElementById('timerBtn').textContent='⏸️';
-    timerInterval=setInterval(()=>{
-      timerRemaining--;if(timerRemaining<0)timerRemaining=0;
-      if(timerRemaining>0)tone(1200,.04,'sine',.04);
-      updateTimerDisplay();
-      if(timerRemaining===0){
-        clearInterval(timerInterval);timerRunning=false;
-        document.getElementById('timerBtn').textContent='▶️';
-        SND.levelUp();showToast('⏰ Time\'s up!','xp');spawnConf(30)}},1000)}}
-function resetTimer(){
-  clearInterval(timerInterval);timerRunning=false;timerRemaining=300;
-  document.getElementById('timerBtn').textContent='▶️';
-  updateTimerDisplay()}
-async function recordStudy(data){
-try{
-const payload={action:data.action,topic:data.topic||'',card_index:currentIndex,total_cards:cards.length,deck_known:0,deck_still:0,deck_complete:false,quality:data.quality||0,bonus_xp:data.bonus_xp||0,use_booster:stats.xp_booster_active,study_mode:stats.study_mode||'normal'};
-const r=await fetch(API_BASE+'/flashcard/study',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-if(r.ok){
-const d=await r.json();const oldLevel=stats.level,oldXp=stats.xp,oldGems=stats.gems||0;
-stats={...stats,...d};
-if(stats.level>oldLevel){SND.levelUp();showLevelUp(stats.level);spawnConf(60)}
-const xg=stats.xp-oldXp;if(xg>0&&data.action!=='known'&&data.action!=='still')spawnFloat('+'+xg+' XP','green');
-const gg=(d.gems||0)-oldGems;if(gg>0){SND.gem();spawnFloat('+'+gg+' 💎','pink')}
-if(d.last_lucky_amount>0){try{document.getElementById('luckyAmount').textContent='+'+d.last_lucky_amount+' XP! 🍀';document.getElementById('luckyNotice').classList.add('show');setTimeout(()=>document.getElementById('luckyNotice').classList.remove('show'),2000)}catch(e){};document.getElementById('cardInner').classList.add('lucky');setTimeout(()=>document.getElementById('cardInner').classList.remove('lucky'),1500)}
-updateStatsUI();
-const ss={total_studied:d.total_studied||0,total_known:d.total_known||0,decks_completed:d.decks_completed||0,best_streak:d.best_streak||0,speed_flips:d.speed_flips||0,decks_in_day:d.decks_in_day||0,topics_count:d.topics_count||0,night_studies:d.night_studies||0,level:stats.level,lucky_cards_today:d.lucky_cards_today||0,gems:stats.gems||0,boosters_used:0,boss_done:0};
-checkNewAchievs(ss)
-  if(stats.xp_booster_active&&stats.xp_booster_cards_remaining>0){const bb=document.getElementById('boosterBtn');if(bb){bb.classList.add('active');bb.disabled=true}}
-  else if(!stats.xp_booster_active){const bb=document.getElementById('boosterBtn');if(bb){bb.classList.remove('active');bb.disabled=false}}
-if(d._special_bonus>0){spawnFloat('+'+d._special_bonus+' 🌟 Special','gold')}
-}}catch(e){}}
-
-// ── Level 2: Tutorial ──
-const TUTORIAL_STEPS=[
-  {icon:'🎯',title:'Welcome, Scholar!',desc:'You\'ve entered the knowledge realm. Let\'s start your learning journey! Master cards, earn XP, and unlock new abilities.'},
-  {icon:'📖',title:'Study Cards',desc:'Click a topic to study its flashcards. Mark each card "Known" or "Still Learning" to track your progress.'},
-  {icon:'🔥',title:'Build Your Streak',desc:'Study every day to build your streak. The longer your streak, the bigger your bonuses!'},
-  {icon:'💰',title:'Earn & Spend Gems',desc:'Complete topics, maintain streaks, and find treasures to earn gems. Spend them on boosts and power-ups.'},
-  {icon:'🏆',title:'Reach New Levels',desc:'Each level unlocks new features: custom decks at Level 8, knowledge trees at Level 10, and more!'},
-  {icon:'🧭',title:'You\'re Ready!',desc:'Explore the interface, try the mystery button, check your knowledge tree, and create custom decks. Happy studying!'},
+const TUTORIAL = [
+  { icon: '🎯', title: 'Welcome, Scholar!', desc: "You've entered the knowledge realm. Let's start your learning journey!" },
+  { icon: '🃏', title: 'Tap to flip', desc: 'Tap any card to reveal its answer. Front asks, back answers.' },
+  { icon: '↔️', title: 'Navigate the deck', desc: 'Use the arrows or the ❤️ / 🔖 / 🔄 buttons to rate each card.' },
+  { icon: '⚡', title: 'Powers & Timer', desc: 'Spend gems on Mystery 🎁 and XP Booster ⚡. Use the timer to race yourself.' },
+  { icon: '🔥', title: 'Tiers matter', desc: 'Detailed shows richer answers and grants more XP. Expert is the real test.' },
+  { icon: '🏆', title: 'Keep your streak', desc: 'Study daily, earn XP, level up, and watch your realm progress.' }
 ];
-let tutStep=0,tutActive=false;
-function showTutorial(stepIdx){
-  const card=document.getElementById('tutCard');
-  if(!card)return;
-  const s=TUTORIAL_STEPS[stepIdx];
-  document.getElementById('tutStep').textContent=`Step ${stepIdx+1}/${TUTORIAL_STEPS.length}`;
-  document.getElementById('tutIcon').textContent=s.icon;
-  document.getElementById('tutTitle').textContent=s.title;
-  document.getElementById('tutDesc').textContent=s.desc;
-  const actions=document.getElementById('tutActions');
-  if(stepIdx===TUTORIAL_STEPS.length-1){
-    actions.innerHTML=`<button class="tut-skip" onclick="skipTutorial()">Skip</button><button class="tut-done" onclick="completeTutorial()">✨ Got it!</button>`;
-  }else{
-    actions.innerHTML=`<button class="tut-skip" onclick="skipTutorial()">Skip</button><button class="tut-next" onclick="nextTutorialStep()">Next →</button>`;
-  }
-  card.classList.add('show');tutActive=true;tutStep=stepIdx;
+
+const LS = 'flashcard_progress';
+
+function $id(x) { return document.getElementById(x); }
+
+let state = { tier: 'normal', idx: 0, known: new Set(), tricky: new Set(), again: new Set(), xp: 0, gems: 0, streak: 0, lastDay: '' };
+
+function save() {
+  try {
+    localStorage.setItem(LS, JSON.stringify({
+      tier: state.tier,
+      known: [...state.known], tricky: [...state.tricky], again: [...state.again],
+      xp: state.xp, gems: state.gems
+    }));
+  } catch (e) {}
 }
-function nextTutorialStep(){
-  if(tutStep<TUTORIAL_STEPS.length-1){showTutorial(tutStep+1)}
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(LS));
+    if (!d) return;
+    state.tier = d.tier || 'normal';
+    state.known = new Set(d.known || []);
+    state.tricky = new Set(d.tricky || []);
+    state.again = new Set(d.again || []);
+    state.xp = d.xp || 0;
+    state.gems = d.gems || 0;
+  } catch (e) {}
 }
-function skipTutorial(){
-  document.getElementById('tutCard').classList.remove('show');tutActive=false;
-  fetch(API_BASE+'/flashcard/advance-tutorial',{method:'POST'});
+
+let topic = null;
+let deck = [];
+let flipped = false;
+let timerId = null;
+let seconds = 300;
+let tutorialStep = 0;
+
+function showToast(msg, type) {
+  const t = $id('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type || 'success');
+  setTimeout(() => (t.className = 'toast'), 2500);
 }
-async function completeTutorial(){
-  document.getElementById('tutCard').classList.remove('show');tutActive=false;
-  SND.achiev();spawnConf(50);
-  showToast('🎉 Tutorial complete! +50 XP, +10 Gems','success');
-  await fetch(API_BASE+'/flashcard/advance-tutorial',{method:'POST'});
-  await loadStats();updateStatsUI();
-}
-async function checkTutorial(){
-  if(stats._tutorial&&!stats.tutorial_completed&&!tutActive){
-    showTutorial(stats._tutorial_step||0);
+
+function renderTopics() {
+  const grid = $id('topicGrid');
+  grid.innerHTML = '';
+  for (const tp of TOPICS) {
+    const el = document.createElement('button');
+    el.className = 'topic-btn';
+    el.textContent = tp.name;
+    el.onclick = () => selectTopic(tp.id);
+    grid.appendChild(el);
   }
 }
 
-// ── Level 2: Weekly Summary ──
-async function checkWeeklySummary(){
-  if(stats._weekly_summary){
-    document.getElementById('wsXp').textContent=stats.xp_week||0;
-    document.getElementById('wsCards').textContent=stats.cards_week||0;
-    document.getElementById('wsDecks').textContent=stats.decks_week||0;
-    const c=document.getElementById('wsChange');
-    const x=stats.xp_change||0;
-    if(x>0){c.textContent='📈 +'+x+' XP vs last week';c.className='ws-change up'}
-    else if(x<0){c.textContent='📉 '+x+' XP vs last week';c.className='ws-change down'}
-    else{c.textContent='➖ Same as last week';c.className='ws-change'}
-    document.getElementById('weeklySummary').classList.add('show');
-    SND.levelUp();spawnConf(30);
-    // Auto-close after 8s
-    setTimeout(closeWeeklySummary,8000);
-  }
-}
-function closeWeeklySummary(){
-  document.getElementById('weeklySummary').classList.remove('show');
+function selectTopic(id) {
+  topic = TOPICS.find((t) => t.id === id);
+  if (!topic) return;
+  deck = topic.cards.slice();
+  $id('narrText').innerHTML = `<strong>${topic.name.replace(/^[^ ]+ /, '')}</strong> — Knowledge unlocked.`;
+  $id('narrStage').textContent = topic.realm;
+  state.idx = 0;
+  $id('topicArea').style.display = 'none';
+  $id('flashcardArea').style.display = 'block';
+  renderCard();
+  updateCounters();
 }
 
-// ── Level 3: Personal Bests ──
-function renderPersonalBests(){
-  const pb=stats.personal_bests||{};
-  const el=document.getElementById('pbDisplay');
-  const items=[];
-  if(pb.longest_streak)items.push({v:pb.longest_streak+'d',l:'Longest Streak'});
-  if(pb.most_xp_day)items.push({v:pb.most_xp_day+'xp',l:'Best Day'});
-  if(pb.most_cards_day)items.push({v:pb.most_cards_day+'c',l:'Most Cards'});
-  if(pb.best_accuracy)items.push({v:pb.best_accuracy+'%',l:'Best Accuracy'});
-  if(pb.fastest_deck)items.push({v:pb.fastest_deck+'s',l:'Fastest Deck'});
-  if(items.length===0){el.innerHTML='';return}
-  el.innerHTML=items.map(i=>`<span class="pb-chip${(pb._new||'').includes(i.l)?' new':''}">${i.v} ${i.l}</span>`).join(' ');
+function backToTopics() {
+  $id('flashcardArea').style.display = 'none';
+  $id('topicArea').style.display = 'block';
+  renderTopics();
 }
 
-// ── Level 3: Player Type ──
-async function updatePlayerType(){
-  if(!stats.player_type_scores)return;
-  try{
-    const r=await fetch(API_BASE+'/flashcard/player-insight');
-    const data=await r.json();
-    if(data.dominant_type){
-      stats.player_type=data.dominant_type;
-      const icons={achiever:'🏆',explorer:'🧭',socializer:'💬',killer:'⚔️'};
-      const label=(icons[data.dominant_type]||'🧭')+' '+
-        data.dominant_type.charAt(0).toUpperCase()+data.dominant_type.slice(1);
-      const badge=document.getElementById('playerTypeBadge');
-      if(badge)badge.textContent=label;
-      const pop=document.getElementById('popPlayerType');
-      if(pop)pop.textContent='🧭 '+label;
+function tierCards() {
+  return deck;
+}
+
+function renderCard() {
+  const cards = tierCards();
+  const idx = Math.min(state.idx, cards.length - 1);
+  const card = cards[idx];
+  flipped = false;
+  $id('cardInner').classList.remove('flipped');
+  $id('frontText').textContent = card.q;
+  $id('backText').textContent = state.tier === 'expert' ? card.extra : card.a;
+  $id('cardInner').dataset.card = idx;
+  updateCounters();
+}
+
+function handleCardTap() {
+  if (!topic) return;
+  $id('cardInner').classList.toggle('flipped');
+  flipped = !flipped;
+}
+
+function nextCard() {
+  if (!topic) return;
+  const cards = tierCards();
+  state.idx = (state.idx + 1) % Math.max(1, cards.length);
+  renderCard();
+}
+function prevCard() {
+  if (!topic) return;
+  const cards = tierCards();
+  state.idx = (state.idx - 1 + cards.length) % Math.max(1, cards.length);
+  renderCard();
+}
+
+function rateCard(rating) {
+  if (!topic) return;
+  const card = tierCards()[Math.min(state.idx, tierCards().length - 1)];
+  const keyIn = card.q;
+  if (rating >= 3) {
+    if (!state.known.has(keyIn)) {
+      state.known.add(keyIn);
+      state.xp += state.tier === 'expert' ? 15 : 10;
+      showToast('❤️ Got it! ' + (state.tier === 'expert' ? '+15' : '+10') + ' XP', 'success');
     }
-  }catch(e){}
+    state.tricky.delete(keyIn);
+    state.again.delete(keyIn);
+  } else if (rating === 2) {
+    state.tricky.add(keyIn);
+    state.again.delete(keyIn);
+    showToast('🔖 Marked tricky', 'info');
+  } else {
+    state.again.add(keyIn);
+    state.tricky.delete(keyIn);
+    showToast('🔄 We\'ll revisit this one', 'warning');
+  }
+  save();
+  updateCounters();
+  setTimeout(nextCard, 250);
 }
 
-// Init
-async function init(){
-await loadStats();
-try{const r=await fetch('./flashcard_decks.json');if(r.ok)deckCache=await r.json()}catch(e){}
-loadTopics();
-
-// CD1: Beginner's blessing
-if(stats._beginner_blessed){
-spawnFloat('+'+stats._blessing_xp+' XP','gold');SND.levelUp();spawnConf(60)}
-
-// CD1: Milestone
-if(stats._milestone_reached){
-spawnConf(60);SND.levelUp()}
-
-// Daily special topic
-if(stats.daily_special_topic){
-document.querySelectorAll('.topic-card').forEach(c=>{
-if(c.querySelector('.tc-name')&&c.querySelector('.tc-name').textContent.trim()===stats.daily_special_topic){
-c.classList.add('special');
-const badge=document.createElement('span');badge.className='special-badge';badge.textContent='+'+stats.daily_special_bonus+'XP';
-c.appendChild(badge)}})}
-
-// CD7: Treasure
-if(stats._treasure){
-SND.mystery();spawnConf(30)}
-
-// Decay warning
-if(stats._decay_warning){
-SND.still()}
-
-// CD8: Deposit claimed
-if(stats._deposit_claimed){
-spawnFloat('+'+stats._deposit_reward+' 💎','green');SND.gem();showToast('💰 Deposit complete! +'+stats._deposit_reward+' gems, +50 XP','success');
-spawnConf(40)}
-
-// CD2: Cascade bonus
-if(stats._cascade_bonus){
-spawnConf(60);SND.levelUp()}
-
-// CD2: Mastery
-if(stats._topic_mastered){
-showToast('📚 Topic Mastered: '+stats._topic_mastered+'! +30 XP, +5 Gems','success');
-SND.deckComplete();spawnConf(50)}
-
-// CD6: Evanescing done
-if(stats._ec_done){
-showToast('⏳ Evanescing Challenge Complete!','success');SND.achiev();spawnConf(40)}
-
-// Mystery button
-if(stats.mystery_available===false){const mb=document.getElementById('mysteryBtn');if(mb)mb.disabled=true}
-
-// Narrative
-const stage=Math.min(stats.narrative_stage||1,REALMS.length);
-const nt=document.getElementById('narrText');
-const ns=document.getElementById('narrStage');
-if(nt)nt.innerHTML=stage<=1?'<strong>The Knowledge Seeker</strong> — Your journey begins. Study topics to unlock new realms.':`<strong>The Knowledge Seeker</strong> — Realm ${stage}: ${REALMS[stage-1]}`;
-if(ns)ns.textContent=`Realm ${stage}: ${REALMS[stage-1]}`;
-
-// Tutorial
-checkTutorial();
-
-// Level 2: Weekly summary
-checkWeeklySummary();
-
-// Level 3: Player type
-updatePlayerType();
+function updateCounters() {
+  const cards = tierCards();
+  const known = cards.filter((c) => state.known.has(c.q)).length;
+  const again = cards.filter((c) => state.again.has(c.q)).length;
+  $id('counter').textContent = `${Math.min(state.idx + 1, cards.length)}/${cards.length}`;
+  $id('knownCount').textContent = known;
+  $id('stillCount').textContent = Math.max(0, cards.length - known);
+  $id('progressFill').style.width = Math.round((known / Math.max(1, cards.length)) * 100) + '%';
+  $id('srsState').textContent = `Known ${known} · Tricky ${state.tricky.size} · Again ${again}`;
+  const done = cards.length > 0 && known === cards.length;
+  if (done && topic) {
+    $id('deckComplete').style.display = 'block';
+    $id('deckCompleteXP').textContent = `+${state.tier === 'expert' ? 75 : 50} XP + 💎3 Gems`;
+  } else if ($id('deckComplete')) {
+    $id('deckComplete').style.display = 'none';
+  }
+  $id('topLvlNum').textContent = Math.max(1, Math.floor(state.xp / 100) + 1);
+  $id('topGems').textContent = '💎' + state.gems;
 }
 
-function initAudio(){const c=getCtx();if(c&&c.state==='suspended')c.resume();return c}
-document.addEventListener('click',initAudio,{once:true});
-document.addEventListener('touchstart',initAudio,{once:true});
+function switchTier(t) {
+  state.tier = t;
+  $id('tierNormal').classList.toggle('active', t === 'normal');
+  $id('tierHard').classList.toggle('active', t === 'hard');
+  $id('tierExpert').classList.toggle('active', t === 'expert');
+  state.idx = 0;
+  renderCard();
+  save();
+}
+
+function toggleTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+    $id('timerBtn').textContent = '▶️';
+    return;
+  }
+  if (seconds <= 0) seconds = 300;
+  timerId = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) {
+      clearInterval(timerId);
+      timerId = null;
+      $id('timerBtn').textContent = '▶️';
+      showToast('⏰ Time\u2019s up!', 'error');
+      return;
+    }
+    const m = Math.floor(seconds / 60), s = seconds % 60;
+    $id('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }, 1000);
+  $id('timerBtn').textContent = '⏸️';
+}
+function resetTimer() {
+  clearInterval(timerId);
+  timerId = null;
+  seconds = 300;
+  $id('timerDisplay').textContent = '05:00';
+  $id('timerBtn').textContent = '▶️';
+}
+
+function confirmMystery() {
+  if (state.gems < 2) { showToast('Need 💎2 gems for a mystery card', 'warning'); return; }
+  openPopup('🎁 Mystery Card', 'A random card — flip it for surprise XP!');
+  state.gems -= 2;
+  save();
+}
+function confirmBooster() {
+  if (state.gems < 1) { showToast('Need 💎1 gem for XP booster', 'warning'); return; }
+  state.gems -= 1;
+  state.xp += 25;
+  flashLucky('+25 XP booster!');
+  save();
+  updateCounters();
+}
+
+function showCardPopup() {
+  if (!topic) return;
+  const cards = tierCards();
+  openPopup('🔢 Deck Progress', `${Math.min(state.idx + 1, cards.length)} of ${cards.length} cards shown\nKnown: ${cards.filter((c) => state.known.has(c.q)).length}`);
+}
+function showStatsPopup() {
+  openPopup('🌟 Player Stats', `XP: ${state.xp} · Gems: 💎${state.gems} · Tier: ${state.tier}${topic ? `\nTopic: ${topic.name}` : ''}`);
+}
+function showInsightPopup() {
+  openPopup('🧭 Your Journey', `Level ${Math.max(1, Math.floor(state.xp / 100) + 1)} Scholar\nKeep studying daily to strengthen your streak and unlock new realms.`);
+}
+
+function openPopup(title, body) {
+  $id('popupTitle').textContent = title;
+  $id('popupBody').innerHTML = '<pre style="white-space:pre-wrap;font-family:inherit;margin:0;font-size:14px;color:var(--text-muted)">' + body + '</pre>';
+  $id('popupOverlay').classList.add('show');
+  $id('popupBox').style.display = 'block';
+}
+function closePopup() {
+  $id('popupOverlay').classList.remove('show');
+  $id('popupBox').style.display = 'none';
+}
+
+function flashLucky(text) {
+  $id('luckyAmount').textContent = text;
+  $id('luckyNotice').classList.add('show');
+  setTimeout(() => $id('luckyNotice').classList.remove('show'), 1800);
+}
+
+function showLevelUp(level, title) {
+  $id('lvlModalNum').textContent = level;
+  $id('lvlModalTitle').textContent = title;
+  $id('lvlModal').classList.add('open');
+}
+function closeLvlModal() {
+  $id('lvlModal').classList.remove('open');
+}
+
+function nextTutorialStep() {
+  tutorialStep++;
+  if (tutorialStep >= TUTORIAL.length) { $id('tutCard').style.display = 'none'; return; }
+  const s = TUTORIAL[tutorialStep];
+  $id('tutStep').textContent = `Step ${tutorialStep + 1}/${TUTORIAL.length}`;
+  $id('tutIcon').textContent = s.icon;
+  $id('tutTitle').textContent = s.title;
+  $id('tutDesc').textContent = s.desc;
+  $id('tutNextBtn').textContent = tutorialStep === TUTORIAL.length - 1 ? 'Start' : 'Next →';
+}
+function skipTutorial() {
+  $id('tutCard').style.display = 'none';
+}
+
+function closeWeeklySummary() {
+  $id('weeklySummary').style.display = 'none';
+}
+
+$id('weeklySummary').style.display = 'none';
+
+function init() {
+  load();
+  renderTopics();
+  updateCounters();
+  showLvlIfNew();
+  const tutSeen = localStorage.getItem('flashcard_tut');
+  if (!tutSeen) {
+    $id('tutCard').style.display = 'block';
+    tutorialStep = 0;
+    $id('tutStep').textContent = 'Step 1/6';
+    $id('tutIcon').textContent = TUTORIAL[0].icon;
+    $id('tutTitle').textContent = TUTORIAL[0].title;
+    $id('tutDesc').textContent = TUTORIAL[0].desc;
+    $id('tutNextBtn').textContent = 'Next →';
+  } else {
+    $id('tutCard').style.display = 'none';
+  }
+}
+function showLvlIfNew() {
+  const lvl = Math.floor(state.xp / 100) + 1;
+  const seen = localStorage.getItem('flashcard_lvl') || '0';
+  if (parseInt(seen, 10) < lvl) {
+    localStorage.setItem('flashcard_lvl', String(lvl));
+    setTimeout(() => showLevelUp(lvl, lvl === 1 ? 'Novice' : lvl === 2 ? 'Student' : 'Journeyman'), 400);
+  }
+}
+
+window.backToTopics = backToTopics;
+window.handleCardTap = handleCardTap;
+window.nextCard = nextCard;
+window.prevCard = prevCard;
+window.rateCard = rateCard;
+window.switchTier = switchTier;
+window.toggleTimer = toggleTimer;
+window.resetTimer = resetTimer;
+window.confirmMystery = confirmMystery;
+window.confirmBooster = confirmBooster;
+window.showCardPopup = showCardPopup;
+window.showStatsPopup = showStatsPopup;
+window.showInsightPopup = showInsightPopup;
+window.openPopup = openPopup;
+window.closePopup = closePopup;
+window.closeLvlModal = closeLvlModal;
+window.nextTutorialStep = nextTutorialStep;
+window.skipTutorial = skipTutorial;
+window.closeWeeklySummary = closeWeeklySummary;
+
 init();

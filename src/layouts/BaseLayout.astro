@@ -30,9 +30,7 @@ const { title, description = "Rohit Builds — The new education system." } = As
 </head>
 <body>
   <slot name="topbar" />
-  <main class="main">
-    <slot />
-  </main>
+  <main class="main"><slot /></main>
   <slot name="footer" />
   <script>
     import '../scripts/nav.js';

@@ -65,31 +65,4 @@ const { title, subtitle, emoji, color, color2, activities, cta } = Astro.props;
   <Footer slot="footer" />
 </BaseLayout>
 
-<style>
-  .app-hero {
-    text-align: center; padding: 80px 20px 40px;
-    background: linear-gradient(135deg, var(--color), var(--color2)); color: #fff;
-  }
-  .app-emoji { font-size: 4rem; display: block; margin-bottom: 16px; }
-  .app-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
-  .app-subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 24px; }
-  .section { padding: 40px 20px; max-width: 600px; margin: 0 auto; }
-  .section-label {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.05em; color: #667eea; margin-bottom: 16px; text-align: center;
-  }
-  .activities { display: flex; flex-direction: column; gap: 16px; }
-  .activity {
-    display: flex; align-items: flex-start; gap: 16px;
-    padding: 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
-  }
-  .activity .icon { font-size: 1.5rem; flex-shrink: 0; }
-  .activity .name { font-weight: 700; color: #1e293b; margin-bottom: 4px; }
-  .activity .desc { font-size: 0.9rem; color: #64748b; }
-  .btn-primary {
-    display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff; border: none; border-radius: 999px; font-weight: 700; text-decoration: none;
-    transition: transform 0.2s;
-  }
-  .btn-primary:hover { transform: scale(0.98); }
-</style>
+

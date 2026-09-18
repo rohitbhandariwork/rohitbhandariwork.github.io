@@ -1,198 +1,3 @@
-// ── Phaser Background Effects ──
-(function(){
-  const canvas = document.createElement('div');
-  canvas.id = 'phaser-bg';
-  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.15';
-  document.body.prepend(canvas);
-
-  const config = {
-    type: Phaser.AUTO,
-    width: window.innerWidth,
-    height: window.innerHeight,
-    parent: 'phaser-bg',
-    transparent: true,
-    scene: {
-      create: function() {
-        const scene = this;
-        const particles = [];
-        const colors = [0x667eea, 0x764ba2, 0x7c3aed, 0xf59e0b, 0x22c55e];
-        
-        // Floating particles
-        for (let i = 0; i < 20; i++) {
-          const x = Phaser.Math.Between(0, scene.scale.width);
-          const y = Phaser.Math.Between(0, scene.scale.height);
-          const size = Phaser.Math.Between(3, 8);
-          const color = Phaser.Utils.Array.GetRandom(colors);
-          
-          const circle = scene.add.circle(x, y, size, color, 0.4);
-          particles.push(circle);
-          
-          scene.tweens.add({
-            targets: circle,
-            y: y - Phaser.Math.Between(50, 150),
-            x: x + Phaser.Math.Between(-30, 30),
-            alpha: 0,
-            duration: Phaser.Math.Between(3000, 6000),
-            repeat: -1,
-            delay: Phaser.Math.Between(0, 2000),
-            onRepeat: function() {
-              circle.x = Phaser.Math.Between(0, scene.scale.width);
-              circle.y = scene.scale.height + 20;
-              circle.alpha = 0.4;
-            }
-          });
-        }
-      }
-    }
-  };
-
-  new Phaser.Game(config);
-})();
-
-// ── Phaser Confetti System ──
-let phaserConfetti = null;
-function createConfettiScene(scene) {
-  const colors = [0x667eea, 0x764ba2, 0x7c3aed, 0xf59e0b, 0x22c55e, 0xef4444, 0x3b82f6];
-  const particles = [];
-  
-  for (let i = 0; i < 50; i++) {
-    const x = Phaser.Math.Between(0, scene.scale.width);
-    const y = -20;
-    const color = Phaser.Utils.Array.GetRandom(colors);
-    const size = Phaser.Math.Between(4, 10);
-    const shape = scene.add.rectangle(x, y, size, size * 1.5, color, 1);
-    shape.setRotation(Phaser.Math.FloatBetween(0, Math.PI));
-    particles.push(shape);
-    
-    scene.tweens.add({
-      targets: shape,
-      y: scene.scale.height + 50,
-      x: x + Phaser.Math.Between(-100, 100),
-      rotation: shape.rotation + Phaser.Math.FloatBetween(2, 6),
-      alpha: 0,
-      duration: Phaser.Math.Between(2000, 4000),
-      delay: Phaser.Math.Between(0, 500),
-      ease: 'Power1',
-      onComplete: () => shape.destroy()
-    });
-  }
-}
-
-function launchConfetti() {
-  if (!document.getElementById('phaser-confetti')) {
-    const div = document.createElement('div');
-    div.id = 'phaser-confetti';
-    div.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none';
-    document.body.appendChild(div);
-    
-    phaserConfetti = new Phaser.Game({
-      type: Phaser.AUTO,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      parent: 'phaser-confetti',
-      transparent: true,
-      scene: { create: function() { createConfettiScene(this); } }
-    });
-  } else {
-    const scene = phaserConfetti.scene.getScenes(true)[0];
-    if (scene) createConfettiScene(scene);
-  }
-  
-  setTimeout(() => {
-    const el = document.getElementById('phaser-confetti');
-    if (el) el.remove();
-    if (phaserConfetti) { phaserConfetti.destroy(true); phaserConfetti = null; }
-  }, 4500);
-}
-
-// ── Phaser Level Up Effect ──
-function launchLevelUp(level) {
-  const div = document.createElement('div');
-  div.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none';
-  document.body.appendChild(div);
-  
-  const game = new Phaser.Game({
-    type: Phaser.AUTO,
-    width: window.innerWidth,
-    height: window.innerHeight,
-    parent: div,
-    transparent: true,
-    scene: {
-      create: function() {
-        const scene = this;
-        const cx = scene.scale.width / 2;
-        const cy = scene.scale.height / 2;
-        
-        // Expanding ring
-        const ring = scene.add.circle(cx, cy, 20, 0x7c3aed, 0);
-        ring.setStrokeStyle(4, 0x7c3aed, 1);
-        scene.tweens.add({
-          targets: ring,
-          radius: 150,
-          alpha: 0,
-          duration: 1000,
-          onComplete: () => ring.destroy()
-        });
-        
-        // Level text
-        const txt = scene.add.text(cx, cy, 'LEVEL ' + level, {
-          fontSize: '48px',
-          fontFamily: 'Manrope',
-          fontStyle: 'bold',
-          color: '#7c3aed',
-          stroke: '#fff',
-          strokeThickness: 4
-        }).setOrigin(0.5).setAlpha(0);
-        
-        scene.tweens.add({
-          targets: txt,
-          alpha: 1,
-          scale: { from: 0.5, to: 1.2 },
-          duration: 600,
-          ease: 'Back.easeOut',
-          yoyo: true,
-          hold: 800,
-          onComplete: () => txt.destroy()
-        });
-        
-        // Burst particles
-        for (let i = 0; i < 30; i++) {
-          const angle = (i / 30) * Math.PI * 2;
-          const dist = Phaser.Math.Between(80, 200);
-          const p = scene.add.circle(cx, cy, Phaser.Math.Between(3, 6), 
-            Phaser.Utils.Array.GetRandom([0x667eea, 0x764ba2, 0xf59e0b]), 1);
-          
-          scene.tweens.add({
-            targets: p,
-            x: cx + Math.cos(angle) * dist,
-            y: cy + Math.sin(angle) * dist,
-            alpha: 0,
-            duration: 800,
-            ease: 'Power2',
-            onComplete: () => p.destroy()
-          });
-        }
-      }
-    }
-  });
-  
-  setTimeout(() => { div.remove(); game.destroy(true); }, 2500);
-}
-
-// ── Hook into existing functions ──
-const origFocusComplete = window.focusComplete;
-window.focusComplete = function() {
-  origFocusComplete.call(this);
-  if (visualEnabled) launchConfetti();
-};
-
-const origShowLevelUp = window.showLevelUp;
-if (typeof origShowLevelUp === 'function') {
-  window.showLevelUp = function(lvl) {
-    origShowLevelUp.call(this, lvl);
-    if (visualEnabled) launchLevelUp(lvl);
-  };
-}
 let audioCtx;
 function getCtx(){if(!audioCtx){const C=window.AudioContext||window.webkitAudioContext;audioCtx=new C();if(audioCtx.state==='suspended')audioCtx.resume()}return audioCtx}
 function ensureAudio(){const c=getCtx();if(c.state==='suspended')c.resume();return c}
@@ -225,8 +30,8 @@ const TITLES=[{minLevel:1,title:'Focus Beginner'},{minLevel:2,title:'Flow Starte
 function getTitle(level){let t=TITLES[0].title;for(const ti of TITLES){if(level>=ti.minLevel)t=ti.title}return t}
 function xpNeeded(level){return level*50}
 
-function showLevelUp(l){const t=getTitle(l);document.getElementById('lvlModalNum').textContent=l;document.getElementById('lvlModalTitle').textContent=t;document.getElementById('lvlModalDesc').textContent='You reached '+t+'! Keep building your focus streak.';document.getElementById('lvlModal').classList.add('show')}
-function closeLvlModal(){document.getElementById('lvlModal').classList.remove('show')}
+function showLevelUp(l){const t=getTitle(l);document.getElementById('lvlModalNum').textContent=l;document.getElementById('lvlModalTitle').textContent=t;document.getElementById('lvlModalDesc').textContent='You reached '+t+'! Keep building your focus streak.';document.getElementById('lvlModal').classList.add('open')}
+function closeLvlModal(){document.getElementById('lvlModal').classList.remove('open')}
 
 function addXP(amount){stats.xp+=amount;while(stats.xp>=xpNeeded(stats.level)){stats.xp-=xpNeeded(stats.level);stats.level++;SND.levelUp();spawnConfetti(40);showLevelUp(stats.level)}updateStatsUI();saveStats()}
 
@@ -256,7 +61,7 @@ function formatTime(secs){const m=Math.floor(secs/60),s=Math.floor(secs%60);retu
 function updateDisplay(){
   const phaseEl=document.getElementById('timerPhase'),ring=document.getElementById('timerRing');
   if(state.phase==='break'){phaseEl.textContent='☕ BREAK';phaseEl.className='timer-phase break';ring.style.stroke='#059669';document.getElementById('timerDisplay').textContent='Relax';document.getElementById('curDurDisplay').textContent=currentFocusDuration}
-  else{phaseEl.textContent='FOCUS';phaseEl.className='timer-phase focus';ring.style.stroke='#f59e0b';document.getElementById('timerDisplay').textContent=formatTime(state.timeLeft);document.getElementById('curDurDisplay').textContent=currentFocusDuration}
+  else{phaseEl.textContent='FOCUS';phaseEl.className='timer-phase focus';ring.style.stroke='';document.getElementById('timerDisplay').textContent=formatTime(state.timeLeft);document.getElementById('curDurDisplay').textContent=currentFocusDuration}
   updateRing(state.totalTime>0?state.timeLeft/state.totalTime:0)
 }
 
@@ -285,7 +90,7 @@ function pauseTimer(){if(!state.timerId)return;clearInterval(state.timerId);stat
 
 function focusComplete(){if(soothingNoise){soothingNoise.stop();soothingNoise=null}stats.pomodoros++;if(currentFocusDuration>stats.best_focus)stats.best_focus=currentFocusDuration;addXP(10);updateStreak();flashScreen('flash-complete');spawnConfetti(40);spawnFloat('+10 XP','#7c3aed');if(soundEnabled){SND.complete();setTimeout(()=>SND.alarm(),800)}showToast('🎉 Focus complete! +10 XP','success');currentFocusDuration+=WORK_INCREMENT;state.phase='break';showControls();updateDisplay();saveStats();updateStatsUI()}
 
-function interruptTimer(){if(state.timerId){clearInterval(state.timerId);state.timerId=null}if(soothingNoise){soothingNoise.stop();soothingNoise=null}endTime=null;lastTickSec=-1;addXP(10);spawnFloat('+10 XP Interrupted','#ef4444');flashScreen('flash-complete');if(soundEnabled)SND.pause();showToast('⛔ Interrupted — +10 XP, reset to '+WORK_DUR+' min','warning');currentFocusDuration=WORK_DUR;state.timeLeft=WORK_DUR*60;state.totalTime=WORK_DUR*60;state.phase='idle';state.timerId=null;showControls();updateDisplay();updateStatsUI()}
+function interruptTimer(){if(state.timerId){clearInterval(state.timerId);state.timerId=null}if(soothingNoise){soothingNoise.stop();soothingNoise=null}endTime=null;lastTickSec=-1;addXP(10);spawnFloat('+10 XP Interrupted','#ef4444');flashScreen('flash-red');if(soundEnabled)SND.pause();showToast('⛔ Interrupted — +10 XP, reset to '+WORK_DUR+' min','warning');currentFocusDuration=WORK_DUR;state.timeLeft=WORK_DUR*60;state.totalTime=WORK_DUR*60;state.phase='idle';state.timerId=null;showControls();updateDisplay();updateStatsUI()}
 
 function endBreak(){if(soundEnabled){try{getCtx().resume()}catch(e){}SND.breakStart()}spawnFloat('+5 XP','#059669');showToast('✨ Break over! Ready for '+currentFocusDuration+' min','info');addXP(5);state.timeLeft=currentFocusDuration*60;state.totalTime=currentFocusDuration*60;state.phase='idle';state.timerId=null;endTime=null;lastTickSec=-1;showControls();updateDisplay()}
 
@@ -293,6 +98,13 @@ function toggleSound(){soundEnabled=!soundEnabled;document.getElementById('sound
 function setSoundMode(mode){if(soothingNoise){soothingNoise.stop();soothingNoise=null}soundMode=mode;soundEnabled=mode!=='silent';document.querySelectorAll('.sound-mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));const st=document.getElementById('soundToggle');if(st){st.textContent=soundEnabled?'🔊 Sound':'🔇 Mute';st.classList.toggle('active',soundEnabled)}if(mode==='soothing'&&state.phase==='running')rain(9999);if(soundEnabled)SND.click()}
 function toggleVisual(){visualEnabled=!visualEnabled;document.getElementById('visualToggle').classList.toggle('active');document.getElementById('visualToggle').textContent=visualEnabled?'✨ Effects':'🚫 No FX';if(soundEnabled)SND.click()}
 function toggleNav(){document.getElementById('navLinks').classList.toggle('open')}
+
+function openInstructions(){document.getElementById('instructionsModal').classList.add('open')}
+function closeInstructions(){document.getElementById('instructionsModal').classList.remove('open')}
+
+window.toggleSound=toggleSound;window.toggleVisual=toggleVisual;window.setSoundMode=setSoundMode;
+window.startTimer=startTimer;window.pauseTimer=pauseTimer;window.endBreak=endBreak;window.interruptTimer=interruptTimer;
+window.openInstructions=openInstructions;window.closeInstructions=closeInstructions;window.closeLvlModal=closeLvlModal;
 
 function initAudio(){const c=getCtx();if(c&&c.state==='suspended')c.resume();return c}
 document.addEventListener('click',initAudio,{once:true});
