@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../../../../layouts/BaseLayout.astro';
-import Topbar from '../../../../../components/topbar/TopbarApp.astro';
+import Topbar from '../../../../../components/topbar/Topbar.astro';
 import Footer from '../../../../../components/footer/Footer.astro';
 import contentHtml from '../../../../../content/pages/true-vs-false.html?raw';
 ---
 <BaseLayout title="True or False — Rohit Builds">
-  <Topbar slot="topbar" variant="quiz" backHref="/courses/bot-buddies/" />
+  <Topbar slot="topbar" active="courses" backHref="/courses/bot-buddies/" variant="quiz" />
   <div set:html={contentHtml} />
   <Footer slot="footer" />
 </BaseLayout>

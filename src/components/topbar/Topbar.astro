@@ -1,15 +1,30 @@
 ---
 interface Props {
   active?: string;
+  backHref?: string | null;
+  variant?: 'flashcard' | 'pomoflow' | 'interview' | 'shop' | 'jobtool' | 'quiz';
 }
-const { active } = Astro.props;
+const { active, backHref = null, variant } = Astro.props;
+const showBack = backHref != null;
 ---
 <div id="topbar">
+  {showBack && <a href={backHref} class="btn-back">← Back</a>}
   <button class="hamburger" onclick="toggleNav()">☰</button>
+  {variant === 'flashcard' && (
+    <span class="mini-level" id="topLevel" onclick="showInsightPopup()">
+      <span class="ml-num" id="topLvlNum">1</span>
+      <span class="ml-gems" id="topGems">💎10</span>
+    </span>
+  )}
+  {variant === 'pomoflow' && (
+    <div class="stats-panel">
+      <div class="stats-title">🍅 Pomoflow</div>
+    </div>
+  )}
   <div class="nav-links" id="navLinks">
     <a href="/" class:list={[{ active: active === 'home' }]}>🏠 Home</a>
     <div class="nav-dropdown" onclick="this.classList.toggle('open')">
-      <a href="javascript:void(0)">📱 Applications ▾</a>
+      <a href="javascript:void(0)" class:list={[{ active: active === 'applications' }]}>📱 Applications ▾</a>
       <div class="nav-dropdown-menu">
         <a href="/applications/4-7">👶 Ages 4–7</a>
         <a href="/applications/8-11">🧒 Ages 8–11</a>

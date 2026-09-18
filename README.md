@@ -62,6 +62,7 @@ Full Astro docs: https://docs.astro.build
 | `brand/voice.md` | Voice, tone, copy do's and don'ts |
 | `brand/visual.md` | Design tokens extracted from `brand.css` |
 | `docs/SITE-STRUCTURE.md` | Page map and routing |
+| `docs/TOPBAR.md` | Topbar/nav single source of truth |
 | `public/llms.txt` | Machine-readable site index for LLMs |
 | `public/llms-full.txt` | Full site content for LLMs |
 | `AGENTS.md` | Instructions for AI coding agents working in this repo |

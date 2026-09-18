@@ -33,7 +33,7 @@ Astro file-based routing: a page at `src/pages/<path>.astro` becomes `/<path>/`.
 
 ## Navigation
 
-Topbar order: Home, Applications (dropdown: 4-7, 8-11, 12-15, 15-17, 18+), Courses, Pomoflow, Flashcard, Interview, Jobtool, Shop, News, Contact. The home page is the portfolio, so there is no separate "Portfolio" nav item; Contact links to `/#contact`.
+The topbar is rendered by `src/components/topbar/Topbar.astro` on every page. **Single source of truth: `docs/TOPBAR.md`** — nav items, order, labels, active states, and props. There is no separate "Portfolio" nav item; the home page is the portfolio and Contact links to `/#contact`.
 
 ## Age groups
 

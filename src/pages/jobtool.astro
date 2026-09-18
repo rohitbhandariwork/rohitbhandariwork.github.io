@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Topbar from '../components/topbar/TopbarApp.astro';
+import Topbar from '../components/topbar/Topbar.astro';
 import Footer from '../components/footer/Footer.astro';
 import contentHtml from '../content/pages/jobtool.html?raw';
 ---
 <BaseLayout title="Jobtool — Rohit Builds">
-  <Topbar slot="topbar" variant="jobtool" backHref="/" />
+  <Topbar slot="topbar" active="jobtool" backHref="/" variant="jobtool" />
   <div set:html={contentHtml} />
   <Footer slot="footer" />
 </BaseLayout>
