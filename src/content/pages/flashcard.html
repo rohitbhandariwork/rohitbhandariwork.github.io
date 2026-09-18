@@ -8,10 +8,11 @@
   <div class="ln-sub">Daily queue complete!</div>
 </div>
 
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-<div class="popup-box" id="popupBox">
-  <div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
-  <div class="popup-body" id="popupBody"></div>
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()">
+  <div class="popup-box" id="popupBox" onclick="event.stopPropagation()">
+    <div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
+    <div class="popup-body" id="popupBody"></div>
+  </div>
 </div>
 
 <div class="container" id="container">
