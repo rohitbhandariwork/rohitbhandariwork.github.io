@@ -12,9 +12,9 @@ Single source of truth for everything sold in the Shop. DO NOT change, reorder, 
 
 | # | Slug | Title | Price (₹) | Cover image |
 | :-- | :--- | :--- | :--- | :--- |
-| 1 | `career-leverage` | Salary Booster | 499 | `/assets/img/salary-booster.png` |
-| 2 | `real-engineering` | Bug Sniper | 599 | `/assets/img/bug-sniper.png` |
-| 3 | `ai-working-engineer` | AI Arsenal | 699 | `/assets/img/ai-arsenal.png` |
+| 1 | `career-leverage` | Salary Booster | 499 | `/assets/img/salary-booster.jpg` |
+| 2 | `real-engineering` | Bug Sniper | 599 | `/assets/img/bug-sniper.jpg` |
+| 3 | `ai-working-engineer` | AI Arsenal | 699 | `/assets/img/ai-arsenal.jpg` |
 
 Order slug is used by the order API and stored in purchase records — never change a slug. UPI intent links must include `am=<price>&cu=INR&tn=<slug>`.
 
