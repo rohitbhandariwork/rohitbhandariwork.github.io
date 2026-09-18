@@ -14,10 +14,11 @@ const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=
   <div class="ln-sub">Daily queue complete!</div>
 </div>
 
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-<div class="popup-box" id="popupBox">
-  <div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
-  <div class="popup-body" id="popupBody"></div>
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()">
+  <div class="popup-box" id="popupBox" onclick="event.stopPropagation()">
+    <div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
+    <div class="popup-body" id="popupBody"></div>
+  </div>
 </div>
 
 <div class="container" id="container">
@@ -155,4 +156,4 @@ const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=
 
 <!-- Hidden containers for JS rendering -->
 <span id="knowledgeToggle" style="display:none"></span>
-<span id="playerTypeBadge" style="display:none">🧭 Explorer</span></div>  </main> <footer class="site-footer"> <p>Built for learners, by learners. The new education system.</p> </footer><script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body> </html><script type="module" src="/_astro/flashcard.astro_astro_type_script_index_0_lang.EA8OmjZe.js"></script>
+<span id="playerTypeBadge" style="display:none">🧭 Explorer</span></div>  </main> <script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body> </html><script type="module" src="/_astro/flashcard.astro_astro_type_script_index_0_lang.EA8OmjZe.js"></script>
