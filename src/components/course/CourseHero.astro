@@ -1,0 +1,14 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  emoji: string;
+  color: string;
+}
+const { title, subtitle, emoji, color } = Astro.props;
+---
+<div class="course-hero" style={`--color: ${color}`}>
+  <span class="course-emoji">{emoji}</span>
+  <h1>{title}</h1>
+  <p>{subtitle}</p>
+</div>

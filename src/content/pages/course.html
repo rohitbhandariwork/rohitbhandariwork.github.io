@@ -1,0 +1,44 @@
+<div class="kv-layout">
+  <!-- Mobile drawer toggle -->
+  <button class="drawer-toggle" onclick="toggleDrawer()">☰</button>
+
+  <!-- Drawer overlay -->
+  <div class="kv-drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+
+  <!-- Sidebar drawer -->
+  <div class="kv-drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-logo">🧠</div>
+      <div class="drawer-title">Knowledge Vault</div>
+    </div>
+    <div class="drawer-nav-item active" data-nav="/" onclick="navigate('/')">📊 Dashboard</div>
+    <div class="drawer-nav-divider">Modules</div>
+    <div id="module-tree"></div>
+    <div class="drawer-nav-divider">Collection</div>
+    <div class="drawer-nav-item" data-nav="/vault" onclick="navigate('/vault')">🗂️ Vault</div>
+    <div class="drawer-nav-item" data-nav="/badges" onclick="navigate('/badges')">🏅 Badges</div>
+    <div class="drawer-nav-item" data-nav="/levels" onclick="navigate('/levels')">📊 Levels</div>
+    <div class="drawer-nav-divider">Tools</div>
+    <div class="drawer-nav-item" data-nav="/search" onclick="navigate('/search')">🔍 Search</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="kv-main">
+    <div class="kv-content" id="content"></div>
+  </div>
+</div>
+
+<!-- Bottom bar -->
+<div class="kv-bottombar">
+  <div class="kv-stat"><span class="kv-stat-icon">⭐</span><span id="xp-display">0 XP</span></div>
+  <div class="kv-stat"><span class="kv-stat-icon">💎</span><span id="gem-display">0</span></div>
+  <div class="kv-stat"><span class="kv-stat-icon">🔥</span><span id="streak-display">0</span></div>
+  <div class="kv-stat"><span class="kv-stat-icon">🛡️</span><span id="shield-display">0</span></div>
+  <div class="kv-stat"><span id="level-display" class="kv-level-badge">Apprentice</span></div>
+  <div class="kv-stat"><span id="quest-badge" title="Daily Quests"><span class="kv-stat-icon">📋</span><span id="quest-count">0/3</span></span></div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="modules.js"></script>
+<script src="app.js"></script>

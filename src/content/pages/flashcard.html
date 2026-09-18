@@ -1,0 +1,142 @@
+<canvas id="confettiCanvas"></canvas>
+
+
+<div class="modal-overlay" id="lvlModal"><div class="modal-box">
+<div class="big-lvl" id="lvlModalNum">5</div>
+<div class="big-lvl-title" id="lvlModalTitle">Journeyman</div>
+<div class="big-lvl-desc" id="lvlModalDesc">Keep going!</div>
+<button onclick="closeLvlModal()">Continue</button>
+</div></div>
+
+<div class="achiev-toast" id="achievToast">
+<div class="achiev-icon" id="achievIcon">🏆</div>
+<div class="achiev-title" id="achievTitle">Achievement!</div>
+<div class="achiev-desc" id="achievDesc">New achievement unlocked.</div>
+</div>
+
+<div class="lucky-notice" id="luckyNotice">
+<div class="ln-icon">🍀</div>
+<div class="ln-text" id="luckyAmount">+5 XP!</div>
+<div class="ln-sub">Lucky card bonus!</div>
+</div>
+
+<div class="container" id="container">
+
+<!-- Narrative Banner (always visible welcome) -->
+<div class="narrative-banner" id="narrativeBanner">
+<span class="narr-icon">📜</span>
+<span class="narr-text" id="narrText"><strong>The Knowledge Seeker</strong> — Your journey begins. Study topics to unlock new realms.</span>
+<span class="narr-stage" id="narrStage">Realm 1: The Awakening</span>
+</div>
+
+<div class="topic-area" id="topicArea">
+<div class="topic-heading">📖 Pick a topic to study</div>
+<img src="../assets/img/undraw/studying_n5uj.svg" alt="Studying illustration" class="illustration" style="margin: 0 auto 16px;">
+
+<div class="topic-grid" id="topicGrid"></div>
+</div>
+
+<!-- Flashcard Area -->
+<div class="flashcard-area" id="flashcardArea">
+<div class="back-topics" id="backTopics"><button onclick="backToTopics()">← Topics</button></div>
+<div class="study-topic" id="studyTopic"></div>
+<div class="tracking-bar">
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+<div class="tracking-chips">
+<span class="tchip" onclick="showCardPopup()">🔢<span id="counter" class="tchip-val">0/0</span></span>
+<span class="tchip" onclick="showStatsPopup()">✅<span id="knownCount" class="tchip-val">0</span></span>
+<span class="tchip">📖<span id="stillCount" class="tchip-val">0</span></span>
+</div>
+</div>
+<div class="power-row">
+<button class="pwr-btn" id="mysteryBtn" onclick="confirmMystery()" title="Mystery card">🎁</button>
+<button class="pwr-btn" id="boosterBtn" onclick="confirmBooster()" title="XP Booster">⚡</button>
+</div>
+<div class="timer-row">
+<span class="timer-display" id="timerDisplay">05:00</span>
+<button class="pwr-btn" id="timerBtn" onclick="toggleTimer()" title="Start timer">▶️</button>
+<button class="pwr-btn" id="timerReset" onclick="resetTimer()" title="Reset">↺</button>
+</div>
+<div class="reel-layout">
+<div class="card-section">
+<button class="card-nav-btn card-nav-prev" id="prevBtn" onclick="event.stopPropagation();prevCard()" title="Previous">‹</button>
+<div class="card-wrapper" onclick="handleCardTap(event)">
+<div class="card-inner" id="cardInner">
+<div class="card-face card-front"><div class="card-label front">QUESTION</div><div class="card-text" id="frontText">Pick a topic to start</div></div>
+<div class="card-face card-back">
+<div class="card-label back">ANSWER</div>
+<div class="card-text" id="backText"></div>
+</div>
+</div>
+</div>
+<button class="card-nav-btn card-nav-next" id="nextBtn" onclick="event.stopPropagation();nextCard()" title="Next">›</button>
+<div class="card-hint" id="cardHint">Tap card to flip</div>
+</div>
+<div class="reel-actions" id="reelActions">
+<button class="reel-action-btn" id="likeBtn" onclick="rateCard(3)" title="Got it">❤️<span class="rab-label">Got It</span></button>
+<button class="reel-action-btn" id="bookmarkBtn" onclick="rateCard(2)" title="Tricky">🔖<span class="rab-label">Tricky</span></button>
+<button class="reel-action-btn" id="rewindBtn" onclick="rateCard(1)" title="Again">🔄<span class="rab-label">Again</span></button>
+</div>
+</div>
+<div class="reel-bottom">
+<div class="tier-row" id="tierRow">
+<button class="tier-btn tier-normal active" id="tierNormal" onclick="switchTier('normal')">📘 Normal</button>
+<button class="tier-btn tier-hard" id="tierHard" onclick="switchTier('hard')">🔥 Detailed</button>
+<button class="tier-btn tier-expert" id="tierExpert" onclick="switchTier('expert')">💎 Expert</button>
+</div>
+
+<div class="srs-state" id="srsState"></div>
+</div>
+<div class="deck-complete" id="deckComplete">
+<div class="dc-icon">🎉</div>
+<div class="dc-title">Deck Complete!</div>
+<div class="dc-sub">All cards marked Known</div>
+<div class="dc-xp" id="deckCompleteXP">+50 XP + 💎3 Gems</div>
+</div>
+</div>
+
+<!-- Tutorial card at bottom -->
+<div class="tut-card" id="tutCard">
+  <button class="tut-close" onclick="skipTutorial()">✕</button>
+  <div class="tut-step" id="tutStep">Step 1/6</div>
+  <div class="tut-icon" id="tutIcon">🎯</div>
+  <div class="tut-title" id="tutTitle">Welcome, Scholar!</div>
+  <div class="tut-desc" id="tutDesc">You've entered the knowledge realm. Let's start your learning journey!</div>
+  <div class="tut-actions" id="tutActions">
+    <button class="tut-skip" onclick="skipTutorial()">Skip</button>
+    <button class="tut-next" id="tutNextBtn" onclick="nextTutorialStep()">Next →</button>
+  </div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Hidden containers for JS rendering (formerly in stats-hero) -->
+<div id="knowledgePanel" style="display:none"><div class="kp-header"><div class="kp-stat"><div class="kp-num" id="kpMastered">0</div><div class="kp-label">Mastered</div></div><div class="kp-stat"><div class="kp-num" id="kpLearning">0</div><div class="kp-label">Learning</div></div><div class="kp-stat"><div class="kp-num" id="kpTotal">0</div><div class="kp-label">Total</div></div></div><div class="kp-bar"><div class="kp-bar-fill" id="kpBarFill" style="width:0%"></div></div><div class="kp-tags" id="kpTags"></div></div>
+<span id="knowledgeToggle" style="display:none"></span>
+<span id="playerTypeBadge" style="display:none">🧭 Explorer</span>
+<div id="pbDisplay" style="display:none"></div>
+<div id="achievWall" style="display:none"></div>
+
+<!-- Popup Overlay (replaces gear panel) -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+<div class="popup-box" id="popupBox">
+<div class="popup-header"><span class="popup-title" id="popupTitle"></span><button class="popup-close" onclick="closePopup()">✕</button></div>
+<div class="popup-body" id="popupBody"></div>
+</div>
+
+
+
+<!-- Weekly Summary (Level 2) -->
+<div class="weekly-summary" id="weeklySummary">
+  <div class="ws-icon">📊</div>
+  <div class="ws-title">Weekly Roundup</div>
+  <div class="ws-row">
+    <div class="ws-item"><div class="ws-num" id="wsXp">0</div><div class="ws-label">XP</div></div>
+    <div class="ws-item"><div class="ws-num" id="wsCards">0</div><div class="ws-label">Cards</div></div>
+    <div class="ws-item"><div class="ws-num" id="wsDecks">0</div><div class="ws-label">Decks</div></div>
+  </div>
+  <div class="ws-change" id="wsChange"></div>
+  <button onclick="closeWeeklySummary()">Got it!</button>
+</div>

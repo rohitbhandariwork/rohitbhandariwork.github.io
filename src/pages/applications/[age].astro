@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Topbar from '../../components/topbar/Topbar.astro';
+import Footer from '../../components/footer/Footer.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { age: '4-7' }, props: { title: 'Ages 4–7', subtitle: 'Bot Buddies', emoji: '👶', color: '#f472b6', color2: '#fbbf24', activities: [
+      { icon: '🎬', name: 'Scratch.Jr', desc: 'Create animated stories and interactive games' },
+      { icon: '🤖', name: 'Bot Builders', desc: 'Assemble and program simple robots' },
+      { icon: '🎨', name: 'Digital Art', desc: 'Draw, animate, and share creations' },
+    ], cta: 'Start Playing' } },
+    { params: { age: '8-11' }, props: { title: 'Ages 8–11', subtitle: 'Code Kids', emoji: '🧒', color: '#34d399', color2: '#60a5fa', activities: [
+      { icon: '🐱', name: 'Scratch', desc: 'Create games, stories, and animations with code' },
+      { icon: '🤖', name: 'Robotics', desc: 'Build and program real robots' },
+      { icon: '🌐', name: 'Web Basics', desc: 'Create your first website' },
+    ], cta: 'Take the Challenge' } },
+    { params: { age: '12-15' }, props: { title: 'Ages 12–15', subtitle: 'Code Quest', emoji: '🧑', color: '#f59e0b', color2: '#ef4444', activities: [
+      { icon: '💻', name: 'Small Coding Projects', desc: 'Build real apps and games' },
+      { icon: '🐍', name: 'Python', desc: 'Learn the language of AI and automation' },
+      { icon: '🎮', name: 'Game Dev', desc: 'Create your own video games' },
+    ], cta: 'Level Up' } },
+    { params: { age: '15-17' }, props: { title: 'Ages 15–17', subtitle: 'AI Lab', emoji: '🎓', color: '#8b5cf6', color2: '#06b6d4', activities: [
+      { icon: '🏆', name: 'Competitions', desc: 'Compete in hackathons and coding contests' },
+      { icon: '🧠', name: 'Machine Learning', desc: 'Train your own AI models' },
+      { icon: '📱', name: 'Full-Stack', desc: 'Build complete web applications' },
+    ], cta: 'Get Started' } },
+    { params: { age: '18+' }, props: { title: 'Ages 18+', subtitle: 'Career Launcher', emoji: '💼', color: '#667eea', color2: '#764ba2', activities: [
+      { icon: '📚', name: 'Knowledge Vault', desc: 'AI-powered learning paths' },
+      { icon: '🎤', name: 'Interview Prep', desc: 'AI mock interviews with real-time feedback' },
+      { icon: '📝', name: 'Job Tool', desc: 'AI resume builder and job matcher' },
+    ], cta: 'Start Learning' } },
+  ];
+}
+
+const { title, subtitle, emoji, color, color2, activities, cta } = Astro.props;
+---
+<BaseLayout title={`${title} — Rohit Builds`}>
+  <Topbar slot="topbar" active="applications" />
+
+  <section class="app-hero" style={`--color: ${color}; --color2: ${color2}`}>
+    <div class="app-hero-content">
+      <span class="app-emoji">{emoji}</span>
+      <h1>{title}</h1>
+      <p class="app-subtitle">{subtitle}</p>
+      <a href={`/courses/${subtitle.toLowerCase().replace(' ', '-')}/`} class="btn btn-primary btn-lg">{cta}</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">What You'll Do</div>
+    <div class="activities">
+      {activities.map((a) => (
+        <div class="activity">
+          <div class="icon">{a.icon}</div>
+          <div>
+            <div class="name">{a.name}</div>
+            <div class="desc">{a.desc}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .app-hero {
+    text-align: center; padding: 80px 20px 40px;
+    background: linear-gradient(135deg, var(--color), var(--color2)); color: #fff;
+  }
+  .app-emoji { font-size: 4rem; display: block; margin-bottom: 16px; }
+  .app-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .app-subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 24px; }
+  .section { padding: 40px 20px; max-width: 600px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #667eea; margin-bottom: 16px; text-align: center;
+  }
+  .activities { display: flex; flex-direction: column; gap: 16px; }
+  .activity {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  }
+  .activity .icon { font-size: 1.5rem; flex-shrink: 0; }
+  .activity .name { font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+  .activity .desc { font-size: 0.9rem; color: #64748b; }
+  .btn-primary {
+    display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff; border: none; border-radius: 999px; font-weight: 700; text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .btn-primary:hover { transform: scale(0.98); }
+</style>

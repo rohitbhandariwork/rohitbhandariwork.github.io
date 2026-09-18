@@ -1,0 +1,14 @@
+---
+interface Props {
+  href: string;
+  date: string;
+  headlines: string[];
+}
+const { href, date, headlines } = Astro.props;
+---
+<a href={href} class="news-card">
+  <h2>{date}</h2>
+  <ul>
+    {headlines.map((h) => <li>{h}</li>)}
+  </ul>
+</a>

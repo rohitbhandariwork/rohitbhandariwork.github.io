@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  open?: boolean;
+}
+const { title, open = false } = Astro.props;
+---
+<details class="year-card" open={open}>
+  <summary class="year-header">{title}</summary>
+  <div class="year-content">
+    <slot />
+  </div>
+</details>

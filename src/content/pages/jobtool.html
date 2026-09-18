@@ -1,0 +1,64 @@
+<section class="job-hero">
+  <img src="../assets/img/undraw/job-application.svg" alt="Job application illustration" class="hero-illustration" style="margin: 0 auto 16px;">
+  <h1>Job Application Tool</h1>
+  <p>Paste a job description and get a tailored resume + cover letter delivered to email. Quick mode for Rohit, or full form for anyone else.</p>
+</section>
+
+<div class="container">
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" id="toggleRohit" onclick="setMode('rohit')">⚡ For Rohit</button>
+    <button class="toggle-btn" id="toggleOther" onclick="setMode('other')">👤 Someone Else</button>
+  </div>
+
+  <div class="form-card" id="formCard">
+    <h2 id="formTitle">Quick Apply — Rohit</h2>
+    <p class="form-sub" id="formSub">Only the job description is needed — everything else is pre-filled.</p>
+    <form id="jobForm" onsubmit="submitJob(event)">
+      <div class="form-group">
+        <label for="jd">Job Description *</label>
+        <textarea id="jd" name="job_description" required placeholder="Paste the full job description here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company" placeholder="Optional — will auto-detect from JD">
+        <div class="hint">Leave blank to auto-detect from the job description.</div>
+      </div>
+
+      <div class="extra-fields" id="extraFields">
+        <div style="height:1px;background:#d4d8dd;margin:0 0 20px"></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candName">Full Name *</label>
+            <input type="text" id="candName" placeholder="e.g. Jane Doe">
+          </div>
+          <div class="form-group">
+            <label for="candEmail">Email *</label>
+            <input type="email" id="candEmail" placeholder="e.g. jane@example.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candPhone">Phone</label>
+            <input type="text" id="candPhone" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label for="candLinkedin">LinkedIn</label>
+            <input type="url" id="candLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:#f59e0b;font-weight:600;margin-bottom:12px;">⏱ Estimated time: ~5–7 minutes</div>
+      <button type="submit" class="btn-submit" id="submitBtn">Generate &amp; Send</button>
+    </form>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <h3>📨 Sent for Review</h3>
+    <p id="resultMsg">Your tailored resume and cover letter have been sent to <strong>rohitbhandari.work@gmail.com</strong> for review.</p>
+      <a href="./" class="btn-gray" style="display:inline-block;margin-top:16px;text-decoration:none">Apply for Another</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>

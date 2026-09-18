@@ -1,0 +1,18 @@
+---
+interface Props {
+  href: string;
+  emoji: string;
+  title: string;
+  subtitle: string;
+  color: string;
+}
+const { href, emoji, title, subtitle, color } = Astro.props;
+---
+<a href={href} class="age-card" style={`--color: ${color}`}>
+  <span class="age-emoji">{emoji}</span>
+  <div>
+    <h3>{title}</h3>
+    <p>{subtitle}</p>
+  </div>
+  <span class="age-arrow">→</span>
+</a>

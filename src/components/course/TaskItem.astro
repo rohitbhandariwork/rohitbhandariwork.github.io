@@ -1,0 +1,12 @@
+---
+interface Props {
+  text: string;
+  xp?: number;
+}
+const { text, xp = 10 } = Astro.props;
+---
+<div class="task-item">
+  <input type="checkbox" class="task-check" />
+  <span class="task-text">{text}</span>
+  <span class="task-xp">+{xp} XP</span>
+</div>

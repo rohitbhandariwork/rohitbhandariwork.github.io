@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+const articles = (await getCollection('news'))
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+---
+<aside class="sidebar">
+  <h3>Editions</h3>
+  <ul>
+    {articles.map((article) => (
+      <li>
+        <a href={`/news/${article.id}`}>{article.data.label}</a>
+      </li>
+    ))}
+  </ul>
+</aside>

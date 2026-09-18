@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rohitbhandariwork.github.io/assets/site/sitemap.xml

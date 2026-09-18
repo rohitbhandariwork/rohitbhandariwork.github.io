@@ -1,0 +1,50 @@
+<section class="hero">
+  <img src="../assets/img/undraw/conversation.svg" alt="Conversation illustration" class="hero-illustration" style="margin: 0 auto 16px;">
+  <h1>AI Interview</h1>
+  <p>A conversational technical interview with our AI recruiter. Real questions, real-time feedback.</p>
+  <span class="hero-badge">4 focus areas · no time limit</span>
+</section>
+
+<div class="container">
+  <div id="startScreen" class="start-screen">
+    <div class="start-icon">🤖</div>
+    <h2>Ready for your interview?</h2>
+    <p>You'll answer ~20 questions across 4 technical areas. The AI recruiter will guide you through each one.</p>
+    <div class="focus-tags">
+      <span class="focus-tag">🐍 Python & FastAPI</span>
+      <span class="focus-tag">⚡ Concurrency</span>
+      <span class="focus-tag">⚛️ React</span>
+      <span class="focus-tag">🗄️ SQL</span>
+    </div>
+    <p class="start-hint">Find a quiet spot. Each answer is evaluated as you go.</p>
+    <button class="btn-primary btn-lg" id="startBtn" onclick="startInterview()">Start Interview</button>
+  </div>
+
+  <div id="interviewView" style="display:none;">
+    <div class="progress-section">
+      <div class="progress-label" id="progressLabel">Question 0 of 0</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="timer-row" id="timerRow">
+      <div class="timer-ring" id="timerRing">120</div>
+      <span id="timerText">2:00 remaining</span>
+    </div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-area" id="inputArea">
+      <textarea id="answerInput" rows="1" placeholder="Type your answer..." disabled></textarea>
+      <button id="sendBtn" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <h3>Interview Complete</h3>
+    <p class="subtitle" id="resultSub">Here's how you performed.</p>
+    <div class="score-grid" id="scoreGrid"></div>
+    <div class="summary-text" id="summaryText"></div>
+    <button class="btn-gray btn-lg" onclick="location.reload()">Take Another Interview</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>

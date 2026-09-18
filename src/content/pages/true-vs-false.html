@@ -1,0 +1,47 @@
+<div class="main">
+  <div class="hero">
+    <div class="hero-emoji">✅❌</div>
+    <h1>True vs. False</h1>
+    <div class="tagline">Logic Basics — Q1</div>
+  </div>
+
+  <div class="gamification-bar">
+    <div class="gf-level" id="gf-level">Lv.1</div>
+    <div class="gf-xp-wrap">
+      <div class="gf-xp-label" id="gf-xp-text">0 XP</div>
+      <div class="gf-xp-bar"><div class="gf-xp-fill" id="gf-xp-fill"></div></div>
+    </div>
+    <div class="gf-item"><span class="gf-icon">🔥</span><span id="gf-streak">0</span></div>
+    <div class="gf-item"><span class="gf-icon">💎</span><span id="gf-gems">0</span></div>
+  </div>
+
+  <div class="progress-dots" id="progress-dots"></div>
+
+  <div class="game-card" id="game-card">
+    <div class="question-emoji" id="question-emoji">☀️</div>
+    <div class="question-text" id="question-text">Is the sun hot?</div>
+    <div class="answer-buttons">
+      <button class="answer-btn true" onclick="checkAnswer(true)">
+        <span class="answer-emoji">✅</span>
+        <span class="answer-label">True</span>
+      </button>
+      <button class="answer-btn false" onclick="checkAnswer(false)">
+        <span class="answer-emoji">❌</span>
+        <span class="answer-label">False</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="complete-screen" id="complete-screen" style="display:none">
+    <div class="complete-emoji">🏆</div>
+    <div class="complete-title">Great Job!</div>
+    <div class="complete-score" id="complete-score">You earned 80 XP!</div>
+    <div class="complete-buttons">
+      <a href="true-vs-false/" class="btn-primary btn-lg">Play Again</a>
+      <a href="../yes-or-no/" class="btn-secondary btn-lg">Next: Yes or No →</a>
+      <a href="../../../../courses/bot-buddies/" class="btn-gray btn-md">← Back to Course</a>
+    </div>
+  </div>
+</div>
+
+<div class="feedback" id="feedback"></div>

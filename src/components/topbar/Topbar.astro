@@ -1,0 +1,31 @@
+---
+interface Props {
+  active?: string;
+}
+const { active } = Astro.props;
+---
+<div id="topbar">
+  <button class="hamburger" onclick="toggleNav()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="/" class:list={[{ active: active === 'home' }]}>🏠 Home</a>
+    <a href="/portfolio/" class:list={[{ active: active === 'portfolio' }]}>💼 Portfolio</a>
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <a href="javascript:void(0)">📱 Applications ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="/applications/4-7">👶 Ages 4–7</a>
+        <a href="/applications/8-11">🧒 Ages 8–11</a>
+        <a href="/applications/12-15">🧑 Ages 12–15</a>
+        <a href="/applications/15-17">🎓 Ages 15–17</a>
+        <a href="/applications/18+">💼 Ages 18+</a>
+      </div>
+    </div>
+    <a href="/courses/" class:list={[{ active: active === 'courses' }]}>📚 Courses</a>
+    <a href="/pomoflow/" class:list={[{ active: active === 'pomoflow' }]}>🍅 Pomoflow</a>
+    <a href="/flashcard/" class:list={[{ active: active === 'flashcard' }]}>🃏 Flashcard</a>
+    <a href="/interview/" class:list={[{ active: active === 'interview' }]}>🎤 Interview</a>
+    <a href="/jobtool/" class:list={[{ active: active === 'jobtool' }]}>📝 Jobtool</a>
+    <a href="/shop/" class:list={[{ active: active === 'shop' }]}>🛒 Shop</a>
+    <a href="/news/" class:list={[{ active: active === 'news' }]}>📰 News</a>
+    <a href="/portfolio/#contact" class:list={[{ active: active === 'contact' }]}>✉️ Contact</a>
+  </div>
+</div>

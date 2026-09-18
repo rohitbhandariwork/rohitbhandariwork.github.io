@@ -1,0 +1,207 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from '../components/topbar/Topbar.astro';
+import Footer from '../components/footer/Footer.astro';
+---
+<BaseLayout title="Rohit Builds — The new education system.">
+  <Topbar slot="topbar" active="home" />
+
+  <section class="hero">
+    <div class="hero-content">
+      <img src="/assets/img/undraw/education_3vwh.svg" alt="Education" class="illustration" />
+      <h1>Rohit Builds</h1>
+      <p class="tagline">The new education system — AI-powered, personalized, and free for every age group.</p>
+      <div class="hero-stats">
+        <span>5 Age Groups</span>
+        <span>7 Apps</span>
+        <span>∞ Potential</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Choose Your Age Group</div>
+    <div class="age-grid">
+      <a class="age-card age-4-7" href="/applications/4-7">
+        <div class="age-icon">👶</div>
+        <div class="age-info">
+          <div class="age-name">Ages 4–7</div>
+          <div class="age-sub">Bot Buddies</div>
+        </div>
+        <div class="age-arrow">→</div>
+      </a>
+      <a class="age-card age-8-11" href="/applications/8-11">
+        <div class="age-icon">🧒</div>
+        <div class="age-info">
+          <div class="age-name">Ages 8–11</div>
+          <div class="age-sub">Code Kids</div>
+        </div>
+        <div class="age-arrow">→</div>
+      </a>
+      <a class="age-card age-12-15" href="/applications/12-15">
+        <div class="age-icon">🧑</div>
+        <div class="age-info">
+          <div class="age-name">Ages 12–15</div>
+          <div class="age-sub">Code Quest</div>
+        </div>
+        <div class="age-arrow">→</div>
+      </a>
+      <a class="age-card age-15-17" href="/applications/15-17">
+        <div class="age-icon">🎓</div>
+        <div class="age-info">
+          <div class="age-name">Ages 15–17</div>
+          <div class="age-sub">AI Lab</div>
+        </div>
+        <div class="age-arrow">→</div>
+      </a>
+      <a class="age-card age-18plus" href="/applications/18+">
+        <div class="age-icon">💼</div>
+        <div class="age-info">
+          <div class="age-name">Ages 18+</div>
+          <div class="age-sub">Career Launcher</div>
+        </div>
+        <div class="age-arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section focus">
+    <div class="container">
+      <div class="section-intro">
+        <span class="section-kicker">Our Mission</span>
+        <h2>Rohit Builds</h2>
+        <p>Make world-class education accessible, personalized, and engaging for every human on the planet. No gatekeepers. No one-size-fits-all. Just learning that works.</p>
+      </div>
+      <img src="/assets/img/undraw/online-reading_jtnx.svg" alt="Mission" class="illustration" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="text-align:center; padding: 40px 0;">
+      <a href="/portfolio/" class="btn btn-outline">View Portfolio</a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+  }
+  .hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .hero .illustration {
+    max-width: 280px;
+    margin: 0 auto 24px;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero .tagline {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 24px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #667eea;
+  }
+  .section {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #667eea;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .age-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .age-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .age-card:hover {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .age-icon {
+    font-size: 2rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+  .age-4-7 .age-icon { background: rgba(244,114,182,0.1); }
+  .age-8-11 .age-icon { background: rgba(52,211,153,0.1); }
+  .age-12-15 .age-icon { background: rgba(245,158,11,0.1); }
+  .age-15-17 .age-icon { background: rgba(139,92,246,0.1); }
+  .age-18plus .age-icon { background: rgba(102,126,234,0.1); }
+  .age-info { flex: 1; }
+  .age-name { font-weight: 700; font-size: 1rem; color: #1e293b; }
+  .age-sub { font-size: 0.85rem; color: #64748b; }
+  .age-arrow { font-size: 1.2rem; color: #94a3b8; }
+  .focus .container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .focus .illustration {
+    max-width: 240px;
+    flex-shrink: 0;
+  }
+  .section-intro h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+  .section-intro p {
+    color: #64748b;
+    line-height: 1.6;
+  }
+  .section-kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #667eea;
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8rem; }
+    .focus .container { flex-direction: column; text-align: center; }
+    .focus .illustration { max-width: 200px; }
+  }
+</style>

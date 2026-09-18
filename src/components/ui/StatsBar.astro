@@ -1,0 +1,13 @@
+---
+interface Props {
+  xp?: number;
+  level?: number;
+  gems?: number;
+}
+const { xp = 0, level = 1, gems = 0 } = Astro.props;
+---
+<div class="stats-bar">
+  <span class="stat">⭐ {xp} XP</span>
+  <span class="stat">📊 Level {level}</span>
+  <span class="stat">💎 {gems}</span>
+</div>
