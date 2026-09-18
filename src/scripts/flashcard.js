@@ -71,234 +71,415 @@ const TOPICS = [
   }
 ];
 
-const TUTORIAL = [
-  { icon: '🎯', title: 'Welcome, Scholar!', desc: "You've entered the knowledge realm. Let's start your learning journey!" },
-  { icon: '🃏', title: 'Tap to flip', desc: 'Tap any card to reveal its answer. Front asks, back answers.' },
-  { icon: '↔️', title: 'Navigate the deck', desc: 'Use the arrows or the ❤️ / 🔖 / 🔄 buttons to rate each card.' },
-  { icon: '⚡', title: 'Powers & Timer', desc: 'Spend gems on Mystery 🎁 and XP Booster ⚡. Use the timer to race yourself.' },
-  { icon: '🔥', title: 'Tiers matter', desc: 'Detailed shows richer answers and grants more XP. Expert is the real test.' },
-  { icon: '🏆', title: 'Keep your streak', desc: 'Study daily, earn XP, level up, and watch your realm progress.' }
-];
-
 const LS = 'flashcard_progress';
+const DAY = 86400000;
+const MAX_CYCLES = 3;
 
 function $id(x) { return document.getElementById(x); }
+function dayKey(ts) {
+  const d = new Date(ts || Date.now());
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
 
-let state = { tier: 'normal', idx: 0, known: new Set(), tricky: new Set(), again: new Set(), xp: 0, gems: 0, streak: 0, lastDay: '' };
+let S = {
+  tier: 'normal',
+  onboarded: false,
+  meta: { xp: 0, gems: 0, streak: 0, lastStudyDay: '', totalReviews: 0 },
+  cards: {},
+  log: []
+};
 
 function save() {
-  try {
-    localStorage.setItem(LS, JSON.stringify({
-      tier: state.tier,
-      known: [...state.known], tricky: [...state.tricky], again: [...state.again],
-      xp: state.xp, gems: state.gems
-    }));
-  } catch (e) {}
+  try { localStorage.setItem(LS, JSON.stringify(Object.assign({ v: 2 }, S))); } catch (e) {}
 }
 function load() {
   try {
     const d = JSON.parse(localStorage.getItem(LS));
-    if (!d) return;
-    state.tier = d.tier || 'normal';
-    state.known = new Set(d.known || []);
-    state.tricky = new Set(d.tricky || []);
-    state.again = new Set(d.again || []);
-    state.xp = d.xp || 0;
-    state.gems = d.gems || 0;
+    if (d && d.v === 2) {
+      S.tier = d.tier || 'normal';
+      S.onboarded = !!d.onboarded;
+      S.meta = Object.assign({ xp: 0, gems: 0, streak: 0, lastStudyDay: '', totalReviews: 0 }, d.meta || {});
+      S.cards = d.cards || {};
+      S.log = d.log || [];
+    }
   } catch (e) {}
 }
 
-let topic = null;
-let deck = [];
-let flipped = false;
-let timerId = null;
-let seconds = 300;
-let tutorialStep = 0;
+function cardFor(key) {
+  const [tid, qi] = key.split('::');
+  const t = TOPICS.find((x) => x.id === tid);
+  return t ? { topic: t, idx: Number(qi), card: t.cards[Number(qi)] } : null;
+}
+function keyOf(topic, idx) { return topic.id + '::' + idx; }
+function getCard(key) {
+  if (!S.cards[key]) S.cards[key] = { ease: 2.5, iv: 0, due: 0, reps: 0, lapses: 0, state: 'new' };
+  return S.cards[key];
+}
+
+const GRADES = { AGAIN: 0, HARD: 1, GOOD: 2, EASY: 3 };
+
+function schedule(key, grade) {
+  const c = getCard(key);
+  const now = Date.now();
+  c.reps++;
+  S.meta.totalReviews++;
+  S.log.push({ c: key, g: grade, ts: now });
+  if (S.log.length > 500) S.log = S.log.slice(-500);
+
+  if (grade === GRADES.AGAIN) {
+    c.lapses++;
+    c.ease = Math.max(1.3, +(c.ease - 0.2).toFixed(2));
+    c.iv = 1;
+    c.due = now;
+  } else if (c.state === 'new') {
+    c.iv = grade === GRADES.EASY ? 3 : 1;
+    c.state = 'review';
+    c.due = now + c.iv * DAY;
+    if (grade === GRADES.EASY) c.ease = Math.min(2.6, +(c.ease + 0.15).toFixed(2));
+  } else {
+    if (grade === GRADES.HARD) {
+      c.ease = Math.max(1.3, +(c.ease - 0.15).toFixed(2));
+      c.iv = Math.max(1, Math.round(c.iv * 1.2));
+    } else if (grade === GRADES.GOOD) {
+      c.iv = Math.max(1, Math.round(c.iv * c.ease));
+    } else {
+      c.ease = Math.min(2.6, +(c.ease + 0.15).toFixed(2));
+      c.iv = Math.max(1, Math.round(c.iv * c.ease * 1.3));
+    }
+    c.iv = Math.min(365, c.iv);
+    c.due = now + c.iv * DAY;
+  }
+  save();
+  return c.iv;
+}
+
+function xpFor(grade) {
+  const base = [0, 2, 3, 5][grade];
+  const mult = S.tier === 'expert' ? 1.4 : S.tier === 'hard' ? 1.2 : 1;
+  return Math.round(base * mult);
+}
+
+function freshView() {
+  return { queue: [], pos: 0, again: [], cycles: 0, revealed: false, graded: 0, againCount: 0, xp: 0 };
+}
+let view = freshView();
+
+function showView(name) {
+  ['onboardView', 'queueView', 'topicsView', 'sessionView', 'doneView'].forEach((v) => {
+    $id(v).style.display = v === name ? 'block' : 'none';
+  });
+}
 
 function showToast(msg, type) {
   const t = $id('toast');
   t.textContent = msg;
   t.className = 'toast show ' + (type || 'success');
-  setTimeout(() => (t.className = 'toast'), 2500);
+  setTimeout(() => (t.className = 'toast'), 2400);
 }
 
-function renderTopics() {
+function dueList() {
+  const now = Date.now();
+  return Object.keys(S.cards)
+    .filter((k) => S.cards[k].state !== 'new' && S.cards[k].due <= now)
+    .sort((a, b) => S.cards[a].due - S.cards[b].due);
+}
+function dueNow() { return dueList().length; }
+function nextDueIn() {
+  const f = Object.keys(S.cards)
+    .map((k) => S.cards[k])
+    .filter((c) => c.state !== 'new' && c.due > Date.now())
+    .sort((a, b) => a.due - b.due)[0];
+  return f ? f.due - Date.now() : null;
+}
+function fmtDelay(ms) {
+  if (ms == null) return 'later';
+  const h = Math.round(ms / 3600000);
+  if (h < 1) return 'under an hour';
+  if (h < 48) return h + 'h';
+  return Math.round(h / 24) + ' days';
+}
+
+function availableNew() {
+  const have = new Set(Object.keys(S.cards));
+  const all = [];
+  TOPICS.forEach((t) => t.cards.forEach((_, i) => { const k = keyOf(t, i); if (!have.has(k) || S.cards[k].state === 'new') all.push(k); }));
+  return all;
+}
+
+function renderQueue() {
+  const due = dueNow();
+  const fresh = availableNew().length;
+  $id('qvSub').textContent = due ? 'You have cards waiting' : 'Nothing due — perfect.';
+  $id('qmDue').textContent = due;
+  $id('qmNew').textContent = fresh;
+  $id('qmNext').textContent = due ? 'now' : fmtDelay(nextDueIn());
+  $id('qvLevel').textContent = level();
+  $id('qvGems').textContent = '💎' + S.meta.gems;
+  $id('qvStreak').textContent = '🔥 ' + S.meta.streak + ' day streak';
+  $id('qvTotal').textContent = S.meta.totalReviews + ' reviews';
+  $id('startBtn').textContent = due ? 'Start review' : fresh ? 'Study new cards' : 'All caught up';
+  $id('startBtn').disabled = !(due || fresh);
+  renderSpark();
+}
+
+function renderSpark() {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const map = {};
+  S.log.forEach((e) => { const k = dayKey(e.ts); (map[k] = map[k] || []).push(e.g); });
+  const days = [];
+  for (let i = 13; i >= 0; i--) {
+    const list = map[dayKey(today.getTime() - i * DAY)] || [];
+    days.push(list.length ? Math.round(list.filter((g) => g >= GRADES.GOOD).length / list.length * 100) : null);
+  }
+  $id('spark').innerHTML = days.map((p) =>
+    `<span class="${p == null ? 'spk spk-none' : p >= 75 ? 'spk spk-ok' : p >= 50 ? 'spk spk-mid' : 'spk spk-low'}" style="height:${p == null ? 4 : Math.max(8, p)}%"></span>`
+  ).join('');
+  const recent = days.slice(-7).filter((p) => p != null);
+  $id('qvCalibPct').textContent = recent.length ? Math.round(recent.reduce((a, b) => a + b, 0) / recent.length) + '%' : '—';
+}
+
+function openTopics() {
+  showView('topicsView');
   const grid = $id('topicGrid');
   grid.innerHTML = '';
-  for (const tp of TOPICS) {
+  TOPICS.forEach((t) => {
     const el = document.createElement('button');
     el.className = 'topic-btn';
-    el.textContent = tp.name;
-    el.onclick = () => selectTopic(tp.id);
+    el.textContent = t.name;
+    el.onclick = () => startTopic(t.id);
     grid.appendChild(el);
+  });
+}
+
+function startTopic(id) {
+  const t = TOPICS.find((x) => x.id === id);
+  if (!t) return;
+  t.cards.forEach((_, i) => getCard(keyOf(t, i)));
+  view = freshView();
+  view.queue = t.cards.map((_, i) => keyOf(t, i));
+  view.topicTitle = t.name.replace(/^[^ ]+ /, '');
+  enterSession();
+}
+
+function startQueue() {
+  const keys = dueList();
+  if (!keys.length) {
+    const fresh = availableNew();
+    const pick = fresh[Math.floor(Math.random() * fresh.length)];
+    if (pick) keys.push(pick);
   }
+  view = freshView();
+  view.queue = keys;
+  view.topicTitle = '';
+  enterSession();
 }
 
-function selectTopic(id) {
-  topic = TOPICS.find((t) => t.id === id);
-  if (!topic) return;
-  deck = topic.cards.slice();
-  $id('narrText').innerHTML = `<strong>${topic.name.replace(/^[^ ]+ /, '')}</strong> — Knowledge unlocked.`;
-  $id('narrStage').textContent = topic.realm;
-  state.idx = 0;
-  $id('topicArea').style.display = 'none';
-  $id('flashcardArea').style.display = 'block';
+function enterSession() {
+  if (!view.queue.length) { backToQueue(); return; }
+  $id('shTopic').style.display = view.topicTitle ? 'block' : 'none';
+  if (view.topicTitle) $id('shTopic').textContent = view.topicTitle;
+  counter();
+  showView('sessionView');
   renderCard();
-  updateCounters();
 }
 
-function backToTopics() {
-  $id('flashcardArea').style.display = 'none';
-  $id('topicArea').style.display = 'block';
-  renderTopics();
+function currentKey() {
+  return view.queue.length ? view.queue[Math.min(view.pos, view.queue.length - 1)] : null;
 }
-
-function tierCards() {
-  return deck;
+function counter() {
+  $id('shCount').textContent = (view.pos + 1) + ' / ' + view.queue.length;
 }
 
 function renderCard() {
-  const cards = tierCards();
-  const idx = Math.min(state.idx, cards.length - 1);
-  const card = cards[idx];
-  flipped = false;
-  $id('cardInner').classList.remove('flipped');
-  $id('frontText').textContent = card.q;
-  $id('backText').textContent = state.tier === 'expert' ? card.extra : card.a;
-  $id('cardInner').dataset.card = idx;
-  updateCounters();
+  const key = currentKey();
+  view.revealed = false;
+  const inner = $id('cardInner');
+  inner.classList.remove('flipped');
+  $id('graderBar').style.display = 'none';
+  $id('revealBtn').style.display = 'block';
+  $id('cardHint').textContent = 'Try to recall the answer, then reveal';
+  $id('revealZone').innerHTML = '';
+  if (!key) return;
+  const c = cardFor(key);
+  if (!c) return;
+  $id('frontText').textContent = c.card.q;
+  $id('cardLabel').textContent = 'QUESTION · ' + nice(c.topic.name);
+  $id('backText').textContent = tierAnswer(c);
+  counter();
 }
 
-function handleCardTap() {
-  if (!topic) return;
-  $id('cardInner').classList.toggle('flipped');
-  flipped = !flipped;
+function tierAnswer(c) {
+  if (S.tier === 'expert') return 'Expert mode: answer hidden. Say it in your own words, then grade yourself.';
+  return S.tier === 'hard' ? c.card.extra : c.card.a;
+}
+
+function reveal() {
+  if (!currentKey() || view.revealed) return;
+  view.revealed = true;
+  $id('cardInner').classList.add('flipped');
+  $id('revealBtn').style.display = 'none';
+  $id('graderBar').style.display = 'flex';
+  $id('cardHint').textContent = 'How well did you recall it?';
+}
+
+function grade(g) {
+  const key = currentKey();
+  if (!key || !view.revealed) {
+    if (!view.revealed) showToast('Reveal the answer first', 'info');
+    return;
+  }
+  schedule(key, g);
+  view.graded++;
+  if (g === GRADES.AGAIN) { view.againCount++; view.again.push(key); }
+  const xp = xpFor(g);
+  view.xp += xp;
+  S.meta.xp += xp;
+  save();
+  showToast(g === GRADES.AGAIN ? 'Will retry shortly' : '+' + xp + ' XP', g === GRADES.AGAIN ? 'warning' : 'success');
+  nextCard();
 }
 
 function nextCard() {
-  if (!topic) return;
-  const cards = tierCards();
-  state.idx = (state.idx + 1) % Math.max(1, cards.length);
-  renderCard();
+  view.pos++;
+  if (view.pos < view.queue.length) { renderCard(); counter(); return; }
+  finishSession();
 }
 function prevCard() {
-  if (!topic) return;
-  const cards = tierCards();
-  state.idx = (state.idx - 1 + cards.length) % Math.max(1, cards.length);
-  renderCard();
+  if (view.pos > 0) { view.pos--; renderCard(); counter(); }
 }
 
-function rateCard(rating) {
-  if (!topic) return;
-  const card = tierCards()[Math.min(state.idx, tierCards().length - 1)];
-  const keyIn = card.q;
-  if (rating >= 3) {
-    if (!state.known.has(keyIn)) {
-      state.known.add(keyIn);
-      state.xp += state.tier === 'expert' ? 15 : 10;
-      showToast('❤️ Got it! ' + (state.tier === 'expert' ? '+15' : '+10') + ' XP', 'success');
-    }
-    state.tricky.delete(keyIn);
-    state.again.delete(keyIn);
-  } else if (rating === 2) {
-    state.tricky.add(keyIn);
-    state.again.delete(keyIn);
-    showToast('🔖 Marked tricky', 'info');
-  } else {
-    state.again.add(keyIn);
-    state.tricky.delete(keyIn);
-    showToast('🔄 We\'ll revisit this one', 'warning');
+function finishSession() {
+  if (view.again.length && view.cycles < MAX_CYCLES) {
+    view.queue = view.again.slice();
+    view.again = [];
+    view.cycles++;
+    view.pos = 0;
+    renderCard();
+    counter();
+    showToast('Retrying cards you missed', 'info');
+    return;
   }
+  endSession();
+}
+
+function endSession() {
+  const bonus = 50;
+  const today = dayKey();
+  if (S.meta.lastStudyDay !== today) {
+    const yesterday = dayKey(Date.now() - DAY);
+    S.meta.streak = S.meta.lastStudyDay === yesterday ? S.meta.streak + 1 : 1;
+    S.meta.lastStudyDay = today;
+  }
+  S.meta.xp += bonus;
+  S.meta.gems += 3;
   save();
-  updateCounters();
-  setTimeout(nextCard, 250);
+
+  $id('doneCount').textContent = view.graded;
+  $id('doneAgainPct').textContent = Math.round((view.againCount / Math.max(1, view.graded)) * 100) + '%';
+  $id('doneXp').textContent = '+' + (bonus + view.xp);
+  $id('doneStreak').textContent = S.meta.streak;
+  $id('doneNext').textContent = fmtDelay(nextDueIn());
+  showView('doneView');
+  confetti();
+  setTimeout(() => { $id('luckyAmount').textContent = 'Queue complete! +50 XP +💎3'; $id('luckyNotice').classList.add('show'); }, 500);
+  setTimeout(() => $id('luckyNotice').classList.remove('show'), 2600);
 }
 
-function updateCounters() {
-  const cards = tierCards();
-  const known = cards.filter((c) => state.known.has(c.q)).length;
-  const again = cards.filter((c) => state.again.has(c.q)).length;
-  $id('counter').textContent = `${Math.min(state.idx + 1, cards.length)}/${cards.length}`;
-  $id('knownCount').textContent = known;
-  $id('stillCount').textContent = Math.max(0, cards.length - known);
-  $id('progressFill').style.width = Math.round((known / Math.max(1, cards.length)) * 100) + '%';
-  $id('srsState').textContent = `Known ${known} · Tricky ${state.tricky.size} · Again ${again}`;
-  const done = cards.length > 0 && known === cards.length;
-  if (done && topic) {
-    $id('deckComplete').style.display = 'block';
-    $id('deckCompleteXP').textContent = `+${state.tier === 'expert' ? 75 : 50} XP + 💎3 Gems`;
-  } else if ($id('deckComplete')) {
-    $id('deckComplete').style.display = 'none';
-  }
-  $id('topLvlNum').textContent = Math.max(1, Math.floor(state.xp / 100) + 1);
-  $id('topGems').textContent = '💎' + state.gems;
+function backToQueue() {
+  stopTimer();
+  renderQueue();
+  showView('queueView');
 }
+
+function nice(name) { return name.replace(/^[^ ]+ /, ''); }
+function level() { return Math.max(1, Math.floor(S.meta.xp / 250) + 1); }
 
 function switchTier(t) {
-  state.tier = t;
+  S.tier = t;
   $id('tierNormal').classList.toggle('active', t === 'normal');
   $id('tierHard').classList.toggle('active', t === 'hard');
   $id('tierExpert').classList.toggle('active', t === 'expert');
-  state.idx = 0;
-  renderCard();
   save();
+  if (currentKey()) renderCard();
 }
 
+let timerId = null;
+let seconds = 300;
 function toggleTimer() {
-  if (timerId) {
-    clearInterval(timerId);
-    timerId = null;
-    $id('timerBtn').textContent = '▶️';
-    return;
-  }
+  if (timerId) { stopTimer(); return; }
   if (seconds <= 0) seconds = 300;
+  const disp = $id('timerDisplay');
   timerId = setInterval(() => {
     seconds--;
     if (seconds <= 0) {
-      clearInterval(timerId);
-      timerId = null;
-      $id('timerBtn').textContent = '▶️';
-      showToast('⏰ Time\u2019s up!', 'error');
+      stopTimer();
+      seconds = 300;
+      showToast('Focus session done', 'success');
       return;
     }
-    const m = Math.floor(seconds / 60), s = seconds % 60;
-    $id('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    disp.textContent = fmt(seconds);
   }, 1000);
   $id('timerBtn').textContent = '⏸️';
 }
+function stopTimer() {
+  if (timerId) { clearInterval(timerId); timerId = null; $id('timerBtn').textContent = '▶️'; }
+}
 function resetTimer() {
-  clearInterval(timerId);
-  timerId = null;
+  stopTimer();
   seconds = 300;
   $id('timerDisplay').textContent = '05:00';
-  $id('timerBtn').textContent = '▶️';
+}
+function fmt(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+
+function mystery() {
+  if (S.meta.gems < 2) { showToast('Need 2 gems for a mystery card', 'warning'); return; }
+  const keys = [];
+  TOPICS.forEach((t) => t.cards.forEach((_, i) => keys.push(keyOf(t, i))));
+  const k = keys[Math.floor(Math.random() * keys.length)];
+  getCard(k);
+  S.meta.gems -= 2;
+  view.queue.splice(view.pos + 1, 0, k);
+  save();
+  openPopup('Mystery Card', 'A random card joined your queue — bonus practice.');
+  counter();
 }
 
-function confirmMystery() {
-  if (state.gems < 2) { showToast('Need 💎2 gems for a mystery card', 'warning'); return; }
-  openPopup('🎁 Mystery Card', 'A random card — flip it for surprise XP!');
-  state.gems -= 2;
-  save();
-}
-function confirmBooster() {
-  if (state.gems < 1) { showToast('Need 💎1 gem for XP booster', 'warning'); return; }
-  state.gems -= 1;
-  state.xp += 25;
-  flashLucky('+25 XP booster!');
-  save();
-  updateCounters();
+function showStats() {
+  const grades = S.log.slice(-200);
+  const again = grades.filter((e) => e.g === GRADES.AGAIN).length;
+  const pct = grades.length ? Math.round((1 - again / grades.length) * 100) : 100;
+  openPopup('Statistics', [
+    'Level ' + level() + ' · ' + S.meta.xp + ' XP',
+    'Streak: ' + S.meta.streak + ' days',
+    'Gems: ' + S.meta.gems,
+    'Total reviews: ' + S.meta.totalReviews,
+    'Recall accuracy (recent): ' + pct + '%',
+    'Due now: ' + dueNow(),
+    'Next review: ' + fmtDelay(nextDueIn())
+  ].join('\n'));
 }
 
-function showCardPopup() {
-  if (!topic) return;
-  const cards = tierCards();
-  openPopup('🔢 Deck Progress', `${Math.min(state.idx + 1, cards.length)} of ${cards.length} cards shown\nKnown: ${cards.filter((c) => state.known.has(c.q)).length}`);
+const ONBOARD = [
+  { icon: '🧠', title: 'Try to recall first', desc: 'Read the question, attempt the answer in your head, then reveal. The attempt is the learning.' },
+  { icon: '📅', title: 'Space it out', desc: 'Cards return on a schedule — 1 day, 3 days, a week. This spacing is what makes it stick.' },
+  { icon: '🎯', title: 'Grade honestly', desc: 'Again = couldn\'t recall. That\'s normal and it\'s exactly how the schedule helps you. An honest Again beats a bored Easy.' }
+];
+let obStep = 0;
+function onboardNext() {
+  obStep++;
+  if (obStep >= ONBOARD.length) { finishOnboard(); return; }
+  $id('obIcon').textContent = ONBOARD[obStep].icon;
+  $id('obTitle').textContent = ONBOARD[obStep].title;
+  $id('obDesc').textContent = ONBOARD[obStep].desc;
+  [0, 1, 2].forEach((i) => $id('obDot' + i).classList.toggle('on', i === obStep));
+  $id('obNext').textContent = obStep === ONBOARD.length - 1 ? 'Start' : 'Next';
 }
-function showStatsPopup() {
-  openPopup('🌟 Player Stats', `XP: ${state.xp} · Gems: 💎${state.gems} · Tier: ${state.tier}${topic ? `\nTopic: ${topic.name}` : ''}`);
-}
-function showInsightPopup() {
-  openPopup('🧭 Your Journey', `Level ${Math.max(1, Math.floor(state.xp / 100) + 1)} Scholar\nKeep studying daily to strengthen your streak and unlock new realms.`);
+function onboardSkip() { finishOnboard(); }
+function finishOnboard() {
+  S.onboarded = true;
+  save();
+  renderQueue();
+  showView('queueView');
 }
 
 function openPopup(title, body) {
@@ -312,86 +493,52 @@ function closePopup() {
   $id('popupBox').style.display = 'none';
 }
 
-function flashLucky(text) {
-  $id('luckyAmount').textContent = text;
-  $id('luckyNotice').classList.add('show');
-  setTimeout(() => $id('luckyNotice').classList.remove('show'), 1800);
+function confetti() {
+  const c = $id('confettiCanvas');
+  const ctx = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const colors = ['#6366f1', '#22d3ee', '#f59e0b', '#a78bfa', '#34d399'];
+  const parts = Array.from({ length: 90 }, () => ({ x: Math.random() * c.width, y: -20 - Math.random() * 60, s: 5 + Math.random() * 6, v: 2 + Math.random() * 3, a: Math.random() * 6, c: colors[Math.floor(Math.random() * 5)] }));
+  let frames = 0;
+  const iv = setInterval(() => {
+    ctx.clearRect(0, 0, c.width, c.height);
+    parts.forEach((p) => { p.y += p.v; p.x += Math.sin(p.a) * 1.5; p.a += 0.08; ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, 7); ctx.fill(); });
+    if (++frames > 110) { clearInterval(iv); ctx.clearRect(0, 0, c.width, c.height); }
+  }, 20);
 }
 
-function showLevelUp(level, title) {
-  $id('lvlModalNum').textContent = level;
-  $id('lvlModalTitle').textContent = title;
-  $id('lvlModal').classList.add('open');
-}
-function closeLvlModal() {
-  $id('lvlModal').classList.remove('open');
-}
+document.addEventListener('keydown', (e) => {
+  if ($id('sessionView').style.display !== 'block') return;
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); return; }
+  if (e.key === '1') grade(0);
+  if (e.key === '2') grade(1);
+  if (e.key === '3') grade(2);
+  if (e.key === '4') grade(3);
+  if (e.key === 'ArrowRight') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+});
 
-function nextTutorialStep() {
-  tutorialStep++;
-  if (tutorialStep >= TUTORIAL.length) { $id('tutCard').style.display = 'none'; return; }
-  const s = TUTORIAL[tutorialStep];
-  $id('tutStep').textContent = `Step ${tutorialStep + 1}/${TUTORIAL.length}`;
-  $id('tutIcon').textContent = s.icon;
-  $id('tutTitle').textContent = s.title;
-  $id('tutDesc').textContent = s.desc;
-  $id('tutNextBtn').textContent = tutorialStep === TUTORIAL.length - 1 ? 'Start' : 'Next →';
-}
-function skipTutorial() {
-  $id('tutCard').style.display = 'none';
-}
-
-function closeWeeklySummary() {
-  $id('weeklySummary').style.display = 'none';
-}
-
-$id('weeklySummary').style.display = 'none';
-
-function init() {
-  load();
-  renderTopics();
-  updateCounters();
-  showLvlIfNew();
-  const tutSeen = localStorage.getItem('flashcard_tut');
-  if (!tutSeen) {
-    $id('tutCard').style.display = 'block';
-    tutorialStep = 0;
-    $id('tutStep').textContent = 'Step 1/6';
-    $id('tutIcon').textContent = TUTORIAL[0].icon;
-    $id('tutTitle').textContent = TUTORIAL[0].title;
-    $id('tutDesc').textContent = TUTORIAL[0].desc;
-    $id('tutNextBtn').textContent = 'Next →';
-  } else {
-    $id('tutCard').style.display = 'none';
-  }
-}
-function showLvlIfNew() {
-  const lvl = Math.floor(state.xp / 100) + 1;
-  const seen = localStorage.getItem('flashcard_lvl') || '0';
-  if (parseInt(seen, 10) < lvl) {
-    localStorage.setItem('flashcard_lvl', String(lvl));
-    setTimeout(() => showLevelUp(lvl, lvl === 1 ? 'Novice' : lvl === 2 ? 'Student' : 'Journeyman'), 400);
-  }
-}
-
-window.backToTopics = backToTopics;
-window.handleCardTap = handleCardTap;
-window.nextCard = nextCard;
+window.onboardNext = onboardNext;
+window.onboardSkip = onboardSkip;
+window.startQueue = startQueue;
+window.openTopics = openTopics;
+window.startTopic = startTopic;
+window.backToQueue = backToQueue;
+window.reveal = reveal;
+window.grade = grade;
 window.prevCard = prevCard;
-window.rateCard = rateCard;
+window.nextCard = nextCard;
 window.switchTier = switchTier;
 window.toggleTimer = toggleTimer;
 window.resetTimer = resetTimer;
-window.confirmMystery = confirmMystery;
-window.confirmBooster = confirmBooster;
-window.showCardPopup = showCardPopup;
-window.showStatsPopup = showStatsPopup;
-window.showInsightPopup = showInsightPopup;
-window.openPopup = openPopup;
+window.mystery = mystery;
+window.showStats = showStats;
 window.closePopup = closePopup;
-window.closeLvlModal = closeLvlModal;
-window.nextTutorialStep = nextTutorialStep;
-window.skipTutorial = skipTutorial;
-window.closeWeeklySummary = closeWeeklySummary;
 
+function init() {
+  load();
+  stopTimer();
+  if (S.onboarded) { renderQueue(); showView('queueView'); }
+  else { showView('onboardView'); }
+}
 init();
