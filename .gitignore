@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# ebook fulfillment ledger + email artifacts (contains buyer PII)
+deliveries/
+
 # macOS-specific files
 .DS_Store
 

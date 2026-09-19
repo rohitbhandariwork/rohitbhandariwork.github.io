@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" font-family="Manrope, Inter, -apple-system, 'Segoe UI', sans-serif">
+<defs>
+  <linearGradient id="ch02-bisect-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+  </linearGradient>
+  <linearGradient id="ch02-bisect-warm" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
+  </linearGradient>
+  <linearGradient id="ch02-bisect-go" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#06b6d4"/>
+  </linearGradient>
+</defs>
+<rect x="410" y="40" width="300" height="84" rx="22" fill="url(#ch02-bisect-grad)" filter="drop-shadow(0 10px 16px rgba(102,126,234,.35))"/>
+<text x="560" y="90" text-anchor="middle" font-size="19" font-weight="800" fill="#ffffff">The repro is flaky</text>
+<text x="560" y="114" text-anchor="middle" font-size="14" font-weight="500" fill="rgba(255,255,255,.85)">change one thing, observe, fold</text><path d="M 560 124 C 560 100, 215 100, 215 124" fill="none" stroke="#818cf8" stroke-width="3" marker-end="url(#ch02-bisect-arr)"/><rect x="60" y="130" width="310" height="124" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="drop-shadow(0 6px 10px rgba(15,23,42,.06))"/><rect x="60" y="146" width="156.20000000000002" height="34" rx="10" fill="#64748b" opacity=".92"/>
+<text x="73" y="168" font-size="13" font-weight="800" fill="#ffffff">WINDOW</text><text x="76" y="212" font-size="18" font-weight="800" fill="#0f172a">Find the window</text><text x="76" y="236" font-size="13.5" font-weight="500" fill="#64748b">perf + time-based triggers</text><path d="M 560 124 C 560 100, 715 100, 715 124" fill="none" stroke="#818cf8" stroke-width="3" marker-end="url(#ch02-bisect-arr)"/><rect x="560" y="130" width="310" height="124" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="drop-shadow(0 6px 10px rgba(15,23,42,.06))"/><rect x="560" y="146" width="138.84" height="34" rx="10" fill="#64748b" opacity=".92"/>
+<text x="573" y="168" font-size="13" font-weight="800" fill="#ffffff">SWAP</text><text x="576" y="212" font-size="18" font-weight="800" fill="#0f172a">Swap suspects</text><text x="576" y="236" font-size="13.5" font-weight="500" fill="#64748b">binary search the change space</text><path d="M 560 124 C 560 100, 1215 100, 1215 124" fill="none" stroke="#818cf8" stroke-width="3" marker-end="url(#ch02-bisect-arr)"/><rect x="1060" y="130" width="310" height="124" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="drop-shadow(0 6px 10px rgba(15,23,42,.06))"/><rect x="1060" y="146" width="138.84" height="34" rx="10" fill="#64748b" opacity=".92"/>
+<text x="1073" y="168" font-size="13" font-weight="800" fill="#ffffff">SHRINK</text><text x="1076" y="212" font-size="18" font-weight="800" fill="#0f172a">Cut the input</text><text x="1076" y="236" font-size="13.5" font-weight="500" fill="#64748b">smallest payload still failing</text><defs><marker id="ch02-bisect-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/></marker></defs></svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="460" viewBox="0 0 640 460" font-family="Manrope, Inter, -apple-system, 'Segoe UI', sans-serif">
+<defs>
+  <linearGradient id="fm-persona-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+  </linearGradient>
+  <linearGradient id="fm-persona-warm" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
+  </linearGradient>
+  <linearGradient id="fm-persona-go" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#06b6d4"/>
+  </linearGradient>
+</defs>
+<circle cx="320" cy="230" r="176" fill="#f1f5f9"/>
+<circle cx="320" cy="230" r="176" fill="none" stroke="#e2e8f0" stroke-width="1.5"/><circle cx="320" cy="230" r="150" fill="url(#fm-persona-go)" opacity=".08"/><circle cx="320" cy="230" r="150" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="320" cy="230" r="50" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4 6"/><circle cx="320" cy="230" r="100" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4 6"/><circle cx="320" cy="230" r="150" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4 6"/><line x1="320" y1="230" x2="395" y2="100.0961894323342" stroke="#e2e8f0" stroke-width="1.5"/><line x1="320" y1="230" x2="449.9038105676658" y2="305" stroke="#e2e8f0" stroke-width="1.5"/><line x1="320" y1="230" x2="245.00000000000003" y2="359.9038105676658" stroke="#e2e8f0" stroke-width="1.5"/><line x1="320" y1="230" x2="190.0961894323342" y2="155" stroke="#e2e8f0" stroke-width="1.5"/><path d="M 320 230 L 443.80034223645174 145.3036289907447 A 150 150 0 0 1 455.24938002059287 294.8660558693472 Z" fill="url(#fm-persona-grad)" opacity=".55"/><circle cx="400" cy="170" r="9" fill="#ef4444" opacity=".85"/><circle cx="360" cy="320" r="9" fill="#ef4444" opacity=".85"/><circle cx="210" cy="240" r="9" fill="#ef4444" opacity=".85"/><text x="320" y="434" text-anchor="middle" font-size="14.5" font-weight="700" fill="#64748b">Rhea, Sam, Meera — three engineers, one production loop.</text><defs><marker id="fm-persona-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b"/></marker></defs></svg>

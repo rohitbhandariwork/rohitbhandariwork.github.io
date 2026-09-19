@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="300" viewBox="0 0 1080 300" font-family="Manrope, Inter, -apple-system, 'Segoe UI', sans-serif">
+<defs>
+  <linearGradient id="ch02-stack-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+  </linearGradient>
+  <linearGradient id="ch02-stack-warm" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
+  </linearGradient>
+  <linearGradient id="ch02-stack-go" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#06b6d4"/>
+  </linearGradient>
+</defs><text x="540" y="40" text-anchor="middle" font-size="23" font-weight="800" fill="#0f172a">THE COMPENSATION STACK</text><rect x="40" y="150" width="550" height="96" rx="6" fill="#818cf8" stroke="#ffffff" stroke-width="3"/><text x="315" y="200" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">Base</text><text x="315" y="228" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" opacity=".95">55%</text><rect x="590" y="150" width="150" height="96" rx="6" fill="#818cf8" stroke="#ffffff" stroke-width="3"/><text x="665" y="200" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">Bonus</text><text x="665" y="228" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" opacity=".95">15%</text><rect x="740" y="150" width="200" height="96" rx="6" fill="#818cf8" stroke="#ffffff" stroke-width="3"/><text x="840" y="200" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">Equity</text><text x="840" y="228" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" opacity=".95">20%</text><rect x="940" y="150" width="100" height="96" rx="6" fill="#818cf8" stroke="#ffffff" stroke-width="3"/><text x="990" y="200" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">Other</text><text x="990" y="228" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" opacity=".95">10%</text><text x="540" y="284" text-anchor="middle" font-size="13" font-weight="500" fill="#64748b">illustrative split — your band varies by level and company</text></svg>

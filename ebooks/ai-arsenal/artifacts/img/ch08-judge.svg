@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" font-family="Manrope, Inter, -apple-system, 'Segoe UI', sans-serif">
+<defs>
+  <linearGradient id="ch08-judge-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+  </linearGradient>
+  <linearGradient id="ch08-judge-warm" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
+  </linearGradient>
+  <linearGradient id="ch08-judge-go" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#06b6d4"/>
+  </linearGradient>
+</defs><rect x="0" y="0" width="900" height="118" rx="24" fill="url(#ch08-judge-grad)"/>
+<text x="40" y="52" font-family="Manrope, Inter, -apple-system, 'Segoe UI', sans-serif" font-size="31" font-weight="800" fill="#ffffff">THE GOLDEN SET</text>
+<text x="42" y="84" font-family="Manrope, Inter, -apple-system, 'Segoe UI', sans-serif" font-size="17" font-weight="500" fill="rgba(255,255,255,.85)">20–50 cases, labeled, versioned</text>
+<circle cx="834" cy="59" r="26" fill="rgba(255,255,255,.16)"/>
+<path d="M 816 52 q 18 0 18 14 v 6 l 4 8 h -24 l 4 -8 v -6 q 0 -3 1.5 -6 q 2.5 -6 8 -8 z" fill="#ffffff" opacity=".9"/>
+<rect x="24" y="140" width="852" height="510" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/><text x="52" y="182" font-size="17" font-weight="800" fill="#0f172a">Case (input)</text><line x1="52" y1="212" x2="848" y2="212" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="234" x2="848" y2="234" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="256" x2="848" y2="256" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><text x="52" y="200" font-size="12.5" font-weight="500" fill="#94a3b8">one real production input</text><text x="52" y="282" font-size="17" font-weight="800" fill="#0f172a">Expected output</text><line x1="52" y1="312" x2="848" y2="312" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="334" x2="848" y2="334" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="356" x2="848" y2="356" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><text x="52" y="300" font-size="12.5" font-weight="500" fill="#94a3b8">the 'good answer' token-for-token</text><text x="52" y="382" font-size="17" font-weight="800" fill="#0f172a">Type</text><line x1="52" y1="412" x2="848" y2="412" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="434" x2="848" y2="434" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="456" x2="848" y2="456" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><text x="52" y="400" font-size="12.5" font-weight="500" fill="#94a3b8">exact · semantic · judge · rubric</text><text x="52" y="482" font-size="17" font-weight="800" fill="#0f172a">Why it's here</text><line x1="52" y1="512" x2="848" y2="512" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="534" x2="848" y2="534" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><line x1="52" y1="556" x2="848" y2="556" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 8"/><text x="52" y="500" font-size="12.5" font-weight="500" fill="#94a3b8">what failure it exists to catch</text></svg>
