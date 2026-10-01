@@ -15,26 +15,29 @@ const LEDGER_DIR = path.join(ROOT, "deliveries");
 const LEDGER = path.join(LEDGER_DIR, "ledger.jsonl");
 
 const BOOKS = {
-  "career-leverage": { dir: "salary-booster", title: "Salary Booster", sub: "Career Leverage: From Junior to Senior", price: "₹499", cover: "/assets/img/salary-booster.jpg" },
-  "salary-booster": { dir: "salary-booster", title: "Salary Booster", sub: "Career Leverage: From Junior to Senior", price: "₹499", cover: "/assets/img/salary-booster.jpg" },
-  "real-engineering": { dir: "bug-sniper", title: "Bug Sniper", sub: "Real Engineering: Beyond the Tutorial", price: "₹599", cover: "/assets/img/bug-sniper.jpg" },
-  "bug-sniper": { dir: "bug-sniper", title: "Bug Sniper", sub: "Real Engineering: Beyond the Tutorial", price: "₹599", cover: "/assets/img/bug-sniper.jpg" },
-  "ai-working-engineer": { dir: "ai-arsenal", title: "AI Arsenal", sub: "AI for Working Engineers", price: "₹699", cover: "/assets/img/ai-arsenal.jpg" },
-  "ai-arsenal": { dir: "ai-arsenal", title: "AI Arsenal", sub: "AI for Working Engineers", price: "₹699", cover: "/assets/img/ai-arsenal.jpg" },
+  "career-leverage": { pdf: "products/salary-booster.pdf", title: "Salary Booster", sub: "Career Leverage: From Junior to Senior", price: "₹499", cover: "/assets/img/salary-booster.jpg" },
+  "salary-booster": { pdf: "products/salary-booster.pdf", title: "Salary Booster", sub: "Career Leverage: From Junior to Senior", price: "₹499", cover: "/assets/img/salary-booster.jpg" },
+  "real-engineering": { pdf: "products/bug-sniper.pdf", title: "Bug Sniper", sub: "Real Engineering: Beyond the Tutorial", price: "₹599", cover: "/assets/img/bug-sniper.jpg" },
+  "bug-sniper": { pdf: "products/bug-sniper.pdf", title: "Bug Sniper", sub: "Real Engineering: Beyond the Tutorial", price: "₹599", cover: "/assets/img/bug-sniper.jpg" },
+  "ai-working-engineer": { pdf: "products/ai-arsenal.pdf", title: "AI Arsenal", sub: "AI for Working Engineers", price: "₹699", cover: "/assets/img/ai-arsenal.jpg" },
+  "ai-arsenal": { pdf: "products/ai-arsenal.pdf", title: "AI Arsenal", sub: "AI for Working Engineers", price: "₹699", cover: "/assets/img/ai-arsenal.jpg" },
 };
 
 const [slug, name, email, orderId] = process.argv.slice(2);
 if (!slug || !name || !email || !BOOKS[slug]) {
-  console.error(`usage: node ebooks/_shared/tools/deliver.js <slug> <name> <email> [orderId]`);
+  console.error(`usage: node ebooks/_shared/tools/deliver.cjs <slug> <name> <email> [orderId]`);
   console.error(`  slugs: ${Object.keys(BOOKS).slice(0, 3).join(" | ")}   (folder names work too)`);
   process.exit(1);
 }
 
 const book = BOOKS[slug];
-const pdf = path.join(ROOT, "ebooks", book.dir, "dist", `${book.dir}.pdf`);
+const pdf = path.join(ROOT, book.pdf);
 if (!fs.existsSync(pdf)) {
   console.error(`missing deliverable: ${pdf}`);
-  console.error(`run first:  node ebooks/_shared/tools/render-book.cjs ${book.dir}`);
+  console.error(`the paid PDFs are not in git — restore them from your own copy:`);
+  for (const key of ["career-leverage", "real-engineering", "ai-working-engineer"]) {
+    console.error(`  products/${BOOKS[key].pdf.split("/").pop()}`);
+  }
   process.exit(1);
 }
 
@@ -65,10 +68,9 @@ function mailDraft() {
 on run
   tell application "Mail"
     set newMsg to make new outgoing message with properties {subject:"${esc(subject)}", content:"", visible:true}
-    set toRecipient of newMsg to "${esc(email)}"
     tell newMsg
-      set theBody to read (POSIX file "${esc(bodyFile)}")
-      set content of newMsg to theBody
+      make new to recipient at end of to recipients with properties {address:"${esc(email)}"}
+      set content of newMsg to (read (POSIX file "${esc(bodyFile)}"))
       make new attachment with properties {file name:(POSIX file "${esc(pdf)}")} at after the last paragraph of content
     end tell
     activate
@@ -96,7 +98,7 @@ function htmlPreview() {
     <p style="font-size:16px;margin:0 0 14px">Hi ${name.replace(/[<>]/g, "")},</p>
     <p style="font-size:14px;line-height:1.6;margin:0 0 14px">Thanks for your order of <strong>${book.title}</strong> — ${book.sub} (<strong>${book.price}</strong>). Your copy is attached: v1.0.</p>
     <table style="border-collapse:collapse;margin:8px 0 18px"><tr>
-      <td style="vertical-align:top"><img src="https://rohitbuilds.dev${book.cover}" style="width:132px;border-radius:8px;box-shadow:0 4px 14px rgba(15,23,42,.18)" alt="${book.title} cover"></td>
+      <td style="vertical-align:top"><img src="https://rohitbhandariwork.github.io${book.cover}" style="width:132px;border-radius:8px;box-shadow:0 4px 14px rgba(15,23,42,.18)" alt="${book.title} cover"></td>
       <td style="vertical-align:top;padding-left:18px;font-size:13px;line-height:1.6;color:#475569">
         <strong style="color:#334155">Order</strong> ${orderRef}<br>
         <strong style="color:#334155">Book</strong> ${book.title}<br>

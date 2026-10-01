@@ -21,23 +21,44 @@
       <h2>How it works</h2>
       <p>Straightforward, no accounts, no subscriptions.</p>
     </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <span class="step-n">1</span>
-        <h3>Pay with UPI</h3>
-        <div class="payment-upi">8989059838@axisb <button class="btn-icon" onclick="copyUPI()" aria-label="Copy UPI ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg></button></div>
-        <p>Google Pay, PhonePe, or Paytm — the amount for each book shows when you tap Get.</p>
+
+    <div class="ig-panel shop-flow" id="shopFlow">
+      <div class="ig-head">
+        <div class="ig-head-txt">
+          <span class="ig-kicker">In one glance · Order</span>
+          <h3 class="ig-title" id="flowTitle">Pay. Fill. Get.</h3>
+        </div>
+        <img class="ig-art" src="/assets/img/undraw/book.svg" alt="Illustration of an open book" loading="lazy" decoding="async" />
       </div>
-      <div class="step-card">
-        <span class="step-n">2</span>
-        <h3>Fill the order form</h3>
-        <p>Name, email, and the UPI transaction ID from your payment app. That's it.</p>
+
+      <div class="flow-meta" aria-hidden="true">
+        <div class="flow-bar"><span id="flowBar"></span></div>
+        <span class="flow-count" id="flowCount">1 of 3</span>
       </div>
-      <div class="step-card">
-        <span class="step-n">3</span>
-        <h3>Get the ebook</h3>
-        <p>Payment verified within 24 hours, and the ebook lands in your email inbox.</p>
+
+      <div class="flow-stages" role="group" aria-label="Purchase steps">
+        <button type="button" class="flow-stage" data-step="0">
+          <span class="flow-dot">1</span>
+          <strong>Pay with UPI</strong>
+          <em>Amount shows when you tap Get</em>
+        </button>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <button type="button" class="flow-stage" data-step="1">
+          <span class="flow-dot">2</span>
+          <strong>Fill the order form</strong>
+          <em>Name, email, UPI transaction ID</em>
+        </button>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <button type="button" class="flow-stage" data-step="2">
+          <span class="flow-dot">3</span>
+          <strong>Get the ebook</strong>
+          <em>Lands in your inbox within 24h</em>
+        </button>
       </div>
+
+      <div class="flow-detail" id="flowDetail" aria-live="polite"></div>
+
+      <p class="ig-note">Each step activates in turn — click any step to jump ahead.</p>
     </div>
 
     <button class="track-toggle" id="trackToggle" onclick="toggleTrack()">Already purchased? Track your order</button>
@@ -91,8 +112,13 @@
     </form>
     <div class="success-view" id="successView">
       <div class="success-icon">✓</div>
-      <h3>Submitted</h3>
-      <p>Your order <strong id="orderId">#--</strong> has been received. You'll get your ebook once payment is verified — usually within 24 hours. Contact <strong>rohitbhandari.work@gmail.com</strong> if not received.</p>
+      <h3>Finish in your email app</h3>
+      <p>Your order <strong id="orderId">#--</strong> is ready. An email to <strong>rohitbhandari.work@gmail.com</strong> should have opened — review it and press <strong>Send</strong>. Your order is not placed until you send it.</p>
+      <p class="order-fallback">Nothing opened? Use one of these instead:</p>
+      <a class="btn btn-primary btn-lg btn-block" id="orderMailto" href="#">Open the order email again</a>
+      <button class="btn btn-gray btn-lg btn-block" type="button" onclick="copyOrder()">Copy order details</button>
+      <textarea id="orderRaw" class="order-raw" readonly rows="7" aria-label="Order details to copy"></textarea>
+      <p>Once I confirm your payment you'll get the ebook at <strong id="confirmEmail">your email</strong> — usually within 24 hours. Quote reference <strong id="orderIdEcho">#--</strong> if you need to follow up.</p>
       <button class="btn btn-gray btn-lg btn-block" onclick="closeModal()">Done</button>
     </div>
   </div>

@@ -28,3 +28,6 @@ deliveries/
 
 # Angular cache junk
 .angular/
+
+# canonical paid deliverables (large, never committed)
+products/*.pdf
