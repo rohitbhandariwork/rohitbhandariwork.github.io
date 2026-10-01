@@ -27,23 +27,44 @@ const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=
       <h2>How it works</h2>
       <p>Straightforward, no accounts, no subscriptions.</p>
     </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <span class="step-n">1</span>
-        <h3>Pay with UPI</h3>
-        <div class="payment-upi">8989059838@axisb <button class="btn-icon" onclick="copyUPI()" aria-label="Copy UPI ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg></button></div>
-        <p>Google Pay, PhonePe, or Paytm — the amount for each book shows when you tap Get.</p>
+
+    <div class="ig-panel shop-flow" id="shopFlow">
+      <div class="ig-head">
+        <div class="ig-head-txt">
+          <span class="ig-kicker">In one glance · Order</span>
+          <h3 class="ig-title" id="flowTitle">Pay. Fill. Get.</h3>
+        </div>
+        <img class="ig-art" src="/assets/img/undraw/book.svg" alt="Illustration of an open book" loading="lazy" decoding="async" />
       </div>
-      <div class="step-card">
-        <span class="step-n">2</span>
-        <h3>Fill the order form</h3>
-        <p>Name, email, and the UPI transaction ID from your payment app. That's it.</p>
+
+      <div class="flow-meta" aria-hidden="true">
+        <div class="flow-bar"><span id="flowBar"></span></div>
+        <span class="flow-count" id="flowCount">1 of 3</span>
       </div>
-      <div class="step-card">
-        <span class="step-n">3</span>
-        <h3>Get the ebook</h3>
-        <p>Payment verified within 24 hours, and the ebook lands in your email inbox.</p>
+
+      <div class="flow-stages" role="group" aria-label="Purchase steps">
+        <button type="button" class="flow-stage" data-step="0">
+          <span class="flow-dot">1</span>
+          <strong>Pay with UPI</strong>
+          <em>Amount shows when you tap Get</em>
+        </button>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <button type="button" class="flow-stage" data-step="1">
+          <span class="flow-dot">2</span>
+          <strong>Fill the order form</strong>
+          <em>Name, email, UPI transaction ID</em>
+        </button>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <button type="button" class="flow-stage" data-step="2">
+          <span class="flow-dot">3</span>
+          <strong>Get the ebook</strong>
+          <em>Lands in your inbox within 24h</em>
+        </button>
       </div>
+
+      <div class="flow-detail" id="flowDetail" aria-live="polite"></div>
+
+      <p class="ig-note">Each step activates in turn — click any step to jump ahead.</p>
     </div>
 
     <button class="track-toggle" id="trackToggle" onclick="toggleTrack()">Already purchased? Track your order</button>
@@ -97,21 +118,17 @@ const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=
     </form>
     <div class="success-view" id="successView">
       <div class="success-icon">✓</div>
-      <h3>Submitted</h3>
-      <p>Your order <strong id="orderId">#--</strong> has been received. You'll get your ebook once payment is verified — usually within 24 hours. Contact <strong>rohitbhandari.work@gmail.com</strong> if not received.</p>
+      <h3>Finish in your email app</h3>
+      <p>Your order <strong id="orderId">#--</strong> is ready. An email to <strong>rohitbhandari.work@gmail.com</strong> should have opened — review it and press <strong>Send</strong>. Your order is not placed until you send it.</p>
+      <p class="order-fallback">Nothing opened? Use one of these instead:</p>
+      <a class="btn btn-primary btn-lg btn-block" id="orderMailto" href="#">Open the order email again</a>
+      <button class="btn btn-gray btn-lg btn-block" type="button" onclick="copyOrder()">Copy order details</button>
+      <textarea id="orderRaw" class="order-raw" readonly rows="7" aria-label="Order details to copy"></textarea>
+      <p>Once I confirm your payment you'll get the ebook at <strong id="confirmEmail">your email</strong> — usually within 24 hours. Quote reference <strong id="orderIdEcho">#--</strong> if you need to follow up.</p>
       <button class="btn btn-gray btn-lg btn-block" onclick="closeModal()">Done</button>
     </div>
   </div>
 </div>
 
 <!-- ── Toast ── -->
-<div class="toast" id="toast"></div></div>  </main> <script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body> </html><script type="module">var e=`https://api.rohitbuildsapp.tech`,t=[{slug:`career-leverage`,img:`salary-booster.jpg`,title:`Salary Booster`,subtitle:`Career Leverage: From Junior to Senior`,desc:`Promotions, salary negotiation, building influence, and interviews — the playbook for engineers who refuse to stay overlooked.`,price:499},{slug:`real-engineering`,img:`bug-sniper.jpg`,title:`Bug Sniper`,subtitle:`Real Engineering: Beyond the Tutorial`,desc:`Production systems, debugging, architecture, CI/CD, and the trade-offs that actually matter after the tutorial ends.`,price:599},{slug:`ai-working-engineer`,img:`ai-arsenal.jpg`,title:`AI Arsenal`,subtitle:`AI for Working Engineers`,desc:`LLMs, RAG, AI-assisted coding, and production AI — practical tools for engineers who want to stay ahead of the shift.`,price:699}],n=null;function r(e){return document.getElementById(e)}function i(e,t){let n=r(`toast`);n.textContent=e,n.className=`toast show `+(t||`success`),setTimeout(()=>n.className=`toast`,3e3)}function a(){let e=r(`productGrid`);e.innerHTML=``;for(let n of t){let t=document.createElement(`div`);t.className=`book-tile`,t.innerHTML=`
-      <div class="book-cover"><img src="/assets/img/${n.img}" alt="${n.title} cover" loading="lazy"></div>
-      <p class="book-kicker">${n.subtitle}</p>
-      <h3 class="book-title">${n.title}</h3>
-      <p class="book-desc">${n.desc}</p>
-      <div class="book-foot">
-        <div class="book-price">₹${n.price}<span>one-time</span></div>
-        <button class="btn btn-primary btn-md" onclick="openBook('${n.slug}')">Get</button>
-      </div>
-    `,e.appendChild(t)}}function o(e){let i=t.find(t=>t.slug===e);i&&(n=i,r(`ebookSlug`).value=i.slug,r(`modalCover`).src=`/assets/img/`+i.img,r(`modalCover`).alt=i.title+` cover`,r(`modalCover`).style.display=`block`,r(`modalTitle`).textContent=i.title,r(`modalSub`).textContent=`Complete your order in 3 quick steps.`,r(`modalPrice`).innerHTML=`₹${i.price}<span>one-time</span>`,r(`payLink`).href=`upi://pay?pa=8989059838@axisb&am=`+i.price+`&cu=INR&tn=`+i.slug,r(`successView`).style.display=`none`,r(`purchaseForm`).style.display=`block`,r(`modal`).classList.add(`open`))}function s(){r(`modal`).classList.remove(`open`)}function c(){let e=`8989059838@axisb`;navigator.clipboard?navigator.clipboard.writeText(e).then(()=>i(`UPI ID copied!`)).catch(()=>i(`Copy: `+e,`info`)):i(`Copy: `+e,`info`)}function l(){let e=r(`trackPanel`),t=e.style.display!==`none`;e.style.display=t?`none`:`block`,r(`trackToggle`).textContent=t?`Already purchased? Track your order`:`Close track`}async function u(){let t=r(`trackEmail`).value.trim(),n=r(`trackResult`);if(!t){n.textContent=`Enter the email you used at purchase.`;return}n.textContent=`Checking…`;let i=r(`trackBtn`);i.disabled=!0;try{let r=await fetch(e+`/shop/status`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({email:t})});if(!r.ok)throw Error(String(r.status));n.textContent=(await r.json()).status||`No order found for that email yet.`}catch{n.textContent=`Status service unreachable. Email rohitbhandari.work@gmail.com.`}finally{i.disabled=!1}}async function d(t){t.preventDefault();let a=r(`submitBtn`);if(!n)return;let o=r(`purchaseForm`),s=new FormData(o),c={ebook_slug:n.slug,name:s.get(`name`),email:s.get(`email`),txn_id:s.get(`txn_id`)};a.disabled=!0,a.textContent=`Submitting…`;let l=`RBP-`+Date.now().toString().slice(-6);try{let t=await fetch(e+`/shop/order`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify(c)});if(!t.ok)throw Error(String(t.status))}catch{i(`Server unreachable — will record on my side from this reference.`,`warning`)}finally{a.disabled=!1,a.textContent=`Submit Purchase`}r(`orderId`).textContent=`#`+l,r(`purchaseForm`).style.display=`none`,r(`successView`).style.display=`block`}document.addEventListener(`DOMContentLoaded`,a),window.openBook=o,window.closeModal=s,window.copyUPI=c,window.toggleTrack=l,window.trackOrder=u,window.submitPurchase=d;</script>
+<div class="toast" id="toast"></div></div>  </main> <script type="module">function e(){let e=document.getElementById(`navLinks`);e&&e.classList.toggle(`open`)}window.toggleNav=e;</script></body> </html><script type="module" src="/_astro/shop.astro_astro_type_script_index_0_lang.DEosGua1.js"></script>
