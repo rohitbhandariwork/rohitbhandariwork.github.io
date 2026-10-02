@@ -13,7 +13,7 @@ const path = require("path");
 const { spawnSync } = require("child_process");
 const { ROOT, LEDGER_DIR, LEDGER } = require("./paths.cjs");
 const { loadEnv, requireToken } = require("./dl-config.cjs");
-const { CANONICAL, bookOf, canonicalSlug, descriptions, shopLink, shopUrl, othersThan, downloadUrl, SITE } = require("./books.cjs");
+const { CANONICAL, bookOf, canonicalSlug, descriptions, shopLink, shopUrl, othersThan, downloadUrl, pdfPath, SITE } = require("./books.cjs");
 
 const args = process.argv.slice(2);
 const useLink = args.includes("--link");
@@ -27,11 +27,11 @@ if (!slug || !name || !email || !bookOf(slug)) {
 
 const book = bookOf(slug);
 const canon = canonicalSlug(slug);
-const pdf = path.join(ROOT, book.pdf);
+const pdf = pdfPath(book.file);
 if (!fs.existsSync(pdf)) {
   console.error(`missing deliverable: ${pdf}`);
-  console.error(`the paid PDFs are not in git — restore them from your own copy:`);
-  for (const c of CANONICAL) console.error(`  ${bookOf(c).pdf}`);
+  console.error(`the paid PDFs are not in git — restore them from your own copy into public/dl/<token>/:`);
+  for (const c of CANONICAL) console.error(`  ${bookOf(c).file}`);
   process.exit(1);
 }
 
@@ -40,7 +40,7 @@ if (useLink) {
   const token = (loadEnv().DL_TOKEN || "").trim();
   if (!token) {
     console.error("--link needs DL_TOKEN. Set it in .env (see .env.example), then:");
-    console.error(`  npm run build && node ebooks/_shared/tools/deploy-dl.cjs`);
+    console.error(`  npm run build   (the PDFs live in public/dl/<token>/ and ship with the build)`);
     console.error(`or drop --link to deliver the PDF as an attachment instead.`);
     process.exit(1);
   }
@@ -96,7 +96,7 @@ on run
     set newMsg to make new outgoing message with properties {subject:"${esc(subject)}", content:"", visible:true}
     tell newMsg
       make new to recipient at end of to recipients with properties {address:"${esc(email)}"}
-      set content of newMsg to (read (POSIX file "${esc(bodyFile)}"))
+      set content of newMsg to (read (POSIX file "${esc(bodyFile)}") as «class utf8»)
 ${attach}    end tell
     activate
   end tell

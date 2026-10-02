@@ -29,5 +29,7 @@ deliveries/
 # Angular cache junk
 .angular/
 
-# canonical paid deliverables (large, never committed)
-products/*.pdf
+# canonical paid deliverables (large, never committed).
+# public/ is copied into dist/ by the build, so the PDFs deploy with no extra step,
+# while staying out of git. Restore these from your own copy.
+public/dl/
