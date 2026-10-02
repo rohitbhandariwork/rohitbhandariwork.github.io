@@ -25,27 +25,49 @@ copy of the order; the ledger is your record of what you sent.
 - One order = one book. Pass the **catalog slug** to `deliver.cjs` (folder names are accepted too):
   `career-leverage` · `real-engineering` · `ai-working-engineer`.
 
-## Deliver — attachment (default)
+## Deliver — prebuilt email (forward this)
+
+The everyday path, since you already receive the buyer's order by email and simply forward it.
+
+```bash
+npm run prep-emails                     # rebuild all three into deliveries/emails/
+npm run prep-emails RBP-20261002-041    # with the order ref already filled in
+```
+
+```
+deliveries/emails/index.html          start here — pick the book they bought
+deliveries/emails/<slug>.html         rich version: cover, what's inside, order table
+deliveries/emails/<slug>.txt          plain-text fallback
+```
+
+Per order: verify the payment, open the rich HTML in a browser, select all, copy, then reply to
+the buyer and paste. Only three fields are yours to fill, and they appear as visible placeholders:
+
+`{{BUYER_NAME}}` · `{{TXN_ID}}` · `{{ORDER_REF}}`
+
+The amount is **not** a placeholder — it is read from the catalog price, so it cannot drift.
+Subject line: `Your ebook: <Title> (order <ref>)`.
+
+Each email contains the working download link, four real highlights from that book, the
+living-book promise, the other two titles with catalog descriptions, and a support line.
+HTML is written for Gmail: table layout, inline styles only, `bgcolor` fallbacks beside every
+gradient, and a preheader line for the inbox preview. Nothing needs a stylesheet or script.
+
+## Deliver — Mail draft (attachment or link)
+
+Use this when you would rather let Apple Mail assemble the draft.
 
 ```bash
 node ebooks/_shared/tools/deliver.cjs <slug> "<Buyer Name>" <email> [orderId]
-```
-
-Opens a Mail draft with the PDF attached. Verified working: Mail's AppleScript must use
-`make new to recipient at end of to recipients` — setting `toRecipient` to a string fails
-with error `-1700` and silently drops you into the manual fallback.
-
-## Deliver — download link
-
-```bash
 node ebooks/_shared/tools/deliver.cjs <slug> "<Buyer Name>" <email> [orderId] --link
 ```
 
-Puts `https://rohitbhandariwork.github.io/dl/<token>/<file>.pdf` in the email body instead of
-attaching. Needs `DL_TOKEN` in `.env` and the PDFs deployed under `dist/dl/<token>/` (below).
-The ledger row records the exact `link` sent, so you can audit which buyer got which URL.
+Without `--link` the PDF is attached; with it, the download URL goes in the body instead. Both
+write a ledger row. Verified working: Mail's AppleScript must use
+`make new to recipient at end of to recipients` — setting `toRecipient` to a string fails
+with error `-1700` and silently drops you into the manual fallback.
 
-### Deploying the PDFs
+## Deploying the PDFs
 
 ```bash
 npm run build
@@ -106,9 +128,11 @@ ledger (`email` column). The ledger is that list.
 | Path | Role |
 | :-- | :-- |
 | `products/*.pdf` | canonical paid deliverables, gitignored, restored from your own copy |
+| `ebooks/_shared/tools/prep-emails.cjs` | builds the forward-ready emails into `deliveries/emails/` |
 | `ebooks/_shared/tools/deliver.cjs` | fulfillment: Mail draft, HTML preview, ledger row |
 | `ebooks/_shared/tools/deploy-dl.cjs` | copy PDFs into `dist/dl/<token>/`, with size guard |
 | `ebooks/_shared/tools/books.cjs` | catalog + slugs; reads descriptions from the canonical doc |
 | `ebooks/_shared/tools/dl-config.cjs` | `.env` loading and token validation |
 | `ebooks/_shared/tools/paths.cjs` | repo root and ledger paths |
 | `deliveries/ledger.jsonl` | proof-of-delivery record (buyer PII, gitignored) |
+| `deliveries/emails/` | the prebuilt emails (gitignored; rebuild with `npm run prep-emails`) |

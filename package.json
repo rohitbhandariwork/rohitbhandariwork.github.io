@@ -12,7 +12,8 @@
     "astro": "astro",
     "render-ebooks": "node ebooks/_shared/tools/render-book.cjs",
     "deliver-ebook": "node ebooks/_shared/tools/deliver.cjs",
-    "deploy-dl": "node ebooks/_shared/tools/deploy-dl.cjs"
+    "deploy-dl": "node ebooks/_shared/tools/deploy-dl.cjs",
+    "prep-emails": "node ebooks/_shared/tools/prep-emails.cjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
