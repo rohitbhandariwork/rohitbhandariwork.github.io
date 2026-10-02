@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /dl/
 
-Sitemap: https://rohitbhandariwork.github.io/assets/site/sitemap.xml
+Sitemap: https://rohitbhandariwork.github.io/sitemap-index.xml
