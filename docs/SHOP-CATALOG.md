@@ -16,7 +16,7 @@ Single source of truth for everything sold in the Shop. DO NOT change, reorder, 
 | 2 | `real-engineering` | Bug Sniper | 599 | `/assets/img/bug-sniper.jpg` |
 | 3 | `ai-working-engineer` | AI Arsenal | 699 | `/assets/img/ai-arsenal.jpg` |
 
-Order slug is used by the order API and stored in purchase records — never change a slug. UPI intent links must include `am=<price>&cu=INR&tn=<slug>`.
+Order slug is used in the order email and stored in the fulfillment ledger — never change a slug. UPI intent links must include `am=<price>&cu=INR&tn=<slug>`.
 
 ## Book 1 — Salary Booster
 
@@ -50,8 +50,14 @@ Order slug is used by the order API and stored in purchase records — never cha
 - Books section header: "The books" / "Three books. One topic each."
 - How-it-works steps: 1) Pay with UPI — Google Pay, PhonePe, or Paytm (amount shown on Get); 2) Fill the order form — name, email, UPI transaction ID; 3) Get the ebook — verified within 24 hours, delivered by email.
 
-## Order API
+## Order capture
 
-- Base: `https://api.rohitbuildsapp.tech`
-- Submit order: `POST /shop/order` with `{ ebook_slug, name, email, txn_id }`
-- Order status: `POST /shop/status` with `{ email }`
+There is **no order API** and no backend. The earlier `api.rohitbuildsapp.tech` service was
+never deployed (NXDOMAIN) and must not be referenced again.
+
+- The shop form composes a pre-filled `mailto:` to `rohitbhandari.work@gmail.com` carrying
+  slug, name, email, txn_id, and a client-generated `RBP-YYYYMMDD-nnnn` reference. The buyer
+  must press Send; nothing is sent for them.
+- The "order placed" screen is local to the buyer's browser and is not proof of purchase.
+  Delivery happens only after you verify the UPI transaction by hand.
+- Fulfillment and the download link: see `docs/SHOP-DELIVERY.md`.

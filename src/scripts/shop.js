@@ -312,7 +312,17 @@ window.setFlow = setFlow;
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   initShopFlow();
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 });
+
+function openFromHash() {
+  const slug = decodeURIComponent((window.location.hash || '').replace(/^#/, '')).trim();
+  if (!slug) return;
+  if (!PRODUCTS.some((b) => b.slug === slug)) return;
+  if (currentBook && currentBook.slug === slug && $id('modal').classList.contains('open')) return;
+  openBook(slug);
+}
 
 window.openBook = openBook;
 window.closeModal = closeModal;
