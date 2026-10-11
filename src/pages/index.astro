@@ -1,15 +1,36 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Topbar from '../components/topbar/Topbar.astro';
 import Footer from '../components/footer/Footer.astro';
-import contentHtml from '../content/pages/portfolio.html?raw';
+import portfolioSource from '../content/pages/portfolio.html?raw';
+
+const certifications = (await getCollection('certifications')).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date)
+);
+
+const certCards = certifications
+  .map(
+    (c) => `<div class="cert-item">
+      <a class="cert-card" href="${c.data.url}" target="_blank" rel="noreferrer">
+        <div class="cert-badge">${c.data.issuer}</div>
+        <h4 class="cert-title">${c.data.title}</h4>
+        <p class="cert-desc">${c.data.description}</p>
+        <span class="cert-link">View certificate &rarr;</span>
+      </a>
+      ${
+        c.data.pdf
+          ? `<a class="cert-link cert-pdf" href="${c.data.pdf}" target="_blank" rel="noreferrer">Download PDF</a>`
+          : ''
+      }
+    </div>`
+  )
+  .join('\n');
+
+const contentHtml = portfolioSource.replace('<!-- CERTIFICATIONS -->', certCards);
 ---
 <BaseLayout title="Rohit Builds — Azure Data Engineer & Builder">
   <Topbar slot="topbar" active="home" />
   <div set:html={contentHtml} />
   <Footer slot="footer" />
 </BaseLayout>
-
-
-
-

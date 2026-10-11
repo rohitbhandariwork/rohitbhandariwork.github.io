@@ -11,4 +11,16 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { news };
+const certifications = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/certifications' }),
+  schema: z.object({
+    date: z.string(),
+    title: z.string(),
+    issuer: z.string(),
+    description: z.string(),
+    url: z.string(),
+    pdf: z.string().optional(),
+  }),
+});
+
+export const collections = { news, certifications };
