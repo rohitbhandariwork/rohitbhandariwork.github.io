@@ -9,6 +9,8 @@ Subline: Azure Data Engineer evolving into a platform-minded architect.
 
 Sections: hero with brand mark, proof cards (core technical strengths), case studies written for hiring managers, experience supporting the move toward architecture ownership, verified credentials validating hands-on skills, and a contact block. Currently open to Azure data engineering or architecture opportunities.
 
+The Certifications section lists LinkedIn Learning credentials, newest first, each with a verification link and, when available, a hosted PDF (e.g. /certifications/stakeholder-communication-strategies-that-stick.pdf). Maintained as one markdown file per certificate in src/content/certifications/.
+
 Contact: email rohitbhandari.work@gmail.com, GitHub github.com/rohitbhandariwork, LinkedIn linkedin.com/in/rohitonlinked, resume via Google Drive link on the page.
 
 ## News (flagship project)

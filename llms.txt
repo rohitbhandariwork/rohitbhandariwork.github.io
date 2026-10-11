@@ -6,7 +6,7 @@ This file is a lightweight index for LLMs and AI agents. Full site content in ll
 
 ## Key pages
 
-- [Home](https://rohitbhandariwork.github.io/): Rohit's careers/portfolio page — "Designing data platforms that are readable, reliable, and ready to scale." Azure Data Engineer evolving into a platform-minded architect.
+- [Home](https://rohitbhandariwork.github.io/): Rohit's careers/portfolio page — "Designing data platforms that are readable, reliable, and ready to scale." Azure Data Engineer evolving into a platform-minded architect. Lists LinkedIn Learning certifications in the Certifications section.
 - [News](https://rohitbhandariwork.github.io/news/): Flagship — curated AI news portal with dated, editorial editions.
 - [Shop](https://rohitbhandariwork.github.io/shop/): Flagship — storefront project.
 - [Portfolio (legacy)](https://rohitbhandariwork.github.io/portfolio/): Redirects to Home.
@@ -22,3 +22,4 @@ This file is a lightweight index for LLMs and AI agents. Full site content in ll
 
 - Site name is "Rohit Builds"; older branding ("Education Reimagined", "RBPN") is retired.
 - Personal brand only — the projects are demonstrations of a builder at work.
+- Certifications: LinkedIn Learning credentials (with hosted PDFs) are listed on the home page, newest first. One markdown file per certificate in src/content/certifications/.
