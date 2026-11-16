@@ -1,35 +1,6 @@
+import { PRODUCTS } from './products.js';
+
 const ORDERS_EMAIL = 'rohitbhandari.work@gmail.com';
-const UPI_ID = '8989059838@axisb';
-const SITE_ORIGIN = 'https://rohitbhandariwork.github.io';
-
-const PRODUCTS = [
-  {
-    slug: 'career-leverage',
-    img: 'salary-booster.jpg',
-    title: 'Salary Booster',
-    subtitle: 'Career Leverage: From Junior to Senior',
-    desc: 'Promotions, salary negotiation, building influence, and interviews — the playbook for engineers who refuse to stay overlooked.',
-    price: 499
-  },
-  {
-    slug: 'real-engineering',
-    img: 'bug-sniper.jpg',
-    title: 'Bug Sniper',
-    subtitle: 'Real Engineering: Beyond the Tutorial',
-    desc: 'Production systems, debugging, architecture, CI/CD, and the trade-offs that actually matter after the tutorial ends.',
-    price: 599
-  },
-  {
-    slug: 'ai-working-engineer',
-    img: 'ai-arsenal.jpg',
-    title: 'AI Arsenal',
-    subtitle: 'AI for Working Engineers',
-    desc: 'LLMs, RAG, AI-assisted coding, and production AI — practical tools for engineers who want to stay ahead of the shift.',
-    price: 699
-  }
-];
-
-let currentBook = null;
 
 function $id(x) { return document.getElementById(x); }
 
@@ -53,32 +24,11 @@ function renderProducts() {
       <p class="book-desc">${b.desc}</p>
       <div class="book-foot">
         <div class="book-price">₹${b.price}<span>one-time</span></div>
-        <button class="btn btn-primary btn-md" onclick="openBook('${b.slug}')">Get</button>
+        <a class="btn btn-primary btn-md" href="/shop/checkout/${b.slug}/">Get</a>
       </div>
     `;
     grid.appendChild(card);
   }
-}
-
-function openBook(slug) {
-  const b = PRODUCTS.find((p) => p.slug === slug);
-  if (!b) return;
-  currentBook = b;
-  $id('ebookSlug').value = b.slug;
-  $id('modalCover').src = '/assets/img/' + b.img;
-  $id('modalCover').alt = b.title + ' cover';
-  $id('modalCover').style.display = 'block';
-  $id('modalTitle').textContent = b.title;
-  $id('modalSub').textContent = 'Complete your order in 3 quick steps.';
-  $id('modalPrice').innerHTML = `₹${b.price}<span>one-time</span>`;
-  $id('payLink').href = 'upi://pay?pa=8989059838@axisb&am=' + b.price + '&cu=INR&tn=' + b.slug;
-  $id('successView').style.display = 'none';
-  $id('purchaseForm').style.display = 'block';
-  $id('modal').classList.add('open');
-}
-
-function closeModal() {
-  $id('modal').classList.remove('open');
 }
 
 function copyUPI() {
@@ -87,20 +37,6 @@ function copyUPI() {
     navigator.clipboard.writeText(v).then(() => showToast('UPI ID copied!')).catch(() => showToast('Copy: ' + v, 'info'));
   } else {
     showToast('Copy: ' + v, 'info');
-  }
-}
-
-function copyOrder() {
-  const raw = $id('orderRaw');
-  const text = raw ? raw.value : '';
-  if (!text) return;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text)
-      .then(() => showToast('Order details copied — paste into your email app.'))
-      .catch(() => { raw.select(); showToast('Press Cmd/Ctrl+C to copy the selected details.', 'info'); });
-  } else {
-    raw.select();
-    showToast('Press Cmd/Ctrl+C to copy the selected details.', 'info');
   }
 }
 
@@ -127,17 +63,6 @@ async function trackOrder() {
   btn.disabled = false;
 }
 
-function saveSubmittedOrder(order) {
-  try {
-    const all = JSON.parse(localStorage.getItem('rb_orders') || '[]');
-    all.push(order);
-    localStorage.setItem('rb_orders', JSON.stringify(all.slice(-20)));
-  } catch (err) {}
-  try {
-    localStorage.setItem('rb_last_order', JSON.stringify(order));
-  } catch (err) {}
-}
-
 function lastSubmittedOrder(email) {
   const needle = String(email || '').trim().toLowerCase();
   if (!needle) return null;
@@ -151,89 +76,6 @@ function lastSubmittedOrder(email) {
     if (String(all[i].email || '').toLowerCase() === needle) return all[i];
   }
   return null;
-}
-
-async function submitPurchase(e) {
-  e.preventDefault();
-  const btn = $id('submitBtn');
-  if (!currentBook) return;
-  const form = $id('purchaseForm');
-  const data = new FormData(form);
-  const payload = {
-    ebook_slug: currentBook.slug,
-    name: data.get('name'),
-    email: data.get('email'),
-    txn_id: data.get('txn_id')
-  };
-  btn.disabled = true;
-  btn.textContent = 'Building your order…';
-
-  const name = String(payload.name || '').trim();
-  const email = String(payload.email || '').trim();
-  const txn = String(payload.txn_id || '').trim();
-  if (!name || !email || !txn) {
-    showToast('Fill name, email and UPI transaction ID.', 'warning');
-    btn.disabled = false;
-    btn.textContent = 'Submit Purchase';
-    return;
-  }
-
-  const d = new Date();
-  const stamp = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
-  const rand = Math.floor(Math.random() * 9000 + 1000);
-  const ref = 'RBP-' + stamp + '-' + rand;
-
-  const order = {
-    ref: ref,
-    title: currentBook.title,
-    sub: currentBook.subtitle,
-    price: '₹' + currentBook.price,
-    name: name,
-    email: email,
-    txn_id: txn,
-    when: d.toLocaleString()
-  };
-
-  const body = [
-    'NEW ORDER — Rohit Builds',
-    '',
-    'Order reference: ' + ref,
-    'Book: ' + order.title + ' — ' + order.sub,
-    'Price paid: ' + order.price,
-    'Paid to UPI: ' + UPI_ID,
-    '',
-    'Name: ' + name,
-    'Email: ' + email,
-    'UPI transaction ID: ' + txn,
-    '',
-    'I have paid the amount above by UPI and want the ebook delivered to the email above.',
-    '',
-    '— sent from ' + SITE_ORIGIN + '/shop'
-  ].join('\n');
-
-  const mailto = 'mailto:' + ORDERS_EMAIL +
-    '?subject=' + encodeURIComponent('New order ' + ref + ' — ' + order.title) +
-    '&body=' + encodeURIComponent(body);
-
-  saveSubmittedOrder(order);
-
-  const raw = $id('orderRaw');
-  if (raw) raw.value = 'To: ' + ORDERS_EMAIL + '\nSubject: New order ' + ref + ' — ' + order.title + '\n\n' + body;
-  const again = $id('orderMailto');
-  if (again) again.href = mailto;
-
-  $id('orderId').textContent = ref;
-  const echo = $id('orderIdEcho');
-  if (echo) echo.textContent = ref;
-  const conf = $id('confirmEmail');
-  if (conf) conf.textContent = email;
-  $id('purchaseForm').style.display = 'none';
-  $id('successView').style.display = 'block';
-
-  btn.disabled = false;
-  btn.textContent = 'Submit Purchase';
-
-  window.location.href = mailto;
 }
 
 const FLOW_STEPS = [
@@ -312,21 +154,8 @@ window.setFlow = setFlow;
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   initShopFlow();
-  openFromHash();
-  window.addEventListener('hashchange', openFromHash);
 });
 
-function openFromHash() {
-  const slug = decodeURIComponent((window.location.hash || '').replace(/^#/, '')).trim();
-  if (!slug) return;
-  if (!PRODUCTS.some((b) => b.slug === slug)) return;
-  if (currentBook && currentBook.slug === slug && $id('modal').classList.contains('open')) return;
-  openBook(slug);
-}
-
-window.openBook = openBook;
-window.closeModal = closeModal;
 window.copyUPI = copyUPI;
 window.toggleTrack = toggleTrack;
 window.trackOrder = trackOrder;
-window.submitPurchase = submitPurchase;

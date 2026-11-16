@@ -9,6 +9,9 @@ This file is a lightweight index for LLMs and AI agents. Full site content in ll
 - [Home](https://rohitbhandariwork.github.io/): Rohit's careers/portfolio page — "Designing data platforms that are readable, reliable, and ready to scale." Azure Data Engineer evolving into a platform-minded architect. Lists LinkedIn Learning certifications in the Certifications section.
 - [News](https://rohitbhandariwork.github.io/news/): Flagship — curated AI news portal with dated, editorial editions.
 - [Shop](https://rohitbhandariwork.github.io/shop/): Flagship — storefront project.
+  - [Checkout — Salary Booster](https://rohitbhandariwork.github.io/shop/checkout/career-leverage/): Buy Salary Booster ebook.
+  - [Checkout — Bug Sniper](https://rohitbhandariwork.github.io/shop/checkout/real-engineering/): Buy Bug Sniper ebook.
+  - [Checkout — AI Arsenal](https://rohitbhandariwork.github.io/shop/checkout/ai-working-engineer/): Buy AI Arsenal ebook.
 - [Portfolio (legacy)](https://rohitbhandariwork.github.io/portfolio/): Redirects to Home.
 - [Courses](https://rohitbhandariwork.github.io/courses/): Education system courses — Bot Buddies (4-7), Code Kids (8-11), Code Quest (12-15), AI Lab (15-17), Career Launcher (18+).
 - [Applications](https://rohitbhandariwork.github.io/applications/): Age-group hubs (4-7, 8-11, 12-15, 15-17, 18+).

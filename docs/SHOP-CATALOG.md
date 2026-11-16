@@ -10,11 +10,11 @@ Single source of truth for everything sold in the Shop. DO NOT change, reorder, 
 
 ## Catalog
 
-| # | Slug | Title | Price (₹) | Cover image |
-| :-- | :--- | :--- | :--- | :--- |
-| 1 | `career-leverage` | Salary Booster | 499 | `/assets/img/salary-booster.jpg` |
-| 2 | `real-engineering` | Bug Sniper | 599 | `/assets/img/bug-sniper.jpg` |
-| 3 | `ai-working-engineer` | AI Arsenal | 699 | `/assets/img/ai-arsenal.jpg` |
+| # | Slug | Title | Price (₹) | Cover image | Checkout |
+| :-- | :--- | :--- | :--- | :--- | :--- |
+| 1 | `career-leverage` | Salary Booster | 499 | `/assets/img/salary-booster.jpg` | `/shop/checkout/career-leverage/` |
+| 2 | `real-engineering` | Bug Sniper | 599 | `/assets/img/bug-sniper.jpg` | `/shop/checkout/real-engineering/` |
+| 3 | `ai-working-engineer` | AI Arsenal | 699 | `/assets/img/ai-arsenal.jpg` | `/shop/checkout/ai-working-engineer/` |
 
 Order slug is used in the order email and stored in the fulfillment ledger — never change a slug. UPI intent links must include `am=<price>&cu=INR&tn=<slug>`.
 
@@ -61,3 +61,7 @@ never deployed (NXDOMAIN) and must not be referenced again.
 - The "order placed" screen is local to the buyer's browser and is not proof of purchase.
   Delivery happens only after you verify the UPI transaction by hand.
 - Fulfillment and the download link: see `docs/SHOP-DELIVERY.md`.
+
+## Checkout routes
+
+Each eBook has a dedicated checkout page at `/shop/checkout/<slug>/`. The landing page at `/shop/` links each book's "Get" button to its checkout page. Checkout pages render the product cover, title, subtitle, description, price, a `upi://pay` link (`pa=8989059838@axisb&am=<price>&cu=INR&tn=<slug>`), and an order form (name, email, UPI transaction ID) that composes a `mailto:` to `rohitbhandari.work@gmail.com`. No backend; delivery is manual verification within ~24 hours.

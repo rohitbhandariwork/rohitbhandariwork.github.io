@@ -21,6 +21,13 @@ A curated AI news portal with an editorial voice. Editions are dated (e.g. /news
 
 A storefront project page.
 
+Three ebooks are sold, each with its own checkout page:
+- **Salary Booster** (₹499) — Career Leverage: From Junior to Senior — `/shop/checkout/career-leverage/`
+- **Bug Sniper** (₹599) — Real Engineering: Beyond the Tutorial — `/shop/checkout/real-engineering/`
+- **AI Arsenal** (₹699) — AI for Working Engineers — `/shop/checkout/ai-working-engineer/`
+
+Payment is by UPI to `8989059838@axisb`. The buyer pays, then fills an order form (name, email, UPI transaction ID) which composes a `mailto:` to `rohitbhandari.work@gmail.com`. Nothing is sent automatically — the buyer presses Send in their email app. Delivery is manual verification, ebook emailed within ~24 hours. Order reference format: `RBP-YYYYMMDD-nnnn`.
+
 ## Courses
 
 Education system courses across the age groups:

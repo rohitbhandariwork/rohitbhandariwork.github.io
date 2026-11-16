@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Topbar from '../../../components/topbar/Topbar.astro';
+import Footer from '../../../components/footer/Footer.astro';
+import { PRODUCTS } from '../../../scripts/products.js';
+
+const UPI_ID = '8989059838@axisb';
+
+const slug = Astro.params.slug;
+const product = PRODUCTS.find((p) => p.slug === slug);
+
+if (!product) {
+  return Astro.redirect('/shop/');
+}
+
+export function getStaticPaths() {
+  return PRODUCTS.map((p) => ({ params: { slug: p.slug } }));
+}
+---
+
+<BaseLayout title={`Buy ${product.title} — Rohit Builds`} description={`Purchase ${product.title} (${product.subtitle}) — ₹${product.price} one-time, delivered by email.`}>
+  <Topbar slot="topbar" active="shop" backHref="/shop/" variant="shop" />
+  <main class="checkout-page">
+    <article class="checkout-card">
+      <div class="checkout-head">
+        <img class="checkout-cover" src={`/assets/img/${product.img}`} alt={`${product.title} cover`} loading="lazy" />
+        <div class="checkout-meta">
+          <h1 class="checkout-title">{product.title}</h1>
+          <p class="checkout-subtitle">{product.subtitle}</p>
+        </div>
+      </div>
+      <p class="checkout-desc">{product.desc}</p>
+      <div class="checkout-foot">
+        <div class="checkout-price">₹{product.price}<span>one-time</span></div>
+        <div class="checkout-upi">
+          {UPI_ID} <button class="btn-icon" onclick="copyUPI()" aria-label="Copy UPI ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg></button>
+        </div>
+      </div>
+      <a class="btn btn-primary btn-md" id="payLink" href={`upi://pay?pa=${UPI_ID}&am=${product.price}&cu=INR&tn=${product.slug}`} target="_blank">Pay now</a>
+      <span class="field-hint">Pay through Google Pay, PhonePe, Paytm or your UPI app</span>
+
+      <form id="purchaseForm" onsubmit="submitPurchase(event)">
+        <input type="hidden" name="ebook_slug" value={product.slug} />
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="name" required placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label>UPI Transaction ID</label>
+          <input type="text" name="txn_id" required placeholder="e.g. AXIS123456789" pattern="[A-Za-z0-9]+" />
+          <p class="field-hint">Find this in Google Pay, PhonePe, or Paytm</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">Submit Purchase</button>
+      </form>
+
+      <div class="success-view" id="successView" style="display:none;">
+        <div class="success-icon">✓</div>
+        <h3>Finish in your email app</h3>
+        <p>Your order <strong id="orderId">#--</strong> is ready. An email to <strong>rohitbhandari.work@gmail.com</strong> should have opened — review it and press <strong>Send</strong>. Your order is not placed until you send it.</p>
+        <p class="order-fallback">Nothing opened? Use one of these instead:</p>
+        <a class="btn btn-primary btn-lg btn-block" id="orderMailto" href="#">Open the order email again</a>
+        <button class="btn btn-gray btn-lg btn-block" type="button" onclick="copyOrder()">Copy order details</button>
+        <textarea id="orderRaw" class="order-raw" readonly rows="7" aria-label="Order details to copy"></textarea>
+        <p>Once I confirm your payment you'll get the ebook at <strong id="confirmEmail">your email</strong> — usually within 24 hours. Quote reference <strong id="orderIdEcho">#--</strong> if you need to follow up.</p>
+        <button class="btn btn-gray btn-lg btn-block" onclick="window.location.href='/shop/'">Done</button>
+      </div>
+    </article>
+
+    <section class="checkout-track">
+      <button class="track-toggle" id="trackToggle" onclick="toggleTrack()">Already purchased? Track your order</button>
+      <div class="track-panel" id="trackPanel" style="display:none;">
+        <div class="field">
+          <label>Email used at purchase</label>
+          <input type="email" id="trackEmail" placeholder="you@example.com" />
+        </div>
+        <button class="btn btn-primary btn-md" onclick="trackOrder()" id="trackBtn">Check status</button>
+        <div class="track-result" id="trackResult"></div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast"></div>
+  </main>
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script>
+  declare global {
+    interface Window {
+      checkoutProduct: { slug: string; title: string; sub: string; price: string };
+    }
+  }
+  window.checkoutProduct = { slug: '{product.slug}', title: '{product.title}', sub: '{product.subtitle}', price: '₹{product.price}' };
+</script>
+
+<script>
+  import '../../../scripts/checkout.js';
+</script>

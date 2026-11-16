@@ -22,6 +22,7 @@ Astro file-based routing: a page at `src/pages/<path>.astro` becomes `/<path>/`.
 | `/interview/` | `src/pages/interview.astro` | Interview prep app | `src/content/pages/interview.html` |
 | `/jobtool/` | `src/pages/jobtool.astro` | Job search tool | `src/content/pages/jobtool.html` |
 | `/shop/` | `src/pages/shop.astro` | Storefront project | `src/content/pages/shop.html` |
+| `/shop/checkout/<slug>/` | `src/pages/shop/checkout/[slug].astro` | Per-eBook checkout | `src/scripts/products.js` |
 | `/news/` | `src/pages/news/index.astro` | News portal home | inline + listing |
 | `/news/YYYY-MM-DD/` | `src/pages/news/[...slug].astro` | Article | `src/content/news/YYYY-MM-DD.md` |
 | `/#contact` | anchor on home | Contact | portfolio page |
