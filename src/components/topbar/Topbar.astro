@@ -6,40 +6,51 @@ interface Props {
 }
 const { active, backHref = null, variant } = Astro.props;
 const showBack = backHref != null;
+const educationActive = active === 'education' || active === 'courses';
+const portfolioActive = active === 'portfolio' || active === 'home';
+const applicationsActive = active === 'applications-tools' || active === 'applications';
 ---
 <div id="topbar">
   {showBack && <a href={backHref} class="btn-back">← Back</a>}
-  <button class="hamburger" onclick="toggleNav()">☰</button>
+  <button class="hamburger" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">☰</button>
   {variant === 'flashcard' && (
     <span class="mini-level" id="topLevel" onclick="showInsightPopup()">
       <span class="ml-num" id="topLvlNum">1</span>
-      <span class="ml-gems" id="topGems">💎10</span>
+      <span class="ml-gems" id="topGems">10 gems</span>
     </span>
   )}
   {variant === 'pomoflow' && (
     <div class="stats-panel">
-      <div class="stats-title">🍅 Pomoflow</div>
+      <div class="stats-title">PomoFlow</div>
     </div>
   )}
   <div class="nav-links" id="navLinks">
-    <a href="/" class:list={[{ active: active === 'home' }]}>🏠 Home</a>
+    <a href="/" class:list={[{ active: portfolioActive }]}>Portfolio</a>
+
     <div class="nav-dropdown" onclick="this.classList.toggle('open')">
-      <a href="javascript:void(0)" class:list={[{ active: active === 'applications' }]}>📱 Applications ▾</a>
+      <a href="javascript:void(0)" class:list={[{ active: educationActive }]} aria-expanded="false">Education ▾</a>
       <div class="nav-dropdown-menu">
-        <a href="/applications/4-7">👶 Ages 4–7</a>
-        <a href="/applications/8-11">🧒 Ages 8–11</a>
-        <a href="/applications/12-15">🧑 Ages 12–15</a>
-        <a href="/applications/15-17">🎓 Ages 15–17</a>
-        <a href="/applications/18+">💼 Ages 18+</a>
+        <a href="/courses/">All Courses</a>
+        <a href="/applications/4-7">Bot Buddies — Ages 4–7</a>
+        <a href="/applications/8-11">Code Kids — Ages 8–11</a>
+        <a href="/applications/12-15">Code Quest — Ages 12–15</a>
+        <a href="/applications/15-17">AI Lab — Ages 15–17</a>
+        <a href="/applications/18+">Career Launcher — Ages 18+</a>
       </div>
     </div>
-    <a href="/courses/" class:list={[{ active: active === 'courses' }]}>📚 Courses</a>
-    <a href="/pomoflow/" class:list={[{ active: active === 'pomoflow' }]}>🍅 Pomoflow</a>
-    <a href="/flashcard/" class:list={[{ active: active === 'flashcard' }]}>🃏 Flashcard</a>
-    <a href="/interview/" class:list={[{ active: active === 'interview' }]}>🎤 Interview</a>
-    <a href="/jobtool/" class:list={[{ active: active === 'jobtool' }]}>📝 Jobtool</a>
-    <a href="/shop/" class:list={[{ active: active === 'shop' }]}>🛒 Shop</a>
-    <a href="/news/" class:list={[{ active: active === 'news' }]}>📰 News</a>
-    <a href="/#contact" class:list={[{ active: active === 'contact' }]}>✉️ Contact</a>
+
+    <div class="nav-dropdown" onclick="this.classList.toggle('open')">
+      <a href="javascript:void(0)" class:list={[{ active: applicationsActive || active === 'pomoflow' || active === 'flashcard' || active === 'interview' || active === 'jobtool' }]} aria-expanded="false">Applications ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="/pomoflow/">PomoFlow</a>
+        <a href="/flashcard/">Flashcard</a>
+        <a href="/interview/">Interview</a>
+        <a href="/jobtool/">Jobtool</a>
+      </div>
+    </div>
+
+    <a href="/news/" class:list={[{ active: active === 'news' }]}>News</a>
+    <a href="/shop/" class:list={[{ active: active === 'shop' }]}>Shop</a>
+    <a href="/#contact" class:list={[{ active: active === 'contact' }]}>Contact</a>
   </div>
 </div>
