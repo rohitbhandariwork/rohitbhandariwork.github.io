@@ -2,7 +2,7 @@
 
 ## Defaults
 
-The current site is a static personal portfolio and should minimize tracking.
+The site is a static personal portfolio and should minimize tracking.
 
 - Do not add analytics, pixels, cookies, fingerprinting, or third-party trackers by default.
 - Do not collect personally identifiable information unless a page feature explicitly requires it.

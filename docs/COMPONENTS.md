@@ -3,14 +3,14 @@
 ## Principles
 
 - Use plain Astro components and plain HTML/CSS/JavaScript.
-- Reuse a component instead of duplicating markup, styling, or behavior.
+- Reuse components instead of duplicating markup, styling, or behavior.
 - Keep page content in `src/content/pages/*.html` or content collections where established patterns apply.
 - Use shared design tokens from `public/assets/css/brand.css`; do not invent page-local colors or fonts.
 - Preserve the light-only visual identity.
 
 ## Layout
 
-Every public page wraps content with `BaseLayout` and includes `Topbar` and `Footer` slots unless the page has a documented exception.
+Every public page wraps content with `BaseLayout` and includes `Topbar` and `Footer` slots unless a documented exception applies.
 
 ```astro
 <BaseLayout title="Page title">
@@ -44,9 +44,9 @@ Before creating a component, search existing component directories and shared CS
 
 ## Styling rules
 
-- Reuse existing `.btn`, card, layout, spacing, radius, and shadow classes when applicable.
+- Reuse existing button, card, layout, spacing, radius, and shadow classes when applicable.
 - Keep media-query behavior in shared CSS where a pattern is reusable.
-- Avoid adding component-specific names that duplicate an existing global pattern.
+- Avoid component-specific names that duplicate an existing global pattern.
 - Prefer CSS custom properties from `brand.css` over literal values.
 
 ## Review checklist
@@ -55,4 +55,4 @@ Before creating a component, search existing component directories and shared CS
 - Interactive elements have clear hover, active, focus, and disabled states.
 - The component has no inaccessible keyboard trap or focus loss.
 - Empty, loading, error, and success states are defined where applicable.
-- The page is usable without a mouse and without JavaScript for static content.
+- Static content remains usable without JavaScript.

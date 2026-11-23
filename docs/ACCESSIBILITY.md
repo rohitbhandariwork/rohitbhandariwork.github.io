@@ -14,7 +14,7 @@ The website must remain usable by keyboard, screen reader, switch, touch, and zo
 - Decorative icons must be hidden from assistive technology.
 - Images need meaningful alternative text or an empty `alt` attribute when purely decorative.
 - Form fields must have visible labels and associated error messages.
-- Status and error changes must use appropriate live regions when they are not obvious in the visual context.
+- Status and error changes must use appropriate live regions when not obvious in the visual context.
 - Modals and dialogs must trap focus while open, restore focus on close, and support Escape when appropriate.
 - Menus must support keyboard navigation and expose an accurate expanded state.
 - Animation must respect `prefers-reduced-motion`.

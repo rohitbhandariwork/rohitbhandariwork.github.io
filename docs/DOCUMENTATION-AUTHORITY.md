@@ -15,7 +15,7 @@ Before making a change, read:
 ## Source-of-truth hierarchy
 
 1. A canonical document controls its named domain.
-2. Existing implementation is descriptive only unless it is explicitly canonical in this hierarchy.
+2. Existing implementation is descriptive only unless explicitly canonical in this hierarchy.
 3. Code must be updated if a source-of-truth document changes.
 4. If documents disagree, stop and report the conflict before editing when the disagreement changes behavior or public copy.
 
@@ -38,7 +38,7 @@ Before making a change, read:
 | Testing | `docs/TESTING.md` |
 | Deployment | `docs/DEPLOYMENT.md` |
 | Analytics and privacy | `docs/ANALYTICS.md` |
-| SEO and machine-readable discovery | `docs/SEO.md` |
+| SEO and discovery | `docs/SEO.md` |
 | Security | `docs/SECURITY.md` |
 
 ## Sync requirements
